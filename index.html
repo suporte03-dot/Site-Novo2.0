@@ -1,73 +1,22 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-</html>
-Set-Content -Path ".\index.html" -Encoding UTF8 -Value @'
-<!DOCTYPE html>
-<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Controle de Contas de Casa</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
-    body { background: #f4f7fb; color: #1f2937; }
-    header { background: linear-gradient(135deg, #0f172a, #2563eb); color: white; padding: 30px; }
-    header h1 { font-size: 34px; margin-bottom: 8px; }
-    header p { color: #dbeafe; }
-
-    .container { width: 94%; max-width: 1350px; margin: 25px auto; }
-
-    .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
-    .card { background: white; padding: 22px; border-radius: 16px; box-shadow: 0 8px 20px rgba(0,0,0,.08); }
-    .card span { display: block; color: #64748b; font-size: 14px; margin-bottom: 8px; }
-    .card strong { font-size: 28px; }
-    .green { color: #16a34a; }
-    .red { color: #dc2626; }
-    .blue { color: #2563eb; }
-    .orange { color: #ea580c; }
-
-    .grid { display: grid; grid-template-columns: 380px 1fr; gap: 20px; }
-    .panel { background: white; border-radius: 16px; padding: 20px; box-shadow: 0 8px 20px rgba(0,0,0,.08); margin-bottom: 20px; }
-    .panel h2 { margin-bottom: 16px; font-size: 21px; color: #0f172a; }
-
-    label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 13px; color: #475569; }
-    input, select { width: 100%; padding: 11px; border: 1px solid #cbd5e1; border-radius: 10px; margin-bottom: 12px; }
-    button { border: none; background: #2563eb; color: white; padding: 11px 14px; border-radius: 10px; cursor: pointer; font-weight: bold; }
-    button:hover { background: #1d4ed8; } 
-    .danger { background: #dc2626; }
-    .danger:hover { background: #b91c1c; }
-    .success { background: #16a34a; }
-    .success:hover { background: #15803d; }
-
-    .filters { display: grid; grid-template-columns: 1fr 180px 180px; gap: 12px; margin-bottom: 16px; }
-
-    table { width: 100%; border-collapse: collapse; font-size: 14px; }
-    th { background: #0f172a; color: white; padding: 12px; text-align: left; }
-    td { padding: 12px; border-bottom: 1px solid #e2e8f0; }
-    tr:hover { background: #f8fafc; }
-
-    .badge { padding: 6px 10px; border-radius: 999px; font-size: 12px; font-weight: bold; }
-    .pago { background: #dcfce7; color: #166534; }
-    .pendente { background: #fef3c7; color: #92400e; }
-    .atrasado { background: #fee2e2; color: #991b1b; }
-
-    .actions { display: flex; gap: 6px; }
-    .actions button { padding: 7px 9px; font-size: 12px; }
-
-    .bar-box { margin-bottom: 13px; }
-    .bar-title { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 14px; }
-    .bar { background: #e2e8f0; height: 12px; border-radius: 999px; overflow: hidden; }
-    .bar div { height: 100%; background: #2563eb; }
-
-    @media (max-width: 950px) {
-      .cards, .grid, .filters { grid-template-columns: 1fr; }
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header>
-    <h1>Controle de Contas de Casa</h1>
-    <p>Dashboard completo para controlar receitas, despesas, vencimentos, contas pagas e pendentes.</p>
+  <header style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+    <div>
+      <h1>Controle de Contas de Casa</h1>
+      <p>Dashboard completo para controlar receitas, despesas, vencimentos, contas pagas e pendentes.</p>
+    </div>
+    <div class="backup-controls" style="display: flex; gap: 10px; align-items: center;">
+      <button class="success" onclick="exportarDados()">Backup (Download)</button>
+      <button class="blue" onclick="document.getElementById('importFile').click()">Importar (Upload)</button>
+      <input type="file" id="importFile" style="display: none;" accept=".json" onchange="importarDados(event)">
+    </div>
   </header>
 
   <main class="container">
@@ -93,7 +42,7 @@ Set-Content -Path ".\index.html" -Encoding UTF8 -Value @'
     <section class="grid">
       <div>
         <div class="panel">
-          <h2>Novo Lançamento</h2>
+          <h2 id="tituloForm">Novo Lançamento</h2>
 
           <label>Descrição</label>
           <input id="descricao" placeholder="Ex: Aluguel, mercado, salário">
@@ -131,7 +80,10 @@ Set-Content -Path ".\index.html" -Encoding UTF8 -Value @'
             <option value="pago">Pago</option>
           </select>
 
-          <button onclick="adicionar()">Adicionar</button>
+          <div style="display: flex; gap: 8px;">
+            <button id="btnSalvar" onclick="adicionar()">Adicionar</button>
+            <button id="btnCancelar" class="danger" style="display: none;" onclick="cancelarEdicao()">Cancelar</button>
+          </div>
         </div>
 
         <div class="panel">
@@ -193,173 +145,6 @@ Set-Content -Path ".\index.html" -Encoding UTF8 -Value @'
     </section>
   </main>
 
-  <script>
-    let dados = JSON.parse(localStorage.getItem("contasCasa")) || [
-      { descricao: "Salário", tipo: "receita", categoria: "Salário", valor: 3500, vencimento: "2026-05-05", status: "pago" },
-      { descricao: "Aluguel", tipo: "despesa", categoria: "Moradia", valor: 1200, vencimento: "2026-05-10", status: "pago" },
-      { descricao: "Energia elétrica", tipo: "despesa", categoria: "Energia", valor: 280, vencimento: "2026-05-20", status: "pendente" },
-      { descricao: "Internet", tipo: "despesa", categoria: "Internet", valor: 110, vencimento: "2026-05-25", status: "pendente" }
-    ];
-
-    function salvar() {
-      localStorage.setItem("contasCasa", JSON.stringify(dados));
-    }
-
-    function moeda(valor) {
-      return valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
-    }
-
-    function statusReal(item) {
-      if (item.status === "pago") return "pago";
-
-      const hoje = new Date();
-      hoje.setHours(0,0,0,0);
-
-      const venc = new Date(item.vencimento + "T00:00:00");
-
-      return venc < hoje ? "atrasado" : "pendente";
-    }
-
-    function adicionar() {
-      const item = {
-        descricao: document.getElementById("descricao").value.trim(),
-        tipo: document.getElementById("tipo").value,
-        categoria: document.getElementById("categoria").value,
-        valor: Number(document.getElementById("valor").value),
-        vencimento: document.getElementById("vencimento").value,
-        status: document.getElementById("status").value
-      };
-
-      if (!item.descricao || !item.valor || !item.vencimento) {
-        alert("Preencha descrição, valor e vencimento.");
-        return;
-      }
-
-      dados.push(item);
-      salvar();
-      document.getElementById("descricao").value = "";
-      document.getElementById("valor").value = "";
-      document.getElementById("vencimento").value = "";
-      renderizar();
-    }
-
-    function pagar(index) {
-      dados[index].status = "pago";
-      salvar();
-      renderizar();
-    }
-
-    function excluir(index) {
-      if (confirm("Deseja excluir este lançamento?")) {
-        dados.splice(index, 1);
-        salvar();
-        renderizar();
-      }
-    }
-
-    function renderizarCards() {
-      const receitas = dados.filter(i => i.tipo === "receita").reduce((s, i) => s + i.valor, 0);
-      const despesas = dados.filter(i => i.tipo === "despesa").reduce((s, i) => s + i.valor, 0);
-      const pendentes = dados.filter(i => statusReal(i) !== "pago").length;
-
-      document.getElementById("totalReceitas").innerText = moeda(receitas);
-      document.getElementById("totalDespesas").innerText = moeda(despesas);
-      document.getElementById("saldoAtual").innerText = moeda(receitas - despesas);
-      document.getElementById("qtdPendentes").innerText = pendentes;
-    }
-
-    function renderizarTabela() {
-      const tabela = document.getElementById("tabela");
-      tabela.innerHTML = "";
-
-      const busca = document.getElementById("busca").value.toLowerCase();
-      const filtroTipo = document.getElementById("filtroTipo").value;
-      const filtroStatus = document.getElementById("filtroStatus").value;
-
-      dados.forEach((item, index) => {
-        const st = statusReal(item);
-
-        if (busca && !item.descricao.toLowerCase().includes(busca)) return;
-        if (filtroTipo !== "todos" && item.tipo !== filtroTipo) return;
-        if (filtroStatus !== "todos" && st !== filtroStatus) return;
-
-        tabela.innerHTML += `
-          <tr>
-            <td>${item.descricao}</td>
-            <td>${item.tipo === "receita" ? "Receita" : "Despesa"}</td>
-            <td>${item.categoria}</td>
-            <td>${moeda(item.valor)}</td>
-            <td>${item.vencimento.split("-").reverse().join("/")}</td>
-            <td><span class="badge ${st}">${st.toUpperCase()}</span></td>
-            <td>
-              <div class="actions">
-                <button class="success" onclick="pagar(${index})">Pagar</button>
-                <button class="danger" onclick="excluir(${index})">Excluir</button>
-              </div>
-            </td>
-          </tr>
-        `;
-      });
-    }
-
-    function renderizarVencimentos() {
-      const tabela = document.getElementById("vencimentos");
-      tabela.innerHTML = "";
-
-      dados
-        .filter(i => statusReal(i) !== "pago")
-        .sort((a,b) => new Date(a.vencimento) - new Date(b.vencimento))
-        .slice(0, 6)
-        .forEach(item => {
-          const st = statusReal(item);
-          tabela.innerHTML += `
-            <tr>
-              <td>${item.descricao}</td>
-              <td>${moeda(item.valor)}</td>
-              <td>${item.vencimento.split("-").reverse().join("/")}</td>
-              <td><span class="badge ${st}">${st.toUpperCase()}</span></td>
-            </tr>
-          `;
-        });
-    }
-
-    function renderizarCategorias() {
-      const box = document.getElementById("resumoCategorias");
-      box.innerHTML = "";
-
-      const despesas = dados.filter(i => i.tipo === "despesa");
-      const total = despesas.reduce((s, i) => s + i.valor, 0);
-      const categorias = {};
-
-      despesas.forEach(i => {
-        categorias[i.categoria] = (categorias[i.categoria] || 0) + i.valor;
-      });
-
-      Object.keys(categorias).forEach(cat => {
-        const valor = categorias[cat];
-        const perc = total ? (valor / total) * 100 : 0;
-
-        box.innerHTML += `
-          <div class="bar-box">
-            <div class="bar-title">
-              <span>${cat}</span>
-              <strong>${moeda(valor)}</strong>
-            </div>
-            <div class="bar"><div style="width:${perc}%"></div></div>
-          </div>
-        `;
-      });
-    }
-
-    function renderizar() {
-      renderizarCards();
-      renderizarTabela();
-      renderizarVencimentos();
-      renderizarCategorias();
-    }
-
-    renderizar();
-  </script>
+  <script src="script.js" defer></script>
 </body>
 </html>
-'@
