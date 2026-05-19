@@ -735,12 +735,113 @@ function limparFormLanc() { ['fDesc','fValor','fVenc','fResp','fObs'].forEach(id
 function pagarLancamento(id) { const i = dados.find(d=>d.id===id); if(i){ i.status = 'pago'; salvar('dados',dados); showToast("✅ Pago!"); processarDadosGlobais(); } }
 function excluirLancamento(id) { if(confirm("Excluir lançamento?")) { dados = dados.filter(d=>d.id!==id); salvar('dados',dados); showToast("🗑 Excluído.", "warning"); processarDadosGlobais(); } }
 
-function renderMetas() { /* ... */ } function salvarMeta() { /* ... */ } function removerMeta() { /* ... */ }
-function renderOrcamento() { /* ... */ } function salvarOrcamento() { /* ... */ } function removerOrcamento() { /* ... */ }
-function renderFuturo() { /* ... */ } function salvarFuturo() { /* ... */ } function excluirFuturo() { /* ... */ } function efetivarFuturo() { /* ... */ }
-function renderRecorrentes() { /* ... */ } function salvarRecorrente() { /* ... */ } function excluirRecorrente() { /* ... */ } function lancarRecorrente() { /* ... */ }
-function renderParcelamentos() { /* ... */ } function gerarParcelamento() { /* ... */ }
-function renderCategorias() { /* ... */ } function popularSelectCategorias() { /* ... */ } function adicionarCategoria() { /* ... */ } function removerCategoria() { /* ... */ }
+function renderMetas() {
+  const mes = getMesGlobal(); const v = metas[mes] || 0;
+  document.getElementById('fMetaValor').value = v || '';
+  if(!v) return document.getElementById('metaProgressoHtml').innerHTML = '<div style="color:var(--text-light); text-align:center; padding:20px;">Nenhuma meta definida.</div>';
+  const fDados = getLancamentosFiltrados(mes);
+  const saldo = fDados.filter(i=>i.tipo==='receita').reduce((s,i)=>s+i.valor,0) - fDados.filter(i=>i.tipo==='despesa').reduce((s,i)=>s+i.valor,0);
+  const pct = Math.max(0, Math.min(100, (saldo / v) * 100));
+  document.getElementById('metaProgressoHtml').innerHTML = `Meta: ${formatMoeda(v)} <br> Saldo atual: ${formatMoeda(saldo)} <br> <div class="bar-track mt-3"><div class="bar-fill ${saldo>=v?'bg-success':'bg-warning'}" style="width:${pct}%"></div></div>`;
+}
+function salvarMeta() {
+  const mes = getMesGlobal(); if(!mes) return showToast("Selecione um mês no filtro.", "error");
+  const v = Number(document.getElementById('fMetaValor').value);
+  if(v>0) metas[mes] = v; else delete metas[mes];
+  salvar('metas', metas); showToast("Meta salva!"); processarDadosGlobais();
+}
+
+function renderOrcamento() {
+  const mes = getMesGlobal(); const orcMes = orcamentos[mes] || {}; let h = '';
+  const fDados = getLancamentosFiltrados(mes); let catDesc = {};
+  fDados.filter(i=>i.tipo==='despesa').forEach(i=>catDesc[i.categoria] = (catDesc[i.categoria]||0)+i.valor);
+  Object.keys(orcMes).forEach(c => {
+    const lim = orcMes[c]; const gas = catDesc[c]||0; const pct = Math.min(100, (gas/lim)*100);
+    h += `<div style="margin-bottom:15px;"><strong>${c}</strong>: Limite ${formatMoeda(lim)} | Gasto ${formatMoeda(gas)}
+    <div class="bar-track" style="margin-top:5px;"><div class="bar-fill ${pct>=100?'bg-danger':(pct>80?'bg-warning':'bg-success')}" style="width:${pct}%"></div></div>
+    <button class="btn btn-sm btn-outline mt-3" onclick="removerOrcamento('${c}')">Remover Limite</button></div><hr>`;
+  });
+  document.getElementById('orcamentoProgressoHtml').innerHTML = h || '<div style="color:var(--text-light); text-align:center; padding:20px;">Nenhum limite definido.</div>';
+}
+function salvarOrcamento() {
+  const mes = getMesGlobal(); if(!mes) return showToast("Selecione um mês no filtro.", "error");
+  const c = document.getElementById('fOrcCat').value; const v = Number(document.getElementById('fOrcValor').value);
+  if(!c || !v) return;
+  if(!orcamentos[mes]) orcamentos[mes] = {};
+  orcamentos[mes][c] = v; salvar('orcamentos', orcamentos); showToast("Limite definido!"); processarDadosGlobais();
+}
+function removerOrcamento(cat) { const mes = getMesGlobal(); if(orcamentos[mes]) delete orcamentos[mes][cat]; salvar('orcamentos', orcamentos); showToast("Removido."); processarDadosGlobais(); }
+
+function renderFuturo() {
+  let tb=''; futuros.forEach(i => tb += `<tr><td>${i.descricao}</td><td>${formatData(i.data)}</td><td class="${i.tipo==='receita'?'c-green':'c-red'}">${formatMoeda(i.valor)}</td><td><button class="btn btn-sm btn-success" onclick="efetivarFuturo('${i.id}')">Efetivar</button> <button class="btn btn-sm btn-danger" onclick="excluirFuturo('${i.id}')">Excluir</button></td></tr>`);
+  document.getElementById('listFuturoTabela').innerHTML = tb;
+}
+function salvarFuturo() {
+  const desc = document.getElementById('fFutDesc').value; const tipo = document.getElementById('fFutTipo').value; const cat = document.getElementById('fFutCat').value; const valor = Number(document.getElementById('fFutValor').value); const data = document.getElementById('fFutData').value;
+  if(!desc || !valor || !data) return;
+  futuros.push({id: generateId(), descricao: desc, tipo, categoria: cat, valor, data}); salvar('futuros', futuros); showToast("Plano adicionado!"); processarDadosGlobais();
+}
+function excluirFuturo(id) { futuros = futuros.filter(i=>i.id!==id); salvar('futuros', futuros); processarDadosGlobais(); }
+function efetivarFuturo(id) {
+  const f = futuros.find(i=>i.id===id); if(!f) return;
+  dados.push({id: generateId(), descricao: f.descricao, tipo: f.tipo, categoria: f.categoria, valor: f.valor, vencimento: f.data, status: 'pendente'});
+  excluirFuturo(id); salvar('dados', dados); showToast("Efetivado como lançamento!"); processarDadosGlobais();
+}
+
+function renderRecorrentes() {
+  let tb=''; recorrentes.forEach(i => tb += `<tr><td>${i.descricao}</td><td>Dia ${i.dia}</td><td>${formatMoeda(i.valor)}</td><td><button class="btn btn-sm btn-danger" onclick="excluirRecorrente('${i.id}')">Excluir</button></td></tr>`);
+  document.getElementById('listRecorrenteTabela').innerHTML = tb;
+}
+function salvarRecorrente() {
+  const desc = document.getElementById('fRecDesc').value; const cat = document.getElementById('fRecCat').value; const valor = Number(document.getElementById('fRecValor').value); const dia = Number(document.getElementById('fRecDia').value);
+  if(!desc || !valor || !dia) return;
+  recorrentes.push({id: generateId(), descricao: desc, categoria: cat, valor, dia, tipo: 'despesa'}); salvar('recorrentes', recorrentes); showToast("Recorrente salva!"); processarDadosGlobais();
+}
+function excluirRecorrente(id) { recorrentes = recorrentes.filter(i=>i.id!==id); salvar('recorrentes', recorrentes); processarDadosGlobais(); }
+
+function gerarParcelamento() {
+  const desc = document.getElementById('fParDesc').value; const valorTotal = Number(document.getElementById('fParValor').value); const qtd = Number(document.getElementById('fParQtd').value); const dataInicio = document.getElementById('fParData').value; const cat = document.getElementById('fParCat').value;
+  if(!desc || !valorTotal || !qtd || !dataInicio) return;
+  const valorParcela = valorTotal / qtd; let d = new Date(dataInicio);
+  for(let i=1; i<=qtd; i++) {
+    const dStr = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    dados.push({id: generateId(), descricao: `${desc} (${i}/${qtd})`, tipo: 'despesa', categoria: cat, valor: valorParcela, vencimento: dStr, status: 'pendente'});
+    d.setMonth(d.getMonth()+1);
+  }
+  parcelamentos.push({id: generateId(), descricao: desc, valorTotal, parcelas: qtd, dataCriacao: dataInicio});
+  salvar('dados', dados); salvar('parcelamentos', parcelamentos); showToast("Parcelas geradas!"); processarDadosGlobais();
+}
+function renderParcelamentos() {
+  let tb = ''; parcelamentos.forEach(i => tb += `<tr><td>${i.descricao}</td><td>${formatMoeda(i.valorTotal)}</td><td>${i.parcelas}</td><td>${formatData(i.dataCriacao)}</td></tr>`);
+  document.getElementById('listParcelamentosGerados').innerHTML = tb;
+}
+
+function popularSelectCategorias() {
+  const catDefault = ['Moradia', 'Mercado', 'Energia', 'Água', 'Internet', 'Transporte', 'Saúde', 'Educação', 'Lazer', 'Salário', 'Cartão de Crédito', 'Financiamento', 'Condomínio', 'Farmácia', 'Pets', 'Outros'];
+  if(!categorias || categorias.length === 0) { categorias = [...catDefault]; salvar('categorias', categorias); }
+  categorias = [...new Set(categorias)].sort();
+  const options = categorias.map(c => `<option value="${c}">${c}</option>`).join('');
+  ['fCat', 'fOrcCat', 'fFutCat', 'fRecCat', 'fParCat'].forEach(id => {
+    const el = document.getElementById(id); if(el) el.innerHTML = options;
+  });
+}
+function renderCategorias() {
+  popularSelectCategorias(); 
+  let h = ''; categorias.forEach(c => {
+    h += `<div style="background:var(--bg); padding:8px 15px; border-radius:20px; font-size:13px; font-weight:600; display:flex; align-items:center; gap:8px;">${c} <button style="background:none; border:none; color:var(--danger); cursor:pointer; font-size:16px;" onclick="removerCategoria('${c}')">&times;</button></div>`;
+  });
+  document.getElementById('listaCategoriasHtml').innerHTML = h;
+}
+function adicionarCategoria() {
+  const nc = document.getElementById('fNovaCat').value.trim(); if(!nc) return;
+  if(categorias.includes(nc)) return showToast("Categoria já existe.", "warning");
+  categorias.push(nc); salvar('categorias', categorias); document.getElementById('fNovaCat').value = ''; showToast("Adicionada!"); processarDadosGlobais();
+}
+function removerCategoria(cat) {
+  if(confirm(`Excluir a categoria "${cat}"? (Lançamentos existentes não serão afetados)`)) {
+    categorias = categorias.filter(c => c !== cat); salvar('categorias', categorias); showToast("Excluída.", "warning"); processarDadosGlobais();
+  }
+}
 
 /* ASSISTENTE IA */
 let iaContext = { qtdAlertas: 0 }; 
