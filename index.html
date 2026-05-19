@@ -244,7 +244,7 @@
         <span>💰 FinançasCasa</span>
         <button class="btn-menu hidden" id="btnCloseMenu" onclick="toggleMenu()" style="color:white; font-size:16px;">✕</button>
       </div>
-      <div style="font-size:11px; color:#94a3b8; font-weight:normal; margin-top:5px; cursor:pointer;" onclick="copiarGrupoId()" id="lblGrupoId" title="Clique para copiar">Grupo: Aguardando...</div>
+      <div style="font-size:11px; color:#94a3b8; font-weight:normal; margin-top:5px;" id="lblGrupoId">Modo: Local</div>
     </div>
     <div class="sidebar-menu">
       <div class="menu-item active" onclick="navegar('dashboard')">📊 Início / Dashboard</div>
@@ -258,7 +258,7 @@
       <div class="menu-item" onclick="navegar('categorias')">🏷️ Categorias</div>
       <div class="menu-item" onclick="navegar('relatorios')">📈 Relatórios <span class="menu-badge badge-static">PDF/CSV</span></div>
       <div class="menu-item" onclick="navegar('config')">⚙️ Configurações</div>
-      <div class="menu-item" onclick="navegar('backup')">☁️ Nuvem / Conta</div>
+      <div class="menu-item" onclick="navegar('backup')">💾 Backup / Importar</div>
     </div>
   </aside>
 
@@ -291,7 +291,7 @@
           <button class="btn btn-outline btn-sm" onclick="navegar('lancamentos')">📝 Ver Lançamentos</button>
           <button class="btn btn-outline btn-sm" onclick="navegar('assistente')">🤖 Abrir Assistente IA</button>
           <button class="btn btn-outline btn-sm" onclick="navegar('relatorios')">📈 Gerar Relatório</button>
-          <button class="btn btn-outline btn-sm" onclick="navegar('backup')">☁️ Acessar Nuvem</button>
+          <button class="btn btn-outline btn-sm" onclick="navegar('backup')">💾 Fazer Backup</button>
         </div>
         
         <!-- Dashboard Content -->
@@ -434,17 +434,18 @@
       <section id="mod-config" class="module hidden">
         <div class="panel" style="max-width:400px;"><div class="panel-title">Aparência e Navegação</div><div class="form-group"><label>Modo Visualização</label><select id="configModo" class="form-control" onchange="salvarConfigModo()"><option value="auto">Automático</option><option value="pc">PC</option><option value="celular">Celular</option></select></div><div class="form-group"><label>Início</label><select id="configInicio" class="form-control" onchange="salvarConfigInicio()"><option value="dashboard">Dashboard</option><option value="lancamentos">Lançamentos</option></select></div></div>
       </section>
-      <!-- Conta / Nuvem -->
+      <!-- Backup Local -->
       <section id="mod-backup" class="module hidden">
         <div class="grid-2">
           <div class="panel">
-            <div class="panel-title">Nuvem e Sincronização</div>
-            <p style="font-size:13px; margin-bottom:15px; color:var(--text-light);">Todos os seus dados estão seguros no Supabase em tempo real. Se você possui dados antigos no seu navegador, pode migrá-los para cá.</p>
-            <button class="btn btn-warning mt-3" style="width:100%" onclick="migrarLocalStorageParaNuveem()">⬆️ Importar LocalStorage Antigo para a Nuvem</button>
+            <div class="panel-title">Fazer Backup Manual</div>
+            <p style="font-size:13px; margin-bottom:15px; color:var(--text-light);">Faça o download de todos os seus dados e salve em um local seguro (pendrive, e-mail, etc).</p>
+            <button class="btn btn-primary mt-3" style="width:100%" onclick="exportarBackupJSON()">⬇️ Baixar Backup (JSON)</button>
           </div>
-          <div class="panel" style="border-color:var(--danger)">
-            <div class="panel-title" style="color:var(--danger)">Sua Conta</div>
-            <button class="btn btn-danger" style="width:100%" onclick="fazerLogout()">Sair da Conta (Logout)</button>
+          <div class="panel">
+            <div class="panel-title">Restaurar Backup</div>
+            <p style="font-size:13px; margin-bottom:15px; color:var(--text-light);">Selecione um arquivo de backup (.json) para restaurar no sistema.</p>
+            <input type="file" id="inputFileBackup" class="form-control" accept=".json" onchange="importarBackupJSON(event)">
           </div>
         </div>
       </section>
@@ -859,9 +860,14 @@ function aplicarModoVisualizacao() {
 }
 function toggleMenu() { document.getElementById('sidebar').classList.toggle('open'); document.getElementById('overlayMenu').classList.toggle('active'); }
 function navegar(modulo) {
-  document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active')); const btn = document.querySelector(`.menu-item[onclick="navegar('${modulo}')"]`); if(btn) btn.classList.add('active');
-  document.querySelectorAll('.module').forEach(el => el.classList.add('hidden', 'active'));
-  document.getElementById(`mod-${modulo}`).classList.remove('hidden'); document.getElementById(`mod-${modulo}`).classList.add('active');
+  document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active')); 
+  const btn = document.querySelector(`.menu-item[onclick="navegar('${modulo}')"]`); 
+  if(btn) btn.classList.add('active');
+  
+  document.querySelectorAll('.module').forEach(el => { el.classList.add('hidden'); el.classList.remove('active'); });
+  document.getElementById(`mod-${modulo}`).classList.remove('hidden'); 
+  document.getElementById(`mod-${modulo}`).classList.add('active');
+  
   if(document.body.classList.contains('modo-celular')) { document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlayMenu').classList.remove('active'); }
 }
 
@@ -972,18 +978,30 @@ function renderCategorias() { let h = ''; categorias.forEach(c => h += `<div sty
 function gerarRelatorioTela() { /* Logica simples local mantida */ document.getElementById('relatorioViewArea').innerHTML = `Relatório gerado sobre ${dados.length} lançamentos. Baixe CSV.`; }
 function exportarRelatorioCSV() { /* Simplificado */ showToast("CSV baixado!"); }
 
-/* MIGRAR LOCAL STORAGE PARA NUVEM */
-async function migrarLocalStorageParaNuveem() {
-  if(!confirm("Tem certeza que deseja migrar os dados antigos salvos no navegador para a nuvem? Isso copiará todos os lançamentos para o seu grupo atual.")) return;
-  const oldDados = JSON.parse(localStorage.getItem('financasCasa_dados') || "[]");
-  if(oldDados.length === 0) return alert("Nenhum dado local antigo encontrado.");
-  
-  const m = oldDados.map(i => ({ grupo_id: currentGroupId, descricao: i.descricao, tipo: i.tipo, categoria: i.categoria, valor: i.valor, vencimento: i.vencimento, status: i.status, forma_pagamento: i.formaPagamento, responsavel: i.responsavel, observacao: i.observacao, criado_por: sessionUser.id }));
-  const chunk = 50;
-  for(let i=0; i<m.length; i+=chunk) { await supabase.from('lancamentos').insert(m.slice(i, i+chunk)); }
-  alert("Migração concluída com sucesso! Os dados agora vivem na nuvem.");
-  localStorage.removeItem('financasCasa_dados'); // limpa o local para evitar duplicar migração
-  carregarTudoSupabase();
+/* MODO LOCAL BACKUP */
+function exportarBackupJSON() {
+  const bk = { dados, metas, orcamentos, futuros, recorrentes, parcelamentos, categorias };
+  const str = JSON.stringify(bk, null, 2);
+  const blob = new Blob([str], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = `financas_casa_backup_${new Date().toISOString().split('T')[0]}.json`; a.click();
+}
+
+function importarBackupJSON(evt) {
+  const f = evt.target.files[0]; if(!f) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const b = JSON.parse(e.target.result);
+      if(b.dados) {
+        dados=b.dados; metas=b.metas||{}; orcamentos=b.orcamentos||{}; futuros=b.futuros||[]; recorrentes=b.recorrentes||[]; parcelamentos=b.parcelamentos||[]; categorias=b.categorias||[];
+        salvarLocal('dados',dados); salvarLocal('metas',metas); salvarLocal('orcamentos',orcamentos); salvarLocal('futuros',futuros); salvarLocal('recorrentes',recorrentes); salvarLocal('parcelamentos',parcelamentos); salvarLocal('categorias',categorias);
+        processarDadosGlobais(); showToast("Backup restaurado com sucesso!");
+        document.getElementById('inputFileBackup').value = '';
+      }
+    } catch(err) { showToast("Erro ao ler arquivo.", "error"); }
+  };
+  reader.readAsText(f);
 }
 
 /* IA / AUTOAJUDA SIMPLIFICADO */
