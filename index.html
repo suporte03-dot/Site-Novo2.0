@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Controle de Contas de Casa</title>
   <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <header style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
@@ -12,7 +13,8 @@
       <h1>Controle de Contas de Casa</h1>
       <p>Dashboard completo para controlar receitas, despesas, vencimentos, contas pagas e pendentes.</p>
     </div>
-    <div class="backup-controls" style="display: flex; gap: 10px; align-items: center;">
+    <div class="backup-controls" style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+      <button class="orange" onclick="abrirDashboardModal()">📊 Ver Dashboards</button>
       <button class="success" onclick="exportarDados()">Backup (Download)</button>
       <button class="blue" onclick="document.getElementById('importFile').click()">Importar (Upload)</button>
       <input type="file" id="importFile" style="display: none;" accept=".json" onchange="importarDados(event)">
@@ -144,6 +146,30 @@
       </div>
     </section>
   </main>
+
+  <!-- Modal do Dashboard -->
+  <div id="dashboardModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Visão Geral - Dashboards</h2>
+        <button class="close-btn danger" onclick="fecharDashboardModal()">X Fechar</button>
+      </div>
+      <div class="modal-body">
+        <div class="chart-container">
+          <h3>Despesas por Categoria</h3>
+          <canvas id="chartCategoria"></canvas>
+        </div>
+        <div class="chart-container">
+          <h3>Receitas vs Despesas</h3>
+          <canvas id="chartReceitaDespesa"></canvas>
+        </div>
+        <div class="chart-container">
+          <h3>Evolução Mensal</h3>
+          <canvas id="chartEvolucao"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="script.js" defer></script>
 </body>
