@@ -14,9 +14,9 @@
       <p>Dashboard completo para controlar receitas, despesas, vencimentos, contas pagas e pendentes.</p>
     </div>
     <div class="backup-controls" style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-      <button class="orange" onclick="abrirDashboardModal()">📊 Ver Dashboards</button>
+      <button class="btn-orange" onclick="abrirDashboardModal()">📊 Ver Dashboards</button>
       <button class="success" onclick="exportarDados()">Backup (Download)</button>
-      <button class="blue" onclick="document.getElementById('importFile').click()">Importar (Upload)</button>
+      <button class="btn-purple" onclick="document.getElementById('importFile').click()">Importar (Upload)</button>
       <input type="file" id="importFile" style="display: none;" accept=".json" onchange="importarDados(event)">
     </div>
   </header>

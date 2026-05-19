@@ -29,6 +29,10 @@ button:hover { background: #1d4ed8; }
 .success:hover { background: #15803d; }
 .warning { background: #ca8a04; color: white; }
 .warning:hover { background: #a16207; }
+.btn-orange { background: #ea580c; color: white; }
+.btn-orange:hover { background: #c2410c; }
+.btn-purple { background: #7c3aed; color: white; }
+.btn-purple:hover { background: #6d28d9; }
 
 .filters { display: grid; grid-template-columns: 1fr 180px 180px; gap: 12px; margin-bottom: 16px; }
 
