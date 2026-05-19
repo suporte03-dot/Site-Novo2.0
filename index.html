@@ -207,8 +207,8 @@
     <p style="text-align:center; font-size:13px; color:var(--text-light); margin-bottom:20px;">Versão Nuvem (Supabase)</p>
     <div class="form-group"><label>E-mail</label><input type="email" id="authEmail" class="form-control"></div>
     <div class="form-group"><label>Senha</label><input type="password" id="authSenha" class="form-control"></div>
-    <button class="btn btn-primary" style="width:100%; margin-bottom:10px;" onclick="fazerLogin()">Entrar</button>
-    <button class="btn btn-outline" style="width:100%; margin-bottom:10px;" onclick="fazerCadastro()">Criar Nova Conta</button>
+    <button id="btnAuthEntrar" class="btn btn-primary" style="width:100%; margin-bottom:10px;" onclick="fazerLogin()">Entrar</button>
+    <button id="btnAuthCriar" class="btn btn-outline" style="width:100%; margin-bottom:10px;" onclick="fazerCadastro()">Criar Nova Conta</button>
     <div id="authError" style="color:var(--danger); font-size:13px; text-align:center; margin-top:10px; font-weight:bold;"></div>
   </div>
 </div>
@@ -479,7 +479,9 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('filtroGlobalMes').value = `${hoje.getFullYear()}-${String(hoje.getMonth()+1).padStart(2,'0')}`;
   
   if(!supabase || SUPABASE_URL === 'SUA_URL_SUPABASE_AQUI') {
-    document.getElementById('authError').innerText = "ATENÇÃO: O Supabase não foi configurado no código. Insira a URL e KEY no topo do script.";
+    document.getElementById('authError').innerText = "Supabase não configurado. Verifique SUPABASE_URL e SUPABASE_ANON_KEY no código.";
+    const btnEntrar = document.getElementById('btnAuthEntrar'); if(btnEntrar) btnEntrar.disabled = true;
+    const btnCriar = document.getElementById('btnAuthCriar'); if(btnCriar) btnCriar.disabled = true;
   } else {
     verificarSessao();
   }
@@ -489,31 +491,87 @@ document.addEventListener('DOMContentLoaded', () => {
    AUTENTICAÇÃO E GRUPOS
    ======================================================== */
 async function verificarSessao() {
-  const { data: { session } } = await supabase.auth.getSession();
-  if(session) {
-    sessionUser = session.user;
-    document.getElementById('authOverlay').classList.remove('active');
-    verificarGrupo();
-  } else {
-    document.getElementById('authOverlay').classList.add('active');
-    document.getElementById('groupOverlay').classList.remove('active');
+  try {
+    const { data: { session }, error } = await supabase.auth.getSession();
+    if(error) throw error;
+    if(session) {
+      sessionUser = session.user;
+      document.getElementById('authOverlay').classList.remove('active');
+      verificarGrupo();
+    } else {
+      document.getElementById('authOverlay').classList.add('active');
+      document.getElementById('groupOverlay').classList.remove('active');
+    }
+  } catch(err) {
+    console.error("Erro ao verificar sessão:", err);
   }
 }
 
 async function fazerLogin() {
-  const email = document.getElementById('authEmail').value; const senha = document.getElementById('authSenha').value;
-  if(!email || !senha) return;
-  document.getElementById('authError').innerText = "Entrando...";
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password: senha });
-  if(error) document.getElementById('authError').innerText = error.message; else verificarSessao();
+  console.log("Tentando login...");
+  const email = document.getElementById('authEmail').value.trim(); 
+  const senha = document.getElementById('authSenha').value;
+  const btn = document.getElementById('btnAuthEntrar');
+  const errBox = document.getElementById('authError');
+  
+  errBox.style.color = 'var(--danger)';
+  errBox.innerText = "";
+  
+  if(!email || !senha) return errBox.innerText = "Por favor, preencha e-mail e senha.";
+  
+  btn.innerText = "Entrando...";
+  btn.disabled = true;
+  
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password: senha });
+    if(error) throw error;
+    console.log("Login realizado");
+    verificarSessao();
+  } catch (error) {
+    console.log("Erro no login:", error);
+    btn.innerText = "Entrar";
+    btn.disabled = false;
+    
+    if (error.message.includes('Invalid login credentials')) {
+      errBox.innerText = "Usuário não encontrado ou senha incorreta.";
+    } else if (error.message.includes('Email not confirmed')) {
+      errBox.innerText = "E-mail não confirmado. Verifique sua caixa de entrada.";
+    } else if (error.message.includes('Failed to fetch')) {
+      errBox.innerText = "Erro de conexão. Verifique sua internet ou a URL/Key do Supabase.";
+    } else {
+      errBox.innerText = "Erro: " + error.message;
+    }
+  }
 }
 
 async function fazerCadastro() {
-  const email = document.getElementById('authEmail').value; const senha = document.getElementById('authSenha').value;
-  if(!email || !senha) return;
-  document.getElementById('authError').innerText = "Criando conta...";
-  const { data, error } = await supabase.auth.signUp({ email, password: senha });
-  if(error) document.getElementById('authError').innerText = error.message; else document.getElementById('authError').innerText = "Conta criada! Por favor, faça login.";
+  const email = document.getElementById('authEmail').value.trim(); 
+  const senha = document.getElementById('authSenha').value;
+  const btn = document.getElementById('btnAuthCriar');
+  const errBox = document.getElementById('authError');
+  
+  errBox.innerText = "";
+  if(!email || !senha) {
+    errBox.style.color = 'var(--danger)';
+    return errBox.innerText = "Por favor, preencha e-mail e senha.";
+  }
+  
+  btn.innerText = "Criando...";
+  btn.disabled = true;
+  
+  try {
+    const { data, error } = await supabase.auth.signUp({ email, password: senha });
+    if(error) throw error;
+    btn.innerText = "Criar Nova Conta";
+    btn.disabled = false;
+    errBox.style.color = 'var(--success)';
+    errBox.innerText = "Conta criada com sucesso! Verifique seu e-mail para confirmar o cadastro.";
+  } catch (error) {
+    btn.innerText = "Criar Nova Conta";
+    btn.disabled = false;
+    errBox.style.color = 'var(--danger)';
+    errBox.innerText = "Erro ao criar: " + error.message;
+  }
 }
 
 async function fazerLogout() {
