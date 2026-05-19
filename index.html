@@ -676,82 +676,156 @@ function configurarRealtime() {
 }
 
 /* ========================================================
-   BANCO DE DADOS: ESCRITA
+   BANCO DE DADOS: ESCRITA E LOCALSTORAGE
    ======================================================== */
+function generateId() { return Date.now().toString(36) + Math.random().toString(36).substr(2, 5); }
+
 async function salvarLancamento() {
   const desc = document.getElementById('fDesc').value.trim(); const val = Number(document.getElementById('fValor').value); const venc = document.getElementById('fVenc').value;
   if(!desc||!val||!venc||val<=0) return showToast("Preencha Descrição, Valor e Vencimento.", "error");
-  const obj = { grupo_id: currentGroupId, descricao: desc, valor: val, vencimento: venc, tipo: document.getElementById('fTipo').value, categoria: document.getElementById('fCat').value, status: document.getElementById('fStatus').value, forma_pagamento: document.getElementById('fPgto').value, responsavel: document.getElementById('fResp').value, observacao: document.getElementById('fObs').value, criado_por: sessionUser.id };
+  
+  const obj = { id: editLancId || generateId(), descricao: desc, valor: val, vencimento: venc, tipo: document.getElementById('fTipo').value, categoria: document.getElementById('fCat').value, status: document.getElementById('fStatus').value, formaPagamento: document.getElementById('fPgto').value, responsavel: document.getElementById('fResp').value, observacao: document.getElementById('fObs').value };
   
   document.getElementById('btnSalvarLanc').disabled = true;
-  if(editLancId) { await supabase.from('lancamentos').update(obj).eq('id', editLancId); cancelarEdicaoLancamento(); }
-  else { await supabase.from('lancamentos').insert([obj]); }
+  
+  if (USAR_SUPABASE && currentGroupId) {
+    const dbObj = { ...obj, grupo_id: currentGroupId, criado_por: sessionUser.id, forma_pagamento: obj.formaPagamento };
+    delete dbObj.id; delete dbObj.formaPagamento;
+    if(editLancId) { await supabase.from('lancamentos').update(dbObj).eq('id', editLancId); cancelarEdicaoLancamento(); }
+    else { await supabase.from('lancamentos').insert([dbObj]); }
+    carregarTudoSupabase();
+  } else {
+    if(editLancId) {
+      const idx = dados.findIndex(d => d.id === editLancId);
+      if(idx !== -1) Object.assign(dados[idx], obj);
+      cancelarEdicaoLancamento();
+    } else { dados.push(obj); }
+    salvarLocal('dados', dados); processarDadosGlobais();
+  }
   
   document.getElementById('btnSalvarLanc').disabled = false;
-  showToast("Lançamento salvo!"); limparFormLanc(); carregarTudoSupabase();
+  showToast("Lançamento salvo!"); limparFormLanc();
 }
 
-async function pagarLancamento(id) { await supabase.from('lancamentos').update({ status: 'pago' }).eq('id', id); showToast("Pago!"); carregarTudoSupabase(); }
-async function excluirLancamento(id) { if(confirm("Excluir?")) { await supabase.from('lancamentos').delete().eq('id', id); showToast("Excluído", "warning"); carregarTudoSupabase(); } }
+async function pagarLancamento(id) { 
+  if (USAR_SUPABASE && currentGroupId) { await supabase.from('lancamentos').update({ status: 'pago' }).eq('id', id); carregarTudoSupabase(); }
+  else { const i = dados.find(d=>d.id===id); if(i) { i.status = 'pago'; salvarLocal('dados', dados); processarDadosGlobais(); } }
+  showToast("Pago!"); 
+}
+async function excluirLancamento(id) { 
+  if(!confirm("Excluir?")) return;
+  if (USAR_SUPABASE && currentGroupId) { await supabase.from('lancamentos').delete().eq('id', id); carregarTudoSupabase(); }
+  else { dados = dados.filter(d=>d.id!==id); salvarLocal('dados', dados); processarDadosGlobais(); }
+  showToast("Excluído", "warning"); 
+}
 
 async function adicionarCategoria() {
   const nc = document.getElementById('fNovaCat').value.trim(); if(!nc) return;
   if(categorias.includes(nc)) return showToast("Categoria já existe.", "warning");
-  await supabase.from('categorias').insert([{ grupo_id: currentGroupId, nome: nc }]);
-  document.getElementById('fNovaCat').value = ''; showToast("Adicionada!"); carregarTudoSupabase();
+  if(USAR_SUPABASE && currentGroupId) { await supabase.from('categorias').insert([{ grupo_id: currentGroupId, nome: nc }]); carregarTudoSupabase(); }
+  else { categorias.push(nc); salvarLocal('categorias', categorias); processarDadosGlobais(); }
+  document.getElementById('fNovaCat').value = ''; showToast("Adicionada!"); 
 }
 async function removerCategoria(cat) {
-  if(confirm(`Excluir a categoria "${cat}"?`)) { await supabase.from('categorias').delete().eq('grupo_id', currentGroupId).eq('nome', cat); showToast("Excluída."); carregarTudoSupabase(); }
+  if(!confirm(`Excluir a categoria "${cat}"?`)) return;
+  if(USAR_SUPABASE && currentGroupId) { await supabase.from('categorias').delete().eq('grupo_id', currentGroupId).eq('nome', cat); carregarTudoSupabase(); }
+  else { categorias = categorias.filter(c=>c!==cat); salvarLocal('categorias', categorias); processarDadosGlobais(); }
+  showToast("Excluída."); 
 }
 
 async function salvarMeta() {
   const mes = getMesGlobal(); if(!mes) return; const v = Number(document.getElementById('fMetaValor').value);
-  await supabase.from('metas').delete().eq('grupo_id', currentGroupId).eq('mes_referencia', mes);
-  if(v>0) await supabase.from('metas').insert([{ grupo_id: currentGroupId, mes_referencia: mes, valor_meta: v }]);
-  showToast("Meta salva!"); carregarTudoSupabase();
+  if(USAR_SUPABASE && currentGroupId) {
+    await supabase.from('metas').delete().eq('grupo_id', currentGroupId).eq('mes_referencia', mes);
+    if(v>0) await supabase.from('metas').insert([{ grupo_id: currentGroupId, mes_referencia: mes, valor_meta: v }]);
+    carregarTudoSupabase();
+  } else {
+    if(v>0) metas[mes] = v; else delete metas[mes];
+    salvarLocal('metas', metas); processarDadosGlobais();
+  }
+  showToast("Meta salva!"); 
 }
 
 async function salvarOrcamento() {
   const mes = getMesGlobal(); const c = document.getElementById('fOrcCat').value; const v = Number(document.getElementById('fOrcValor').value);
   if(!mes || !c || !v) return;
-  await supabase.from('orcamentos_categoria').delete().eq('grupo_id', currentGroupId).eq('mes_referencia', mes).eq('categoria', c);
-  await supabase.from('orcamentos_categoria').insert([{ grupo_id: currentGroupId, mes_referencia: mes, categoria: c, limite_valor: v }]);
-  showToast("Limite definido!"); carregarTudoSupabase();
+  if(USAR_SUPABASE && currentGroupId) {
+    await supabase.from('orcamentos_categoria').delete().eq('grupo_id', currentGroupId).eq('mes_referencia', mes).eq('categoria', c);
+    await supabase.from('orcamentos_categoria').insert([{ grupo_id: currentGroupId, mes_referencia: mes, categoria: c, limite_valor: v }]);
+    carregarTudoSupabase();
+  } else {
+    if(!orcamentos[mes]) orcamentos[mes] = {}; orcamentos[mes][c] = v;
+    salvarLocal('orcamentos', orcamentos); processarDadosGlobais();
+  }
+  showToast("Limite definido!"); 
 }
-async function removerOrcamento(cat) { const mes = getMesGlobal(); await supabase.from('orcamentos_categoria').delete().eq('grupo_id', currentGroupId).eq('mes_referencia', mes).eq('categoria', cat); showToast("Removido."); carregarTudoSupabase(); }
+async function removerOrcamento(cat) { 
+  const mes = getMesGlobal(); 
+  if(USAR_SUPABASE && currentGroupId) { await supabase.from('orcamentos_categoria').delete().eq('grupo_id', currentGroupId).eq('mes_referencia', mes).eq('categoria', cat); carregarTudoSupabase(); }
+  else { if(orcamentos[mes]) { delete orcamentos[mes][cat]; salvarLocal('orcamentos', orcamentos); processarDadosGlobais(); } }
+  showToast("Removido."); 
+}
 
 async function salvarFuturo() {
-  const obj = { grupo_id: currentGroupId, descricao: document.getElementById('fFutDesc').value, tipo: document.getElementById('fFutTipo').value, categoria: document.getElementById('fFutCat').value, valor_previsto: Number(document.getElementById('fFutValor').value), data_prevista: document.getElementById('fFutData').value };
-  if(!obj.descricao || !obj.valor_previsto || !obj.data_prevista) return;
-  await supabase.from('planejamentos').insert([obj]); showToast("Plano salvo!"); carregarTudoSupabase();
+  const obj = { id: generateId(), descricao: document.getElementById('fFutDesc').value, tipo: document.getElementById('fFutTipo').value, categoria: document.getElementById('fFutCat').value, valor: Number(document.getElementById('fFutValor').value), data: document.getElementById('fFutData').value };
+  if(!obj.descricao || !obj.valor || !obj.data) return;
+  if(USAR_SUPABASE && currentGroupId) {
+    await supabase.from('planejamentos').insert([{ grupo_id: currentGroupId, descricao: obj.descricao, tipo: obj.tipo, categoria: obj.categoria, valor_previsto: obj.valor, data_prevista: obj.data }]); carregarTudoSupabase();
+  } else { futuros.push(obj); salvarLocal('futuros', futuros); processarDadosGlobais(); }
+  showToast("Plano salvo!"); 
 }
-async function excluirFuturo(id) { await supabase.from('planejamentos').delete().eq('id', id); carregarTudoSupabase(); }
+async function excluirFuturo(id) { 
+  if(USAR_SUPABASE && currentGroupId) { await supabase.from('planejamentos').delete().eq('id', id); carregarTudoSupabase(); }
+  else { futuros = futuros.filter(f=>f.id!==id); salvarLocal('futuros', futuros); processarDadosGlobais(); }
+}
 async function efetivarFuturo(id) {
-  const f = futuros.find(i=>i.id===id); if(!f) return;
-  await supabase.from('lancamentos').insert([{ grupo_id: currentGroupId, descricao: f.descricao, tipo: f.tipo, categoria: f.categoria, valor: f.valor, vencimento: f.data, status: 'pendente', criado_por: sessionUser.id }]);
-  await supabase.from('planejamentos').delete().eq('id', id); showToast("Efetivado!"); carregarTudoSupabase();
+  const f = futuros.find(i=>i.id===id) || (USAR_SUPABASE ? await supabase.from('planejamentos').select('*').eq('id',id).single().then(r=>r.data) : null);
+  if(!f) return;
+  const desc = f.descricao; const tipo = f.tipo; const cat = f.categoria; const val = f.valor || f.valor_previsto; const dta = f.data || f.data_prevista;
+  if(USAR_SUPABASE && currentGroupId) {
+    await supabase.from('lancamentos').insert([{ grupo_id: currentGroupId, descricao: desc, tipo: tipo, categoria: cat, valor: val, vencimento: dta, status: 'pendente', criado_por: sessionUser.id }]);
+    await supabase.from('planejamentos').delete().eq('id', id); carregarTudoSupabase();
+  } else {
+    dados.push({ id: generateId(), descricao: desc, tipo: tipo, categoria: cat, valor: val, vencimento: dta, status: 'pendente' });
+    futuros = futuros.filter(i=>i.id!==id); salvarLocal('dados', dados); salvarLocal('futuros', futuros); processarDadosGlobais();
+  }
+  showToast("Efetivado!"); 
 }
 
 async function salvarRecorrente() {
-  const obj = { grupo_id: currentGroupId, descricao: document.getElementById('fRecDesc').value, categoria: document.getElementById('fRecCat').value, valor: Number(document.getElementById('fRecValor').value), dia_vencimento: Number(document.getElementById('fRecDia').value) };
-  if(!obj.descricao || !obj.valor || !obj.dia_vencimento) return;
-  await supabase.from('recorrencias').insert([obj]); showToast("Recorrente salva!"); carregarTudoSupabase();
+  const obj = { id: generateId(), descricao: document.getElementById('fRecDesc').value, categoria: document.getElementById('fRecCat').value, valor: Number(document.getElementById('fRecValor').value), dia: Number(document.getElementById('fRecDia').value) };
+  if(!obj.descricao || !obj.valor || !obj.dia) return;
+  if(USAR_SUPABASE && currentGroupId) {
+    await supabase.from('recorrencias').insert([{ grupo_id: currentGroupId, descricao: obj.descricao, categoria: obj.categoria, valor: obj.valor, dia_vencimento: obj.dia }]); carregarTudoSupabase();
+  } else { recorrentes.push(obj); salvarLocal('recorrentes', recorrentes); processarDadosGlobais(); }
+  showToast("Recorrente salva!"); 
 }
-async function excluirRecorrente(id) { await supabase.from('recorrencias').delete().eq('id', id); carregarTudoSupabase(); }
+async function excluirRecorrente(id) { 
+  if(USAR_SUPABASE && currentGroupId) { await supabase.from('recorrencias').delete().eq('id', id); carregarTudoSupabase(); }
+  else { recorrentes = recorrentes.filter(r=>r.id!==id); salvarLocal('recorrentes', recorrentes); processarDadosGlobais(); }
+}
 
 async function gerarParcelamento() {
   const desc = document.getElementById('fParDesc').value; const valorTotal = Number(document.getElementById('fParValor').value); const qtd = Number(document.getElementById('fParQtd').value); const dataInicio = document.getElementById('fParData').value; const cat = document.getElementById('fParCat').value;
   if(!desc || !valorTotal || !qtd || !dataInicio) return;
   const valorParcela = valorTotal / qtd; let d = new Date(dataInicio);
-  const pacotes = [];
+  const pacotes = []; const dLocais = [];
   for(let i=1; i<=qtd; i++) {
     const dStr = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-    pacotes.push({ grupo_id: currentGroupId, descricao: `${desc} (${i}/${qtd})`, tipo: 'despesa', categoria: cat, valor: valorParcela, vencimento: dStr, status: 'pendente', criado_por: sessionUser.id });
+    pacotes.push({ grupo_id: currentGroupId, descricao: `${desc} (${i}/${qtd})`, tipo: 'despesa', categoria: cat, valor: valorParcela, vencimento: dStr, status: 'pendente', criado_por: sessionUser?.id });
+    dLocais.push({ id: generateId(), descricao: `${desc} (${i}/${qtd})`, tipo: 'despesa', categoria: cat, valor: valorParcela, vencimento: dStr, status: 'pendente' });
     d.setMonth(d.getMonth()+1);
   }
-  await supabase.from('lancamentos').insert(pacotes);
-  await supabase.from('parcelamentos').insert([{ grupo_id: currentGroupId, descricao: desc, valor_total: valorTotal, quantidade_parcelas: qtd, categoria: cat }]);
-  showToast("Parcelas geradas!"); carregarTudoSupabase();
+  if(USAR_SUPABASE && currentGroupId) {
+    await supabase.from('lancamentos').insert(pacotes);
+    await supabase.from('parcelamentos').insert([{ grupo_id: currentGroupId, descricao: desc, valor_total: valorTotal, quantidade_parcelas: qtd, categoria: cat }]);
+    carregarTudoSupabase();
+  } else {
+    dLocais.forEach(l => dados.push(l));
+    parcelamentos.push({ id: generateId(), descricao: desc, valorTotal: valorTotal, parcelas: qtd, dataCriacao: new Date().toISOString() });
+    salvarLocal('dados', dados); salvarLocal('parcelamentos', parcelamentos); processarDadosGlobais();
+  }
+  showToast("Parcelas geradas!"); 
 }
 
 /* ========================================================
