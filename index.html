@@ -454,6 +454,10 @@
 </div>
 
 <script>
+/* CONFIGURAÇÃO */
+const USAR_LOGIN = false; 
+const USAR_SUPABASE = false; 
+
 /* ========================================================
    CONFIGURAÇÃO SUPABASE
    ======================================================== */
@@ -461,15 +465,23 @@
 const SUPABASE_URL = 'SUA_URL_SUPABASE_AQUI';
 const SUPABASE_ANON_KEY = 'SUA_CHAVE_ANON_AQUI';
 
-const supabase = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+const supabase = (USAR_SUPABASE && window.supabase) ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 /* ESTADOS E VARIÁVEIS GLOBAIS */
 let sessionUser = null;
 let currentGroupId = null;
 let realtimeChannel = null;
 
-let dados = []; let metas = {}; let orcamentos = {}; let futuros = []; let recorrentes = []; let parcelamentos = []; let categorias = [];
-let config = JSON.parse(localStorage.getItem('financasCasa_config')) || { modo: 'auto', inicio: 'dashboard' };
+function carregarLocal(key, def) { const d = localStorage.getItem('financasCasa_' + key); return d ? JSON.parse(d) : def; }
+
+let dados = carregarLocal('dados', []); 
+let metas = carregarLocal('metas', {}); 
+let orcamentos = carregarLocal('orcamentos', {}); 
+let futuros = carregarLocal('futuros', []); 
+let recorrentes = carregarLocal('recorrentes', []); 
+let parcelamentos = carregarLocal('parcelamentos', []); 
+let categorias = carregarLocal('categorias', []);
+let config = carregarLocal('config', { modo: 'auto', inicio: 'dashboard' });
 let editLancId = null;
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -478,12 +490,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const hoje = new Date();
   document.getElementById('filtroGlobalMes').value = `${hoje.getFullYear()}-${String(hoje.getMonth()+1).padStart(2,'0')}`;
   
-  if(!supabase || SUPABASE_URL === 'SUA_URL_SUPABASE_AQUI') {
-    document.getElementById('authError').innerText = "Supabase não configurado. Verifique SUPABASE_URL e SUPABASE_ANON_KEY no código.";
-    const btnEntrar = document.getElementById('btnAuthEntrar'); if(btnEntrar) btnEntrar.disabled = true;
-    const btnCriar = document.getElementById('btnAuthCriar'); if(btnCriar) btnCriar.disabled = true;
+  if (USAR_LOGIN) {
+    if(!supabase || SUPABASE_URL === 'SUA_URL_SUPABASE_AQUI') {
+      document.getElementById('authError').innerText = "Supabase não configurado. Verifique SUPABASE_URL e SUPABASE_ANON_KEY no código.";
+      const btnEntrar = document.getElementById('btnAuthEntrar'); if(btnEntrar) btnEntrar.disabled = true;
+      const btnCriar = document.getElementById('btnAuthCriar'); if(btnCriar) btnCriar.disabled = true;
+    } else {
+      verificarSessao();
+    }
   } else {
-    verificarSessao();
+    // Entrar direto (Offline / Local)
+    document.getElementById('authOverlay').classList.remove('active');
+    document.getElementById('groupOverlay').classList.remove('active');
+    document.getElementById('lblGrupoId').innerText = "Modo: Offline (Local)";
+    navegar(config.inicio);
+    processarDadosGlobais();
   }
 });
 
@@ -575,7 +596,7 @@ async function fazerCadastro() {
 }
 
 async function fazerLogout() {
-  await supabase.auth.signOut();
+  if (USAR_SUPABASE && supabase) await supabase.auth.signOut();
   location.reload();
 }
 
