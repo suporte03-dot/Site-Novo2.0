@@ -62,13 +62,13 @@
   
   /* Grids */
   .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-  .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .grid-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
   
   /* Cards Resumo Aprimorados */
-  .summary-card { padding: 20px; border-radius: 12px; background: white; border: 1px solid var(--border); border-left: 5px solid var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.03); display: flex; flex-direction: column; gap: 8px; }
+  .summary-card { padding: 18px; border-radius: 12px; background: white; border: 1px solid var(--border); border-left: 5px solid var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.03); display: flex; flex-direction: column; gap: 8px; }
   .summary-card .sc-header { display: flex; justify-content: space-between; align-items: center; font-size: 13px; text-transform: uppercase; font-weight: 700; color: var(--text-light); }
-  .summary-card strong { font-size: 28px; color: var(--text); }
+  .summary-card strong { font-size: 26px; color: var(--text); }
   .summary-card .sc-legend { font-size: 12px; color: #94a3b8; }
   .sc-success { border-left-color: var(--success); }
   .sc-danger { border-left-color: var(--danger); }
@@ -130,11 +130,6 @@
   .chat-ai { background: white; border: 1px solid var(--border); align-self: flex-start; border-bottom-left-radius: 2px; }
   .chat-user { background: var(--primary); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
 
-  /* Empty States */
-  .empty-state { text-align: center; padding: 40px 20px; background: #f8fafc; border-radius: 12px; border: 2px dashed #cbd5e1; }
-  .empty-state h3 { font-size: 18px; color: var(--dark); margin-bottom: 10px; }
-  .empty-state p { color: var(--text-light); font-size: 14px; margin-bottom: 20px; line-height: 1.5; }
-
   /* Utilitários */
   .hidden { display: none !important; }
   .flex { display: flex; } .gap-2 { gap: 10px; } .items-center { align-items: center; } .justify-between { justify-content: space-between; }
@@ -149,7 +144,9 @@
   body.modo-celular .btn-menu { display: block; }
   
   body.modo-celular .grid-2, body.modo-celular .grid-3 { grid-template-columns: 1fr; }
-  body.modo-celular .grid-4 { grid-template-columns: 1fr 1fr; }
+  body.modo-celular .grid-summary { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 480px) { body.modo-celular .grid-summary { grid-template-columns: 1fr; } }
+  
   body.modo-celular .form-row { flex-direction: column; gap: 0; }
   body.modo-celular .form-row > div { margin-bottom: 16px; }
   
@@ -252,53 +249,48 @@
         <div class="panel" style="padding: 15px 25px; margin-bottom: 25px; display:flex; flex-wrap:wrap; gap:12px; align-items:center;">
           <span style="font-weight:700; color:var(--dark);">⚡ Ações Rápidas:</span>
           <button class="btn btn-primary btn-sm" onclick="navegar('lancamentos')">➕ Novo Lançamento</button>
+          <button class="btn btn-outline btn-sm" onclick="navegar('lancamentos')">📝 Ver Lançamentos</button>
           <button class="btn btn-outline btn-sm" onclick="navegar('assistente')">🤖 Abrir Assistente IA</button>
           <button class="btn btn-outline btn-sm" onclick="navegar('relatorios')">📈 Gerar Relatório</button>
           <button class="btn btn-outline btn-sm" onclick="navegar('backup')">💾 Backup / Importação</button>
         </div>
         
-        <!-- Empty State Container (Se não houver lançamentos) -->
-        <div id="dashEmptyState" class="hidden">
-          <div class="empty-state">
-            <h3 style="font-size:22px;">📊 Bem-vindo ao Dashboard</h3>
-            <p style="font-size:15px;">Nenhum lançamento encontrado para este período.<br>Cadastre um lançamento, importe um backup ou adicione dados de exemplo para começar as análises inteligentes.</p>
-            <div class="flex justify-center gap-2" style="justify-content:center;">
-              <button class="btn btn-primary" onclick="navegar('lancamentos')">➕ Novo Lançamento</button>
-              <button class="btn btn-outline" onclick="navegar('backup')">⬆️ Importar Backup</button>
-              <button class="btn btn-success" onclick="adicionarDadosExemplo()">🧪 Adicionar Dados de Exemplo</button>
+        <!-- Banner Vazio (Aparece se não houver dados no mês) -->
+        <div id="dashEmptyBanner" class="panel hidden" style="border: 2px dashed var(--primary); background: #f0f9ff; padding: 20px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px;">
+            <div>
+              <h4 style="margin-bottom:8px; color:var(--dark); font-size:16px;">Bem-vindo ao mês selecionado!</h4>
+              <p style="font-size:14px; color:var(--text-light); line-height:1.5;">Ainda não existem lançamentos neste período, por isso os cards e gráficos abaixo estão zerados.<br>Você pode começar adicionando contas manualmente ou populando o mês automaticamente com dados de teste.</p>
             </div>
+            <button class="btn btn-success" onclick="adicionarDadosExemplo()">🧪 Adicionar Dados de Exemplo</button>
           </div>
         </div>
 
-        <!-- Dashboard Content (Ocultado se vazio) -->
-        <div id="dashContentArea">
-          <div class="grid-4 mb-3">
-            <div class="summary-card sc-success"><div class="sc-header"><span>Receitas</span> 💰</div><strong class="c-green" id="dashReceitas">R$ 0,00</strong><div class="sc-legend">Total arrecadado no mês</div></div>
-            <div class="summary-card sc-danger"><div class="sc-header"><span>Despesas</span> 💸</div><strong class="c-red" id="dashDespesas">R$ 0,00</strong><div class="sc-legend">Total gasto no mês</div></div>
-            <div class="summary-card sc-info"><div class="sc-header"><span>Saldo Líquido</span> ⚖️</div><strong id="dashSaldo">R$ 0,00</strong><div class="sc-legend">Receitas - Despesas</div></div>
-            <div class="summary-card sc-warning"><div class="sc-header"><span>Pendentes / Atrasadas</span> ⚠️</div><strong id="dashPendentes">0</strong><div class="sc-legend">Aguardando pagamento</div></div>
-          </div>
+        <!-- Dashboard Content Sempre Visível -->
+        <div class="grid-summary mb-3">
+          <div class="summary-card sc-success"><div class="sc-header"><span>Receitas</span> 💰</div><strong class="c-green" id="dashReceitas">R$ 0,00</strong></div>
+          <div class="summary-card sc-danger"><div class="sc-header"><span>Despesas</span> 💸</div><strong class="c-red" id="dashDespesas">R$ 0,00</strong></div>
+          <div class="summary-card sc-info"><div class="sc-header"><span>Saldo Líquido</span> ⚖️</div><strong id="dashSaldo">R$ 0,00</strong></div>
+          <div class="summary-card sc-warning"><div class="sc-header"><span>Pendentes/Atrasadas</span> ⚠️</div><strong id="dashPendentes">0</strong></div>
+          <div class="summary-card sc-success"><div class="sc-header"><span>Contas Pagas</span> ✅</div><strong id="dashPagas">0</strong></div>
+          <div class="summary-card sc-info"><div class="sc-header"><span>Saúde Financeira</span> ❤️</div><strong id="dashSaudeCard" style="font-size:22px;">-</strong></div>
+        </div>
 
-          <div class="grid-3 mb-3">
-            <div class="panel">
-              <div class="panel-title">❤️ Saúde Financeira do Mês</div>
-              <div id="dashSaudeHtml" style="font-size:14px; line-height:1.5;"></div>
-            </div>
-            <div class="panel">
-              <div class="panel-title">🧠 Resumo Inteligente IA</div>
-              <div id="dashResumoIAHtml" style="font-size:14px; line-height:1.5; color:var(--text-light);"></div>
-              <button class="btn btn-outline btn-sm mt-3" style="width:100%" onclick="navegar('assistente')">Abrir Assistente Completo</button>
-            </div>
-            <div class="panel" style="padding:0; overflow:hidden;">
-              <div class="panel-title" style="padding: 20px 20px 10px 20px; margin:0;">⏰ Vencimentos (7 dias)</div>
-              <div id="dashProxVencHtml" style="padding: 0 20px 20px 20px;"></div>
-            </div>
+        <div class="grid-2 mb-3">
+          <div class="panel">
+            <div class="panel-title">🧠 Resumo Inteligente IA</div>
+            <div id="dashResumoIAHtml" style="font-size:14px; line-height:1.6; color:var(--text-light);"></div>
           </div>
+          
+          <div class="panel" style="padding:0; overflow:hidden;">
+            <div class="panel-title" style="padding: 20px 20px 10px 20px; margin:0;">⏰ Próximos Vencimentos (7 dias)</div>
+            <div id="dashProxVencHtml" style="padding: 0 20px 20px 20px;"></div>
+          </div>
+        </div>
 
-          <div class="grid-2">
-            <div class="panel"><div class="panel-title">📊 Gastos por Categoria</div><div id="dashCategoriasHtml"></div></div>
-            <div class="panel"><div class="panel-title">🏆 Ranking: Maiores Despesas</div><div id="dashRankingHtml"></div></div>
-          </div>
+        <div class="grid-2">
+          <div class="panel"><div class="panel-title">📊 Gastos por Categoria</div><div id="dashCategoriasHtml"></div></div>
+          <div class="panel"><div class="panel-title">🏆 Ranking: Maiores Despesas</div><div id="dashRankingHtml"></div></div>
         </div>
       </section>
 
@@ -539,7 +531,7 @@ function processarDadosGlobais() {
   popularSelectCategorias(); 
   popularDatalistDescricao(); 
   
-  analisarIA(); // Atualiza IA primeiro para pegar quantidade de alertas para o Badge
+  analisarIA(); // Atualiza IA primeiro
   
   renderDashboard();
   renderLancamentos();
@@ -581,7 +573,6 @@ function adicionarDadosExemplo() {
   if(!mes) return showToast("Selecione um mês no filtro.", "error");
   const fDados = getLancamentosFiltrados(mes);
   if(fDados.length > 0) { if(!confirm("Já existem lançamentos. Adicionar os exemplos mesmo assim?")) return; } 
-  else { if(!confirm("Adicionar dados fictícios para teste neste mês?")) return; }
   
   const exemplos = [
     {id:generateId(), descricao:'Salário', tipo:'receita', categoria:'Salário', valor:4500, vencimento:`${mes}-05`, status:'pago'},
@@ -595,18 +586,16 @@ function adicionarDadosExemplo() {
   showToast("Dados de exemplo adicionados com sucesso!"); processarDadosGlobais();
 }
 
-/* DASHBOARD OTIMIZADO */
+/* DASHBOARD OTIMIZADO - Sempre Visível */
 function renderDashboard() {
   const fDados = getLancamentosFiltrados();
   
+  // Controle do Banner "Empty State"
   if(fDados.length === 0) {
-    document.getElementById('dashEmptyState').classList.remove('hidden');
-    document.getElementById('dashContentArea').classList.add('hidden');
-    return;
+    document.getElementById('dashEmptyBanner').classList.remove('hidden');
+  } else {
+    document.getElementById('dashEmptyBanner').classList.add('hidden');
   }
-  
-  document.getElementById('dashEmptyState').classList.add('hidden');
-  document.getElementById('dashContentArea').classList.remove('hidden');
 
   let rec=0, des=0, pend=0, pg=0, atrasadas=0; let catDesc = {};
   fDados.forEach(i => {
@@ -616,26 +605,35 @@ function renderDashboard() {
   });
   const saldo = rec-des;
   
-  document.getElementById('dashReceitas').innerText = formatMoeda(rec); document.getElementById('dashDespesas').innerText = formatMoeda(des);
-  document.getElementById('dashSaldo').innerText = formatMoeda(saldo); document.getElementById('dashSaldo').className = saldo>=0?'c-green':'c-red';
+  // Cards Principais
+  document.getElementById('dashReceitas').innerText = formatMoeda(rec);
+  document.getElementById('dashDespesas').innerText = formatMoeda(des);
+  document.getElementById('dashSaldo').innerText = formatMoeda(saldo); 
+  document.getElementById('dashSaldo').className = saldo>=0 ? 'c-green' : 'c-red';
   document.getElementById('dashPendentes').innerText = pend+atrasadas;
+  document.getElementById('dashPagas').innerText = pg;
   
   // Saúde Financeira
-  let saudeHtml = '';
-  if(saldo >= 0 && atrasadas === 0 && pend === 0) saudeHtml = `<span style="font-size:20px; color:var(--success); font-weight:bold;">Excelente</span><p class="mt-3">Seu saldo está positivo e não há pendências.</p>`;
-  else if(saldo >= 0 && atrasadas === 0 && pend > 0) saudeHtml = `<span style="font-size:20px; color:var(--success); font-weight:bold;">Boa</span><p class="mt-3">Seu saldo está positivo neste período, mas existem contas pendentes que precisam de acompanhamento.</p>`;
-  else if(atrasadas > 0) saudeHtml = `<span style="font-size:20px; color:var(--danger); font-weight:bold;">Atenção Crítica</span><p class="mt-3">Existem contas atrasadas. Priorize esses pagamentos.</p>`;
-  else if(saldo < 0) saudeHtml = `<span style="font-size:20px; color:var(--danger); font-weight:bold;">Crítico</span><p class="mt-3">As despesas superaram as receitas no período.</p>`;
-  else saudeHtml = `<span style="font-size:20px; color:var(--warning); font-weight:bold;">Atenção</span><p class="mt-3">Acompanhe seus gastos de perto.</p>`;
-  document.getElementById('dashSaudeHtml').innerHTML = saudeHtml;
+  const dashSaude = document.getElementById('dashSaudeCard');
+  if(fDados.length === 0) { dashSaude.innerText = "-"; dashSaude.className = ""; dashSaude.style.color = "var(--text)"; }
+  else if(saldo >= 0 && atrasadas === 0 && pend === 0) { dashSaude.innerText = "Excelente"; dashSaude.style.color = "var(--success)"; }
+  else if(saldo >= 0 && atrasadas === 0 && pend > 0) { dashSaude.innerText = "Boa"; dashSaude.style.color = "var(--success)"; }
+  else if(atrasadas > 0) { dashSaude.innerText = "Atenção Crítica"; dashSaude.style.color = "var(--danger)"; }
+  else if(saldo < 0) { dashSaude.innerText = "Crítico"; dashSaude.style.color = "var(--danger)"; }
+  else { dashSaude.innerText = "Atenção"; dashSaude.style.color = "var(--warning)"; }
   
   // Resumo Inteligente IA
-  const maiorCat = Object.entries(catDesc).sort((a,b)=>b[1]-a[1])[0];
-  let iaSum = `<strong>Receitas:</strong> ${formatMoeda(rec)} <br> <strong>Despesas:</strong> ${formatMoeda(des)} <br>`;
-  if(maiorCat) iaSum += `<strong>Maior Gasto:</strong> ${maiorCat[0]} (${formatMoeda(maiorCat[1])})<br>`;
-  if(atrasadas > 0) iaSum += `<strong>Atrasadas:</strong> <span class="c-red">${atrasadas} contas</span><br>`;
-  iaSum += `<br><em>Recomendação:</em> ${iaContext.saldo < 0 ? 'Corte despesas e negocie prazos.' : (atrasadas > 0 ? 'Regularize contas em atraso.' : 'Mantenha o controle e defina metas mensais.')}`;
-  document.getElementById('dashResumoIAHtml').innerHTML = iaSum;
+  const resumoIA = document.getElementById('dashResumoIAHtml');
+  if(fDados.length === 0) {
+    resumoIA.innerHTML = `<div style="text-align:center; padding:15px; color:var(--text-light);"><p>Ainda não há lançamentos neste período.<br>Cadastre uma receita ou despesa para iniciar a análise financeira.</p><button class="btn btn-outline btn-sm mt-3" onclick="navegar('lancamentos')">Adicionar Lançamento</button></div>`;
+  } else {
+    const maiorCat = Object.entries(catDesc).sort((a,b)=>b[1]-a[1])[0];
+    let iaSum = `<strong>Receitas:</strong> ${formatMoeda(rec)} <br> <strong>Despesas:</strong> ${formatMoeda(des)} <br>`;
+    if(maiorCat) iaSum += `<strong>Maior Gasto:</strong> ${maiorCat[0]} (${formatMoeda(maiorCat[1])})<br>`;
+    if(atrasadas > 0) iaSum += `<strong>Atrasadas:</strong> <span class="c-red">${atrasadas} contas críticas</span><br>`;
+    iaSum += `<br><em>Recomendação Principal:</em> ${iaContext.saldo < 0 ? 'Corte despesas e negocie prazos urgentes.' : (atrasadas > 0 ? 'Regularize contas em atraso para evitar juros.' : 'Mantenha o controle e defina metas de economia mensais.')}`;
+    resumoIA.innerHTML = iaSum + `<br><button class="btn btn-outline btn-sm mt-3" style="width:100%" onclick="navegar('assistente')">Abrir Assistente Completo</button>`;
+  }
   
   // Próximos Vencimentos (7 dias)
   const hoje = new Date(); hoje.setHours(0,0,0,0);
@@ -665,7 +663,7 @@ function renderDashboard() {
       </div>
     `;
   });
-  document.getElementById('dashProxVencHtml').innerHTML = vHtml || '<div style="padding:20px; text-align:center; color:var(--text-light); font-size:13px;">Nenhuma conta próxima do vencimento.</div>';
+  document.getElementById('dashProxVencHtml').innerHTML = vHtml || '<div style="padding:30px 20px; text-align:center; color:var(--text-light); font-size:14px;">Tudo em dia! Nenhuma conta pendente para os próximos 7 dias.</div>';
   
   // Gastos Categoria
   let catH = ''; const totalD = des||1;
@@ -673,7 +671,7 @@ function renderDashboard() {
     const val = catDesc[c]; const pct = (val/totalD)*100;
     catH += `<div class="bar-container"><div class="bar-header"><span>${c} (${pct.toFixed(1)}%)</span><span>${formatMoeda(val)}</span></div><div class="bar-track"><div class="bar-fill bg-danger" style="width:${pct}%"></div></div></div>`;
   });
-  document.getElementById('dashCategoriasHtml').innerHTML = catH||'<div class="empty-state" style="padding:20px;"><p style="margin:0;">Nenhuma despesa para exibir no gráfico.</p></div>';
+  document.getElementById('dashCategoriasHtml').innerHTML = catH||'<div style="text-align:center; padding:30px 20px; color:var(--text-light); font-size:14px;">Nenhuma despesa para exibir no gráfico neste mês.</div>';
   
   // Ranking
   let rH = '';
@@ -690,7 +688,7 @@ function renderDashboard() {
         </div>
       </div>`;
   });
-  document.getElementById('dashRankingHtml').innerHTML = rH||'<div class="empty-state" style="padding:20px;"><p style="margin:0;">Nenhuma despesa para exibir no ranking.</p></div>';
+  document.getElementById('dashRankingHtml').innerHTML = rH||'<div style="text-align:center; padding:30px 20px; color:var(--text-light); font-size:14px;">Nenhuma despesa para exibir no ranking.</div>';
 }
 
 /* LANÇAMENTOS E DEMAIS (Mantidos da versão anterior) */
