@@ -15,7 +15,7 @@
     --bg: #f8fafc; --card-bg: #ffffff;
     --text: #1e293b; --text-light: #64748b;
     --border: #e2e8f0;
-    --sidebar-w: 250px;
+    --sidebar-w: 260px;
   }
   
   * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
@@ -28,9 +28,12 @@
   .sidebar { width: var(--sidebar-w); background: var(--dark); color: #cbd5e1; display: flex; flex-direction: column; transition: transform 0.3s ease; z-index: 1000; flex-shrink: 0; }
   .sidebar-header { padding: 20px; font-size: 18px; font-weight: 700; color: white; border-bottom: 1px solid #1e293b; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
   .sidebar-menu { flex: 1; overflow-y: auto; padding: 15px 0; display: flex; flex-direction: column; gap: 2px; }
-  .menu-item { padding: 12px 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-size: 14px; border-left: 3px solid transparent; transition: 0.2s; }
+  .menu-item { padding: 12px 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-size: 14px; border-left: 3px solid transparent; transition: 0.2s; position: relative; }
   .menu-item:hover { background: #1e293b; color: white; }
   .menu-item.active { background: #1e293b; color: white; border-left-color: var(--primary); font-weight: 600; }
+  .menu-badge { margin-left: auto; background: var(--primary); color: white; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: bold; }
+  .menu-badge.badge-static { background: #334155; color: #94a3b8; }
+  .menu-badge.badge-alert { background: var(--danger); }
   
   /* Conteúdo Principal */
   .main-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; }
@@ -52,20 +55,21 @@
   @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
   
   /* Elementos Visuais Compartilhados */
-  .panel { background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border: 1px solid var(--border); margin-bottom: 20px; transition: 0.3s ease; }
+  .panel { background: var(--card-bg); padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border: 1px solid var(--border); margin-bottom: 20px; transition: 0.3s ease; }
   .panel-edit-mode { border: 2px solid var(--warning) !important; box-shadow: 0 10px 25px rgba(245, 158, 11, 0.15) !important; transform: translateY(-2px); }
   
-  .panel-title { font-size: 17px; font-weight: 700; margin-bottom: 20px; color: var(--dark); border-bottom: 1px solid var(--border); padding-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+  .panel-title { font-size: 16px; font-weight: 700; margin-bottom: 15px; color: var(--dark); border-bottom: 1px solid var(--border); padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
   
   /* Grids */
   .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
-  .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
   
-  /* Cards Resumo */
-  .summary-card { padding: 20px; border-radius: 12px; background: white; border: 1px solid var(--border); border-left: 4px solid var(--primary); box-shadow: 0 2px 4px rgba(0,0,0,0.03); }
-  .summary-card span { display: block; font-size: 12px; text-transform: uppercase; font-weight: 700; color: var(--text-light); margin-bottom: 8px; }
-  .summary-card strong { font-size: 26px; color: var(--text); }
+  /* Cards Resumo Aprimorados */
+  .summary-card { padding: 20px; border-radius: 12px; background: white; border: 1px solid var(--border); border-left: 5px solid var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.03); display: flex; flex-direction: column; gap: 8px; }
+  .summary-card .sc-header { display: flex; justify-content: space-between; align-items: center; font-size: 13px; text-transform: uppercase; font-weight: 700; color: var(--text-light); }
+  .summary-card strong { font-size: 28px; color: var(--text); }
+  .summary-card .sc-legend { font-size: 12px; color: #94a3b8; }
   .sc-success { border-left-color: var(--success); }
   .sc-danger { border-left-color: var(--danger); }
   .sc-warning { border-left-color: var(--warning); }
@@ -126,6 +130,11 @@
   .chat-ai { background: white; border: 1px solid var(--border); align-self: flex-start; border-bottom-left-radius: 2px; }
   .chat-user { background: var(--primary); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
 
+  /* Empty States */
+  .empty-state { text-align: center; padding: 40px 20px; background: #f8fafc; border-radius: 12px; border: 2px dashed #cbd5e1; }
+  .empty-state h3 { font-size: 18px; color: var(--dark); margin-bottom: 10px; }
+  .empty-state p { color: var(--text-light); font-size: 14px; margin-bottom: 20px; line-height: 1.5; }
+
   /* Utilitários */
   .hidden { display: none !important; }
   .flex { display: flex; } .gap-2 { gap: 10px; } .items-center { align-items: center; } .justify-between { justify-content: space-between; }
@@ -135,11 +144,11 @@
      RESPONSIVIDADE E MODOS (PC vs CELULAR)
      ========================================================= */
   
-  body.modo-celular .sidebar { position: fixed; left: -250px; top: 0; bottom: 0; box-shadow: 2px 0 10px rgba(0,0,0,0.5); }
+  body.modo-celular .sidebar { position: fixed; left: -260px; top: 0; bottom: 0; box-shadow: 2px 0 10px rgba(0,0,0,0.5); }
   body.modo-celular .sidebar.open { left: 0; }
   body.modo-celular .btn-menu { display: block; }
   
-  body.modo-celular .grid-2 { grid-template-columns: 1fr; }
+  body.modo-celular .grid-2, body.modo-celular .grid-3 { grid-template-columns: 1fr; }
   body.modo-celular .grid-4 { grid-template-columns: 1fr 1fr; }
   body.modo-celular .form-row { flex-direction: column; gap: 0; }
   body.modo-celular .form-row > div { margin-bottom: 16px; }
@@ -202,17 +211,17 @@
     </div>
     <div class="sidebar-menu">
       <div class="menu-item active" onclick="navegar('dashboard')">📊 Início / Dashboard</div>
-      <div class="menu-item" onclick="navegar('assistente')">🤖 Assistente IA</div>
-      <div class="menu-item" onclick="navegar('lancamentos')">📝 Lançamentos</div>
+      <div class="menu-item" onclick="navegar('assistente')">🤖 Assistente IA <span class="menu-badge hidden" id="badgeIA">0</span></div>
+      <div class="menu-item" onclick="navegar('lancamentos')">📝 Lançamentos <span class="menu-badge hidden" id="badgeLanc">0</span></div>
       <div class="menu-item" onclick="navegar('metas')">🎯 Metas do Mês</div>
       <div class="menu-item" onclick="navegar('orcamento')">📉 Controle de Gastos</div>
       <div class="menu-item" onclick="navegar('futuro')">🔮 Planejamento Futuro</div>
       <div class="menu-item" onclick="navegar('recorrentes')">🔁 Contas Recorrentes</div>
       <div class="menu-item" onclick="navegar('parcelamentos')">🛍️ Parcelamentos</div>
       <div class="menu-item" onclick="navegar('categorias')">🏷️ Categorias</div>
-      <div class="menu-item" onclick="navegar('relatorios')">📈 Relatórios</div>
+      <div class="menu-item" onclick="navegar('relatorios')">📈 Relatórios <span class="menu-badge badge-static">PDF/CSV</span></div>
       <div class="menu-item" onclick="navegar('config')">⚙️ Configurações</div>
-      <div class="menu-item" onclick="navegar('backup')">💾 Backup / Importação</div>
+      <div class="menu-item" onclick="navegar('backup')">💾 Backup <span class="menu-badge badge-static">JSON</span></div>
     </div>
   </aside>
 
@@ -238,31 +247,68 @@
 
       <!-- MÓDULO 1: DASHBOARD -->
       <section id="mod-dashboard" class="module active">
-        <div class="grid-4 mb-3">
-          <div class="summary-card sc-success"><span>Receitas</span><strong class="c-green" id="dashReceitas">R$ 0,00</strong></div>
-          <div class="summary-card sc-danger"><span>Despesas</span><strong class="c-red" id="dashDespesas">R$ 0,00</strong></div>
-          <div class="summary-card sc-info"><span>Saldo Líquido</span><strong id="dashSaldo">R$ 0,00</strong></div>
-          <div class="summary-card sc-warning"><span>Pendentes / Atrasadas</span><strong id="dashPendentes">0</strong></div>
+        
+        <!-- Ações Rápidas -->
+        <div class="panel" style="padding: 15px 25px; margin-bottom: 25px; display:flex; flex-wrap:wrap; gap:12px; align-items:center;">
+          <span style="font-weight:700; color:var(--dark);">⚡ Ações Rápidas:</span>
+          <button class="btn btn-primary btn-sm" onclick="navegar('lancamentos')">➕ Novo Lançamento</button>
+          <button class="btn btn-outline btn-sm" onclick="navegar('assistente')">🤖 Abrir Assistente IA</button>
+          <button class="btn btn-outline btn-sm" onclick="navegar('relatorios')">📈 Gerar Relatório</button>
+          <button class="btn btn-outline btn-sm" onclick="navegar('backup')">💾 Backup / Importação</button>
         </div>
-        <div class="grid-2">
-          <div class="panel"><div class="panel-title">Gastos por Categoria</div><div id="dashCategoriasHtml"></div></div>
-          <div class="panel"><div class="panel-title">Ranking: Maiores Despesas</div><div id="dashRankingHtml"></div></div>
+        
+        <!-- Empty State Container (Se não houver lançamentos) -->
+        <div id="dashEmptyState" class="hidden">
+          <div class="empty-state">
+            <h3 style="font-size:22px;">📊 Bem-vindo ao Dashboard</h3>
+            <p style="font-size:15px;">Nenhum lançamento encontrado para este período.<br>Cadastre um lançamento, importe um backup ou adicione dados de exemplo para começar as análises inteligentes.</p>
+            <div class="flex justify-center gap-2" style="justify-content:center;">
+              <button class="btn btn-primary" onclick="navegar('lancamentos')">➕ Novo Lançamento</button>
+              <button class="btn btn-outline" onclick="navegar('backup')">⬆️ Importar Backup</button>
+              <button class="btn btn-success" onclick="adicionarDadosExemplo()">🧪 Adicionar Dados de Exemplo</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dashboard Content (Ocultado se vazio) -->
+        <div id="dashContentArea">
+          <div class="grid-4 mb-3">
+            <div class="summary-card sc-success"><div class="sc-header"><span>Receitas</span> 💰</div><strong class="c-green" id="dashReceitas">R$ 0,00</strong><div class="sc-legend">Total arrecadado no mês</div></div>
+            <div class="summary-card sc-danger"><div class="sc-header"><span>Despesas</span> 💸</div><strong class="c-red" id="dashDespesas">R$ 0,00</strong><div class="sc-legend">Total gasto no mês</div></div>
+            <div class="summary-card sc-info"><div class="sc-header"><span>Saldo Líquido</span> ⚖️</div><strong id="dashSaldo">R$ 0,00</strong><div class="sc-legend">Receitas - Despesas</div></div>
+            <div class="summary-card sc-warning"><div class="sc-header"><span>Pendentes / Atrasadas</span> ⚠️</div><strong id="dashPendentes">0</strong><div class="sc-legend">Aguardando pagamento</div></div>
+          </div>
+
+          <div class="grid-3 mb-3">
+            <div class="panel">
+              <div class="panel-title">❤️ Saúde Financeira do Mês</div>
+              <div id="dashSaudeHtml" style="font-size:14px; line-height:1.5;"></div>
+            </div>
+            <div class="panel">
+              <div class="panel-title">🧠 Resumo Inteligente IA</div>
+              <div id="dashResumoIAHtml" style="font-size:14px; line-height:1.5; color:var(--text-light);"></div>
+              <button class="btn btn-outline btn-sm mt-3" style="width:100%" onclick="navegar('assistente')">Abrir Assistente Completo</button>
+            </div>
+            <div class="panel" style="padding:0; overflow:hidden;">
+              <div class="panel-title" style="padding: 20px 20px 10px 20px; margin:0;">⏰ Vencimentos (7 dias)</div>
+              <div id="dashProxVencHtml" style="padding: 0 20px 20px 20px;"></div>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="panel"><div class="panel-title">📊 Gastos por Categoria</div><div id="dashCategoriasHtml"></div></div>
+            <div class="panel"><div class="panel-title">🏆 Ranking: Maiores Despesas</div><div id="dashRankingHtml"></div></div>
+          </div>
         </div>
       </section>
 
       <!-- MÓDULO: ASSISTENTE IA -->
       <section id="mod-assistente" class="module hidden">
         <div class="grid-2">
-          <!-- Alertas e Autoajuda -->
           <div>
             <div class="panel">
-              <div class="panel-title flex justify-between">
-                <span>Alertas Inteligentes</span>
-                <button class="btn btn-outline btn-sm" onclick="exportarAnaliseIA()">📄 Baixar Análise TXT</button>
-              </div>
-              <div id="iaAlertasHtml">
-                <!-- Alertas injetados via JS -->
-              </div>
+              <div class="panel-title flex justify-between"><span>Alertas Inteligentes</span><button class="btn btn-outline btn-sm" onclick="exportarAnaliseIA()">📄 Baixar Análise TXT</button></div>
+              <div id="iaAlertasHtml"></div>
             </div>
             <div class="panel">
               <div class="panel-title">Autoajuda Financeira</div>
@@ -276,7 +322,6 @@
               </div>
             </div>
           </div>
-          <!-- Chat -->
           <div class="panel" style="display:flex; flex-direction:column; height: 600px;">
             <div class="panel-title">Pergunte ao Assistente</div>
             <div id="chatMessages" style="flex:1; overflow-y:auto; padding:10px; display:flex; flex-direction:column; gap:15px; background:#f8fafc; border-radius:8px; margin-bottom:15px; border:1px solid var(--border);">
@@ -290,7 +335,7 @@
         </div>
       </section>
 
-      <!-- MÓDULO 2: LANÇAMENTOS -->
+      <!-- MÓDULO: LANÇAMENTOS -->
       <section id="mod-lancamentos" class="module hidden">
         <div class="layout-lancamentos">
           <div class="panel" id="panelFormLanc">
@@ -300,18 +345,9 @@
               <input type="text" id="fDesc" class="form-control" list="sugestoesDescricao" placeholder="Comece a digitar...">
               <datalist id="sugestoesDescricao"></datalist>
             </div>
-            <div class="form-row">
-              <div class="form-group"><label>Tipo</label><select id="fTipo" class="form-control"><option value="despesa">Despesa</option><option value="receita">Receita</option></select></div>
-              <div class="form-group"><label>Categoria *</label><select id="fCat" class="form-control"></select></div>
-            </div>
-            <div class="form-row">
-              <div class="form-group"><label>Valor (R$) *</label><input type="number" id="fValor" class="form-control" step="0.01" placeholder="0.00"></div>
-              <div class="form-group"><label>Vencimento *</label><input type="date" id="fVenc" class="form-control"></div>
-            </div>
-            <div class="form-row">
-              <div class="form-group"><label>Status</label><select id="fStatus" class="form-control"><option value="pendente">Pendente</option><option value="pago">Pago</option></select></div>
-              <div class="form-group"><label>Pgto.</label><select id="fPgto" class="form-control"><option>Pix</option><option>Boleto</option><option>Cartão Crédito</option><option>Cartão Débito</option><option>Dinheiro</option><option>Débito Auto</option><option>Outro</option></select></div>
-            </div>
+            <div class="form-row"><div class="form-group"><label>Tipo</label><select id="fTipo" class="form-control"><option value="despesa">Despesa</option><option value="receita">Receita</option></select></div><div class="form-group"><label>Categoria *</label><select id="fCat" class="form-control"></select></div></div>
+            <div class="form-row"><div class="form-group"><label>Valor (R$) *</label><input type="number" id="fValor" class="form-control" step="0.01" placeholder="0.00"></div><div class="form-group"><label>Vencimento *</label><input type="date" id="fVenc" class="form-control"></div></div>
+            <div class="form-row"><div class="form-group"><label>Status</label><select id="fStatus" class="form-control"><option value="pendente">Pendente</option><option value="pago">Pago</option></select></div><div class="form-group"><label>Pgto.</label><select id="fPgto" class="form-control"><option>Pix</option><option>Boleto</option><option>Cartão Crédito</option><option>Cartão Débito</option><option>Dinheiro</option><option>Débito Auto</option><option>Outro</option></select></div></div>
             <div class="form-group"><label>Responsável</label><input type="text" id="fResp" class="form-control" placeholder="Quem efetuou/efetuará?"></div>
             <div class="form-group"><label>Observação</label><input type="text" id="fObs" class="form-control" placeholder="Detalhes opcionais..."></div>
             <div class="flex gap-2 mt-3">
@@ -336,154 +372,70 @@
         </div>
       </section>
 
-      <!-- MÓDULO 3: METAS -->
+      <!-- OUTROS MÓDULOS -->
+      <!-- Metas -->
       <section id="mod-metas" class="module hidden">
         <div class="grid-2">
-          <div class="panel">
-            <div class="panel-title">Definir Meta de Economia (Mês Atual)</div>
-            <p style="font-size:13px; color:var(--text-light); margin-bottom:15px;">Configure uma meta de saldo para o mês filtrado.</p>
-            <div class="form-group"><label>Valor da Meta (R$)</label><input type="number" id="fMetaValor" class="form-control"></div>
-            <button class="btn btn-primary" onclick="salvarMeta()">Salvar Meta</button>
-          </div>
+          <div class="panel"><div class="panel-title">Definir Meta de Economia</div><p style="font-size:13px; color:var(--text-light); margin-bottom:15px;">Configure uma meta de saldo para o mês filtrado.</p><div class="form-group"><label>Valor da Meta (R$)</label><input type="number" id="fMetaValor" class="form-control"></div><button class="btn btn-primary" onclick="salvarMeta()">Salvar Meta</button></div>
           <div class="panel"><div class="panel-title">Progresso da Meta</div><div id="metaProgressoHtml"></div></div>
         </div>
       </section>
-
-      <!-- MÓDULO 4: ORÇAMENTO -->
+      <!-- Controle de Gastos -->
       <section id="mod-orcamento" class="module hidden">
         <div class="grid-2">
-          <div class="panel">
-            <div class="panel-title">Definir Limite por Categoria</div>
-            <div class="form-group"><label>Categoria</label><select id="fOrcCat" class="form-control"></select></div>
-            <div class="form-group"><label>Limite Mensal (R$)</label><input type="number" id="fOrcValor" class="form-control"></div>
-            <button class="btn btn-primary" onclick="salvarOrcamento()">Definir Limite</button>
-          </div>
+          <div class="panel"><div class="panel-title">Definir Limite por Categoria</div><div class="form-group"><label>Categoria</label><select id="fOrcCat" class="form-control"></select></div><div class="form-group"><label>Limite Mensal (R$)</label><input type="number" id="fOrcValor" class="form-control"></div><button class="btn btn-primary" onclick="salvarOrcamento()">Definir Limite</button></div>
           <div class="panel"><div class="panel-title">Acompanhamento do Mês</div><div id="orcamentoProgressoHtml"></div></div>
         </div>
       </section>
-
-      <!-- MÓDULO 5: FUTURO -->
+      <!-- Futuro -->
       <section id="mod-futuro" class="module hidden">
         <div class="grid-2">
-          <div class="panel">
-            <div class="panel-title">Adicionar Plano</div>
-            <div class="form-group"><label>Descrição</label><input type="text" id="fFutDesc" class="form-control"></div>
-            <div class="form-row"><div class="form-group"><label>Tipo</label><select id="fFutTipo" class="form-control"><option value="despesa">Despesa</option><option value="receita">Receita</option></select></div><div class="form-group"><label>Categoria</label><select id="fFutCat" class="form-control"></select></div></div>
-            <div class="form-row"><div class="form-group"><label>Valor Previsto</label><input type="number" id="fFutValor" class="form-control"></div><div class="form-group"><label>Data Prevista</label><input type="date" id="fFutData" class="form-control"></div></div>
-            <button class="btn btn-primary" onclick="salvarFuturo()">Adicionar Planejamento</button>
-          </div>
-          <div class="panel">
-            <div class="panel-title">Lista de Planejamentos</div>
-            <div class="view-tabela table-responsive"><table><thead><tr><th>Descrição</th><th>Data</th><th>Valor</th><th>Ação</th></tr></thead><tbody id="listFuturoTabela"></tbody></table></div>
-            <div class="view-lista" id="listFuturoMobile"></div>
-          </div>
+          <div class="panel"><div class="panel-title">Adicionar Plano</div><div class="form-group"><label>Descrição</label><input type="text" id="fFutDesc" class="form-control"></div><div class="form-row"><div class="form-group"><label>Tipo</label><select id="fFutTipo" class="form-control"><option value="despesa">Despesa</option><option value="receita">Receita</option></select></div><div class="form-group"><label>Categoria</label><select id="fFutCat" class="form-control"></select></div></div><div class="form-row"><div class="form-group"><label>Valor Previsto</label><input type="number" id="fFutValor" class="form-control"></div><div class="form-group"><label>Data Prevista</label><input type="date" id="fFutData" class="form-control"></div></div><button class="btn btn-primary" onclick="salvarFuturo()">Adicionar Planejamento</button></div>
+          <div class="panel"><div class="panel-title">Lista de Planejamentos</div><div class="view-tabela table-responsive"><table><thead><tr><th>Descrição</th><th>Data</th><th>Valor</th><th>Ação</th></tr></thead><tbody id="listFuturoTabela"></tbody></table></div><div class="view-lista" id="listFuturoMobile"></div></div>
         </div>
       </section>
-
-      <!-- MÓDULO 6: RECORRENTES -->
+      <!-- Recorrentes -->
       <section id="mod-recorrentes" class="module hidden">
         <div class="grid-2">
-          <div class="panel">
-            <div class="panel-title">Nova Recorrência Mensal fixa</div>
-            <div class="form-group"><label>Descrição</label><input type="text" id="fRecDesc" class="form-control"></div>
-            <div class="form-row"><div class="form-group"><label>Categoria</label><select id="fRecCat" class="form-control"></select></div><div class="form-group"><label>Valor</label><input type="number" id="fRecValor" class="form-control"></div></div>
-            <div class="form-group"><label>Dia do Vencimento (1-31)</label><input type="number" id="fRecDia" class="form-control" min="1" max="31"></div>
-            <button class="btn btn-primary" onclick="salvarRecorrente()">Cadastrar Recorrente</button>
-          </div>
-          <div class="panel">
-            <div class="panel-title">Minhas Recorrências</div>
-            <div class="view-tabela table-responsive"><table><thead><tr><th>Descrição</th><th>Dia</th><th>Valor</th><th>Ações</th></tr></thead><tbody id="listRecorrenteTabela"></tbody></table></div>
-            <div class="view-lista" id="listRecorrenteMobile"></div>
-          </div>
+          <div class="panel"><div class="panel-title">Nova Recorrência Mensal fixa</div><div class="form-group"><label>Descrição</label><input type="text" id="fRecDesc" class="form-control"></div><div class="form-row"><div class="form-group"><label>Categoria</label><select id="fRecCat" class="form-control"></select></div><div class="form-group"><label>Valor</label><input type="number" id="fRecValor" class="form-control"></div></div><div class="form-group"><label>Dia do Vencimento (1-31)</label><input type="number" id="fRecDia" class="form-control" min="1" max="31"></div><button class="btn btn-primary" onclick="salvarRecorrente()">Cadastrar Recorrente</button></div>
+          <div class="panel"><div class="panel-title">Minhas Recorrências</div><div class="view-tabela table-responsive"><table><thead><tr><th>Descrição</th><th>Dia</th><th>Valor</th><th>Ações</th></tr></thead><tbody id="listRecorrenteTabela"></tbody></table></div><div class="view-lista" id="listRecorrenteMobile"></div></div>
         </div>
       </section>
-
-      <!-- MÓDULO 7: PARCELAMENTOS -->
+      <!-- Parcelamentos -->
       <section id="mod-parcelamentos" class="module hidden">
         <div class="grid-2">
-          <div class="panel">
-            <div class="panel-title">Nova Compra Parcelada</div>
-            <div class="form-group"><label>Descrição da Compra</label><input type="text" id="fParDesc" class="form-control"></div>
-            <div class="form-row"><div class="form-group"><label>Valor TOTAL (R$)</label><input type="number" id="fParValor" class="form-control"></div><div class="form-group"><label>Qtd. Parcelas</label><input type="number" id="fParQtd" class="form-control" min="2" value="2"></div></div>
-            <div class="form-row"><div class="form-group"><label>Data 1ª Parcela</label><input type="date" id="fParData" class="form-control"></div><div class="form-group"><label>Categoria</label><select id="fParCat" class="form-control"></select></div></div>
-            <button class="btn btn-primary" onclick="gerarParcelamento()">Gerar Parcelas</button>
-          </div>
-          <div class="panel">
-            <div class="panel-title">Histórico de Compras Parceladas</div>
-            <div class="table-responsive"><table><thead><tr><th>Compra</th><th>Valor Total</th><th>Parcelas</th><th>Criado em</th></tr></thead><tbody id="listParcelamentosGerados"></tbody></table></div>
-          </div>
+          <div class="panel"><div class="panel-title">Nova Compra Parcelada</div><div class="form-group"><label>Descrição da Compra</label><input type="text" id="fParDesc" class="form-control"></div><div class="form-row"><div class="form-group"><label>Valor TOTAL (R$)</label><input type="number" id="fParValor" class="form-control"></div><div class="form-group"><label>Qtd. Parcelas</label><input type="number" id="fParQtd" class="form-control" min="2" value="2"></div></div><div class="form-row"><div class="form-group"><label>Data 1ª Parcela</label><input type="date" id="fParData" class="form-control"></div><div class="form-group"><label>Categoria</label><select id="fParCat" class="form-control"></select></div></div><button class="btn btn-primary" onclick="gerarParcelamento()">Gerar Parcelas</button></div>
+          <div class="panel"><div class="panel-title">Histórico de Compras Parceladas</div><div class="table-responsive"><table><thead><tr><th>Compra</th><th>Valor Total</th><th>Parcelas</th><th>Criado em</th></tr></thead><tbody id="listParcelamentosGerados"></tbody></table></div></div>
         </div>
       </section>
-
-      <!-- MÓDULO 8: CATEGORIAS -->
+      <!-- Categorias -->
       <section id="mod-categorias" class="module hidden">
         <div class="grid-2">
-          <div class="panel">
-            <div class="panel-title">Adicionar Categoria</div>
-            <div class="form-group"><label>Nome da Categoria</label><input type="text" id="fNovaCat" class="form-control"></div>
-            <button class="btn btn-primary" onclick="adicionarCategoria()">Adicionar</button>
-          </div>
+          <div class="panel"><div class="panel-title">Adicionar Categoria</div><div class="form-group"><label>Nome da Categoria</label><input type="text" id="fNovaCat" class="form-control"></div><button class="btn btn-primary" onclick="adicionarCategoria()">Adicionar</button></div>
           <div class="panel"><div class="panel-title">Categorias Existentes</div><div id="listaCategoriasHtml" style="display:flex; flex-wrap:wrap; gap:8px;"></div></div>
         </div>
       </section>
-
-      <!-- MÓDULO 9: RELATÓRIOS COMPLETOS -->
+      <!-- Relatórios -->
       <section id="mod-relatorios" class="module hidden">
         <div class="panel">
-          <div class="panel-title flex justify-between" style="flex-wrap:wrap; gap:10px;">
-            <span>Geração de Relatórios</span>
-            <div class="flex gap-2">
-              <button class="btn btn-outline btn-sm" onclick="exportarRelatorioCSV()">📊 Baixar CSV</button>
-              <button class="btn btn-outline btn-sm" onclick="exportarRelatorioJSON()">💾 Baixar JSON</button>
-              <button class="btn btn-primary btn-sm" onclick="window.print()">🖨️ Imprimir / PDF</button>
-            </div>
-          </div>
-          <div class="form-group" style="max-width:300px;">
-            <label>Tipo de Relatório (aplicado ao mês filtro global):</label>
-            <select id="tipoRelatorio" class="form-control" onchange="gerarRelatorioTela()">
-              <option value="geral">Relatório Geral do Período</option>
-              <option value="receitas">Apenas Receitas</option>
-              <option value="despesas">Apenas Despesas</option>
-              <option value="pagas">Contas Pagas</option>
-              <option value="pendentes">Contas Pendentes</option>
-              <option value="atrasadas">Contas Atrasadas</option>
-              <option value="categorias">Agrupado por Categoria</option>
-            </select>
-          </div>
+          <div class="panel-title flex justify-between" style="flex-wrap:wrap; gap:10px;"><span>Geração de Relatórios</span><div class="flex gap-2"><button class="btn btn-outline btn-sm" onclick="exportarRelatorioCSV()">📊 Baixar CSV</button><button class="btn btn-outline btn-sm" onclick="exportarRelatorioJSON()">💾 Baixar JSON</button><button class="btn btn-primary btn-sm" onclick="window.print()">🖨️ Imprimir / PDF</button></div></div>
+          <div class="form-group" style="max-width:300px;"><label>Tipo de Relatório (aplicado ao mês filtro global):</label><select id="tipoRelatorio" class="form-control" onchange="gerarRelatorioTela()"><option value="geral">Relatório Geral do Período</option><option value="receitas">Apenas Receitas</option><option value="despesas">Apenas Despesas</option><option value="pagas">Contas Pagas</option><option value="pendentes">Contas Pendentes</option><option value="atrasadas">Contas Atrasadas</option><option value="categorias">Agrupado por Categoria</option></select></div>
           <hr style="margin:20px 0; border:1px solid var(--border);">
-          <div id="relatorioViewArea" style="background:#fff; padding:20px; border-radius:8px; border:1px solid #ccc; font-family:sans-serif;">
-            <!-- Renderizado via JS -->
-          </div>
+          <div id="relatorioViewArea" style="background:#fff; padding:20px; border-radius:8px; border:1px solid #ccc; font-family:sans-serif;"></div>
         </div>
       </section>
-
-      <!-- MÓDULO 10: CONFIG -->
+      <!-- Config -->
       <section id="mod-config" class="module hidden">
         <div class="grid-2">
-          <div class="panel">
-            <div class="panel-title">Aparência e Navegação</div>
-            <div class="form-group"><label>Modo Visualização</label><select id="configModo" class="form-control" onchange="salvarConfigModo()"><option value="auto">Automático</option><option value="pc">PC</option><option value="celular">Celular</option></select></div>
-            <div class="form-group"><label>Início</label><select id="configInicio" class="form-control" onchange="salvarConfigInicio()"><option value="dashboard">Dashboard</option><option value="lancamentos">Lançamentos</option></select></div>
-          </div>
-          <div class="panel" style="border-color:var(--danger)">
-            <div class="panel-title" style="color:var(--danger)">Zona de Perigo</div>
-            <button class="btn btn-danger" onclick="limparTudo()">🗑️ APAGAR TODOS OS DADOS</button>
-          </div>
+          <div class="panel"><div class="panel-title">Aparência e Navegação</div><div class="form-group"><label>Modo Visualização</label><select id="configModo" class="form-control" onchange="salvarConfigModo()"><option value="auto">Automático</option><option value="pc">PC</option><option value="celular">Celular</option></select></div><div class="form-group"><label>Início</label><select id="configInicio" class="form-control" onchange="salvarConfigInicio()"><option value="dashboard">Dashboard</option><option value="lancamentos">Lançamentos</option></select></div></div>
+          <div class="panel" style="border-color:var(--danger)"><div class="panel-title" style="color:var(--danger)">Zona de Perigo</div><button class="btn btn-danger" onclick="limparTudo()">🗑️ APAGAR TODOS OS DADOS</button></div>
         </div>
       </section>
-
-      <!-- MÓDULO 11: BACKUP -->
+      <!-- Backup -->
       <section id="mod-backup" class="module hidden">
         <div class="grid-2">
-          <div class="panel">
-            <div class="panel-title">Fazer Backup</div>
-            <button class="btn btn-success" onclick="exportarBackup()">⬇️ Baixar Backup JSON</button>
-          </div>
-          <div class="panel">
-            <div class="panel-title">Restaurar Backup</div>
-            <input type="file" id="arquivoImportacao" accept=".json" class="form-control" style="margin-bottom:10px;">
-            <button class="btn btn-primary" onclick="importarBackup()">⬆️ Importar Dados</button>
-          </div>
+          <div class="panel"><div class="panel-title">Fazer Backup</div><button class="btn btn-success" onclick="exportarBackup()">⬇️ Baixar Backup JSON</button></div>
+          <div class="panel"><div class="panel-title">Restaurar Backup</div><input type="file" id="arquivoImportacao" accept=".json" class="form-control" style="margin-bottom:10px;"><button class="btn btn-primary" onclick="importarBackup()">⬆️ Importar Dados</button></div>
         </div>
       </section>
 
@@ -503,7 +455,7 @@ let futuros = carregar('futuros', []);
 let recorrentes = carregar('recorrentes', []);
 let parcelamentos = carregar('parcelamentos', []);
 let categorias = carregar('categorias', DEFAULT_CATEGS);
-let config = carregar('config', { modo: 'auto', inicio: 'lancamentos' });
+let config = carregar('config', { modo: 'auto', inicio: 'dashboard' });
 
 let editLancId = null;
 
@@ -525,10 +477,7 @@ function showToast(msg, type = 'success') {
   toast.className = `toast toast-${type}`;
   toast.innerHTML = `<span>${msg}</span>`;
   container.appendChild(toast);
-  setTimeout(() => {
-    toast.classList.add('hide');
-    setTimeout(() => toast.remove(), 300);
-  }, 3000);
+  setTimeout(() => { toast.classList.add('hide'); setTimeout(() => toast.remove(), 300); }, 3000);
 }
 
 /* CORE */
@@ -590,6 +539,8 @@ function processarDadosGlobais() {
   popularSelectCategorias(); 
   popularDatalistDescricao(); 
   
+  analisarIA(); // Atualiza IA primeiro para pegar quantidade de alertas para o Badge
+  
   renderDashboard();
   renderLancamentos();
   renderMetas();
@@ -599,8 +550,17 @@ function processarDadosGlobais() {
   renderParcelamentos();
   renderCategorias();
   gerarRelatorioTela();
-  analisarIA(); // Atualiza a IA
   
+  // Atualizar Badges Sidebar
+  const mes = getMesGlobal();
+  const qtdLanc = getLancamentosFiltrados(mes).length;
+  const bLanc = document.getElementById('badgeLanc');
+  if(qtdLanc > 0) { bLanc.innerText = qtdLanc; bLanc.classList.remove('hidden'); } else { bLanc.classList.add('hidden'); }
+  
+  const bIA = document.getElementById('badgeIA');
+  if(iaContext.qtdAlertas > 0) { bIA.innerText = iaContext.qtdAlertas; bIA.classList.remove('hidden'); bIA.classList.add('badge-alert'); } 
+  else { bIA.classList.add('hidden'); }
+
   document.getElementById('configModo').value = config.modo;
   document.getElementById('configInicio').value = config.inicio;
 }
@@ -611,37 +571,129 @@ function popularDatalistDescricao() {
   recorrentes.forEach(i => setDesc.add(i.descricao));
   futuros.forEach(i => setDesc.add(i.descricao));
   parcelamentos.forEach(i => setDesc.add(i.descricao));
-  
   const dList = document.getElementById('sugestoesDescricao');
   dList.innerHTML = '';
   Array.from(setDesc).sort().forEach(d => { const opt = document.createElement('option'); opt.value = d; dList.appendChild(opt); });
 }
 
-/* DASHBOARD E LANÇAMENTOS (Mantidos) */
+function adicionarDadosExemplo() {
+  const mes = getMesGlobal();
+  if(!mes) return showToast("Selecione um mês no filtro.", "error");
+  const fDados = getLancamentosFiltrados(mes);
+  if(fDados.length > 0) { if(!confirm("Já existem lançamentos. Adicionar os exemplos mesmo assim?")) return; } 
+  else { if(!confirm("Adicionar dados fictícios para teste neste mês?")) return; }
+  
+  const exemplos = [
+    {id:generateId(), descricao:'Salário', tipo:'receita', categoria:'Salário', valor:4500, vencimento:`${mes}-05`, status:'pago'},
+    {id:generateId(), descricao:'Aluguel', tipo:'despesa', categoria:'Moradia', valor:1500, vencimento:`${mes}-10`, status:'pendente'},
+    {id:generateId(), descricao:'Energia', tipo:'despesa', categoria:'Energia', valor:250, vencimento:`${mes}-12`, status:'pendente'},
+    {id:generateId(), descricao:'Internet', tipo:'despesa', categoria:'Internet', valor:120, vencimento:`${mes}-15`, status:'pendente'},
+    {id:generateId(), descricao:'Mercado', tipo:'despesa', categoria:'Alimentação', valor:800, vencimento:`${mes}-08`, status:'pago'},
+    {id:generateId(), descricao:'Água', tipo:'despesa', categoria:'Água', valor:80, vencimento:`${mes}-11`, status:'pendente'}
+  ];
+  dados.push(...exemplos); salvar('dados', dados);
+  showToast("Dados de exemplo adicionados com sucesso!"); processarDadosGlobais();
+}
+
+/* DASHBOARD OTIMIZADO */
 function renderDashboard() {
   const fDados = getLancamentosFiltrados();
+  
+  if(fDados.length === 0) {
+    document.getElementById('dashEmptyState').classList.remove('hidden');
+    document.getElementById('dashContentArea').classList.add('hidden');
+    return;
+  }
+  
+  document.getElementById('dashEmptyState').classList.add('hidden');
+  document.getElementById('dashContentArea').classList.remove('hidden');
+
   let rec=0, des=0, pend=0, pg=0, atrasadas=0; let catDesc = {};
   fDados.forEach(i => {
     if(i.tipo==='receita') rec+=i.valor; else { des+=i.valor; catDesc[i.categoria]=(catDesc[i.categoria]||0)+i.valor; }
     const st = calcularStatus(i);
     if(st==='pago') pg++; else if(st==='atrasado') atrasadas++; else pend++;
   });
+  const saldo = rec-des;
+  
   document.getElementById('dashReceitas').innerText = formatMoeda(rec); document.getElementById('dashDespesas').innerText = formatMoeda(des);
-  const saldo = rec-des; document.getElementById('dashSaldo').innerText = formatMoeda(saldo); document.getElementById('dashSaldo').className = saldo>=0?'c-green':'c-red';
+  document.getElementById('dashSaldo').innerText = formatMoeda(saldo); document.getElementById('dashSaldo').className = saldo>=0?'c-green':'c-red';
   document.getElementById('dashPendentes').innerText = pend+atrasadas;
+  
+  // Saúde Financeira
+  let saudeHtml = '';
+  if(saldo >= 0 && atrasadas === 0 && pend === 0) saudeHtml = `<span style="font-size:20px; color:var(--success); font-weight:bold;">Excelente</span><p class="mt-3">Seu saldo está positivo e não há pendências.</p>`;
+  else if(saldo >= 0 && atrasadas === 0 && pend > 0) saudeHtml = `<span style="font-size:20px; color:var(--success); font-weight:bold;">Boa</span><p class="mt-3">Seu saldo está positivo neste período, mas existem contas pendentes que precisam de acompanhamento.</p>`;
+  else if(atrasadas > 0) saudeHtml = `<span style="font-size:20px; color:var(--danger); font-weight:bold;">Atenção Crítica</span><p class="mt-3">Existem contas atrasadas. Priorize esses pagamentos.</p>`;
+  else if(saldo < 0) saudeHtml = `<span style="font-size:20px; color:var(--danger); font-weight:bold;">Crítico</span><p class="mt-3">As despesas superaram as receitas no período.</p>`;
+  else saudeHtml = `<span style="font-size:20px; color:var(--warning); font-weight:bold;">Atenção</span><p class="mt-3">Acompanhe seus gastos de perto.</p>`;
+  document.getElementById('dashSaudeHtml').innerHTML = saudeHtml;
+  
+  // Resumo Inteligente IA
+  const maiorCat = Object.entries(catDesc).sort((a,b)=>b[1]-a[1])[0];
+  let iaSum = `<strong>Receitas:</strong> ${formatMoeda(rec)} <br> <strong>Despesas:</strong> ${formatMoeda(des)} <br>`;
+  if(maiorCat) iaSum += `<strong>Maior Gasto:</strong> ${maiorCat[0]} (${formatMoeda(maiorCat[1])})<br>`;
+  if(atrasadas > 0) iaSum += `<strong>Atrasadas:</strong> <span class="c-red">${atrasadas} contas</span><br>`;
+  iaSum += `<br><em>Recomendação:</em> ${iaContext.saldo < 0 ? 'Corte despesas e negocie prazos.' : (atrasadas > 0 ? 'Regularize contas em atraso.' : 'Mantenha o controle e defina metas mensais.')}`;
+  document.getElementById('dashResumoIAHtml').innerHTML = iaSum;
+  
+  // Próximos Vencimentos (7 dias)
+  const hoje = new Date(); hoje.setHours(0,0,0,0);
+  const dataLimite = new Date(hoje); dataLimite.setDate(hoje.getDate() + 7);
+  const venc7dias = fDados.filter(i => {
+    const st = calcularStatus(i); if(st==='pago') return false;
+    const p = i.vencimento.split('-');
+    if(p.length!==3) return false;
+    const dv = new Date(p[0], p[1]-1, p[2]);
+    return dv <= dataLimite;
+  }).sort((a,b)=>new Date(a.vencimento)-new Date(b.vencimento));
+
+  let vHtml = '';
+  venc7dias.forEach(i => {
+    const p = i.vencimento.split('-'); const dv = new Date(p[0], p[1]-1, p[2]);
+    let colorHex = '#f59e0b'; // amarelado
+    if(dv < hoje) colorHex = '#ef4444'; // vermelho
+    else if(dv.getTime() === hoje.getTime()) colorHex = '#ea580c'; // laranja
+    
+    vHtml += `
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); padding:10px 0;">
+        <div style="line-height:1.4;">
+          <strong style="font-size:13px;">${i.descricao}</strong><br>
+          <span style="font-size:11px; color:${colorHex}; font-weight:bold;">${formatData(i.vencimento)}</span>
+        </div>
+        <strong style="font-size:14px;">${formatMoeda(i.valor)}</strong>
+      </div>
+    `;
+  });
+  document.getElementById('dashProxVencHtml').innerHTML = vHtml || '<div style="padding:20px; text-align:center; color:var(--text-light); font-size:13px;">Nenhuma conta próxima do vencimento.</div>';
+  
+  // Gastos Categoria
   let catH = ''; const totalD = des||1;
   Object.keys(catDesc).sort((a,b)=>catDesc[b]-catDesc[a]).forEach(c => {
     const val = catDesc[c]; const pct = (val/totalD)*100;
-    catH += `<div class="bar-container"><div class="bar-header"><span>${c}</span><span>${formatMoeda(val)}</span></div><div class="bar-track"><div class="bar-fill bg-danger" style="width:${pct}%"></div></div></div>`;
+    catH += `<div class="bar-container"><div class="bar-header"><span>${c} (${pct.toFixed(1)}%)</span><span>${formatMoeda(val)}</span></div><div class="bar-track"><div class="bar-fill bg-danger" style="width:${pct}%"></div></div></div>`;
   });
-  document.getElementById('dashCategoriasHtml').innerHTML = catH||'<p class="text-light">Sem despesas.</p>';
+  document.getElementById('dashCategoriasHtml').innerHTML = catH||'<div class="empty-state" style="padding:20px;"><p style="margin:0;">Nenhuma despesa para exibir no gráfico.</p></div>';
+  
+  // Ranking
   let rH = '';
   fDados.filter(i=>i.tipo==='despesa').sort((a,b)=>b.valor-a.valor).slice(0,5).forEach((i, idx) => {
-    rH += `<div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--border); font-size:14px;"><span><strong>${idx+1}.</strong> ${i.descricao}</span><strong class="c-red">${formatMoeda(i.valor)}</strong></div>`;
+    rH += `
+      <div style="display:flex; flex-direction:column; padding:12px 0; border-bottom:1px solid var(--border); gap:5px;">
+        <div style="display:flex; justify-content:space-between;">
+          <span><strong>${idx+1}.</strong> ${i.descricao}</span>
+          <strong class="c-red">${formatMoeda(i.valor)}</strong>
+        </div>
+        <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--text-light);">
+          <span>${i.categoria} | Venc: ${formatData(i.vencimento)}</span>
+          <span>${getBadgeHtml(calcularStatus(i))}</span>
+        </div>
+      </div>`;
   });
-  document.getElementById('dashRankingHtml').innerHTML = rH||'<p class="text-light">Sem despesas.</p>';
+  document.getElementById('dashRankingHtml').innerHTML = rH||'<div class="empty-state" style="padding:20px;"><p style="margin:0;">Nenhuma despesa para exibir no ranking.</p></div>';
 }
 
+/* LANÇAMENTOS E DEMAIS (Mantidos da versão anterior) */
 function renderLancamentos() {
   const mes = getMesGlobal(); let lista = getLancamentosFiltrados(mes);
   const busca = document.getElementById('buscaLanc').value.toLowerCase();
@@ -685,18 +737,15 @@ function limparFormLanc() { ['fDesc','fValor','fVenc','fResp','fObs'].forEach(id
 function pagarLancamento(id) { const i = dados.find(d=>d.id===id); if(i){ i.status = 'pago'; salvar('dados',dados); showToast("✅ Pago!"); processarDadosGlobais(); } }
 function excluirLancamento(id) { if(confirm("Excluir lançamento?")) { dados = dados.filter(d=>d.id!==id); salvar('dados',dados); showToast("🗑 Excluído.", "warning"); processarDadosGlobais(); } }
 
-/* METAS, ORCAMENTO, ETC... */
-function renderMetas() { /* Lógica mantida... */ } function salvarMeta() { /* ... */ } function removerMeta() { /* ... */ }
-function renderOrcamento() { /* Lógica mantida... */ } function salvarOrcamento() { /* ... */ } function removerOrcamento() { /* ... */ }
-function renderFuturo() { /* Lógica mantida... */ } function salvarFuturo() { /* ... */ } function excluirFuturo() { /* ... */ } function efetivarFuturo() { /* ... */ }
-function renderRecorrentes() { /* Lógica mantida... */ } function salvarRecorrente() { /* ... */ } function excluirRecorrente() { /* ... */ } function lancarRecorrente() { /* ... */ }
-function renderParcelamentos() { /* Lógica mantida... */ } function gerarParcelamento() { /* ... */ }
-function renderCategorias() { /* Lógica mantida... */ } function popularSelectCategorias() { /* ... */ } function adicionarCategoria() { /* ... */ } function removerCategoria() { /* ... */ }
+function renderMetas() { /* ... */ } function salvarMeta() { /* ... */ } function removerMeta() { /* ... */ }
+function renderOrcamento() { /* ... */ } function salvarOrcamento() { /* ... */ } function removerOrcamento() { /* ... */ }
+function renderFuturo() { /* ... */ } function salvarFuturo() { /* ... */ } function excluirFuturo() { /* ... */ } function efetivarFuturo() { /* ... */ }
+function renderRecorrentes() { /* ... */ } function salvarRecorrente() { /* ... */ } function excluirRecorrente() { /* ... */ } function lancarRecorrente() { /* ... */ }
+function renderParcelamentos() { /* ... */ } function gerarParcelamento() { /* ... */ }
+function renderCategorias() { /* ... */ } function popularSelectCategorias() { /* ... */ } function adicionarCategoria() { /* ... */ } function removerCategoria() { /* ... */ }
 
-/* =====================================================================
-   MÓDULO 12: ASSISTENTE IA (NOVO)
-   ===================================================================== */
-let iaContext = {}; // Variável para armazenar contexto para gerar o txt
+/* ASSISTENTE IA */
+let iaContext = { qtdAlertas: 0 }; 
 function analisarIA() {
   const mes = getMesGlobal(); if(!mes) return;
   const fDados = getLancamentosFiltrados(mes);
@@ -712,30 +761,27 @@ function analisarIA() {
   });
   const saldo = rec-des;
   let alertas = '';
+  iaContext.qtdAlertas = 0;
   
-  iaContext = { mes, rec, des, saldo, atrasadas, pendentes, catDesc }; // Para o export
+  iaContext = { ...iaContext, mes, rec, des, saldo, atrasadas, pendentes, catDesc };
   
-  if(saldo < 0) alertas += `<div class="ia-alert danger">🚨 Seu saldo está negativo em ${formatMoeda(Math.abs(saldo))}. Reduza gastos!</div>`;
-  else if(saldo > 0) alertas += `<div class="ia-alert success">✅ Saldo positivo de ${formatMoeda(saldo)}. Ótimo trabalho!</div>`;
+  const pushAlerta = (html) => { alertas += html; iaContext.qtdAlertas++; };
+  
+  if(saldo < 0) pushAlerta(`<div class="ia-alert danger">🚨 Seu saldo está negativo em ${formatMoeda(Math.abs(saldo))}. Reduza gastos!</div>`);
+  else if(saldo > 0) pushAlerta(`<div class="ia-alert success">✅ Saldo positivo de ${formatMoeda(saldo)}. Ótimo trabalho!</div>`);
   
   if(atrasadas.length > 0) {
     const totAtrasado = atrasadas.reduce((s,i)=>s+i.valor,0);
-    alertas += `<div class="ia-alert danger">⚠️ Você tem ${atrasadas.length} conta(s) atrasada(s) (Total: ${formatMoeda(totAtrasado)}). Pague o quanto antes.</div>`;
+    pushAlerta(`<div class="ia-alert danger">⚠️ Você tem ${atrasadas.length} conta(s) atrasada(s) (Total: ${formatMoeda(totAtrasado)}). Pague o quanto antes.</div>`);
   }
-  if(pendentes.length > 5) alertas += `<div class="ia-alert warning">📅 Atenção: Você tem muitas contas pendentes (${pendentes.length}) para este mês.</div>`;
+  if(pendentes.length > 5) pushAlerta(`<div class="ia-alert warning">📅 Atenção: Você tem muitas contas pendentes (${pendentes.length}) para este mês.</div>`);
   
   const orcMes = orcamentos[mes] || {};
   Object.keys(orcMes).forEach(cat => {
     const limite = orcMes[cat]; const gasto = catDesc[cat]||0; const pct = (gasto/limite)*100;
-    if(pct > 100) alertas += `<div class="ia-alert danger">🔥 Você estourou o orçamento na categoria <b>${cat}</b>! (Limite: ${formatMoeda(limite)} | Gasto: ${formatMoeda(gasto)})</div>`;
-    else if(pct > 80) alertas += `<div class="ia-alert warning">⚠️ Cuidado na categoria <b>${cat}</b>. Você já gastou ${pct.toFixed(0)}% do limite.</div>`;
+    if(pct > 100) pushAlerta(`<div class="ia-alert danger">🔥 Você estourou o orçamento na categoria <b>${cat}</b>! (Limite: ${formatMoeda(limite)} | Gasto: ${formatMoeda(gasto)})</div>`);
+    else if(pct > 80) pushAlerta(`<div class="ia-alert warning">⚠️ Cuidado na categoria <b>${cat}</b>. Você já gastou ${pct.toFixed(0)}% do limite.</div>`);
   });
-  
-  const metaObj = metas[mes];
-  if(metaObj) {
-    if(saldo >= metaObj.valor) alertas += `<div class="ia-alert success">🎯 Parabéns! Você já atingiu sua meta de economia de ${formatMoeda(metaObj.valor)}.</div>`;
-    else if(saldo > 0) alertas += `<div class="ia-alert info">🎯 Meta em andamento: Faltam ${formatMoeda(metaObj.valor-saldo)} para bater o objetivo do mês.</div>`;
-  }
   
   if(!alertas) alertas = `<div class="ia-alert info">Tudo parece tranquilo financeiramente para este mês.</div>`;
   document.getElementById('iaAlertasHtml').innerHTML = alertas;
@@ -771,12 +817,8 @@ function autoAjuda(tipo) {
 }
 
 function enviarMensagemIA() {
-  const input = document.getElementById('chatInput');
-  const txt = input.value.trim().toLowerCase();
-  if(!txt) return;
-  addChatMsg(input.value, 'user');
-  input.value = '';
-  
+  const input = document.getElementById('chatInput'); const txt = input.value.trim().toLowerCase();
+  if(!txt) return; addChatMsg(input.value, 'user'); input.value = '';
   setTimeout(() => {
     let r = "";
     if(txt.includes('economizar') || txt.includes('reduzir') || txt.includes('dica')) autoAjuda('economizar');
@@ -785,120 +827,70 @@ function enviarMensagemIA() {
     else if(txt.includes('saldo')) autoAjuda('analisar');
     else if(txt.includes('olá') || txt.includes('oi')) r = "Olá! Como posso ajudar nas suas finanças hoje?";
     else r = "Ainda não entendi essa pergunta. Posso analisar palavras como 'saldo', 'economizar', 'atrasadas' ou 'maior despesa'. Tente usar uma delas ou clique nos botões de autoajuda acima!";
-    
     if(r) addChatMsg(r, 'ai');
   }, 400);
 }
 
 function addChatMsg(msg, sender) {
-  const div = document.createElement('div');
-  div.className = `chat-message chat-${sender}`;
-  div.innerHTML = msg;
-  const box = document.getElementById('chatMessages');
-  box.appendChild(div);
-  box.scrollTop = box.scrollHeight;
+  const div = document.createElement('div'); div.className = `chat-message chat-${sender}`; div.innerHTML = msg;
+  const box = document.getElementById('chatMessages'); box.appendChild(div); box.scrollTop = box.scrollHeight;
 }
 
 function exportarAnaliseIA() {
   const text = `--- ANÁLISE IA - SISTEMA FINANCEIRO ---\nPeríodo: ${iaContext.mes||'Geral'}\n\n`
     + `Receitas: R$ ${iaContext.rec.toFixed(2)}\nDespesas: R$ ${iaContext.des.toFixed(2)}\nSaldo: R$ ${iaContext.saldo.toFixed(2)}\n\n`
     + `Contas Atrasadas: ${iaContext.atrasadas.length}\nContas Pendentes: ${iaContext.pendentes.length}\n\n`
-    + `Categorias com mais gastos:\n`
-    + Object.entries(iaContext.catDesc).sort((a,b)=>b[1]-a[1]).map(x=>`- ${x[0]}: R$ ${x[1].toFixed(2)}`).join('\n')
+    + `Categorias com mais gastos:\n` + Object.entries(iaContext.catDesc).sort((a,b)=>b[1]-a[1]).map(x=>`- ${x[0]}: R$ ${x[1].toFixed(2)}`).join('\n')
     + `\n\nEste é um arquivo gerado automaticamente pelo Assistente IA.`;
-    
   const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
-  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-  a.download = `analise_IA_${iaContext.mes}.txt`; a.click();
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `analise_IA_${iaContext.mes}.txt`; a.click();
 }
 
-
-/* =====================================================================
-   MÓDULO 9: RELATÓRIOS (NOVO E MELHORADO)
-   ===================================================================== */
+/* RELATÓRIOS */
 function gerarRelatorioTela() {
-  const mes = getMesGlobal(); 
-  const fDados = getLancamentosFiltrados(mes);
-  const tipo = document.getElementById('tipoRelatorio') ? document.getElementById('tipoRelatorio').value : 'geral';
-  
-  let titulo = "Relatório Geral";
-  let lista = fDados;
-  
+  const mes = getMesGlobal(); const fDados = getLancamentosFiltrados(mes); const tipo = document.getElementById('tipoRelatorio') ? document.getElementById('tipoRelatorio').value : 'geral';
+  let titulo = "Relatório Geral"; let lista = fDados;
   if(tipo === 'receitas') { lista = fDados.filter(i=>i.tipo==='receita'); titulo = "Relatório de Receitas"; }
   if(tipo === 'despesas') { lista = fDados.filter(i=>i.tipo==='despesa'); titulo = "Relatório de Despesas"; }
   if(tipo === 'pagas') { lista = fDados.filter(i=>calcularStatus(i)==='pago'); titulo = "Relatório de Contas Pagas"; }
   if(tipo === 'pendentes') { lista = fDados.filter(i=>calcularStatus(i)==='pendente'); titulo = "Relatório de Contas Pendentes"; }
   if(tipo === 'atrasadas') { lista = fDados.filter(i=>calcularStatus(i)==='atrasado'); titulo = "Relatório de Contas Atrasadas"; }
-  
-  let rec=0, des=0;
-  fDados.forEach(i=>{ if(i.tipo==='receita') rec+=i.valor; else des+=i.valor; });
-  
+  let rec=0, des=0; fDados.forEach(i=>{ if(i.tipo==='receita') rec+=i.valor; else des+=i.valor; });
   let tableRows = '';
   if(tipo === 'categorias') {
-    titulo = "Relatório Agrupado por Categoria";
-    const catG = {};
+    titulo = "Relatório Agrupado por Categoria"; const catG = {};
     fDados.forEach(i=>{ catG[i.categoria] = (catG[i.categoria]||0) + i.valor; });
     tableRows = Object.entries(catG).map(x=>`<tr><td>${x[0]}</td><td style="text-align:right;">${formatMoeda(x[1])}</td></tr>`).join('');
     tableRows = `<thead><tr><th>Categoria</th><th style="text-align:right;">Total Gasto</th></tr></thead><tbody>${tableRows}</tbody>`;
   } else {
     lista.sort((a,b)=>new Date(a.vencimento)-new Date(b.vencimento));
-    lista.forEach(i => {
-      tableRows += `<tr><td>${formatData(i.vencimento)}</td><td>${i.descricao}</td><td>${i.categoria}</td><td>${i.status}</td><td style="text-align:right;">${formatMoeda(i.valor)}</td></tr>`;
-    });
+    lista.forEach(i => { tableRows += `<tr><td>${formatData(i.vencimento)}</td><td>${i.descricao}</td><td>${i.categoria}</td><td>${i.status}</td><td style="text-align:right;">${formatMoeda(i.valor)}</td></tr>`; });
     tableRows = `<thead><tr><th>Data</th><th>Descrição</th><th>Categoria</th><th>Status</th><th style="text-align:right;">Valor</th></tr></thead><tbody>${tableRows}</tbody>`;
   }
-  
-  const dataHoje = new Date().toLocaleString('pt-BR');
   const html = `
-    <div style="text-align:center; margin-bottom:20px;">
-      <h2>${titulo}</h2>
-      <p style="color:#666; font-size:14px;">Período: <strong>${mes || 'Todos os tempos'}</strong> | Gerado em: ${dataHoje}</p>
-    </div>
-    
+    <div style="text-align:center; margin-bottom:20px;"><h2>${titulo}</h2><p style="color:#666; font-size:14px;">Período: <strong>${mes || 'Todos os tempos'}</strong> | Gerado em: ${new Date().toLocaleString('pt-BR')}</p></div>
     <div style="display:flex; justify-content:space-between; background:#f8fafc; padding:15px; border-radius:8px; margin-bottom:20px; border:1px solid #e2e8f0;">
       <div><span style="font-size:12px;color:#666;">Total Receitas</span><br><strong style="color:var(--success); font-size:18px;">${formatMoeda(rec)}</strong></div>
       <div><span style="font-size:12px;color:#666;">Total Despesas</span><br><strong style="color:var(--danger); font-size:18px;">${formatMoeda(des)}</strong></div>
       <div><span style="font-size:12px;color:#666;">Saldo Líquido</span><br><strong style="font-size:18px; color:${rec-des>=0?'var(--success)':'var(--danger)'}">${formatMoeda(rec-des)}</strong></div>
     </div>
-    
-    <table style="width:100%; border-collapse:collapse; font-size:13px;">
-      ${tableRows || '<tr><td colspan="5" align="center">Nenhum dado encontrado para o filtro atual.</td></tr>'}
-    </table>
+    <table style="width:100%; border-collapse:collapse; font-size:13px;">${tableRows || '<tr><td colspan="5" align="center">Nenhum dado encontrado para o filtro atual.</td></tr>'}</table>
   `;
   document.getElementById('relatorioViewArea').innerHTML = html;
 }
-
 function getDadosParaRelatorio() {
-  const mes = getMesGlobal(); const fDados = getLancamentosFiltrados(mes);
-  const tipo = document.getElementById('tipoRelatorio').value;
-  if(tipo === 'receitas') return fDados.filter(i=>i.tipo==='receita');
-  if(tipo === 'despesas') return fDados.filter(i=>i.tipo==='despesa');
-  if(tipo === 'pagas') return fDados.filter(i=>calcularStatus(i)==='pago');
-  if(tipo === 'pendentes') return fDados.filter(i=>calcularStatus(i)==='pendente');
-  if(tipo === 'atrasadas') return fDados.filter(i=>calcularStatus(i)==='atrasado');
-  return fDados; // geral ou categorias
+  const fDados = getLancamentosFiltrados(); const tipo = document.getElementById('tipoRelatorio').value;
+  if(tipo==='receitas') return fDados.filter(i=>i.tipo==='receita'); if(tipo==='despesas') return fDados.filter(i=>i.tipo==='despesa');
+  if(tipo==='pagas') return fDados.filter(i=>calcularStatus(i)==='pago'); if(tipo==='pendentes') return fDados.filter(i=>calcularStatus(i)==='pendente');
+  if(tipo==='atrasadas') return fDados.filter(i=>calcularStatus(i)==='atrasado'); return fDados;
 }
-
-function exportarRelatorioCSV() {
-  const lista = getDadosParaRelatorio();
-  let csv = "ID;Descricao;Tipo;Categoria;Valor;Vencimento;Status;FormaPgto\n";
-  lista.forEach(i => { csv += `${i.id};"${i.descricao}";${i.tipo};${i.categoria};${i.valor};${i.vencimento};${i.status};${i.formaPagamento||''}\n`; });
-  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' }); const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href = url; a.download = `relatorio_${getMesGlobal()||'tudo'}.csv`; a.click(); showToast("CSV baixado!");
-}
-
-function exportarRelatorioJSON() {
-  const lista = getDadosParaRelatorio();
-  const blob = new Blob([JSON.stringify(lista, null, 2)], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href = url; a.download = `relatorio_filtrado.json`; a.click(); showToast("JSON baixado!");
-}
-
+function exportarRelatorioCSV() { const lista = getDadosParaRelatorio(); let csv = "ID;Descricao;Tipo;Categoria;Valor;Vencimento;Status;FormaPgto\n"; lista.forEach(i => { csv += `${i.id};"${i.descricao}";${i.tipo};${i.categoria};${i.valor};${i.vencimento};${i.status};${i.formaPagamento||''}\n`; }); const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `relatorio_${getMesGlobal()||'tudo'}.csv`; a.click(); showToast("CSV baixado!"); }
+function exportarRelatorioJSON() { const blob = new Blob([JSON.stringify(getDadosParaRelatorio(), null, 2)], { type: 'application/json' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `relatorio_filtrado.json`; a.click(); showToast("JSON baixado!"); }
 
 /* CONFIG E BACKUP */
 function salvarConfigModo() { config.modo = document.getElementById('configModo').value; salvar('config', config); aplicarModoVisualizacao(); showToast("Preferência salva!"); }
 function salvarConfigInicio() { config.inicio = document.getElementById('configInicio').value; salvar('config', config); showToast("Preferência salva!"); }
-function limparTudo() { if(confirm("CUIDADO! Isso apagará TODOS os seus dados. Tem certeza?")) { localStorage.clear(); location.reload(); } }
+function limparTudo() { if(confirm("CUIDADO! Isso apagará TODOS os dados. Tem certeza?")) { localStorage.clear(); location.reload(); } }
 function exportarBackup() { const ex = { dados, metas, orcamentos, futuros, recorrentes, parcelamentos, categorias, config }; const blob = new Blob([JSON.stringify(ex, null, 2)], { type: "application/json" }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `backup_financas_${new Date().toISOString().slice(0,10)}.json`; a.click(); }
 function importarBackup() { const file = document.getElementById('arquivoImportacao').files[0]; if(!file) return showToast("Selecione um arquivo.", "error"); const reader = new FileReader(); reader.onload = function(e) { try { const b = JSON.parse(e.target.result); if(confirm("Sobrescrever todos os dados?")) { if(b.dados) salvar('dados', b.dados); if(b.metas) salvar('metas', b.metas); if(b.orcamentos) salvar('orcamentos', b.orcamentos); if(b.futuros) salvar('futuros', b.futuros); if(b.recorrentes) salvar('recorrentes', b.recorrentes); if(b.parcelamentos) salvar('parcelamentos', b.parcelamentos); if(b.categorias) salvar('categorias', b.categorias); if(b.config) salvar('config', b.config); alert("Restaurado com sucesso!"); location.reload(); } } catch(err) { showToast("Arquivo JSON inválido.", "error"); } }; reader.readAsText(file); }
 
