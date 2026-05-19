@@ -28,7 +28,7 @@
   .sidebar { width: var(--sidebar-w); background: var(--dark); color: #cbd5e1; display: flex; flex-direction: column; transition: transform 0.3s ease; z-index: 1000; flex-shrink: 0; }
   .sidebar-header { padding: 20px; font-size: 18px; font-weight: 700; color: white; border-bottom: 1px solid #1e293b; display: flex; flex-direction: column; gap: 5px; }
   .sidebar-menu { flex: 1; overflow-y: auto; padding: 15px 0; display: flex; flex-direction: column; gap: 2px; }
-  .menu-item { padding: 12px 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-size: 14px; border-left: 3px solid transparent; transition: 0.2s; position: relative; }
+  .menu-item { background: none; border: none; width: 100%; text-align: left; color: inherit; padding: 12px 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-size: 14px; border-left: 3px solid transparent; transition: 0.2s; position: relative; }
   .menu-item:hover { background: #1e293b; color: white; }
   .menu-item.active { background: #1e293b; color: white; border-left-color: var(--primary); font-weight: 600; }
   .menu-badge { margin-left: auto; background: var(--primary); color: white; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: bold; }
@@ -247,18 +247,18 @@
       <div style="font-size:11px; color:#94a3b8; font-weight:normal; margin-top:5px;" id="lblGrupoId">Modo: Local</div>
     </div>
     <div class="sidebar-menu">
-      <div class="menu-item active" onclick="navegar('dashboard')">📊 Início / Dashboard</div>
-      <div class="menu-item" onclick="navegar('assistente')">🤖 Assistente IA <span class="menu-badge hidden" id="badgeIA">0</span></div>
-      <div class="menu-item" onclick="navegar('lancamentos')">📝 Lançamentos <span class="menu-badge hidden" id="badgeLanc">0</span></div>
-      <div class="menu-item" onclick="navegar('metas')">🎯 Metas do Mês</div>
-      <div class="menu-item" onclick="navegar('orcamento')">📉 Controle de Gastos</div>
-      <div class="menu-item" onclick="navegar('futuro')">🔮 Planejamento Futuro</div>
-      <div class="menu-item" onclick="navegar('recorrentes')">🔁 Contas Recorrentes</div>
-      <div class="menu-item" onclick="navegar('parcelamentos')">🛍️ Parcelamentos</div>
-      <div class="menu-item" onclick="navegar('categorias')">🏷️ Categorias</div>
-      <div class="menu-item" onclick="navegar('relatorios')">📈 Relatórios <span class="menu-badge badge-static">PDF/CSV</span></div>
-      <div class="menu-item" onclick="navegar('config')">⚙️ Configurações</div>
-      <div class="menu-item" onclick="navegar('backup')">💾 Backup / Importar</div>
+      <button type="button" class="menu-item active" data-module="dashboard">📊 Início / Dashboard</button>
+      <button type="button" class="menu-item" data-module="assistente">🤖 Assistente IA <span class="menu-badge hidden" id="badgeIA">0</span></button>
+      <button type="button" class="menu-item" data-module="lancamentos">📝 Lançamentos <span class="menu-badge hidden" id="badgeLanc">0</span></button>
+      <button type="button" class="menu-item" data-module="metas">🎯 Metas do Mês</button>
+      <button type="button" class="menu-item" data-module="gastos">📉 Controle de Gastos</button>
+      <button type="button" class="menu-item" data-module="planejamento">🔮 Planejamento Futuro</button>
+      <button type="button" class="menu-item" data-module="recorrentes">🔁 Contas Recorrentes</button>
+      <button type="button" class="menu-item" data-module="parcelamentos">🛍️ Parcelamentos</button>
+      <button type="button" class="menu-item" data-module="categorias">🏷️ Categorias</button>
+      <button type="button" class="menu-item" data-module="relatorios">📈 Relatórios <span class="menu-badge badge-static">PDF/CSV</span></button>
+      <button type="button" class="menu-item" data-module="configuracoes">⚙️ Configurações</button>
+      <button type="button" class="menu-item" data-module="backup">💾 Backup / Importar</button>
     </div>
   </aside>
 
@@ -287,11 +287,11 @@
         <!-- Ações Rápidas -->
         <div class="panel" style="padding: 15px 25px; margin-bottom: 25px; display:flex; flex-wrap:wrap; gap:12px; align-items:center;">
           <span style="font-weight:700; color:var(--dark);">⚡ Ações Rápidas:</span>
-          <button class="btn btn-primary btn-sm" onclick="navegar('lancamentos')">➕ Novo Lançamento</button>
-          <button class="btn btn-outline btn-sm" onclick="navegar('lancamentos')">📝 Ver Lançamentos</button>
-          <button class="btn btn-outline btn-sm" onclick="navegar('assistente')">🤖 Abrir Assistente IA</button>
-          <button class="btn btn-outline btn-sm" onclick="navegar('relatorios')">📈 Gerar Relatório</button>
-          <button class="btn btn-outline btn-sm" onclick="navegar('backup')">💾 Fazer Backup</button>
+          <button class="btn btn-primary btn-sm" onclick="abrirModulo('lancamentos')">➕ Novo Lançamento</button>
+          <button class="btn btn-outline btn-sm" onclick="abrirModulo('lancamentos')">📝 Ver Lançamentos</button>
+          <button class="btn btn-outline btn-sm" onclick="abrirModulo('assistente')">🤖 Abrir Assistente IA</button>
+          <button class="btn btn-outline btn-sm" onclick="abrirModulo('relatorios')">📈 Gerar Relatório</button>
+          <button class="btn btn-outline btn-sm" onclick="abrirModulo('backup')">💾 Fazer Backup</button>
         </div>
         
         <!-- Dashboard Content -->
@@ -342,7 +342,6 @@
         </div>
       </section>
 
-      <!-- MÓDULO: LANÇAMENTOS -->
       <section id="mod-lancamentos" class="module hidden">
         <div class="layout-lancamentos">
           <div class="panel" id="panelFormLanc">
@@ -387,14 +386,14 @@
         </div>
       </section>
       <!-- Controle de Gastos -->
-      <section id="mod-orcamento" class="module hidden">
+      <section id="mod-gastos" class="module hidden">
         <div class="grid-2">
           <div class="panel"><div class="panel-title">Definir Limite por Categoria</div><div class="form-group"><label>Categoria</label><select id="fOrcCat" class="form-control"></select></div><div class="form-group"><label>Limite Mensal (R$)</label><input type="number" id="fOrcValor" class="form-control"></div><button class="btn btn-primary" onclick="salvarOrcamento()">Definir Limite</button></div>
           <div class="panel"><div class="panel-title">Acompanhamento do Mês</div><div id="orcamentoProgressoHtml"></div></div>
         </div>
       </section>
       <!-- Futuro -->
-      <section id="mod-futuro" class="module hidden">
+      <section id="mod-planejamento" class="module hidden">
         <div class="grid-2">
           <div class="panel"><div class="panel-title">Adicionar Plano</div><div class="form-group"><label>Descrição</label><input type="text" id="fFutDesc" class="form-control"></div><div class="form-row"><div class="form-group"><label>Tipo</label><select id="fFutTipo" class="form-control"><option value="despesa">Despesa</option><option value="receita">Receita</option></select></div><div class="form-group"><label>Categoria</label><select id="fFutCat" class="form-control"></select></div></div><div class="form-row"><div class="form-group"><label>Valor Previsto</label><input type="number" id="fFutValor" class="form-control"></div><div class="form-group"><label>Data Prevista</label><input type="date" id="fFutData" class="form-control"></div></div><button class="btn btn-primary" onclick="salvarFuturo()">Adicionar Planejamento</button></div>
           <div class="panel"><div class="panel-title">Lista de Planejamentos</div><div class="view-tabela table-responsive"><table><thead><tr><th>Descrição</th><th>Data</th><th>Valor</th><th>Ação</th></tr></thead><tbody id="listFuturoTabela"></tbody></table></div></div>
@@ -431,7 +430,7 @@
         </div>
       </section>
       <!-- Config -->
-      <section id="mod-config" class="module hidden">
+      <section id="mod-configuracoes" class="module hidden">
         <div class="panel" style="max-width:400px;"><div class="panel-title">Aparência e Navegação</div><div class="form-group"><label>Modo Visualização</label><select id="configModo" class="form-control" onchange="salvarConfigModo()"><option value="auto">Automático</option><option value="pc">PC</option><option value="celular">Celular</option></select></div><div class="form-group"><label>Início</label><select id="configInicio" class="form-control" onchange="salvarConfigInicio()"><option value="dashboard">Dashboard</option><option value="lancamentos">Lançamentos</option></select></div></div>
       </section>
       <!-- Backup Local -->
@@ -458,6 +457,7 @@
 /* CONFIGURAÇÃO */
 const USAR_LOGIN = false; 
 const USAR_SUPABASE = false; 
+const MODO_LOCAL = true;
 
 /* ========================================================
    CONFIGURAÇÃO SUPABASE
@@ -485,12 +485,35 @@ let categorias = carregarLocal('categorias', []);
 let config = carregarLocal('config', { modo: 'auto', inicio: 'dashboard' });
 let editLancId = null;
 
+function salvarConfigModo() {
+  config.modo = document.getElementById('configModo').value;
+  salvarLocal('config', config);
+  aplicarModoVisualizacao();
+}
+function salvarConfigInicio() {
+  config.inicio = document.getElementById('configInicio').value;
+  salvarLocal('config', config);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   aplicarModoVisualizacao();
   window.addEventListener('resize', aplicarModoVisualizacao);
   const hoje = new Date();
   document.getElementById('filtroGlobalMes').value = `${hoje.getFullYear()}-${String(hoje.getMonth()+1).padStart(2,'0')}`;
   
+  // Configs
+  const configModoEl = document.getElementById('configModo'); if(configModoEl) configModoEl.value = config.modo || 'auto';
+  const configInicioEl = document.getElementById('configInicio'); if(configInicioEl) configInicioEl.value = config.inicio || 'dashboard';
+
+  // Event Listeners for menu-item buttons
+  document.querySelectorAll(".menu-item").forEach(item => {
+    item.addEventListener("click", function(event) {
+      event.preventDefault();
+      const modulo = this.dataset.module;
+      abrirModulo(modulo);
+    });
+  });
+
   if (USAR_LOGIN) {
     if(!supabase || SUPABASE_URL === 'SUA_URL_SUPABASE_AQUI') {
       document.getElementById('authError').innerText = "Supabase não configurado. Verifique SUPABASE_URL e SUPABASE_ANON_KEY no código.";
@@ -504,7 +527,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('authOverlay').classList.remove('active');
     document.getElementById('groupOverlay').classList.remove('active');
     document.getElementById('lblGrupoId').innerText = "Modo: Offline (Local)";
-    navegar(config.inicio);
+    abrirModulo(config.inicio);
     processarDadosGlobais();
   }
 });
@@ -607,7 +630,7 @@ async function verificarGrupo() {
     currentGroupId = data[0].grupo_id;
     document.getElementById('groupOverlay').classList.remove('active');
     document.getElementById('lblGrupoId').innerText = `Grupo ID: ${currentGroupId}`;
-    navegar(config.inicio);
+    abrirModulo(config.inicio);
     await carregarTudoSupabase();
     configurarRealtime();
   } else {
@@ -689,7 +712,7 @@ async function salvarLancamento() {
   
   document.getElementById('btnSalvarLanc').disabled = true;
   
-  if (USAR_SUPABASE && currentGroupId) {
+  if (USAR_SUPABASE && supabase && currentGroupId) {
     const dbObj = { ...obj, grupo_id: currentGroupId, criado_por: sessionUser.id, forma_pagamento: obj.formaPagamento };
     delete dbObj.id; delete dbObj.formaPagamento;
     if(editLancId) { await supabase.from('lancamentos').update(dbObj).eq('id', editLancId); cancelarEdicaoLancamento(); }
@@ -709,13 +732,13 @@ async function salvarLancamento() {
 }
 
 async function pagarLancamento(id) { 
-  if (USAR_SUPABASE && currentGroupId) { await supabase.from('lancamentos').update({ status: 'pago' }).eq('id', id); carregarTudoSupabase(); }
+  if (USAR_SUPABASE && supabase && currentGroupId) { await supabase.from('lancamentos').update({ status: 'pago' }).eq('id', id); carregarTudoSupabase(); }
   else { const i = dados.find(d=>d.id===id); if(i) { i.status = 'pago'; salvarLocal('dados', dados); processarDadosGlobais(); } }
   showToast("Pago!"); 
 }
 async function excluirLancamento(id) { 
   if(!confirm("Excluir?")) return;
-  if (USAR_SUPABASE && currentGroupId) { await supabase.from('lancamentos').delete().eq('id', id); carregarTudoSupabase(); }
+  if (USAR_SUPABASE && supabase && currentGroupId) { await supabase.from('lancamentos').delete().eq('id', id); carregarTudoSupabase(); }
   else { dados = dados.filter(d=>d.id!==id); salvarLocal('dados', dados); processarDadosGlobais(); }
   showToast("Excluído", "warning"); 
 }
@@ -723,20 +746,20 @@ async function excluirLancamento(id) {
 async function adicionarCategoria() {
   const nc = document.getElementById('fNovaCat').value.trim(); if(!nc) return;
   if(categorias.includes(nc)) return showToast("Categoria já existe.", "warning");
-  if(USAR_SUPABASE && currentGroupId) { await supabase.from('categorias').insert([{ grupo_id: currentGroupId, nome: nc }]); carregarTudoSupabase(); }
+  if(USAR_SUPABASE && supabase && currentGroupId) { await supabase.from('categorias').insert([{ grupo_id: currentGroupId, nome: nc }]); carregarTudoSupabase(); }
   else { categorias.push(nc); salvarLocal('categorias', categorias); processarDadosGlobais(); }
   document.getElementById('fNovaCat').value = ''; showToast("Adicionada!"); 
 }
 async function removerCategoria(cat) {
   if(!confirm(`Excluir a categoria "${cat}"?`)) return;
-  if(USAR_SUPABASE && currentGroupId) { await supabase.from('categorias').delete().eq('grupo_id', currentGroupId).eq('nome', cat); carregarTudoSupabase(); }
+  if(USAR_SUPABASE && supabase && currentGroupId) { await supabase.from('categorias').delete().eq('grupo_id', currentGroupId).eq('nome', cat); carregarTudoSupabase(); }
   else { categorias = categorias.filter(c=>c!==cat); salvarLocal('categorias', categorias); processarDadosGlobais(); }
   showToast("Excluída."); 
 }
 
 async function salvarMeta() {
   const mes = getMesGlobal(); if(!mes) return; const v = Number(document.getElementById('fMetaValor').value);
-  if(USAR_SUPABASE && currentGroupId) {
+  if(USAR_SUPABASE && supabase && currentGroupId) {
     await supabase.from('metas').delete().eq('grupo_id', currentGroupId).eq('mes_referencia', mes);
     if(v>0) await supabase.from('metas').insert([{ grupo_id: currentGroupId, mes_referencia: mes, valor_meta: v }]);
     carregarTudoSupabase();
@@ -750,7 +773,7 @@ async function salvarMeta() {
 async function salvarOrcamento() {
   const mes = getMesGlobal(); const c = document.getElementById('fOrcCat').value; const v = Number(document.getElementById('fOrcValor').value);
   if(!mes || !c || !v) return;
-  if(USAR_SUPABASE && currentGroupId) {
+  if(USAR_SUPABASE && supabase && currentGroupId) {
     await supabase.from('orcamentos_categoria').delete().eq('grupo_id', currentGroupId).eq('mes_referencia', mes).eq('categoria', c);
     await supabase.from('orcamentos_categoria').insert([{ grupo_id: currentGroupId, mes_referencia: mes, categoria: c, limite_valor: v }]);
     carregarTudoSupabase();
@@ -762,7 +785,7 @@ async function salvarOrcamento() {
 }
 async function removerOrcamento(cat) { 
   const mes = getMesGlobal(); 
-  if(USAR_SUPABASE && currentGroupId) { await supabase.from('orcamentos_categoria').delete().eq('grupo_id', currentGroupId).eq('mes_referencia', mes).eq('categoria', cat); carregarTudoSupabase(); }
+  if(USAR_SUPABASE && supabase && currentGroupId) { await supabase.from('orcamentos_categoria').delete().eq('grupo_id', currentGroupId).eq('mes_referencia', mes).eq('categoria', cat); carregarTudoSupabase(); }
   else { if(orcamentos[mes]) { delete orcamentos[mes][cat]; salvarLocal('orcamentos', orcamentos); processarDadosGlobais(); } }
   showToast("Removido."); 
 }
@@ -770,20 +793,20 @@ async function removerOrcamento(cat) {
 async function salvarFuturo() {
   const obj = { id: generateId(), descricao: document.getElementById('fFutDesc').value, tipo: document.getElementById('fFutTipo').value, categoria: document.getElementById('fFutCat').value, valor: Number(document.getElementById('fFutValor').value), data: document.getElementById('fFutData').value };
   if(!obj.descricao || !obj.valor || !obj.data) return;
-  if(USAR_SUPABASE && currentGroupId) {
+  if(USAR_SUPABASE && supabase && currentGroupId) {
     await supabase.from('planejamentos').insert([{ grupo_id: currentGroupId, descricao: obj.descricao, tipo: obj.tipo, categoria: obj.categoria, valor_previsto: obj.valor, data_prevista: obj.data }]); carregarTudoSupabase();
   } else { futuros.push(obj); salvarLocal('futuros', futuros); processarDadosGlobais(); }
   showToast("Plano salvo!"); 
 }
 async function excluirFuturo(id) { 
-  if(USAR_SUPABASE && currentGroupId) { await supabase.from('planejamentos').delete().eq('id', id); carregarTudoSupabase(); }
+  if(USAR_SUPABASE && supabase && currentGroupId) { await supabase.from('planejamentos').delete().eq('id', id); carregarTudoSupabase(); }
   else { futuros = futuros.filter(f=>f.id!==id); salvarLocal('futuros', futuros); processarDadosGlobais(); }
 }
 async function efetivarFuturo(id) {
-  const f = futuros.find(i=>i.id===id) || (USAR_SUPABASE ? await supabase.from('planejamentos').select('*').eq('id',id).single().then(r=>r.data) : null);
+  const f = futuros.find(i=>i.id===id) || ((USAR_SUPABASE && supabase) ? await supabase.from('planejamentos').select('*').eq('id',id).single().then(r=>r.data) : null);
   if(!f) return;
   const desc = f.descricao; const tipo = f.tipo; const cat = f.categoria; const val = f.valor || f.valor_previsto; const dta = f.data || f.data_prevista;
-  if(USAR_SUPABASE && currentGroupId) {
+  if(USAR_SUPABASE && supabase && currentGroupId) {
     await supabase.from('lancamentos').insert([{ grupo_id: currentGroupId, descricao: desc, tipo: tipo, categoria: cat, valor: val, vencimento: dta, status: 'pendente', criado_por: sessionUser.id }]);
     await supabase.from('planejamentos').delete().eq('id', id); carregarTudoSupabase();
   } else {
@@ -796,13 +819,13 @@ async function efetivarFuturo(id) {
 async function salvarRecorrente() {
   const obj = { id: generateId(), descricao: document.getElementById('fRecDesc').value, categoria: document.getElementById('fRecCat').value, valor: Number(document.getElementById('fRecValor').value), dia: Number(document.getElementById('fRecDia').value) };
   if(!obj.descricao || !obj.valor || !obj.dia) return;
-  if(USAR_SUPABASE && currentGroupId) {
+  if(USAR_SUPABASE && supabase && currentGroupId) {
     await supabase.from('recorrencias').insert([{ grupo_id: currentGroupId, descricao: obj.descricao, categoria: obj.categoria, valor: obj.valor, dia_vencimento: obj.dia }]); carregarTudoSupabase();
   } else { recorrentes.push(obj); salvarLocal('recorrentes', recorrentes); processarDadosGlobais(); }
   showToast("Recorrente salva!"); 
 }
 async function excluirRecorrente(id) { 
-  if(USAR_SUPABASE && currentGroupId) { await supabase.from('recorrencias').delete().eq('id', id); carregarTudoSupabase(); }
+  if(USAR_SUPABASE && supabase && currentGroupId) { await supabase.from('recorrencias').delete().eq('id', id); carregarTudoSupabase(); }
   else { recorrentes = recorrentes.filter(r=>r.id!==id); salvarLocal('recorrentes', recorrentes); processarDadosGlobais(); }
 }
 
@@ -817,7 +840,7 @@ async function gerarParcelamento() {
     dLocais.push({ id: generateId(), descricao: `${desc} (${i}/${qtd})`, tipo: 'despesa', categoria: cat, valor: valorParcela, vencimento: dStr, status: 'pendente' });
     d.setMonth(d.getMonth()+1);
   }
-  if(USAR_SUPABASE && currentGroupId) {
+  if(USAR_SUPABASE && supabase && currentGroupId) {
     await supabase.from('lancamentos').insert(pacotes);
     await supabase.from('parcelamentos').insert([{ grupo_id: currentGroupId, descricao: desc, valor_total: valorTotal, quantidade_parcelas: qtd, categoria: cat }]);
     carregarTudoSupabase();
@@ -841,7 +864,9 @@ function formatMoeda(val) { return Number(val).toLocaleString('pt-BR', {style:'c
 function formatData(iso) { if(!iso) return '-'; const p = iso.split('-'); return p.length===3 ? `${p[2]}/${p[1]}/${p[0]}` : iso; }
 
 function calcularStatus(item) {
+  if (!item) return 'pendente';
   if (item.status === 'pago') return 'pago';
+  if (!item.vencimento) return 'pendente';
   const hoje = new Date(); hoje.setHours(0,0,0,0);
   const p = item.vencimento.split('-');
   if (p.length === 3 && new Date(p[0], p[1]-1, p[2]) < hoje) return 'atrasado';
@@ -858,22 +883,52 @@ function aplicarModoVisualizacao() {
   if (modoFinal === 'celular') { document.body.classList.add('modo-celular'); document.body.classList.remove('modo-pc'); }
   else { document.body.classList.add('modo-pc'); document.body.classList.remove('modo-celular'); document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlayMenu').classList.remove('active'); }
 }
+const titulosModulos = {
+  dashboard: "Dashboard / Visão Geral",
+  assistente: "🤖 Assistente IA",
+  lancamentos: "📝 Lançamentos",
+  metas: "🎯 Metas do Mês",
+  gastos: "📉 Controle de Gastos",
+  planejamento: "🔮 Planejamento Futuro",
+  recorrentes: "🔁 Contas Recorrentes",
+  parcelamentos: "🛍️ Parcelamentos",
+  categorias: "🏷️ Categorias",
+  relatorios: "📈 Relatórios",
+  configuracoes: "⚙️ Configurações",
+  backup: "💾 Backup / Importar"
+};
+
 function toggleMenu() { document.getElementById('sidebar').classList.toggle('open'); document.getElementById('overlayMenu').classList.toggle('active'); }
-function navegar(modulo) {
+
+function abrirModulo(modulo) {
+  if(!modulo) return;
+  
+  // Map old config.inicio fallback
+  if(modulo === 'config') modulo = 'configuracoes';
+  if(modulo === 'orcamento') modulo = 'gastos';
+  if(modulo === 'futuro') modulo = 'planejamento';
+
   document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active')); 
-  const btn = document.querySelector(`.menu-item[onclick="navegar('${modulo}')"]`); 
+  const btn = document.querySelector(`.menu-item[data-module="${modulo}"]`); 
   if(btn) btn.classList.add('active');
   
   document.querySelectorAll('.module').forEach(el => { el.classList.add('hidden'); el.classList.remove('active'); });
-  document.getElementById(`mod-${modulo}`).classList.remove('hidden'); 
-  document.getElementById(`mod-${modulo}`).classList.add('active');
+  const alvo = document.getElementById(`mod-${modulo}`);
+  if(alvo) {
+    alvo.classList.remove('hidden'); 
+    alvo.classList.add('active');
+  }
+  
+  const titulo = titulosModulos[modulo] || "FinançasCasa";
+  const pTitle = document.getElementById('pageTitle');
+  if(pTitle) pTitle.innerText = titulo;
   
   if(document.body.classList.contains('modo-celular')) { document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlayMenu').classList.remove('active'); }
 }
 
 function limparFiltroGlobal() { document.getElementById('filtroGlobalMes').value = ''; processarDadosGlobais(); }
 function getMesGlobal() { return document.getElementById('filtroGlobalMes').value; }
-function getLancamentosFiltrados(mes = getMesGlobal()) { return mes ? dados.filter(i => i.vencimento.startsWith(mes)) : dados; }
+function getLancamentosFiltrados(mes = getMesGlobal()) { return mes ? dados.filter(i => i.vencimento && i.vencimento.startsWith(mes)) : dados; }
 
 function popularSelectCategorias() {
   const options = [...new Set(categorias)].sort().map(c => `<option value="${c}">${c}</option>`).join('');
@@ -920,7 +975,7 @@ function renderDashboard() {
   }
   
   const hoje = new Date(); hoje.setHours(0,0,0,0); const dataLimite = new Date(hoje); dataLimite.setDate(hoje.getDate() + 7);
-  const venc7dias = fDados.filter(i => calcularStatus(i)!=='pago' && i.vencimento.split('-').length===3 && new Date(i.vencimento.split('-')[0], i.vencimento.split('-')[1]-1, i.vencimento.split('-')[2]) <= dataLimite).sort((a,b)=>new Date(a.vencimento)-new Date(b.vencimento));
+  const venc7dias = fDados.filter(i => i.vencimento && i.vencimento.split('-').length===3 && calcularStatus(i)!=='pago' && new Date(i.vencimento.split('-')[0], i.vencimento.split('-')[1]-1, i.vencimento.split('-')[2]) <= dataLimite).sort((a,b)=>(a.vencimento && b.vencimento) ? (new Date(a.vencimento)-new Date(b.vencimento)) : 0);
   let vHtml = ''; venc7dias.forEach(i => vHtml += `<div style="border-bottom:1px solid var(--border); padding:10px 0;"><strong style="font-size:13px;">${i.descricao}</strong><br><span style="font-size:11px; font-weight:bold;">${formatData(i.vencimento)}</span> - <strong>${formatMoeda(i.valor)}</strong></div>`);
   document.getElementById('dashProxVencHtml').innerHTML = vHtml || '<div style="padding:20px;">Tudo em dia!</div>';
   
@@ -934,7 +989,7 @@ function renderDashboard() {
 
 function renderLancamentos() {
   const mes = getMesGlobal(); let lista = getLancamentosFiltrados(mes); const busca = document.getElementById('buscaLanc').value.toLowerCase();
-  if(busca) lista = lista.filter(i => i.descricao.toLowerCase().includes(busca)); lista.sort((a,b) => new Date(a.vencimento) - new Date(b.vencimento));
+  if(busca) lista = lista.filter(i => i.descricao.toLowerCase().includes(busca)); lista.sort((a,b) => (a.vencimento && b.vencimento) ? (new Date(a.vencimento) - new Date(b.vencimento)) : 0);
   let tb='', lst='';
   lista.forEach(i => {
     const st = calcularStatus(i); const corV = i.tipo==='receita'?'c-green':'c-red';
