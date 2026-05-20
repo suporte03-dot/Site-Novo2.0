@@ -25,21 +25,19 @@
   .app-layout { display: flex; height: 100vh; width: 100vw; }
   
   /* Sidebar */
-  .sidebar { width: var(--sidebar-w); background: var(--dark); color: #cbd5e1; display: flex; flex-direction: column; transition: width 0.3s ease, transform 0.3s ease; z-index: 1000; flex-shrink: 0; position: relative; }
-  .sidebar.collapsed-pc { width: 65px; }
-  .sidebar.collapsed-pc .sidebar-header span { display: none; }
-  .sidebar.collapsed-pc .sidebar-header #lblGrupoId { display: none; }
-  .sidebar.collapsed-pc .menu-badge { display: none; }
-  .sidebar.collapsed-pc .menu-item { padding: 12px 18px; }
+  .sidebar { width: var(--sidebar-w); background: var(--dark); color: #cbd5e1; display: flex; flex-direction: column; transition: margin-left 0.3s ease; z-index: 1000; flex-shrink: 0; position: relative; margin-left: 0; }
+  .sidebar.collapsed-pc { margin-left: calc(var(--sidebar-w) * -1); }
   
-  .btn-collapse-pc { position: absolute; right: -16px; top: 50%; transform: translateY(-50%); width: 16px; height: 60px; background: var(--primary); color: white; border: none; border-radius: 0 8px 8px 0; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 10px; z-index: 1001; transition: 0.2s; opacity: 0.8; box-shadow: 2px 0 5px rgba(0,0,0,0.2); }
-  .btn-collapse-pc:hover { opacity: 1; width: 22px; right: -22px; }
-  .sidebar.collapsed-pc .btn-collapse-pc { transform: translateY(-50%) rotate(180deg); right: -16px; border-radius: 8px 0 0 8px; box-shadow: -2px 0 5px rgba(0,0,0,0.2); }
-  .sidebar.collapsed-pc .btn-collapse-pc:hover { right: -22px; }
+  .btn-collapse-pc { position: absolute; right: -14px; top: 50%; transform: translateY(-50%); width: 28px; height: 28px; background: white; color: var(--text); border: 1px solid var(--border); border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 1001; transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.15); }
+  .btn-collapse-pc:hover { background: #f8fafc; transform: translateY(-50%) scale(1.1); color: var(--primary); }
+  .btn-collapse-pc svg { transition: transform 0.3s ease; }
+  .sidebar.collapsed-pc .btn-collapse-pc { right: -28px; box-shadow: 2px 0 5px rgba(0,0,0,0.15); }
+  .sidebar.collapsed-pc .btn-collapse-pc:hover { right: -28px; transform: translateY(-50%) scale(1.1); }
+  .sidebar.collapsed-pc .btn-collapse-pc svg { transform: rotate(180deg); }
 
-  .sidebar-header { padding: 20px; font-size: 18px; font-weight: 700; color: white; border-bottom: 1px solid #1e293b; display: flex; flex-direction: column; gap: 5px; overflow: hidden; white-space: nowrap; }
-  .sidebar-menu { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 15px 0; display: flex; flex-direction: column; gap: 2px; }
-  .menu-item { background: none; border: none; width: 100%; text-align: left; color: inherit; padding: 12px 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-size: 14px; border-left: 3px solid transparent; transition: 0.2s; position: relative; white-space: nowrap; overflow: hidden; }
+  .sidebar-header { padding: 20px; font-size: 18px; font-weight: 700; color: white; border-bottom: 1px solid #1e293b; display: flex; flex-direction: column; gap: 5px; }
+  .sidebar-menu { flex: 1; overflow-y: auto; padding: 15px 0; display: flex; flex-direction: column; gap: 2px; }
+  .menu-item { background: none; border: none; width: 100%; text-align: left; color: inherit; padding: 12px 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-size: 14px; border-left: 3px solid transparent; transition: 0.2s; position: relative; }
   .menu-item:hover { background: #1e293b; color: white; }
   .menu-item.active { background: #1e293b; color: white; border-left-color: var(--primary); font-weight: 600; }
   .menu-badge { margin-left: auto; background: var(--primary); color: white; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: bold; }
@@ -221,7 +219,9 @@
   
   <!-- BARRA LATERAL -->
   <aside class="sidebar" id="sidebar">
-    <button class="btn-collapse-pc" onclick="toggleSidebarPC()" title="Recolher/Expandir Menu">◀</button>
+    <button class="btn-collapse-pc" onclick="toggleSidebarPC()" title="Recolher/Expandir Menu">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
     <div class="sidebar-header">
       <div class="flex justify-between" style="width:100%;">
         <span>💰 FinançasCasa</span>
