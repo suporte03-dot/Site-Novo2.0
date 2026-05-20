@@ -340,7 +340,7 @@
             <div class="form-group"><label>Responsável</label><input type="text" id="fResp" class="form-control" placeholder="Quem efetuou/efetuará?"></div>
             <div class="form-group"><label>Observação</label><input type="text" id="fObs" class="form-control" placeholder="Detalhes opcionais..."></div>
             <div class="flex gap-2 mt-3">
-              <button class="btn btn-primary" style="flex:1; padding: 14px; font-size:15px;" onclick="salvarLancamento()" id="btnSalvarLanc">💾 Salvar Lançamento</button>
+              <button class="btn btn-primary" style="flex:1; padding: 14px; font-size:15px;" onclick="salvarLancamento()" id="btnSalvarLanc">Salvar Lançamento</button>
               <button class="btn btn-outline hidden" id="btnCancelLanc" style="padding: 14px; font-size:15px;" onclick="cancelarEdicaoLancamento()">Cancelar</button>
             </div>
           </div>
@@ -1015,11 +1015,11 @@ function renderLancamentos() {
 function editarLancamento(id) {
   const item = dados.find(d=>d.id===id); if(!item) return; editLancId = id;
   const pForm = document.getElementById('panelFormLanc'); pForm.classList.add('panel-edit-mode');
-  document.getElementById('formLancTitle').innerText = "✏️ Editando"; document.getElementById('btnSalvarLanc').innerText = "💾 Salvar Edição"; document.getElementById('btnSalvarLanc').className = "btn btn-warning"; document.getElementById('btnCancelLanc').classList.remove('hidden');
+  document.getElementById('formLancTitle').innerText = "✏️ Editando"; document.getElementById('btnSalvarLanc').innerText = "Salvar Edição"; document.getElementById('btnSalvarLanc').className = "btn btn-warning"; document.getElementById('btnCancelLanc').classList.remove('hidden');
   document.getElementById('fDesc').value=item.descricao; document.getElementById('fValor').value=item.valor; document.getElementById('fVenc').value=item.vencimento; document.getElementById('fTipo').value=item.tipo; document.getElementById('fCat').value=item.categoria; document.getElementById('fStatus').value=item.status; document.getElementById('fPgto').value=item.formaPagamento||'Outro'; document.getElementById('fResp').value=item.responsavel||''; document.getElementById('fObs').value=item.observacao||'';
   pForm.scrollIntoView({ behavior: 'smooth' });
 }
-function cancelarEdicaoLancamento() { editLancId = null; document.getElementById('panelFormLanc').classList.remove('panel-edit-mode'); document.getElementById('formLancTitle').innerText = "Novo Lançamento"; document.getElementById('btnSalvarLanc').innerText = "💾 Salvar"; document.getElementById('btnSalvarLanc').className = "btn btn-primary"; document.getElementById('btnCancelLanc').classList.add('hidden'); limparFormLanc(); }
+function cancelarEdicaoLancamento() { editLancId = null; document.getElementById('panelFormLanc').classList.remove('panel-edit-mode'); document.getElementById('formLancTitle').innerText = "Novo Lançamento"; document.getElementById('btnSalvarLanc').innerText = "Salvar Lançamento"; document.getElementById('btnSalvarLanc').className = "btn btn-primary"; document.getElementById('btnCancelLanc').classList.add('hidden'); limparFormLanc(); }
 function limparFormLanc() { ['fDesc','fValor','fVenc','fResp','fObs'].forEach(id => document.getElementById(id).value = ''); document.getElementById('fStatus').value = 'pendente'; }
 
 function renderMetas() {
