@@ -433,7 +433,10 @@
           <div class="panel">
             <div class="panel-title flex justify-between items-center">
               <span>📋 Minha Lista de Compras</span>
-              <button class="btn btn-primary btn-sm" onclick="limparListaMercado()">Limpar Tudo</button>
+              <div class="flex gap-2">
+                <button class="btn btn-outline btn-sm" onclick="baixarListaMercado()">📥 Baixar Lista</button>
+                <button class="btn btn-primary btn-sm" onclick="limparListaMercado()">Limpar Tudo</button>
+              </div>
             </div>
             <div class="flex gap-2 mb-3" style="flex-wrap: wrap;">
               <input type="text" id="inputItemMercado" class="form-control" style="flex:2; min-width:150px;" placeholder="Ex: Arroz 5kg..." onkeypress="if(event.key==='Enter') adicionarItemMercado()">
@@ -1111,6 +1114,23 @@ function removerItemMercado(id) {
 function limparListaMercado() {
   if(!confirm("Limpar toda a lista de compras?")) return;
   listaMercado = []; salvarLocal('listaMercado', listaMercado); renderListaMercado();
+}
+function baixarListaMercado() {
+  if(listaMercado.length === 0) return showToast("A lista está vazia!");
+  let txt = "📋 MINHA LISTA DE COMPRAS - FINANÇASCASA\n";
+  txt += "Gerado em: " + new Date().toLocaleDateString() + "\n\n";
+  let total = 0;
+  listaMercado.forEach(i => {
+    let check = i.marcado ? "[X]" : "[ ]";
+    let valorStr = i.preco ? ` | R$ ${i.preco.toFixed(2)}` : "";
+    let mercStr = i.mercado ? ` (${i.mercado})` : "";
+    txt += `${check} ${i.nome}${mercStr}${valorStr}\n`;
+    total += i.preco || 0;
+  });
+  txt += `\nTotal Estimado: R$ ${total.toFixed(2)}\n`;
+  const blob = new Blob([txt], { type: 'text/plain;charset=utf-8' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = `Lista_Mercado_${new Date().toISOString().split('T')[0]}.txt`; a.click();
 }
 function renderListaMercado() {
   let h = ''; let total = 0;
