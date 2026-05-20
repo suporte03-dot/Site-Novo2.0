@@ -435,9 +435,21 @@
               <span>📋 Minha Lista de Compras</span>
               <button class="btn btn-primary btn-sm" onclick="limparListaMercado()">Limpar Tudo</button>
             </div>
-            <div class="flex gap-2 mb-3">
-              <input type="text" id="inputItemMercado" class="form-control" placeholder="Ex: Arroz 5kg, Leite, Pão..." onkeypress="if(event.key==='Enter') adicionarItemMercado()">
+            <div class="flex gap-2 mb-3" style="flex-wrap: wrap;">
+              <input type="text" id="inputItemMercado" class="form-control" style="flex:2; min-width:150px;" placeholder="Ex: Arroz 5kg..." onkeypress="if(event.key==='Enter') adicionarItemMercado()">
+              <input type="number" id="inputPrecoMercado" class="form-control" style="flex:1; min-width:80px;" placeholder="R$ 0,00" step="0.01">
+              <select id="selectMercadoDestino" class="form-control" style="flex:1; min-width:120px;">
+                <option value="">🛒 Qualquer</option>
+                <option value="Coqueiros">Coqueiros</option>
+                <option value="Economia">Economia</option>
+                <option value="Boa Vista">Boa Vista</option>
+                <option value="Outro">Outro</option>
+              </select>
               <button class="btn btn-success" onclick="adicionarItemMercado()">Add</button>
+            </div>
+            <div class="flex justify-between items-center" style="margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px dashed var(--border);">
+              <span style="font-size:12px; color:var(--text-light);">* O valor é opcional para prever o gasto.</span>
+              <strong style="font-size:14px;">Total da Lista: <span id="mercadoTotalLista" class="c-red">R$ 0,00</span></strong>
             </div>
             <div id="listaMercadoHtml" style="max-height: 300px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;">
               <!-- Items go here -->
@@ -1083,9 +1095,11 @@ function limparFormLanc() { ['fDesc','fValor','fVenc','fResp','fObs'].forEach(id
 /* LISTA DE MERCADO */
 function adicionarItemMercado() {
   const i = document.getElementById('inputItemMercado'); const nome = i.value.trim();
+  const pre = document.getElementById('inputPrecoMercado'); const preco = Number(pre.value) || 0;
+  const mer = document.getElementById('selectMercadoDestino').value;
   if(!nome) return;
-  listaMercado.push({ id: generateId(), nome: nome, marcado: false });
-  salvarLocal('listaMercado', listaMercado); i.value = ''; renderListaMercado(); showToast("Item adicionado na lista!");
+  listaMercado.push({ id: generateId(), nome: nome, preco: preco, mercado: mer, marcado: false });
+  salvarLocal('listaMercado', listaMercado); i.value = ''; pre.value = ''; renderListaMercado(); showToast("Item adicionado!");
 }
 function alternarItemMercado(id) {
   const item = listaMercado.find(i => i.id === id);
@@ -1099,19 +1113,24 @@ function limparListaMercado() {
   listaMercado = []; salvarLocal('listaMercado', listaMercado); renderListaMercado();
 }
 function renderListaMercado() {
-  let h = '';
+  let h = ''; let total = 0;
   listaMercado.forEach(i => {
+    total += i.preco || 0;
     const estilo = i.marcado ? `text-decoration: line-through; opacity: 0.6;` : ``;
+    const lblPreco = i.preco ? `<span style="font-size:12px; font-weight:bold; color:var(--danger); background:#fee2e2; padding:2px 6px; border-radius:4px; margin-left:8px;">${formatMoeda(i.preco)}</span>` : '';
+    const lblMercado = i.mercado ? `<span style="font-size:11px; color:#fff; background:var(--primary); padding:2px 6px; border-radius:4px; margin-left:8px;">${i.mercado}</span>` : '';
     h += `<div style="display:flex; justify-content:space-between; align-items:center; padding:10px; background:#f8fafc; border:1px solid var(--border); border-radius:6px; transition:0.2s;">
-      <div style="display:flex; align-items:center; gap:10px; cursor:pointer; flex:1;" onclick="alternarItemMercado('${i.id}')">
+      <div style="display:flex; align-items:center; gap:10px; cursor:pointer; flex:1; flex-wrap:wrap;" onclick="alternarItemMercado('${i.id}')">
         <input type="checkbox" ${i.marcado?'checked':''} style="width:18px; height:18px; pointer-events:none;">
-        <span style="${estilo} font-size:14px; font-weight:600;">${i.nome}</span>
+        <span style="${estilo} font-size:14px; font-weight:600; display:flex; align-items:center; flex-wrap:wrap;">${i.nome} ${lblPreco} ${lblMercado}</span>
       </div>
       <button class="btn btn-sm btn-danger" style="padding:4px 8px; font-size:10px;" onclick="removerItemMercado('${i.id}')">✕</button>
     </div>`;
   });
   const el = document.getElementById('listaMercadoHtml');
   if(el) el.innerHTML = h || `<div style="padding:20px; text-align:center; color:var(--text-light); font-size:14px;">Sua lista está vazia. Comece adicionando itens!</div>`;
+  
+  const tEl = document.getElementById('mercadoTotalLista'); if(tEl) tEl.innerText = formatMoeda(total);
   
   const mes = getMesGlobal();
   const gastosMercado = getLancamentosFiltrados(mes).filter(l => l.tipo === 'despesa' && (l.categoria.toLowerCase().includes('alimentação') || l.categoria.toLowerCase().includes('mercado'))).reduce((sum, l) => sum + l.valor, 0);
