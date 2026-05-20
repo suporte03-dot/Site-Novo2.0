@@ -196,41 +196,12 @@
     * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
   }
 </style>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="modo-pc">
 
-<!-- Supabase Overlays -->
-<div id="authOverlay" class="overlay-bg">
-  <div class="panel" style="width: 400px; max-width: 90%; background: #fff;">
-    <h2 style="text-align:center; margin-bottom:10px;">💰 FinançasCasa</h2>
-    <p style="text-align:center; font-size:13px; color:var(--text-light); margin-bottom:20px;">Versão Nuvem (Supabase)</p>
-    <div class="form-group"><label>E-mail</label><input type="email" id="authEmail" class="form-control"></div>
-    <div class="form-group"><label>Senha</label><input type="password" id="authSenha" class="form-control"></div>
-    <button id="btnAuthEntrar" class="btn btn-primary" style="width:100%; margin-bottom:10px;" onclick="fazerLogin()">Entrar</button>
-    <button id="btnAuthCriar" class="btn btn-outline" style="width:100%; margin-bottom:10px;" onclick="fazerCadastro()">Criar Nova Conta</button>
-    <div id="authError" style="color:var(--danger); font-size:13px; text-align:center; margin-top:10px; font-weight:bold;"></div>
-  </div>
-</div>
-
-<div id="groupOverlay" class="overlay-bg">
-  <div class="panel" style="width: 450px; max-width: 90%; background: #fff;">
-    <h3 style="text-align:center; margin-bottom:10px;">Configurar Grupo Familiar</h3>
-    <p style="font-size:13px; color:var(--text-light); text-align:center; margin-bottom:20px;">Você precisa criar uma casa (grupo) ou entrar no grupo do seu parceiro(a) para sincronizar dados em tempo real.</p>
-    
-    <div style="border:1px solid var(--border); padding:15px; border-radius:8px; margin-bottom:15px;">
-      <label style="font-weight:bold; font-size:14px;">🏡 Criar Novo Grupo</label>
-      <input type="text" id="novoGrupoNome" class="form-control mt-3" placeholder="Nome (Ex: Casa do João)">
-      <button class="btn btn-primary btn-sm mt-3" style="width:100%" onclick="criarGrupo()">Criar e Acessar</button>
-    </div>
-
-    <div style="border:1px solid var(--border); padding:15px; border-radius:8px;">
-      <label style="font-weight:bold; font-size:14px;">🔗 Entrar em Grupo Existente</label>
-      <input type="text" id="joinGrupoId" class="form-control mt-3" placeholder="Cole o ID do Grupo">
-      <button class="btn btn-outline btn-sm mt-3" style="width:100%" onclick="entrarGrupo()">Conectar</button>
-    </div>
-  </div>
-</div>
+<!-- As telas de login (Supabase) foram removidas para uso 100% offline -->
+<div id="authOverlay" class="overlay-bg" style="display:none !important;"></div>
+<div id="groupOverlay" class="overlay-bg" style="display:none !important;"></div>
 
 <div id="toast-container"></div>
 <div class="overlay-menu" id="overlayMenu" onclick="toggleMenu()"></div>
@@ -459,30 +430,57 @@ const USAR_LOGIN = false;
 const USAR_SUPABASE = false; 
 const MODO_LOCAL = true;
 
-/* ========================================================
-   CONFIGURAÇÃO SUPABASE
-   ======================================================== */
-// COLOQUE SUAS CHAVES DO SUPABASE ABAIXO:
-const SUPABASE_URL = 'SUA_URL_SUPABASE_AQUI';
-const SUPABASE_ANON_KEY = 'SUA_CHAVE_ANON_AQUI';
-
-const supabase = (USAR_SUPABASE && window.supabase) ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
-
-/* ESTADOS E VARIÁVEIS GLOBAIS */
+const supabase = null;
 let sessionUser = null;
 let currentGroupId = null;
 let realtimeChannel = null;
 
-function carregarLocal(key, def) { const d = localStorage.getItem('financasCasa_' + key); return d ? JSON.parse(d) : def; }
+/* ========================================================
+   ESTADOS, VARIÁVEIS GLOBAIS E LOCALSTORAGE
+   ======================================================== */
+function carregarLocal(key, def) { 
+  try { 
+    const d = localStorage.getItem('financasCasa_' + key); 
+    return d ? JSON.parse(d) : def; 
+  } catch(e) { 
+    console.error("Erro localStorage (carregar)", key, e); 
+    return def; 
+  } 
+}
 
-let dados = carregarLocal('dados', []); 
-let metas = carregarLocal('metas', {}); 
-let orcamentos = carregarLocal('orcamentos', {}); 
-let futuros = carregarLocal('futuros', []); 
-let recorrentes = carregarLocal('recorrentes', []); 
-let parcelamentos = carregarLocal('parcelamentos', []); 
-let categorias = carregarLocal('categorias', []);
+function salvarLocal(key, val) { 
+  try { 
+    localStorage.setItem('financasCasa_' + key, JSON.stringify(val)); 
+  } catch(e) { 
+    console.error("Erro localStorage (salvar)", key, e); 
+  } 
+}
+
+let dados = carregarLocal('dados', []);
+if(!Array.isArray(dados)) dados = [];
+let metas = carregarLocal('metas', {});
+if(!metas || typeof metas !== 'object') metas = {};
+let orcamentos = carregarLocal('orcamentos', {});
+if(!orcamentos || typeof orcamentos !== 'object') orcamentos = {};
+let futuros = carregarLocal('futuros', []);
+if(!Array.isArray(futuros)) futuros = [];
+let recorrentes = carregarLocal('recorrentes', []);
+if(!Array.isArray(recorrentes)) recorrentes = [];
+let parcelamentos = carregarLocal('parcelamentos', []);
+if(!Array.isArray(parcelamentos)) parcelamentos = [];
+
+let categorias = carregarLocal('categorias', ['Moradia', 'Alimentação', 'Transporte', 'Saúde', 'Educação', 'Lazer', 'Outros']);
+if (!Array.isArray(categorias) || categorias.length === 0) {
+  categorias = ['Moradia', 'Alimentação', 'Transporte', 'Saúde', 'Educação', 'Lazer', 'Outros'];
+  salvarLocal('categorias', categorias);
+}
+
 let config = carregarLocal('config', { modo: 'auto', inicio: 'dashboard' });
+if (!config || typeof config !== 'object') {
+  config = { modo: 'auto', inicio: 'dashboard' };
+  salvarLocal('config', config);
+}
+
 let editLancId = null;
 
 function salvarConfigModo() {
