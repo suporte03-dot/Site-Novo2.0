@@ -238,6 +238,7 @@
       <button type="button" class="menu-item" data-module="planejamento">🔮 Planejamento Futuro</button>
       <button type="button" class="menu-item" data-module="recorrentes">🔁 Contas Recorrentes</button>
       <button type="button" class="menu-item" data-module="parcelamentos">🛍️ Parcelamentos</button>
+      <button type="button" class="menu-item" data-module="mercado">🛒 Lista de Mercado</button>
       <button type="button" class="menu-item" data-module="categorias">🏷️ Categorias</button>
       <button type="button" class="menu-item" data-module="relatorios">📈 Relatórios <span class="menu-badge badge-static">PDF/CSV</span></button>
       <button type="button" class="menu-item" data-module="configuracoes">⚙️ Configurações</button>
@@ -396,6 +397,60 @@
           <div class="panel"><div class="panel-title">Histórico de Parceladas</div><div class="table-responsive"><table><thead><tr><th>Compra</th><th>Valor Total</th><th>Parcelas</th><th>Criado em</th></tr></thead><tbody id="listParcelamentosGerados"></tbody></table></div></div>
         </div>
       </section>
+      <!-- Lista de Mercado -->
+      <section id="mod-mercado" class="module hidden">
+        <div class="grid-2">
+          <!-- Hub de Ofertas Inteligente (Carazinho/RS) -->
+          <div class="panel">
+            <div class="panel-title flex justify-between items-center">
+              <span>🤖 Hub de Ofertas - Carazinho/RS</span>
+              <span class="badge bg-success">Online</span>
+            </div>
+            <p style="font-size:13px; color:var(--text-light); margin-bottom:15px;">
+              Acesse rapidamente os encartes oficiais, promoções exclusivas e canais digitais dos principais supermercados da cidade.
+            </p>
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <a href="https://supermercadocoqueiros.com.br/" target="_blank" class="btn btn-outline flex justify-between items-center" style="text-decoration:none; color:var(--text); text-align:left; padding: 12px 15px;">
+                <div><strong style="color:#d97706;">🛒 Sup. Coqueiros</strong><br><span style="font-size:11px; color:var(--text-light);">Acessar Encartes e App Clube+</span></div>
+                <span>➔</span>
+              </a>
+              <a href="https://www.facebook.com/supermercadoeconomiacarazinho/" target="_blank" class="btn btn-outline flex justify-between items-center" style="text-decoration:none; color:var(--text); text-align:left; padding: 12px 15px;">
+                <div><strong style="color:#059669;">🛒 Sup. Economia</strong><br><span style="font-size:11px; color:var(--text-light);">Ver promoções no Facebook Oficial</span></div>
+                <span>➔</span>
+              </a>
+              <a href="https://www.facebook.com/boavistasupermercadoczo/" target="_blank" class="btn btn-outline flex justify-between items-center" style="text-decoration:none; color:var(--text); text-align:left; padding: 12px 15px;">
+                <div><strong style="color:#2563eb;">🛒 Sup. Boa Vista</strong><br><span style="font-size:11px; color:var(--text-light);">Acompanhar ofertas semanais</span></div>
+                <span>➔</span>
+              </a>
+            </div>
+            <div style="margin-top:20px; padding:15px; background:#f0fdf4; border:1px solid #bbf7d0; border-radius:8px;">
+              <strong style="font-size:13px; color:#166534;">💡 Dica da IA para Carazinho:</strong>
+              <p style="font-size:12px; color:#15803d; margin-top:5px; line-height:1.5;">Planeje suas compras com base no calendário de hortifrúti e dia das carnes. Utilize o app Clube+ do Coqueiros para descontos ativados direto no caixa!</p>
+            </div>
+          </div>
+          
+          <!-- Lista de Compras Dinâmica -->
+          <div class="panel">
+            <div class="panel-title flex justify-between items-center">
+              <span>📋 Minha Lista de Compras</span>
+              <button class="btn btn-primary btn-sm" onclick="limparListaMercado()">Limpar Tudo</button>
+            </div>
+            <div class="flex gap-2 mb-3">
+              <input type="text" id="inputItemMercado" class="form-control" placeholder="Ex: Arroz 5kg, Leite, Pão..." onkeypress="if(event.key==='Enter') adicionarItemMercado()">
+              <button class="btn btn-success" onclick="adicionarItemMercado()">Add</button>
+            </div>
+            <div id="listaMercadoHtml" style="max-height: 300px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;">
+              <!-- Items go here -->
+            </div>
+            <hr style="margin:15px 0; border:1px solid var(--border);">
+            <div class="flex justify-between items-center">
+              <strong style="font-size:14px; color:var(--text-light);">Gasto total (Alimentação) neste mês:</strong>
+              <strong style="font-size:18px; color:var(--danger);" id="mercadoGastoMes">R$ 0,00</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- Categorias -->
       <section id="mod-categorias" class="module hidden">
         <div class="grid-2">
@@ -480,6 +535,8 @@ let recorrentes = carregarLocal('recorrentes', []);
 if(!Array.isArray(recorrentes)) recorrentes = [];
 let parcelamentos = carregarLocal('parcelamentos', []);
 if(!Array.isArray(parcelamentos)) parcelamentos = [];
+let listaMercado = carregarLocal('listaMercado', []);
+if(!Array.isArray(listaMercado)) listaMercado = [];
 
 let categorias = carregarLocal('categorias', ['Moradia', 'Alimentação', 'Transporte', 'Saúde', 'Educação', 'Lazer', 'Outros']);
 if (!Array.isArray(categorias) || categorias.length === 0) {
@@ -902,6 +959,7 @@ const titulosModulos = {
   planejamento: "🔮 Planejamento Futuro",
   recorrentes: "🔁 Contas Recorrentes",
   parcelamentos: "🛍️ Parcelamentos",
+  mercado: "🛒 Lista de Mercado",
   categorias: "🏷️ Categorias",
   relatorios: "📈 Relatórios",
   configuracoes: "⚙️ Configurações",
@@ -953,7 +1011,7 @@ function popularDatalistDescricao() {
 
 function processarDadosGlobais() {
   popularSelectCategorias(); popularDatalistDescricao(); analisarIA();
-  renderDashboard(); renderLancamentos(); renderMetas(); renderOrcamento(); renderFuturo(); renderRecorrentes(); renderParcelamentos(); renderCategorias(); gerarRelatorioTela();
+  renderDashboard(); renderLancamentos(); renderMetas(); renderOrcamento(); renderFuturo(); renderRecorrentes(); renderParcelamentos(); renderCategorias(); renderListaMercado(); gerarRelatorioTela();
   
   const mes = getMesGlobal(); const qtdLanc = getLancamentosFiltrados(mes).length;
   const bLanc = document.getElementById('badgeLanc'); if(qtdLanc > 0) { bLanc.innerText = qtdLanc; bLanc.classList.remove('hidden'); } else bLanc.classList.add('hidden');
@@ -1021,6 +1079,44 @@ function editarLancamento(id) {
 }
 function cancelarEdicaoLancamento() { editLancId = null; document.getElementById('panelFormLanc').classList.remove('panel-edit-mode'); document.getElementById('formLancTitle').innerText = "Novo Lançamento"; document.getElementById('btnSalvarLanc').innerText = "Salvar Lançamento"; document.getElementById('btnSalvarLanc').className = "btn btn-primary"; document.getElementById('btnCancelLanc').classList.add('hidden'); limparFormLanc(); }
 function limparFormLanc() { ['fDesc','fValor','fVenc','fResp','fObs'].forEach(id => document.getElementById(id).value = ''); document.getElementById('fStatus').value = 'pendente'; }
+
+/* LISTA DE MERCADO */
+function adicionarItemMercado() {
+  const i = document.getElementById('inputItemMercado'); const nome = i.value.trim();
+  if(!nome) return;
+  listaMercado.push({ id: generateId(), nome: nome, marcado: false });
+  salvarLocal('listaMercado', listaMercado); i.value = ''; renderListaMercado(); showToast("Item adicionado na lista!");
+}
+function alternarItemMercado(id) {
+  const item = listaMercado.find(i => i.id === id);
+  if(item) { item.marcado = !item.marcado; salvarLocal('listaMercado', listaMercado); renderListaMercado(); }
+}
+function removerItemMercado(id) {
+  listaMercado = listaMercado.filter(i => i.id !== id); salvarLocal('listaMercado', listaMercado); renderListaMercado();
+}
+function limparListaMercado() {
+  if(!confirm("Limpar toda a lista de compras?")) return;
+  listaMercado = []; salvarLocal('listaMercado', listaMercado); renderListaMercado();
+}
+function renderListaMercado() {
+  let h = '';
+  listaMercado.forEach(i => {
+    const estilo = i.marcado ? `text-decoration: line-through; opacity: 0.6;` : ``;
+    h += `<div style="display:flex; justify-content:space-between; align-items:center; padding:10px; background:#f8fafc; border:1px solid var(--border); border-radius:6px; transition:0.2s;">
+      <div style="display:flex; align-items:center; gap:10px; cursor:pointer; flex:1;" onclick="alternarItemMercado('${i.id}')">
+        <input type="checkbox" ${i.marcado?'checked':''} style="width:18px; height:18px; pointer-events:none;">
+        <span style="${estilo} font-size:14px; font-weight:600;">${i.nome}</span>
+      </div>
+      <button class="btn btn-sm btn-danger" style="padding:4px 8px; font-size:10px;" onclick="removerItemMercado('${i.id}')">✕</button>
+    </div>`;
+  });
+  const el = document.getElementById('listaMercadoHtml');
+  if(el) el.innerHTML = h || `<div style="padding:20px; text-align:center; color:var(--text-light); font-size:14px;">Sua lista está vazia. Comece adicionando itens!</div>`;
+  
+  const mes = getMesGlobal();
+  const gastosMercado = getLancamentosFiltrados(mes).filter(l => l.tipo === 'despesa' && (l.categoria.toLowerCase().includes('alimentação') || l.categoria.toLowerCase().includes('mercado'))).reduce((sum, l) => sum + l.valor, 0);
+  const gastoEl = document.getElementById('mercadoGastoMes'); if(gastoEl) gastoEl.innerText = formatMoeda(gastosMercado);
+}
 
 function renderMetas() {
   const mes = getMesGlobal(); const v = metas[mes] || 0; document.getElementById('fMetaValor').value = v || '';
