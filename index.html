@@ -1644,7 +1644,7 @@ function copiarLista() {
   if(navigator.clipboard) navigator.clipboard.writeText(texto).then(() => showToast("Lista copiada!"));
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function inicializarEventosMercado() {
   [
     ['btnIniciarCompra', iniciarModoCompra],
     ['btnExportarLista', openModalDownload],
@@ -1655,7 +1655,8 @@ document.addEventListener('DOMContentLoaded', () => {
     ['abaHubOfertas', evt => abrirAbaMercado('hub', evt)]
   ].forEach(([id, handler]) => {
     const el = document.getElementById(id);
-    if(el) {
+    if(el && !el.dataset.mercadoEventoOk) {
+      el.dataset.mercadoEventoOk = '1';
       el.addEventListener('click', evt => {
         evt.preventDefault();
         handler(evt);
@@ -1664,7 +1665,18 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   renderListaMercado();
   abrirAbaMercado('lista');
-});
+}
+
+window.abrirAbaMercado = abrirAbaMercado;
+window.iniciarModoCompra = iniciarModoCompra;
+window.openModalDownload = openModalDownload;
+window.limparListaMercado = limparListaMercado;
+window.baixarTXT = baixarTXT;
+window.baixarCSV = baixarCSV;
+window.imprimirLista = imprimirLista;
+
+if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', inicializarEventosMercado);
+else inicializarEventosMercado();
 
 function renderMetas() {
   const mes = getMesGlobal(); const v = metas[mes] || 0; document.getElementById('fMetaValor').value = v || '';
