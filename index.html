@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sistema Financeiro Residencial</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
   :root {
     --primary: #6366f1; --primary-hover: #4f46e5;
     --primary-light: #eef2ff;
@@ -244,6 +243,63 @@
   #print-lista { display:none; }
   .mkt-resumo-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:14px; }
   @media(max-width:600px) { .mkt-resumo-grid { grid-template-columns:1fr; } .mkt-tabs { gap:2px; } .mkt-tab { padding:8px 10px; font-size:12px; } }
+
+  /* ===== CAMADA VISUAL PROFISSIONAL ===== */
+  body { background: linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%); }
+  body.theme-dark {
+    --bg:#0f172a; --card-bg:#111827; --text:#e5e7eb; --text-light:#94a3b8; --border:#243244;
+    --dark:#f8fafc; --darker:#e2e8f0; --primary-light:rgba(99,102,241,.18);
+    --shadow:0 14px 38px rgba(0,0,0,.26); --shadow-hover:0 20px 52px rgba(0,0,0,.38);
+    background:#0f172a;
+  }
+  body.theme-dark .top-header, body.theme-dark .panel, body.theme-dark .summary-card, body.theme-dark .mobile-card,
+  body.theme-dark .form-control, body.theme-dark .chat-ai, body.theme-dark .toast { background:var(--card-bg); color:var(--text); }
+  body.theme-dark th, body.theme-dark .global-filter, body.theme-dark .metric-card, body.theme-dark .pro-card,
+  body.theme-dark .pro-filter, body.theme-dark .list-row, body.theme-dark .chip-card { background:#0b1220; }
+  body.theme-dark tr:hover td, body.theme-dark .btn-outline:hover { background:#1e293b; }
+  body.theme-dark .sidebar { background: linear-gradient(180deg,#111827 0%,#1e1b4b 100%); }
+  .modules-wrapper { padding: 22px; }
+  .module { max-width: 1500px; margin: 0 auto; }
+  .panel { border-radius: 12px; box-shadow: 0 10px 30px rgba(15,23,42,.06); }
+  .panel-title { gap:10px; }
+  .module-hero { display:flex; justify-content:space-between; align-items:center; gap:14px; padding:18px 20px; border-radius:14px; margin-bottom:16px; background:linear-gradient(135deg,#ffffff 0%,#eef2ff 100%); border:1px solid var(--border); box-shadow:var(--shadow); }
+  body.theme-dark .module-hero { background:linear-gradient(135deg,#111827 0%,#172554 100%); }
+  .module-hero h3 { font-size:20px; color:var(--dark); margin-bottom:4px; }
+  .module-hero p { font-size:13px; color:var(--text-light); line-height:1.5; }
+  .hero-actions { display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
+  .metric-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; margin-bottom:16px; }
+  .metric-card { background:#fff; border:1px solid var(--border); border-radius:12px; padding:15px; min-height:96px; box-shadow:0 8px 24px rgba(15,23,42,.05); }
+  .metric-card .k { font-size:11px; text-transform:uppercase; letter-spacing:.55px; color:var(--text-light); font-weight:800; }
+  .metric-card .v { margin-top:8px; font-size:23px; font-weight:850; color:var(--dark); letter-spacing:-.6px; }
+  .metric-card .s { margin-top:5px; font-size:12px; color:var(--text-light); }
+  .pro-card, .list-row, .chip-card { border:1px solid var(--border); border-radius:10px; background:#fff; padding:13px; }
+  .pro-card + .pro-card, .list-row + .list-row { margin-top:10px; }
+  .pro-card-title { display:flex; justify-content:space-between; align-items:flex-start; gap:10px; font-weight:800; color:var(--dark); }
+  .pro-muted { color:var(--text-light); font-size:12px; line-height:1.5; }
+  .pro-filter { display:grid; grid-template-columns:1.2fr repeat(4,minmax(120px,.7fr)); gap:10px; align-items:end; padding:12px; border:1px solid var(--border); border-radius:12px; background:#f8fafc; margin-bottom:14px; }
+  .pro-summary-strip { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin-bottom:14px; }
+  .mini-stat { border:1px solid var(--border); border-radius:10px; padding:10px 12px; background:rgba(255,255,255,.7); }
+  body.theme-dark .mini-stat { background:#0b1220; }
+  .mini-stat span { display:block; font-size:11px; color:var(--text-light); font-weight:800; text-transform:uppercase; }
+  .mini-stat strong { display:block; margin-top:4px; font-size:18px; color:var(--dark); }
+  .action-cell { display:flex; gap:7px; flex-wrap:wrap; justify-content:flex-end; }
+  .btn-icon { min-width:34px; padding-left:10px; padding-right:10px; }
+  .status-dot { width:9px; height:9px; border-radius:50%; display:inline-block; margin-right:6px; }
+  .dot-ok { background:var(--success); } .dot-warn { background:var(--warning); } .dot-danger { background:var(--danger); } .dot-info { background:var(--info); }
+  .goal-grid, .card-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px; }
+  .chip-list { display:flex; flex-wrap:wrap; gap:10px; }
+  .chip-card { display:flex; align-items:center; gap:10px; min-width:190px; justify-content:space-between; }
+  .chip-main { display:flex; align-items:center; gap:10px; min-width:0; }
+  .chip-icon { width:32px; height:32px; border-radius:9px; display:flex; align-items:center; justify-content:center; color:white; font-weight:900; flex:none; }
+  .chat-shell { background:linear-gradient(180deg,#f8fafc 0%,#eef2ff 100%) !important; border-radius:14px !important; }
+  body.theme-dark .chat-shell { background:#0b1220 !important; }
+  .autohelp-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:10px; }
+  .report-preview { border:1px solid var(--border); border-radius:12px; padding:18px; background:#fff; }
+  body.theme-dark .report-preview { background:#0b1220; }
+  .backup-preview { max-height:260px; overflow:auto; border:1px solid var(--border); border-radius:10px; padding:12px; background:#f8fafc; font-size:12px; }
+  body.theme-dark .backup-preview { background:#0b1220; }
+  @media(max-width:1100px) { .metric-grid, .pro-summary-strip { grid-template-columns:repeat(2,1fr); } .pro-filter { grid-template-columns:1fr 1fr; } }
+  @media(max-width:680px) { .metric-grid, .pro-summary-strip, .pro-filter { grid-template-columns:1fr; } .module-hero { align-items:flex-start; flex-direction:column; } }
 </style>
 </head>
 <body class="modo-pc">
@@ -1731,6 +1787,7 @@ let iaContext = { qtdAlertas: 0 };
 function analisarIA() { iaContext.qtdAlertas = getLancamentosFiltrados(getMesGlobal()).filter(i=>calcularStatus(i)==='atrasado').length; }
 function enviarMensagemIA() { const i = document.getElementById('chatInput'); if(!i.value) return; const b = document.getElementById('chatMessages'); b.innerHTML += `<div class="chat-message chat-user">${i.value}</div><div class="chat-message chat-ai">Análise na nuvem ativada: Considere revisar os relatórios.</div>`; i.value=''; b.scrollTop=b.scrollHeight; }
 function autoAjuda(t) { document.getElementById('chatMessages').innerHTML += `<div class="chat-message chat-ai">Ação recomendada verificando seu saldo e categorias...</div>`; }
+<script>
 </script>
 </body>
 </html>
