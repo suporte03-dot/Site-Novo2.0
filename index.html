@@ -217,6 +217,7 @@
     th, td { border-bottom: 1px solid #ccc; padding: 8px; font-size: 12px; }
     * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
     #print-lista { display: block !important; }
+    #mod-mercado.mkt-printing > :not(#print-lista) { display: none !important; }
     .mkt-tabs, .mkt-panel:not(.active) { display: none !important; }
   }
   /* ===== MÓDULO MERCADO ===== */
@@ -443,10 +444,9 @@
           <div class="modal-box">
             <div class="modal-title">📥 Exportar Lista</div>
             <div style="display:flex;flex-direction:column;gap:10px;">
-              <button class="btn btn-primary" onclick="imprimirLista()">🖨️ Imprimir / Salvar PDF</button>
-              <button class="btn btn-outline" onclick="baixarCSV()">📊 Baixar CSV</button>
               <button class="btn btn-outline" onclick="baixarTXT()">📄 Baixar TXT</button>
-              <button class="btn btn-outline" onclick="copiarLista()">📋 Copiar para Área de Transferência</button>
+              <button class="btn btn-outline" onclick="baixarCSV()">📊 Baixar CSV</button>
+              <button class="btn btn-primary" onclick="imprimirLista()">🖨️ Imprimir / Salvar PDF</button>
             </div>
             <button class="btn btn-outline" style="margin-top:14px;width:100%;" onclick="closeModalDownload()">Fechar</button>
           </div>
@@ -480,9 +480,9 @@
               <div id="mktDicaIA" style="font-size:12px;color:var(--text-light);margin-top:3px;"></div>
             </div>
             <div class="flex gap-2" style="flex-wrap:wrap;">
-              <button class="btn btn-success btn-sm" onclick="iniciarModoCompra()">🛍️ Iniciar Compra</button>
-              <button class="btn btn-outline btn-sm" onclick="openModalDownload()">📥 Exportar</button>
-              <button class="btn btn-outline btn-sm" onclick="limparListaMercado()">🗑️ Limpar</button>
+              <button class="btn btn-success btn-sm" id="btnIniciarCompra">🛍️ Iniciar Compra</button>
+              <button class="btn btn-outline btn-sm" id="btnExportarLista">📥 Exportar</button>
+              <button class="btn btn-outline btn-sm" id="btnLimparLista">🗑️ Limpar</button>
             </div>
           </div>
           <div class="mkt-resumo-grid">
@@ -502,10 +502,10 @@
         </div>
         <!-- Tabs -->
         <div class="mkt-tabs no-print">
-          <button class="mkt-tab active" onclick="mktTab('lista',this)">📋 Lista</button>
-          <button class="mkt-tab" onclick="mktTab('modo-compra',this)">🛍️ Modo Compra</button>
-          <button class="mkt-tab" onclick="mktTab('historico',this)">📚 Histórico</button>
-          <button class="mkt-tab" onclick="mktTab('hub',this)">🤖 Hub Ofertas</button>
+          <button type="button" class="mkt-tab active" id="abaLista">📋 Lista</button>
+          <button type="button" class="mkt-tab" id="abaModoCompra">🛍️ Modo Compra</button>
+          <button type="button" class="mkt-tab" id="abaHistorico">📚 Histórico</button>
+          <button type="button" class="mkt-tab" id="abaHubOfertas">🤖 Hub Ofertas</button>
         </div>
         <!-- Lista -->
         <div class="mkt-panel active" id="mkt-panel-lista">
@@ -1274,6 +1274,397 @@ function renderListaMercado() {
   const gastosMercado = getLancamentosFiltrados(mes).filter(l => l.tipo === 'despesa' && (l.categoria.toLowerCase().includes('alimentação') || l.categoria.toLowerCase().includes('mercado'))).reduce((sum, l) => sum + l.valor, 0);
   const gastoEl = document.getElementById('mercadoGastoMes'); if(gastoEl) gastoEl.innerText = formatMoeda(gastosMercado);
 }
+
+/* CORRECOES LISTA DE MERCADO */
+const abasMercado = {
+  lista: { tab: 'abaLista', panel: 'mkt-panel-lista' },
+  'modo-compra': { tab: 'abaModoCompra', panel: 'mkt-panel-modo-compra' },
+  historico: { tab: 'abaHistorico', panel: 'mkt-panel-historico' },
+  hub: { tab: 'abaHubOfertas', panel: 'mkt-panel-hub' }
+};
+
+function escapeHtmlMercado(valor) {
+  return String(valor ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+function normalizarListaMercado() {
+  if(!Array.isArray(listaMercado)) listaMercado = [];
+  listaMercado = listaMercado.map(item => ({
+    id: item.id || generateId(),
+    nome: item.nome || item.produto || '',
+    qtd: Number(item.qtd || item.quantidade || 1) || 1,
+    unidade: item.unidade || 'un',
+    preco: Number(item.preco || item.valorEstimado || 0) || 0,
+    mercado: item.mercado || '',
+    obs: item.obs || item.observacao || '',
+    marcado: !!item.marcado,
+    valorReal: Number(item.valorReal || 0) || 0
+  })).filter(item => item.nome);
+}
+
+function salvarListaMercado() {
+  normalizarListaMercado();
+  salvarLocal('listaMercado', listaMercado);
+}
+
+function abrirAbaMercado(nomeAba, evt) {
+  if(evt && typeof evt.preventDefault === 'function') evt.preventDefault();
+  const alvo = abasMercado[nomeAba] ? nomeAba : 'lista';
+  Object.keys(abasMercado).forEach(nome => {
+    const tab = document.getElementById(abasMercado[nome].tab);
+    const panel = document.getElementById(abasMercado[nome].panel);
+    if(tab) tab.classList.toggle('active', nome === alvo);
+    if(panel) panel.classList.toggle('active', nome === alvo);
+  });
+  if(alvo === 'modo-compra') renderModoCompraMercado();
+  if(alvo === 'historico') renderHistoricoMercado();
+  if(alvo === 'hub') renderPromocoesMercado();
+}
+
+function mktTab(nomeAba) {
+  abrirAbaMercado(nomeAba, window.event);
+}
+
+function adicionarItemMercado() {
+  const i = document.getElementById('inputItemMercado');
+  if(!i) return;
+  const nome = i.value.trim();
+  const pre = document.getElementById('inputPrecoMercado');
+  const qtd = document.getElementById('inputQtdMercado');
+  const uni = document.getElementById('inputUnidadeMercado');
+  const mer = document.getElementById('selectMercadoDestino');
+  const obs = document.getElementById('inputObsMercado');
+  if(!nome) return;
+  normalizarListaMercado();
+  listaMercado.push({
+    id: generateId(),
+    nome,
+    qtd: Number(qtd && qtd.value) || 1,
+    unidade: uni ? uni.value : 'un',
+    preco: Number(pre && pre.value) || 0,
+    mercado: mer ? mer.value : '',
+    obs: obs ? obs.value.trim() : '',
+    marcado: false,
+    valorReal: 0
+  });
+  salvarListaMercado();
+  i.value = '';
+  if(qtd) qtd.value = '1';
+  if(uni) uni.value = 'un';
+  if(pre) pre.value = '';
+  if(mer) mer.value = '';
+  if(obs) obs.value = '';
+  renderListaMercado();
+  showToast("Item adicionado!");
+}
+
+function alternarItemMercado(id) {
+  normalizarListaMercado();
+  const item = listaMercado.find(i => i.id === id);
+  if(item) {
+    item.marcado = !item.marcado;
+    salvarListaMercado();
+    renderListaMercado();
+  }
+}
+
+function removerItemMercado(id) {
+  normalizarListaMercado();
+  listaMercado = listaMercado.filter(i => i.id !== id);
+  salvarListaMercado();
+  renderListaMercado();
+}
+
+function limparListaMercado(evt) {
+  if(evt && typeof evt.preventDefault === 'function') evt.preventDefault();
+  if(!confirm("Deseja limpar todos os itens da lista de mercado?")) return;
+  listaMercado = [];
+  salvarListaMercado();
+  renderListaMercado();
+  showToast("Lista de mercado limpa.");
+}
+
+function iniciarModoCompra(evt) {
+  if(evt && typeof evt.preventDefault === 'function') evt.preventDefault();
+  normalizarListaMercado();
+  abrirAbaMercado('modo-compra');
+  if(listaMercado.length === 0) {
+    renderModoCompraMercado("Adicione itens à lista antes de iniciar a compra.");
+    return showToast("Adicione itens à lista antes de iniciar a compra.", "warning");
+  }
+  renderModoCompraMercado();
+}
+
+function listaMercadoVaziaExportacao() {
+  normalizarListaMercado();
+  if(listaMercado.length > 0) return false;
+  showToast("Não há itens para exportar.", "warning");
+  return true;
+}
+
+function openModalDownload(evt) {
+  if(evt && typeof evt.preventDefault === 'function') evt.preventDefault();
+  if(listaMercadoVaziaExportacao()) return;
+  const modal = document.getElementById('modalDownloadLista');
+  if(modal) modal.classList.add('open');
+}
+
+function closeModalDownload() {
+  const modal = document.getElementById('modalDownloadLista');
+  if(modal) modal.classList.remove('open');
+}
+
+function baixarArquivoMercado(nome, conteudo, tipo) {
+  const blob = new Blob([conteudo], { type: tipo });
+  const a = document.createElement('a');
+  const url = URL.createObjectURL(blob);
+  a.href = url;
+  a.download = nome;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+function baixarTXT() {
+  if(listaMercadoVaziaExportacao()) return;
+  let txt = "MINHA LISTA DE COMPRAS - FINANCASCASA\n";
+  txt += "Gerado em: " + new Date().toLocaleDateString('pt-BR') + "\n\n";
+  let total = 0;
+  listaMercado.forEach(i => {
+    const check = i.marcado ? "[X]" : "[ ]";
+    const qtd = `${i.qtd || 1} ${i.unidade || 'un'}`;
+    const valor = i.preco ? ` | ${formatMoeda(i.preco)}` : "";
+    const mercado = i.mercado ? ` (${i.mercado})` : "";
+    const obs = i.obs ? ` | Obs: ${i.obs}` : "";
+    txt += `${check} ${i.nome} - ${qtd}${mercado}${valor}${obs}\n`;
+    total += i.preco || 0;
+  });
+  txt += `\nTotal Estimado: ${formatMoeda(total)}\n`;
+  baixarArquivoMercado(`Lista_Mercado_${new Date().toISOString().split('T')[0]}.txt`, txt, 'text/plain;charset=utf-8');
+  closeModalDownload();
+}
+
+function escaparCSV(valor) {
+  return `"${String(valor ?? '').replace(/"/g, '""')}"`;
+}
+
+function baixarCSV() {
+  if(listaMercadoVaziaExportacao()) return;
+  const linhas = [['produto', 'quantidade', 'unidade', 'valor estimado', 'mercado', 'observação', 'status']];
+  listaMercado.forEach(i => linhas.push([
+    i.nome,
+    i.qtd || 1,
+    i.unidade || 'un',
+    (Number(i.preco) || 0).toFixed(2).replace('.', ','),
+    i.mercado || '',
+    i.obs || '',
+    i.marcado ? 'comprado' : 'pendente'
+  ]));
+  const csv = linhas.map(l => l.map(escaparCSV).join(';')).join('\n');
+  baixarArquivoMercado(`Lista_Mercado_${new Date().toISOString().split('T')[0]}.csv`, csv, 'text/csv;charset=utf-8');
+  closeModalDownload();
+}
+
+function imprimirLista() {
+  if(listaMercadoVaziaExportacao()) return;
+  const printEl = document.getElementById('print-lista');
+  const mod = document.getElementById('mod-mercado');
+  const total = listaMercado.reduce((sum, i) => sum + (Number(i.preco) || 0), 0);
+  if(printEl) {
+    printEl.innerHTML = `<div style="font-family:Arial,sans-serif;padding:24px;">
+      <h1 style="font-size:22px;margin:0 0 8px;">Lista de Mercado</h1>
+      <div style="font-size:12px;margin-bottom:18px;">Gerado em ${new Date().toLocaleDateString('pt-BR')}</div>
+      <table style="width:100%;border-collapse:collapse;">
+        <thead><tr><th>Status</th><th>Produto</th><th>Qtd.</th><th>Valor Est.</th><th>Mercado</th><th>Obs.</th></tr></thead>
+        <tbody>${listaMercado.map(i => `<tr><td>${i.marcado ? 'Comprado' : 'Pendente'}</td><td>${escapeHtmlMercado(i.nome)}</td><td>${escapeHtmlMercado(i.qtd || 1)} ${escapeHtmlMercado(i.unidade || 'un')}</td><td>${formatMoeda(i.preco || 0)}</td><td>${escapeHtmlMercado(i.mercado || '-')}</td><td>${escapeHtmlMercado(i.obs || '-')}</td></tr>`).join('')}</tbody>
+      </table>
+      <h2 style="font-size:16px;margin-top:18px;">Total estimado: ${formatMoeda(total)}</h2>
+    </div>`;
+  }
+  if(mod) mod.classList.add('mkt-printing');
+  closeModalDownload();
+  window.print();
+  setTimeout(() => {
+    if(mod) mod.classList.remove('mkt-printing');
+    if(printEl) printEl.innerHTML = '';
+  }, 500);
+}
+
+function baixarListaMercado() {
+  baixarTXT();
+}
+
+function renderListaMercado() {
+  normalizarListaMercado();
+  let h = '';
+  let total = 0;
+  let totalReal = 0;
+  listaMercado.forEach(i => {
+    total += i.preco || 0;
+    totalReal += i.valorReal || 0;
+    const estilo = i.marcado ? `text-decoration: line-through; opacity: 0.6;` : ``;
+    const lblPreco = i.preco ? `<span style="font-size:12px;font-weight:bold;color:var(--danger);background:#fee2e2;padding:2px 6px;border-radius:4px;margin-left:8px;">${formatMoeda(i.preco)}</span>` : '';
+    const lblMercado = i.mercado ? `<span style="font-size:11px;color:#fff;background:var(--primary);padding:2px 6px;border-radius:4px;margin-left:8px;">${escapeHtmlMercado(i.mercado)}</span>` : '';
+    const obs = i.obs ? `<div style="font-size:12px;color:var(--text-light);width:100%;">${escapeHtmlMercado(i.obs)}</div>` : '';
+    h += `<div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:#f8fafc;border:1px solid var(--border);border-radius:6px;transition:0.2s;">
+      <div style="display:flex;align-items:center;gap:10px;cursor:pointer;flex:1;flex-wrap:wrap;" onclick="alternarItemMercado('${i.id}')">
+        <input type="checkbox" ${i.marcado ? 'checked' : ''} style="width:18px;height:18px;pointer-events:none;">
+        <span style="${estilo} font-size:14px;font-weight:600;display:flex;align-items:center;flex-wrap:wrap;">${escapeHtmlMercado(i.nome)} <small style="color:var(--text-light);margin-left:6px;">${escapeHtmlMercado(i.qtd)} ${escapeHtmlMercado(i.unidade)}</small> ${lblPreco} ${lblMercado}</span>${obs}
+      </div>
+      <button class="btn btn-sm btn-danger" style="padding:4px 8px;font-size:10px;" onclick="removerItemMercado('${i.id}')">×</button>
+    </div>`;
+  });
+  const el = document.getElementById('listaMercadoHtml');
+  if(el) el.innerHTML = h || `<div style="padding:20px;text-align:center;color:var(--text-light);font-size:14px;">Sua lista está vazia. Comece adicionando itens!</div>`;
+  const tEl = document.getElementById('mercadoTotalLista'); if(tEl) tEl.innerText = formatMoeda(total);
+  const cEl = document.getElementById('mktCount'); if(cEl) cEl.innerText = listaMercado.length;
+  const realEl = document.getElementById('mktTotalReal'); if(realEl) realEl.innerText = formatMoeda(totalReal);
+  const difEl = document.getElementById('mktTotalDif');
+  if(difEl) {
+    const dif = totalReal - total;
+    difEl.innerText = totalReal ? formatMoeda(dif) : '—';
+    difEl.style.color = dif > 0 ? 'var(--danger)' : 'var(--success)';
+  }
+  const mes = getMesGlobal();
+  const gastosMercado = getLancamentosFiltrados(mes).filter(l => l.tipo === 'despesa' && (((l.categoria || '').toLowerCase().includes('mercado')) || ((l.categoria || '').toLowerCase().includes('alimenta')))).reduce((sum, l) => sum + l.valor, 0);
+  const gastoEl = document.getElementById('mercadoGastoMes'); if(gastoEl) gastoEl.innerText = formatMoeda(gastosMercado);
+  renderModoCompraMercado();
+  renderHistoricoMercado();
+  renderPromocoesMercado();
+}
+
+function renderModoCompraMercado(mensagem) {
+  const el = document.getElementById('modoCompraHtml');
+  if(!el) return;
+  normalizarListaMercado();
+  if(mensagem) {
+    el.innerHTML = `<div style="padding:20px;text-align:center;color:var(--text-light);font-size:14px;">${escapeHtmlMercado(mensagem)}</div>`;
+    return;
+  }
+  if(listaMercado.length === 0) {
+    el.innerHTML = `<div style="padding:20px;text-align:center;color:var(--text-light);font-size:14px;">Adicione itens à lista antes de iniciar a compra.</div>`;
+    return;
+  }
+  el.innerHTML = listaMercado.map(i => `<div style="display:grid;grid-template-columns:auto 1fr 120px;gap:10px;align-items:center;padding:10px;background:#f8fafc;border:1px solid var(--border);border-radius:6px;">
+    <input type="checkbox" ${i.marcado ? 'checked' : ''} onchange="alternarItemMercado('${i.id}')" style="width:20px;height:20px;">
+    <div>
+      <strong style="${i.marcado ? 'text-decoration:line-through;opacity:.65;' : ''}">${escapeHtmlMercado(i.nome)}</strong>
+      <div style="font-size:12px;color:var(--text-light);">${escapeHtmlMercado(i.qtd || 1)} ${escapeHtmlMercado(i.unidade || 'un')} - Previsto: ${formatMoeda(i.preco || 0)}${i.mercado ? ' - ' + escapeHtmlMercado(i.mercado) : ''}</div>
+    </div>
+    <input type="number" class="form-control" min="0" step="0.01" placeholder="Valor real" value="${i.valorReal || ''}" onchange="atualizarValorRealMercado('${i.id}', this.value)">
+  </div>`).join('');
+}
+
+function atualizarValorRealMercado(id, valor) {
+  normalizarListaMercado();
+  const item = listaMercado.find(i => i.id === id);
+  if(!item) return;
+  item.valorReal = Number(valor) || 0;
+  salvarListaMercado();
+  renderListaMercado();
+}
+
+function openModalFinalizar() {
+  normalizarListaMercado();
+  const totalReal = listaMercado.reduce((sum, i) => sum + (Number(i.valorReal) || 0), 0);
+  const totalPrevisto = listaMercado.reduce((sum, i) => sum + (Number(i.preco) || 0), 0);
+  const totalEl = document.getElementById('mktFinTotal');
+  if(totalEl) totalEl.innerText = formatMoeda(totalReal || totalPrevisto);
+  const modal = document.getElementById('modalFinalizar');
+  if(modal) modal.classList.add('open');
+}
+
+function closeFinalizar() {
+  const modal = document.getElementById('modalFinalizar');
+  if(modal) modal.classList.remove('open');
+}
+
+function confirmarFinalizarCompra(lancarFinanceiro) {
+  normalizarListaMercado();
+  if(listaMercado.length === 0) return closeFinalizar();
+  const totalReal = listaMercado.reduce((sum, i) => sum + (Number(i.valorReal) || Number(i.preco) || 0), 0);
+  if(!Array.isArray(historicoCopras)) historicoCopras = [];
+  historicoCopras.push({
+    id: generateId(),
+    data: new Date().toISOString(),
+    total: totalReal,
+    itens: listaMercado.map(i => ({ ...i })),
+    pagamento: (document.getElementById('mktFinPgto') || {}).value || '',
+    responsavel: (document.getElementById('mktFinResp') || {}).value || ''
+  });
+  salvarLocal('historicoCopras', historicoCopras);
+  if(lancarFinanceiro) showToast("Compra salva no histórico. Lançamentos financeiros não foram alterados.");
+  listaMercado = [];
+  salvarListaMercado();
+  closeFinalizar();
+  abrirAbaMercado('historico');
+  renderListaMercado();
+}
+
+function renderHistoricoMercado() {
+  const el = document.getElementById('historicoComprasHtml');
+  if(!el) return;
+  if(!Array.isArray(historicoCopras)) historicoCopras = [];
+  el.innerHTML = historicoCopras.length ? historicoCopras.slice().reverse().map(h => `<div style="padding:12px;border:1px solid var(--border);border-radius:6px;margin-bottom:8px;background:#f8fafc;">
+    <strong>${formatMoeda(h.total || 0)}</strong>
+    <div style="font-size:12px;color:var(--text-light);">${new Date(h.data).toLocaleDateString('pt-BR')} - ${(h.itens || []).length} itens${h.responsavel ? ' - ' + escapeHtmlMercado(h.responsavel) : ''}</div>
+  </div>`).join('') : `<div style="padding:20px;text-align:center;color:var(--text-light);font-size:14px;">Nenhuma compra no histórico.</div>`;
+}
+
+function adicionarPromocao() {
+  const input = document.getElementById('inputPromoDesc');
+  if(!input || !input.value.trim()) return;
+  if(!Array.isArray(promocoesMercado)) promocoesMercado = [];
+  promocoesMercado.push({ id: generateId(), desc: input.value.trim(), data: new Date().toISOString() });
+  salvarLocal('promocoesMercado', promocoesMercado);
+  input.value = '';
+  renderPromocoesMercado();
+}
+
+function removerPromocao(id) {
+  promocoesMercado = (Array.isArray(promocoesMercado) ? promocoesMercado : []).filter(p => p.id !== id);
+  salvarLocal('promocoesMercado', promocoesMercado);
+  renderPromocoesMercado();
+}
+
+function renderPromocoesMercado() {
+  const el = document.getElementById('promocoesMercadoHtml');
+  if(!el) return;
+  if(!Array.isArray(promocoesMercado)) promocoesMercado = [];
+  el.innerHTML = promocoesMercado.length ? promocoesMercado.map(p => `<div style="display:flex;justify-content:space-between;gap:8px;align-items:center;padding:10px;border:1px solid var(--border);border-radius:6px;margin-bottom:8px;background:#f8fafc;">
+    <span>${escapeHtmlMercado(p.desc)}</span>
+    <button class="btn btn-sm btn-danger" onclick="removerPromocao('${p.id}')">×</button>
+  </div>`).join('') : `<div style="padding:16px;text-align:center;color:var(--text-light);font-size:13px;">Nenhuma promoção anotada.</div>`;
+}
+
+function copiarLista() {
+  if(listaMercadoVaziaExportacao()) return;
+  const texto = listaMercado.map(i => `${i.marcado ? '[X]' : '[ ]'} ${i.nome} - ${i.qtd || 1} ${i.unidade || 'un'}`).join('\n');
+  if(navigator.clipboard) navigator.clipboard.writeText(texto).then(() => showToast("Lista copiada!"));
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  [
+    ['btnIniciarCompra', iniciarModoCompra],
+    ['btnExportarLista', openModalDownload],
+    ['btnLimparLista', limparListaMercado],
+    ['abaLista', evt => abrirAbaMercado('lista', evt)],
+    ['abaModoCompra', evt => abrirAbaMercado('modo-compra', evt)],
+    ['abaHistorico', evt => abrirAbaMercado('historico', evt)],
+    ['abaHubOfertas', evt => abrirAbaMercado('hub', evt)]
+  ].forEach(([id, handler]) => {
+    const el = document.getElementById(id);
+    if(el) {
+      el.addEventListener('click', evt => {
+        evt.preventDefault();
+        handler(evt);
+      });
+    }
+  });
+  renderListaMercado();
+  abrirAbaMercado('lista');
+});
 
 function renderMetas() {
   const mes = getMesGlobal(); const v = metas[mes] || 0; document.getElementById('fMetaValor').value = v || '';
