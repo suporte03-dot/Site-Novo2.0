@@ -206,7 +206,7 @@
 
   /* Impressão */
   @media print {
-    .sidebar, .top-header, .global-filter, .btn, #toast-container, .module:not(.active) { display: none !important; }
+    .sidebar, .top-header, .global-filter, #toast-container, .module:not(.active), .no-print { display: none !important; }
     .main-content { overflow: visible !important; height: auto !important; }
     .modules-wrapper { padding: 0 !important; overflow: visible !important; }
     .module.active { display: block !important; }
@@ -216,7 +216,33 @@
     table { width: 100%; border-collapse: collapse; }
     th, td { border-bottom: 1px solid #ccc; padding: 8px; font-size: 12px; }
     * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    #print-lista { display: block !important; }
+    .mkt-tabs, .mkt-panel:not(.active) { display: none !important; }
   }
+  /* ===== MÓDULO MERCADO ===== */
+  .mkt-tabs { display:flex; gap:4px; margin-bottom:20px; border-bottom:2px solid var(--border); flex-wrap:wrap; }
+  .mkt-tab { padding:10px 16px; background:none; border:none; font-weight:600; font-size:13px; color:var(--text-light); cursor:pointer; border-bottom:3px solid transparent; margin-bottom:-2px; transition:0.2s; border-radius:8px 8px 0 0; }
+  .mkt-tab:hover { color:var(--primary); background:#f1f5f9; }
+  .mkt-tab.active { color:var(--primary); border-bottom-color:var(--primary); background:var(--primary-light); }
+  .mkt-panel { display:none; } .mkt-panel.active { display:block; }
+  .sug-btn { padding:6px 12px; background:#f1f5f9; border:1.5px solid var(--border); border-radius:20px; font-size:12px; font-weight:600; cursor:pointer; transition:0.2s; color:var(--text); white-space:nowrap; }
+  .sug-btn:hover { background:var(--primary); color:white; border-color:var(--primary); transform:translateY(-1px); }
+  .mkt-item-card { background:#f8fafc; border:1.5px solid var(--border); border-radius:10px; padding:12px 14px; display:flex; align-items:flex-start; gap:10px; transition:0.2s; }
+  .mkt-item-card.comprado { border-color:var(--success); background:#f0fdf4; }
+  .mkt-item-card.nao-encontrado { border-color:#94a3b8; background:#f1f5f9; opacity:0.6; }
+  .mkt-status-btn { padding:5px 10px; border-radius:6px; border:1.5px solid var(--border); font-size:11px; font-weight:700; cursor:pointer; background:white; transition:0.2s; }
+  .mkt-status-btn.active-pend { background:#fef3c7; border-color:var(--warning); color:#92400e; }
+  .mkt-status-btn.active-comp { background:#d1fae5; border-color:var(--success); color:#065f46; }
+  .mkt-status-btn.active-nao { background:#f1f5f9; border-color:#94a3b8; color:#475569; }
+  .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:9000; align-items:center; justify-content:center; backdrop-filter:blur(4px); }
+  .modal-overlay.open { display:flex; }
+  .modal-box { background:white; border-radius:16px; padding:28px; max-width:440px; width:90%; box-shadow:0 20px 60px rgba(0,0,0,0.2); animation:fadeIn 0.25s ease; max-height:90vh; overflow-y:auto; }
+  .modal-title { font-size:17px; font-weight:800; margin-bottom:18px; color:var(--dark); }
+  .hist-card { background:#f8fafc; border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin-bottom:10px; display:grid; grid-template-columns:1fr auto; align-items:center; gap:10px; }
+  .promo-tag { background:#fefce8; border:1px solid #fde68a; border-radius:8px; padding:10px 12px; font-size:13px; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center; gap:8px; }
+  #print-lista { display:none; }
+  .mkt-resumo-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:14px; }
+  @media(max-width:600px) { .mkt-resumo-grid { grid-template-columns:1fr; } .mkt-tabs { gap:2px; } .mkt-tab { padding:8px 10px; font-size:12px; } }
 </style>
 </head>
 <body class="modo-pc">
@@ -412,68 +438,143 @@
       </section>
       <!-- Lista de Mercado -->
       <section id="mod-mercado" class="module hidden">
-        <div class="grid-2">
-          <!-- Hub de Ofertas Inteligente (Carazinho/RS) -->
-          <div class="panel">
-            <div class="panel-title flex justify-between items-center">
-              <span>🤖 Hub de Ofertas - Carazinho/RS</span>
-              <span class="badge bg-success">Online</span>
+        <!-- Modal Download -->
+        <div class="modal-overlay" id="modalDownloadLista">
+          <div class="modal-box">
+            <div class="modal-title">📥 Exportar Lista</div>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <button class="btn btn-primary" onclick="imprimirLista()">🖨️ Imprimir / Salvar PDF</button>
+              <button class="btn btn-outline" onclick="baixarCSV()">📊 Baixar CSV</button>
+              <button class="btn btn-outline" onclick="baixarTXT()">📄 Baixar TXT</button>
+              <button class="btn btn-outline" onclick="copiarLista()">📋 Copiar para Área de Transferência</button>
             </div>
-            <p style="font-size:13px; color:var(--text-light); margin-bottom:15px;">
-              Acesse rapidamente os encartes oficiais, promoções exclusivas e canais digitais dos principais supermercados da cidade.
-            </p>
-            <div style="display:flex; flex-direction:column; gap:10px;">
-              <a href="https://www.supermercadocoqueiros.com.br/ofertas-carazinho" target="_blank" class="btn btn-outline flex justify-between items-center" style="text-decoration:none; color:var(--text); text-align:left; padding: 12px 15px;">
-                <div><strong style="color:#d97706;">🛒 Sup. Coqueiros</strong><br><span style="font-size:11px; color:var(--text-light);">Acessar Encartes e App Clube+</span></div>
-                <span>➔</span>
-              </a>
-              <a href="https://www.facebook.com/supereconomia/?locale=pt_BR" target="_blank" class="btn btn-outline flex justify-between items-center" style="text-decoration:none; color:var(--text); text-align:left; padding: 12px 15px;">
-                <div><strong style="color:#059669;">🛒 Sup. Economia</strong><br><span style="font-size:11px; color:var(--text-light);">Ver promoções no Facebook Oficial</span></div>
-                <span>➔</span>
-              </a>
-              <a href="https://www.facebook.com/redeboavista?ref=embed_page" target="_blank" class="btn btn-outline flex justify-between items-center" style="text-decoration:none; color:var(--text); text-align:left; padding: 12px 15px;">
-                <div><strong style="color:#2563eb;">🛒 Sup. Boa Vista</strong><br><span style="font-size:11px; color:var(--text-light);">Acompanhar ofertas semanais</span></div>
-                <span>➔</span>
-              </a>
+            <button class="btn btn-outline" style="margin-top:14px;width:100%;" onclick="closeModalDownload()">Fechar</button>
+          </div>
+        </div>
+        <!-- Modal Finalizar Compra -->
+        <div class="modal-overlay" id="modalFinalizar">
+          <div class="modal-box">
+            <div class="modal-title">✅ Finalizar Compra</div>
+            <div style="background:#f1f5f9;border-radius:10px;padding:14px;margin-bottom:16px;text-align:center;">
+              <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text-light);margin-bottom:4px;">Total Real da Compra</div>
+              <div style="font-size:28px;font-weight:800;color:var(--success);" id="mktFinTotal">R$ 0,00</div>
             </div>
-            <div style="margin-top:20px; padding:15px; background:#f0fdf4; border:1px solid #bbf7d0; border-radius:8px;">
-              <strong style="font-size:13px; color:#166534;">💡 Dica da IA para Carazinho:</strong>
-              <p style="font-size:12px; color:#15803d; margin-top:5px; line-height:1.5;">Planeje suas compras com base no calendário de hortifrúti e dia das carnes. Utilize o app Clube+ do Coqueiros para descontos ativados direto no caixa!</p>
+            <div class="form-group"><label>Forma de Pagamento</label>
+              <select id="mktFinPgto" class="form-control"><option>Pix</option><option>Dinheiro</option><option>Cartão Débito</option><option>Cartão Crédito</option><option>Boleto</option></select>
+            </div>
+            <div class="form-group"><label>Responsável</label><input type="text" id="mktFinResp" class="form-control" placeholder="Quem fez a compra?"></div>
+            <div style="display:flex;gap:10px;margin-top:16px;">
+              <button class="btn btn-success" style="flex:1;" onclick="confirmarFinalizarCompra(true)">✅ Lançar no Financeiro</button>
+              <button class="btn btn-outline" style="flex:1;" onclick="confirmarFinalizarCompra(false)">💾 Só Histórico</button>
+            </div>
+            <button class="btn btn-outline" style="margin-top:10px;width:100%;" onclick="closeFinalizar()">Cancelar</button>
+          </div>
+        </div>
+        <!-- Área de Impressão -->
+        <div id="print-lista"></div>
+        <!-- Header -->
+        <div class="panel no-print" style="margin-bottom:16px;padding:16px 20px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+            <div>
+              <div style="font-size:16px;font-weight:800;color:var(--dark);">🛍️ Lista de Mercado</div>
+              <div id="mktDicaIA" style="font-size:12px;color:var(--text-light);margin-top:3px;"></div>
+            </div>
+            <div class="flex gap-2" style="flex-wrap:wrap;">
+              <button class="btn btn-success btn-sm" onclick="iniciarModoCompra()">🛍️ Iniciar Compra</button>
+              <button class="btn btn-outline btn-sm" onclick="openModalDownload()">📥 Exportar</button>
+              <button class="btn btn-outline btn-sm" onclick="limparListaMercado()">🗑️ Limpar</button>
             </div>
           </div>
-          
-          <!-- Lista de Compras Dinâmica -->
+          <div class="mkt-resumo-grid">
+            <div style="background:#f1f5f9;border-radius:10px;padding:12px;text-align:center;">
+              <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text-light);margin-bottom:4px;">Total Previsto</div>
+              <div style="font-size:22px;font-weight:800;color:var(--text);" id="mercadoTotalLista">R$ 0,00</div>
+            </div>
+            <div style="background:#f1f5f9;border-radius:10px;padding:12px;text-align:center;">
+              <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text-light);margin-bottom:4px;">Total Real</div>
+              <div style="font-size:22px;font-weight:800;" id="mktTotalReal">R$ 0,00</div>
+            </div>
+            <div style="background:#f1f5f9;border-radius:10px;padding:12px;text-align:center;">
+              <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text-light);margin-bottom:4px;">Diferença</div>
+              <div style="font-size:22px;font-weight:800;" id="mktTotalDif">—</div>
+            </div>
+          </div>
+        </div>
+        <!-- Tabs -->
+        <div class="mkt-tabs no-print">
+          <button class="mkt-tab active" onclick="mktTab('lista',this)">📋 Lista</button>
+          <button class="mkt-tab" onclick="mktTab('modo-compra',this)">🛍️ Modo Compra</button>
+          <button class="mkt-tab" onclick="mktTab('historico',this)">📚 Histórico</button>
+          <button class="mkt-tab" onclick="mktTab('hub',this)">🤖 Hub Ofertas</button>
+        </div>
+        <!-- Lista -->
+        <div class="mkt-panel active" id="mkt-panel-lista">
+          <div class="grid-2">
+            <div class="panel">
+              <div class="panel-title">Adicionar Item</div>
+              <div style="margin-bottom:14px;">
+                <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text-light);margin-bottom:8px;">Sugestões Rápidas</div>
+                <div style="display:flex;flex-wrap:wrap;gap:6px;" id="mktSugestoes"></div>
+              </div>
+              <div class="form-group"><label>Produto *</label><input type="text" id="inputItemMercado" class="form-control" placeholder="Nome do produto..." onkeypress="if(event.key==='Enter')adicionarItemMercado()"></div>
+              <div class="form-row">
+                <div class="form-group"><label>Qtd.</label><input type="number" id="inputQtdMercado" class="form-control" placeholder="1" min="0.1" step="0.1" value="1"></div>
+                <div class="form-group"><label>Unidade</label><select id="inputUnidadeMercado" class="form-control"><option>un</option><option>kg</option><option>g</option><option>pacote</option><option>caixa</option><option>litro</option><option>outro</option></select></div>
+              </div>
+              <div class="form-row">
+                <div class="form-group"><label>Valor Estimado (R$)</label><input type="number" id="inputPrecoMercado" class="form-control" placeholder="0,00" step="0.01"></div>
+                <div class="form-group"><label>Mercado</label><select id="selectMercadoDestino" class="form-control"><option value="">Qualquer</option><option>Coqueiros</option><option>Economia</option><option>Boa Vista</option><option>Outro</option></select></div>
+              </div>
+              <div class="form-group"><label>Observação</label><input type="text" id="inputObsMercado" class="form-control" placeholder="Ex: marca, promoção..."></div>
+              <button class="btn btn-primary" style="width:100%;" onclick="adicionarItemMercado()">Adicionar Item</button>
+            </div>
+            <div class="panel">
+              <div class="panel-title flex justify-between items-center">
+                <span>📋 Minha Lista (<span id="mktCount">0</span> itens)</span>
+              </div>
+              <div id="listaMercadoHtml" style="max-height:430px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;"></div>
+              <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border);font-size:13px;color:var(--text-light);">Gasto do mês (Alimentação): <strong id="mercadoGastoMes" class="c-red">R$ 0,00</strong></div>
+            </div>
+          </div>
+        </div>
+        <!-- Modo Compra -->
+        <div class="mkt-panel" id="mkt-panel-modo-compra">
           <div class="panel">
             <div class="panel-title flex justify-between items-center">
-              <span>📋 Minha Lista de Compras</span>
-              <div class="flex gap-2">
-                <button class="btn btn-outline btn-sm" onclick="baixarListaMercado()">📥 Baixar Lista</button>
-                <button class="btn btn-primary btn-sm" onclick="limparListaMercado()">Limpar Tudo</button>
+              <span>🛍️ Modo Compra</span>
+              <button class="btn btn-success btn-sm" onclick="openModalFinalizar()">✅ Finalizar Compra</button>
+            </div>
+            <p style="font-size:13px;color:var(--text-light);margin-bottom:16px;">Marque os itens conforme vai comprando. Informe o valor real pago.</p>
+            <div id="modoCompraHtml" style="display:flex;flex-direction:column;gap:10px;"></div>
+          </div>
+        </div>
+        <!-- Histórico -->
+        <div class="mkt-panel" id="mkt-panel-historico">
+          <div class="panel">
+            <div class="panel-title">📚 Histórico de Compras</div>
+            <div id="historicoComprasHtml"></div>
+          </div>
+        </div>
+        <!-- Hub Ofertas -->
+        <div class="mkt-panel" id="mkt-panel-hub">
+          <div class="grid-2">
+            <div class="panel">
+              <div class="panel-title flex justify-between items-center"><span>🤖 Hub Carazinho/RS</span><span class="badge bg-success">Online</span></div>
+              <p style="font-size:13px;color:var(--text-light);margin-bottom:14px;">Acesse encartes e promoções dos principais supermercados.</p>
+              <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:18px;">
+                <a href="https://www.supermercadocoqueiros.com.br/ofertas-carazinho" target="_blank" class="btn btn-outline flex justify-between items-center" style="text-decoration:none;color:var(--text);text-align:left;padding:12px 15px;"><div><strong style="color:#d97706;">🛒 Sup. Coqueiros</strong><br><span style="font-size:11px;color:var(--text-light);">Encartes e App Clube+</span></div><span>➔</span></a>
+                <a href="https://www.facebook.com/supereconomia/?locale=pt_BR" target="_blank" class="btn btn-outline flex justify-between items-center" style="text-decoration:none;color:var(--text);text-align:left;padding:12px 15px;"><div><strong style="color:#059669;">🛒 Sup. Economia</strong><br><span style="font-size:11px;color:var(--text-light);">Promoções no Facebook</span></div><span>➔</span></a>
+                <a href="https://www.facebook.com/redeboavista?ref=embed_page" target="_blank" class="btn btn-outline flex justify-between items-center" style="text-decoration:none;color:var(--text);text-align:left;padding:12px 15px;"><div><strong style="color:#2563eb;">🛒 Sup. Boa Vista</strong><br><span style="font-size:11px;color:var(--text-light);">Ofertas semanais</span></div><span>➔</span></a>
               </div>
+              <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:14px;"><strong style="font-size:13px;color:#166534;">💡 Dica Carazinho:</strong><p style="font-size:12px;color:#15803d;margin-top:5px;line-height:1.6;">Use o app Clube+ do Coqueiros para descontos direto no caixa! Compre hortifrúti nas feiras de quinta-feira.</p></div>
             </div>
-            <div class="flex gap-2 mb-3" style="flex-wrap: wrap;">
-              <input type="text" id="inputItemMercado" class="form-control" style="flex:2; min-width:150px;" placeholder="Ex: Arroz 5kg..." onkeypress="if(event.key==='Enter') adicionarItemMercado()">
-              <input type="number" id="inputPrecoMercado" class="form-control" style="flex:1; min-width:80px;" placeholder="R$ 0,00" step="0.01">
-              <select id="selectMercadoDestino" class="form-control" style="flex:1; min-width:120px;">
-                <option value="">🛒 Qualquer</option>
-                <option value="Coqueiros">Coqueiros</option>
-                <option value="Economia">Economia</option>
-                <option value="Boa Vista">Boa Vista</option>
-                <option value="Outro">Outro</option>
-              </select>
-              <button class="btn btn-success" onclick="adicionarItemMercado()">Add</button>
-            </div>
-            <div class="flex justify-between items-center" style="margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px dashed var(--border);">
-              <span style="font-size:12px; color:var(--text-light);">* O valor é opcional para prever o gasto.</span>
-              <strong style="font-size:14px;">Total da Lista: <span id="mercadoTotalLista" class="c-red">R$ 0,00</span></strong>
-            </div>
-            <div id="listaMercadoHtml" style="max-height: 300px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;">
-              <!-- Items go here -->
-            </div>
-            <hr style="margin:15px 0; border:1px solid var(--border);">
-            <div class="flex justify-between items-center">
-              <strong style="font-size:14px; color:var(--text-light);">Gasto total (Alimentação) neste mês:</strong>
-              <strong style="font-size:18px; color:var(--danger);" id="mercadoGastoMes">R$ 0,00</strong>
+            <div class="panel">
+              <div class="panel-title">📌 Promoções Anotadas</div>
+              <div class="flex gap-2" style="margin-bottom:14px;">
+                <input type="text" id="inputPromoDesc" class="form-control" placeholder="Ex: Arroz 5kg R$22,90 - Coqueiros" onkeypress="if(event.key==='Enter')adicionarPromocao()">
+                <button class="btn btn-primary" onclick="adicionarPromocao()">Anotar</button>
+              </div>
+              <div id="promocoesMercadoHtml"></div>
             </div>
           </div>
         </div>
@@ -565,6 +666,10 @@ let parcelamentos = carregarLocal('parcelamentos', []);
 if(!Array.isArray(parcelamentos)) parcelamentos = [];
 let listaMercado = carregarLocal('listaMercado', []);
 if(!Array.isArray(listaMercado)) listaMercado = [];
+let historicoCopras = carregarLocal('historicoCopras', []);
+if(!Array.isArray(historicoCopras)) historicoCopras = [];
+let promocoesMercado = carregarLocal('promocoesMercado', []);
+if(!Array.isArray(promocoesMercado)) promocoesMercado = [];
 
 let categorias = carregarLocal('categorias', ['Moradia', 'Alimentação', 'Transporte', 'Saúde', 'Educação', 'Lazer', 'Outros']);
 if (!Array.isArray(categorias) || categorias.length === 0) {
