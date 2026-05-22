@@ -922,6 +922,103 @@
     background: var(--bg);
   }
   .rec-form-actions, .par-form-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+
+  /* ===== ETAPA 5: LISTA DE MERCADO ===== */
+  .mkt-hero-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+  .mkt-tab-nav {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 6px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    margin-bottom: 20px;
+  }
+  .mkt-tab-nav .mkt-tab {
+    border-radius: var(--radius-sm);
+    border-bottom: none;
+    margin-bottom: 0;
+    padding: 10px 16px;
+  }
+  .mkt-tab-nav .mkt-tab.active {
+    background: var(--primary);
+    color: #fff;
+    box-shadow: var(--shadow);
+  }
+  .mkt-tab-nav .mkt-tab.active:hover { color: #fff; background: var(--primary); }
+  .mkt-list-grid { display: flex; flex-direction: column; gap: 10px; max-height: 480px; overflow-y: auto; }
+  .mkt-item-card.substituido { border-color: var(--info); background: #eff6ff; }
+  .mkt-item-card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; width: 100%; }
+  .mkt-item-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+  .mkt-tag {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text-light);
+  }
+  .mkt-tag.preco { color: var(--danger); background: var(--danger-soft); border-color: transparent; }
+  .mkt-tag.mercado { color: var(--primary); background: var(--primary-soft, #e8f3ef); border-color: transparent; }
+  .mkt-status-group { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .mkt-status-btn.active-sub { background: #dbeafe; border-color: var(--info); color: #1d4ed8; }
+  .mkt-compra-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+  @media (max-width: 680px) { .mkt-compra-fields { grid-template-columns: 1fr; } }
+  .mkt-resumo-grid .mkt-resumo-box {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 14px;
+    text-align: center;
+  }
+  .mkt-resumo-box span { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-light); margin-bottom: 6px; }
+  .mkt-resumo-box strong { font-size: 22px; color: var(--dark); }
+  .mkt-resumo-box strong.c-up { color: var(--danger); }
+  .mkt-resumo-box strong.c-down { color: var(--success); }
+  .hub-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 14px 16px;
+    background: var(--card-bg);
+    box-shadow: var(--shadow);
+    text-decoration: none;
+    color: var(--text);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    transition: 0.2s;
+  }
+  .hub-card:hover { border-color: var(--primary); transform: translateY(-1px); }
+  .hub-promo-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 14px;
+    background: var(--card-bg);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .mkt-dica-box {
+    border: 1px solid #bbf7d0;
+    background: #f0fdf4;
+    border-radius: var(--radius-lg);
+    padding: 14px 16px;
+    margin-top: 14px;
+  }
+  .hist-card-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; }
+  @media (max-width: 560px) { .hist-card-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body class="modo-pc">
@@ -1520,140 +1617,182 @@
       </section>
       <!-- Lista de Mercado -->
       <section id="mod-mercado" class="module hidden">
-        <!-- Modal Download -->
         <div class="modal-overlay" id="modalDownloadLista">
           <div class="modal-box">
-            <div class="modal-title">📥 Exportar Lista</div>
+            <div class="modal-title">Exportar lista</div>
+            <p class="pro-muted" style="margin-bottom:14px;">Escolha o formato de exportação da lista atual.</p>
             <div style="display:flex;flex-direction:column;gap:10px;">
-              <button class="btn btn-outline" onclick="baixarTXT()">📄 Baixar TXT</button>
-              <button class="btn btn-outline" onclick="baixarCSV()">📊 Baixar CSV</button>
-              <button class="btn btn-primary" onclick="imprimirLista()">🖨️ Imprimir / Salvar PDF</button>
+              <button type="button" class="btn btn-outline" onclick="baixarTXT()">Baixar TXT</button>
+              <button type="button" class="btn btn-outline" onclick="baixarCSV()">Baixar CSV</button>
+              <button type="button" class="btn btn-primary" onclick="imprimirLista()">Imprimir / PDF</button>
             </div>
-            <button class="btn btn-outline" style="margin-top:14px;width:100%;" onclick="closeModalDownload()">Fechar</button>
+            <button type="button" class="btn btn-outline" style="margin-top:14px;width:100%;" onclick="closeModalDownload()">Fechar</button>
           </div>
         </div>
-        <!-- Modal Finalizar Compra -->
         <div class="modal-overlay" id="modalFinalizar">
           <div class="modal-box">
-            <div class="modal-title">✅ Finalizar Compra</div>
-            <div style="background:#f1f5f9;border-radius:10px;padding:14px;margin-bottom:16px;text-align:center;">
-              <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text-light);margin-bottom:4px;">Total Real da Compra</div>
-              <div style="font-size:28px;font-weight:800;color:var(--success);" id="mktFinTotal">R$ 0,00</div>
+            <div class="modal-title">Finalizar compra</div>
+            <div id="mktFinResumo" class="mkt-resumo-grid" style="margin-bottom:16px;"></div>
+            <div class="form-group">
+              <label for="mktFinPgto">Forma de pagamento</label>
+              <select id="mktFinPgto" class="form-control">
+                <option>Pix</option><option>Dinheiro</option><option>Cartão Débito</option>
+                <option>Cartão Crédito</option><option>Boleto</option>
+              </select>
             </div>
-            <div class="form-group"><label>Forma de Pagamento</label>
-              <select id="mktFinPgto" class="form-control"><option>Pix</option><option>Dinheiro</option><option>Cartão Débito</option><option>Cartão Crédito</option><option>Boleto</option></select>
+            <div class="form-group">
+              <label for="mktFinResp">Responsável</label>
+              <input type="text" id="mktFinResp" class="form-control" placeholder="Quem fez a compra?">
             </div>
-            <div class="form-group"><label>Responsável</label><input type="text" id="mktFinResp" class="form-control" placeholder="Quem fez a compra?"></div>
-            <div style="display:flex;gap:10px;margin-top:16px;">
-              <button class="btn btn-success" style="flex:1;" onclick="confirmarFinalizarCompra(true)">✅ Lançar no Financeiro</button>
-              <button class="btn btn-outline" style="flex:1;" onclick="confirmarFinalizarCompra(false)">💾 Só Histórico</button>
+            <p class="pro-muted" style="margin:12px 0;">Deseja lançar esta compra no financeiro?</p>
+            <div style="display:flex;gap:10px;margin-top:8px;">
+              <button type="button" class="btn btn-success" style="flex:1;" onclick="confirmarFinalizarCompra(true)">Sim, lançar</button>
+              <button type="button" class="btn btn-outline" style="flex:1;" onclick="confirmarFinalizarCompra(false)">Só histórico</button>
             </div>
-            <button class="btn btn-outline" style="margin-top:10px;width:100%;" onclick="closeFinalizar()">Cancelar</button>
+            <button type="button" class="btn btn-outline" style="margin-top:10px;width:100%;" onclick="closeFinalizar()">Cancelar</button>
           </div>
         </div>
-        <!-- Área de Impressão -->
+        <div class="modal-overlay" id="modalHistoricoCompra">
+          <div class="modal-box" style="max-width:620px;">
+            <div class="modal-title" id="modalHistoricoTitulo">Detalhes da compra</div>
+            <div id="modalHistoricoConteudo"></div>
+            <button type="button" class="btn btn-outline" style="margin-top:14px;width:100%;" onclick="fecharModalHistoricoCompra()">Fechar</button>
+          </div>
+        </div>
         <div id="print-lista"></div>
-        <!-- Header -->
-        <div class="panel no-print" style="margin-bottom:16px;padding:16px 20px;">
-          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+
+        <div class="module-hero">
+          <div>
+            <p class="dash-eyebrow">Compras</p>
+            <h3 class="dash-hero-title">Lista de Mercado</h3>
+            <p class="dash-hero-desc">Organize itens, acompanhe a compra em tempo real e registre o gasto no financeiro quando quiser.</p>
+          </div>
+        </div>
+
+        <div class="panel no-print" style="margin-bottom:16px;">
+          <div class="mkt-hero-bar">
             <div>
-              <div style="font-size:16px;font-weight:800;color:var(--dark);">🛍️ Lista de Mercado</div>
-              <div id="mktDicaIA" style="font-size:12px;color:var(--text-light);margin-top:3px;"></div>
+              <div id="mktDicaIA" class="pro-muted">Monte sua lista e use o Modo Compra no mercado.</div>
             </div>
             <div class="flex gap-2" style="flex-wrap:wrap;">
-              <button class="btn btn-success btn-sm" id="btnIniciarCompra">🛍️ Iniciar Compra</button>
-              <button class="btn btn-outline btn-sm" id="btnExportarLista">📥 Exportar</button>
-              <button class="btn btn-outline btn-sm" id="btnLimparLista">🗑️ Limpar</button>
+              <button type="button" class="btn btn-success btn-sm" id="btnIniciarCompra">Iniciar compra</button>
+              <button type="button" class="btn btn-outline btn-sm" id="btnExportarLista">Exportar</button>
+              <button type="button" class="btn btn-outline btn-sm" id="btnLimparLista">Limpar lista</button>
             </div>
           </div>
           <div class="mkt-resumo-grid">
-            <div style="background:#f1f5f9;border-radius:10px;padding:12px;text-align:center;">
-              <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text-light);margin-bottom:4px;">Total Previsto</div>
-              <div style="font-size:22px;font-weight:800;color:var(--text);" id="mercadoTotalLista">R$ 0,00</div>
-            </div>
-            <div style="background:#f1f5f9;border-radius:10px;padding:12px;text-align:center;">
-              <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text-light);margin-bottom:4px;">Total Real</div>
-              <div style="font-size:22px;font-weight:800;" id="mktTotalReal">R$ 0,00</div>
-            </div>
-            <div style="background:#f1f5f9;border-radius:10px;padding:12px;text-align:center;">
-              <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text-light);margin-bottom:4px;">Diferença</div>
-              <div style="font-size:22px;font-weight:800;" id="mktTotalDif">—</div>
-            </div>
+            <div class="mkt-resumo-box"><span>Total previsto</span><strong id="mercadoTotalLista">R$ 0,00</strong></div>
+            <div class="mkt-resumo-box"><span>Total real</span><strong id="mktTotalReal">R$ 0,00</strong></div>
+            <div class="mkt-resumo-box"><span>Diferença</span><strong id="mktTotalDif">—</strong></div>
           </div>
+          <div class="pro-muted" style="margin-top:12px;font-size:13px;">Gasto do mês (Alimentação/Mercado): <strong id="mercadoGastoMes" class="c-red">R$ 0,00</strong></div>
         </div>
-        <!-- Tabs -->
-        <div class="mkt-tabs no-print">
-          <button type="button" class="mkt-tab active" id="abaLista">📋 Lista</button>
-          <button type="button" class="mkt-tab" id="abaModoCompra">🛍️ Modo Compra</button>
-          <button type="button" class="mkt-tab" id="abaHistorico">📚 Histórico</button>
-          <button type="button" class="mkt-tab" id="abaHubOfertas">🤖 Hub Ofertas</button>
+
+        <div class="mkt-tab-nav no-print">
+          <button type="button" class="mkt-tab active" id="abaLista">Lista</button>
+          <button type="button" class="mkt-tab" id="abaModoCompra">Modo Compra</button>
+          <button type="button" class="mkt-tab" id="abaHistorico">Histórico</button>
+          <button type="button" class="mkt-tab" id="abaHubOfertas">Hub Ofertas</button>
         </div>
-        <!-- Lista -->
+
         <div class="mkt-panel active" id="mkt-panel-lista">
-          <div class="grid-2">
-            <div class="panel">
-              <div class="panel-title">Adicionar Item</div>
-              <div style="margin-bottom:14px;">
-                <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text-light);margin-bottom:8px;">Sugestões Rápidas</div>
-                <div style="display:flex;flex-wrap:wrap;gap:6px;" id="mktSugestoes"></div>
+          <div class="mod-layout">
+            <div class="panel" id="panelFormMercado">
+              <div class="panel-title" id="formMercadoTitle">Adicionar item</div>
+              <div class="form-section">
+                <div class="form-section-title">Sugestões rápidas</div>
+                <div id="mktSugestoes" style="display:flex;flex-wrap:wrap;gap:6px;"></div>
               </div>
-              <div class="form-group"><label>Produto *</label><input type="text" id="inputItemMercado" class="form-control" placeholder="Nome do produto..." onkeypress="if(event.key==='Enter')adicionarItemMercado()"></div>
+              <div class="form-group">
+                <label for="inputItemMercado">Produto *</label>
+                <input type="text" id="inputItemMercado" class="form-control" placeholder="Nome do produto..." onkeypress="if(event.key==='Enter')adicionarItemMercado()">
+              </div>
               <div class="form-row">
-                <div class="form-group"><label>Qtd.</label><input type="number" id="inputQtdMercado" class="form-control" placeholder="1" min="0.1" step="0.1" value="1"></div>
-                <div class="form-group"><label>Unidade</label><select id="inputUnidadeMercado" class="form-control"><option>un</option><option>kg</option><option>g</option><option>pacote</option><option>caixa</option><option>litro</option><option>outro</option></select></div>
+                <div class="form-group">
+                  <label for="inputQtdMercado">Quantidade</label>
+                  <input type="number" id="inputQtdMercado" class="form-control" min="0.1" step="0.1" value="1">
+                </div>
+                <div class="form-group">
+                  <label for="inputUnidadeMercado">Unidade</label>
+                  <select id="inputUnidadeMercado" class="form-control">
+                    <option>un</option><option>kg</option><option>g</option><option>pacote</option>
+                    <option>caixa</option><option>litro</option><option>outro</option>
+                  </select>
+                </div>
               </div>
               <div class="form-row">
-                <div class="form-group"><label>Valor Estimado (R$)</label><input type="number" id="inputPrecoMercado" class="form-control" placeholder="0,00" step="0.01"></div>
-                <div class="form-group"><label>Mercado</label><select id="selectMercadoDestino" class="form-control"><option value="">Qualquer</option><option>Coqueiros</option><option>Economia</option><option>Boa Vista</option><option>Outro</option></select></div>
+                <div class="form-group">
+                  <label for="inputPrecoMercado">Valor estimado (R$)</label>
+                  <input type="number" id="inputPrecoMercado" class="form-control" step="0.01" min="0" placeholder="0,00">
+                </div>
+                <div class="form-group">
+                  <label for="selectMercadoDestino">Mercado</label>
+                  <select id="selectMercadoDestino" class="form-control">
+                    <option value="">Qualquer</option><option>Coqueiros</option><option>Economia</option>
+                    <option>Boa Vista</option><option>Outro</option>
+                  </select>
+                </div>
               </div>
-              <div class="form-group"><label>Observação</label><input type="text" id="inputObsMercado" class="form-control" placeholder="Ex: marca, promoção..."></div>
-              <button class="btn btn-primary" style="width:100%;" onclick="adicionarItemMercado()">Adicionar Item</button>
+              <div class="form-group">
+                <label for="inputObsMercado">Observação</label>
+                <input type="text" id="inputObsMercado" class="form-control" placeholder="Marca, promoção, tamanho...">
+              </div>
+              <div class="rec-form-actions">
+                <button type="button" class="btn btn-primary" id="btnSalvarMercado" onclick="adicionarItemMercado()">Adicionar item</button>
+                <button type="button" class="btn btn-outline hidden" id="btnCancelMercado" onclick="cancelarEdicaoMercado()">Cancelar edição</button>
+              </div>
             </div>
             <div class="panel">
-              <div class="panel-title flex justify-between items-center">
-                <span>📋 Minha Lista (<span id="mktCount">0</span> itens)</span>
-              </div>
-              <div id="listaMercadoHtml" style="max-height:430px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;"></div>
-              <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border);font-size:13px;color:var(--text-light);">Gasto do mês (Alimentação): <strong id="mercadoGastoMes" class="c-red">R$ 0,00</strong></div>
+              <div class="panel-title">Minha lista (<span id="mktCount">0</span> itens)</div>
+              <div id="listaMercadoHtml" class="mkt-list-grid"></div>
             </div>
           </div>
         </div>
-        <!-- Modo Compra -->
+
         <div class="mkt-panel" id="mkt-panel-modo-compra">
           <div class="panel">
             <div class="panel-title flex justify-between items-center">
-              <span>🛍️ Modo Compra</span>
-              <button class="btn btn-success btn-sm" onclick="openModalFinalizar()">✅ Finalizar Compra</button>
+              <span>Modo Compra</span>
+              <button type="button" class="btn btn-success btn-sm" onclick="openModalFinalizar()">Finalizar compra</button>
             </div>
-            <p style="font-size:13px;color:var(--text-light);margin-bottom:16px;">Marque os itens conforme vai comprando. Informe o valor real pago.</p>
-            <div id="modoCompraHtml" style="display:flex;flex-direction:column;gap:10px;"></div>
+            <p class="pro-muted" style="margin-bottom:16px;">Marque o status de cada item e informe o valor real pago quando comprar.</p>
+            <div id="modoCompraHtml" style="display:flex;flex-direction:column;gap:12px;"></div>
           </div>
         </div>
-        <!-- Histórico -->
+
         <div class="mkt-panel" id="mkt-panel-historico">
           <div class="panel">
-            <div class="panel-title">📚 Histórico de Compras</div>
+            <div class="panel-title">Histórico de compras</div>
             <div id="historicoComprasHtml"></div>
           </div>
         </div>
-        <!-- Hub Ofertas -->
+
         <div class="mkt-panel" id="mkt-panel-hub">
           <div class="grid-2">
             <div class="panel">
-              <div class="panel-title flex justify-between items-center"><span>🤖 Hub Carazinho/RS</span><span class="badge bg-success">Online</span></div>
-              <p style="font-size:13px;color:var(--text-light);margin-bottom:14px;">Acesse encartes e promoções dos principais supermercados.</p>
-              <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:18px;">
-                <a href="https://www.supermercadocoqueiros.com.br/ofertas-carazinho" target="_blank" class="btn btn-outline flex justify-between items-center" style="text-decoration:none;color:var(--text);text-align:left;padding:12px 15px;"><div><strong style="color:#d97706;">🛒 Sup. Coqueiros</strong><br><span style="font-size:11px;color:var(--text-light);">Encartes e App Clube+</span></div><span>➔</span></a>
-                <a href="https://www.facebook.com/supereconomia/?locale=pt_BR" target="_blank" class="btn btn-outline flex justify-between items-center" style="text-decoration:none;color:var(--text);text-align:left;padding:12px 15px;"><div><strong style="color:#059669;">🛒 Sup. Economia</strong><br><span style="font-size:11px;color:var(--text-light);">Promoções no Facebook</span></div><span>➔</span></a>
-                <a href="https://www.facebook.com/redeboavista?ref=embed_page" target="_blank" class="btn btn-outline flex justify-between items-center" style="text-decoration:none;color:var(--text);text-align:left;padding:12px 15px;"><div><strong style="color:#2563eb;">🛒 Sup. Boa Vista</strong><br><span style="font-size:11px;color:var(--text-light);">Ofertas semanais</span></div><span>➔</span></a>
+              <div class="panel-title">Hub de ofertas</div>
+              <p class="pro-muted" style="margin-bottom:14px;">Encartes e promoções dos principais supermercados da região.</p>
+              <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px;">
+                <a href="https://www.supermercadocoqueiros.com.br/ofertas-carazinho" target="_blank" rel="noopener" class="hub-card">
+                  <div><strong>Supermercado Coqueiros</strong><div class="pro-muted" style="margin-top:4px;">Encartes e App Clube+</div></div><span>→</span>
+                </a>
+                <a href="https://www.facebook.com/supereconomia/?locale=pt_BR" target="_blank" rel="noopener" class="hub-card">
+                  <div><strong>Supermercado Economia</strong><div class="pro-muted" style="margin-top:4px;">Promoções no Facebook</div></div><span>→</span>
+                </a>
+                <a href="https://www.facebook.com/redeboavista?ref=embed_page" target="_blank" rel="noopener" class="hub-card">
+                  <div><strong>Supermercado Boa Vista</strong><div class="pro-muted" style="margin-top:4px;">Ofertas semanais</div></div><span>→</span>
+                </a>
               </div>
-              <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:14px;"><strong style="font-size:13px;color:#166534;">💡 Dica Carazinho:</strong><p style="font-size:12px;color:#15803d;margin-top:5px;line-height:1.6;">Use o app Clube+ do Coqueiros para descontos direto no caixa! Compre hortifrúti nas feiras de quinta-feira.</p></div>
+              <div id="mktDicaInteligente" class="mkt-dica-box"></div>
             </div>
             <div class="panel">
-              <div class="panel-title">📌 Promoções Anotadas</div>
-              <div class="flex gap-2" style="margin-bottom:14px;">
-                <input type="text" id="inputPromoDesc" class="form-control" placeholder="Ex: Arroz 5kg R$22,90 - Coqueiros" onkeypress="if(event.key==='Enter')adicionarPromocao()">
-                <button class="btn btn-primary" onclick="adicionarPromocao()">Anotar</button>
+              <div class="panel-title">Promoções anotadas</div>
+              <div class="form-group">
+                <label for="inputPromoDesc">Descrição da promoção</label>
+                <div class="flex gap-2">
+                  <input type="text" id="inputPromoDesc" class="form-control" placeholder="Ex.: Arroz 5kg R$ 22,90 - Coqueiros" onkeypress="if(event.key==='Enter')adicionarPromocao()">
+                  <button type="button" class="btn btn-primary" onclick="adicionarPromocao()">Salvar</button>
+                </div>
               </div>
               <div id="promocoesMercadoHtml"></div>
             </div>
@@ -2458,69 +2597,10 @@ function cancelarEdicaoLancamento() {
 }
 function limparFormLanc() { ['fDesc','fValor','fVenc','fResp','fObs'].forEach(id => document.getElementById(id).value = ''); document.getElementById('fStatus').value = 'pendente'; }
 
-/* LISTA DE MERCADO */
-function adicionarItemMercado() {
-  const i = document.getElementById('inputItemMercado'); const nome = i.value.trim();
-  const pre = document.getElementById('inputPrecoMercado'); const preco = Number(pre.value) || 0;
-  const mer = document.getElementById('selectMercadoDestino').value;
-  if(!nome) return;
-  listaMercado.push({ id: generateId(), nome: nome, preco: preco, mercado: mer, marcado: false });
-  salvarLocal('listaMercado', listaMercado); i.value = ''; pre.value = ''; renderListaMercado(); showToast("Item adicionado!");
-}
-function alternarItemMercado(id) {
-  const item = listaMercado.find(i => i.id === id);
-  if(item) { item.marcado = !item.marcado; salvarLocal('listaMercado', listaMercado); renderListaMercado(); }
-}
-function removerItemMercado(id) {
-  listaMercado = listaMercado.filter(i => i.id !== id); salvarLocal('listaMercado', listaMercado); renderListaMercado();
-}
-function limparListaMercado() {
-  if(!confirm("Limpar toda a lista de compras?")) return;
-  listaMercado = []; salvarLocal('listaMercado', listaMercado); renderListaMercado();
-}
-function baixarListaMercado() {
-  if(listaMercado.length === 0) return showToast("A lista está vazia!");
-  let txt = "📋 MINHA LISTA DE COMPRAS - FINANÇASCASA\n";
-  txt += "Gerado em: " + new Date().toLocaleDateString() + "\n\n";
-  let total = 0;
-  listaMercado.forEach(i => {
-    let check = i.marcado ? "[X]" : "[ ]";
-    let valorStr = i.preco ? ` | R$ ${i.preco.toFixed(2)}` : "";
-    let mercStr = i.mercado ? ` (${i.mercado})` : "";
-    txt += `${check} ${i.nome}${mercStr}${valorStr}\n`;
-    total += i.preco || 0;
-  });
-  txt += `\nTotal Estimado: R$ ${total.toFixed(2)}\n`;
-  const blob = new Blob([txt], { type: 'text/plain;charset=utf-8' });
-  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-  a.download = `Lista_Mercado_${new Date().toISOString().split('T')[0]}.txt`; a.click();
-}
-function renderListaMercado() {
-  let h = ''; let total = 0;
-  listaMercado.forEach(i => {
-    total += i.preco || 0;
-    const estilo = i.marcado ? `text-decoration: line-through; opacity: 0.6;` : ``;
-    const lblPreco = i.preco ? `<span style="font-size:12px; font-weight:bold; color:var(--danger); background:#fee2e2; padding:2px 6px; border-radius:4px; margin-left:8px;">${formatMoeda(i.preco)}</span>` : '';
-    const lblMercado = i.mercado ? `<span style="font-size:11px; color:#fff; background:var(--primary); padding:2px 6px; border-radius:4px; margin-left:8px;">${i.mercado}</span>` : '';
-    h += `<div style="display:flex; justify-content:space-between; align-items:center; padding:10px; background:#f8fafc; border:1px solid var(--border); border-radius:6px; transition:0.2s;">
-      <div style="display:flex; align-items:center; gap:10px; cursor:pointer; flex:1; flex-wrap:wrap;" onclick="alternarItemMercado('${i.id}')">
-        <input type="checkbox" ${i.marcado?'checked':''} style="width:18px; height:18px; pointer-events:none;">
-        <span style="${estilo} font-size:14px; font-weight:600; display:flex; align-items:center; flex-wrap:wrap;">${i.nome} ${lblPreco} ${lblMercado}</span>
-      </div>
-      <button class="btn btn-sm btn-danger" style="padding:4px 8px; font-size:10px;" onclick="removerItemMercado('${i.id}')">✕</button>
-    </div>`;
-  });
-  const el = document.getElementById('listaMercadoHtml');
-  if(el) el.innerHTML = h || `<div style="padding:20px; text-align:center; color:var(--text-light); font-size:14px;">Sua lista está vazia. Comece adicionando itens!</div>`;
-  
-  const tEl = document.getElementById('mercadoTotalLista'); if(tEl) tEl.innerText = formatMoeda(total);
-  
-  const mes = getMesGlobal();
-  const gastosMercado = getLancamentosFiltrados(mes).filter(l => l.tipo === 'despesa' && (l.categoria.toLowerCase().includes('alimentação') || l.categoria.toLowerCase().includes('mercado'))).reduce((sum, l) => sum + l.valor, 0);
-  const gastoEl = document.getElementById('mercadoGastoMes'); if(gastoEl) gastoEl.innerText = formatMoeda(gastosMercado);
-}
+/* LISTA DE MERCADO — ETAPA 5 */
+const SUGESTOES_MERCADO = ['Arroz', 'Feijão', 'Leite', 'Café', 'Açúcar', 'Carne', 'Frango', 'Ovos', 'Detergente', 'Papel higiênico'];
+let editMercadoId = null;
 
-/* CORRECOES LISTA DE MERCADO */
 const abasMercado = {
   lista: { tab: 'abaLista', panel: 'mkt-panel-lista' },
   'modo-compra': { tab: 'abaModoCompra', panel: 'mkt-panel-modo-compra' },
@@ -2533,18 +2613,23 @@ function escapeHtmlMercado(valor) {
 }
 
 function normalizarListaMercado() {
-  if(!Array.isArray(listaMercado)) listaMercado = [];
-  listaMercado = listaMercado.map(item => ({
-    id: item.id || generateId(),
-    nome: item.nome || item.produto || '',
-    qtd: Number(item.qtd || item.quantidade || 1) || 1,
-    unidade: item.unidade || 'un',
-    preco: Number(item.preco || item.valorEstimado || 0) || 0,
-    mercado: item.mercado || '',
-    obs: item.obs || item.observacao || '',
-    marcado: !!item.marcado,
-    valorReal: Number(item.valorReal || 0) || 0
-  })).filter(item => item.nome);
+  if (!Array.isArray(listaMercado)) listaMercado = [];
+  listaMercado = listaMercado.map(item => {
+    const statusCompra = item.statusCompra || (item.marcado ? 'comprado' : 'pendente');
+    return {
+      id: item.id || generateId(),
+      nome: item.nome || item.produto || '',
+      qtd: Number(item.qtd || item.quantidade || 1) || 1,
+      unidade: item.unidade || 'un',
+      preco: Number(item.preco || item.valorEstimado || 0) || 0,
+      mercado: item.mercado || '',
+      obs: item.obs || item.observacao || '',
+      marcado: statusCompra === 'comprado',
+      statusCompra,
+      valorReal: Number(item.valorReal || 0) || 0,
+      obsCompra: item.obsCompra || ''
+    };
+  }).filter(item => item.nome);
 }
 
 function salvarListaMercado() {
@@ -2552,111 +2637,280 @@ function salvarListaMercado() {
   salvarLocal('listaMercado', listaMercado);
 }
 
+function totaisMercado() {
+  normalizarListaMercado();
+  const totalPrevisto = listaMercado.reduce((s, i) => s + (Number(i.preco) || 0), 0);
+  const totalReal = listaMercado.reduce((s, i) => s + valorRealItemMercado(i), 0);
+  const dif = totalReal - totalPrevisto;
+  return { totalPrevisto, totalReal, dif };
+}
+
+function valorRealItemMercado(i) {
+  if (Number(i.valorReal) > 0) return Number(i.valorReal);
+  if (['comprado', 'substituido'].includes(i.statusCompra)) return Number(i.preco) || 0;
+  return 0;
+}
+
+function labelStatusCompra(st) {
+  return { pendente: 'Pendente', comprado: 'Comprado', nao_encontrado: 'Não encontrado', substituido: 'Substituído' }[st] || 'Pendente';
+}
+
+function classeCardCompra(st) {
+  if (st === 'comprado') return 'comprado';
+  if (st === 'nao_encontrado') return 'nao-encontrado';
+  if (st === 'substituido') return 'substituido';
+  return '';
+}
+
+function aplicarSugestaoMercado(nome) {
+  const input = document.getElementById('inputItemMercado');
+  if (input) { input.value = nome; input.focus(); }
+}
+
+function limparFormMercado() {
+  ['inputItemMercado', 'inputPrecoMercado', 'inputObsMercado'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+  const qtd = document.getElementById('inputQtdMercado'); if (qtd) qtd.value = '1';
+  const uni = document.getElementById('inputUnidadeMercado'); if (uni) uni.value = 'un';
+  const mer = document.getElementById('selectMercadoDestino'); if (mer) mer.value = '';
+}
+
+function editarItemMercado(id) {
+  const item = listaMercado.find(i => i.id === id);
+  if (!item) return;
+  editMercadoId = id;
+  document.getElementById('inputItemMercado').value = item.nome;
+  document.getElementById('inputQtdMercado').value = item.qtd || 1;
+  document.getElementById('inputUnidadeMercado').value = item.unidade || 'un';
+  document.getElementById('inputPrecoMercado').value = item.preco || '';
+  document.getElementById('selectMercadoDestino').value = item.mercado || '';
+  document.getElementById('inputObsMercado').value = item.obs || '';
+  document.getElementById('formMercadoTitle').innerText = 'Editar item';
+  document.getElementById('btnSalvarMercado').innerText = 'Salvar alterações';
+  document.getElementById('btnCancelMercado').classList.remove('hidden');
+  document.getElementById('panelFormMercado').scrollIntoView({ behavior: 'smooth' });
+}
+
+function cancelarEdicaoMercado() {
+  editMercadoId = null;
+  limparFormMercado();
+  document.getElementById('formMercadoTitle').innerText = 'Adicionar item';
+  document.getElementById('btnSalvarMercado').innerText = 'Adicionar item';
+  document.getElementById('btnCancelMercado').classList.add('hidden');
+}
+
+function adicionarItemMercado() {
+  const nome = document.getElementById('inputItemMercado').value.trim();
+  if (!nome) return showToast('Informe o produto.', 'warning');
+  normalizarListaMercado();
+  const obj = {
+    id: editMercadoId || generateId(),
+    nome,
+    qtd: Number(document.getElementById('inputQtdMercado').value) || 1,
+    unidade: document.getElementById('inputUnidadeMercado').value || 'un',
+    preco: Number(document.getElementById('inputPrecoMercado').value) || 0,
+    mercado: document.getElementById('selectMercadoDestino').value || '',
+    obs: document.getElementById('inputObsMercado').value.trim(),
+    marcado: false,
+    statusCompra: 'pendente',
+    valorReal: 0,
+    obsCompra: ''
+  };
+  if (editMercadoId) {
+    const idx = listaMercado.findIndex(i => i.id === editMercadoId);
+    if (idx !== -1) {
+      obj.statusCompra = listaMercado[idx].statusCompra || 'pendente';
+      obj.valorReal = listaMercado[idx].valorReal || 0;
+      obj.obsCompra = listaMercado[idx].obsCompra || '';
+      obj.marcado = listaMercado[idx].statusCompra === 'comprado';
+      listaMercado[idx] = obj;
+    }
+  } else {
+    listaMercado.push(obj);
+  }
+  salvarListaMercado();
+  cancelarEdicaoMercado();
+  renderListaMercado();
+  showToast('Item salvo!');
+}
+
+function removerItemMercado(id) {
+  if (!confirm('Excluir este item da lista?')) return;
+  normalizarListaMercado();
+  listaMercado = listaMercado.filter(i => i.id !== id);
+  salvarListaMercado();
+  if (editMercadoId === id) cancelarEdicaoMercado();
+  renderListaMercado();
+  showToast('Item excluído.', 'warning');
+}
+
+function setStatusCompra(id, status) {
+  normalizarListaMercado();
+  const item = listaMercado.find(i => i.id === id);
+  if (!item) return;
+  item.statusCompra = status;
+  item.marcado = status === 'comprado';
+  salvarListaMercado();
+  renderListaMercado();
+}
+
+function atualizarValorRealMercado(id, valor) {
+  normalizarListaMercado();
+  const item = listaMercado.find(i => i.id === id);
+  if (!item) return;
+  item.valorReal = Number(valor) || 0;
+  salvarListaMercado();
+  renderListaMercado();
+}
+
+function atualizarObsCompraMercado(id, valor) {
+  normalizarListaMercado();
+  const item = listaMercado.find(i => i.id === id);
+  if (!item) return;
+  item.obsCompra = String(valor || '').trim();
+  salvarListaMercado();
+}
+
+function renderItemMercadoCard(i) {
+  return `<div class="mkt-item-card ${classeCardCompra(i.statusCompra)}">
+    <div class="mkt-item-card-head">
+      <div style="flex:1;">
+        <strong>${escapeHtmlMercado(i.nome)}</strong>
+        <div class="mkt-item-meta">
+          <span class="mkt-tag">${escapeHtmlMercado(i.qtd)} ${escapeHtmlMercado(i.unidade)}</span>
+          ${i.preco ? `<span class="mkt-tag preco">${formatMoeda(i.preco)}</span>` : ''}
+          ${i.mercado ? `<span class="mkt-tag mercado">${escapeHtmlMercado(i.mercado)}</span>` : ''}
+          <span class="mkt-tag">${escapeHtmlMercado(labelStatusCompra(i.statusCompra))}</span>
+        </div>
+        ${i.obs ? `<div class="pro-muted" style="margin-top:6px;">${escapeHtmlMercado(i.obs)}</div>` : ''}
+      </div>
+      <div class="action-cell">
+        <button type="button" class="btn btn-outline btn-sm" onclick="editarItemMercado('${i.id}')">Editar</button>
+        <button type="button" class="btn btn-danger btn-sm" onclick="removerItemMercado('${i.id}')">Excluir</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderModoCompraItem(i) {
+  const st = i.statusCompra || 'pendente';
+  return `<div class="mkt-item-card ${classeCardCompra(st)}">
+    <div style="width:100%;">
+      <strong>${escapeHtmlMercado(i.nome)}</strong>
+      <div class="pro-muted" style="margin-top:4px;">${escapeHtmlMercado(i.qtd)} ${escapeHtmlMercado(i.unidade)} · Previsto: ${formatMoeda(i.preco || 0)}${i.mercado ? ' · ' + escapeHtmlMercado(i.mercado) : ''}</div>
+      <div class="mkt-status-group">
+        ${['pendente', 'comprado', 'nao_encontrado', 'substituido'].map(s => `<button type="button" class="mkt-status-btn ${s === 'pendente' ? 'active-pend' : s === 'comprado' ? 'active-comp' : s === 'nao_encontrado' ? 'active-nao' : 'active-sub'} ${st === s ? 'active' : ''}" style="${st === s ? 'opacity:1;' : 'opacity:.75;'}" onclick="setStatusCompra('${i.id}','${s}')">${labelStatusCompra(s)}</button>`).join('')}
+      </div>
+      <div class="mkt-compra-fields">
+        <div class="form-group" style="margin:0;">
+          <label>Valor real (R$)</label>
+          <input type="number" class="form-control" min="0" step="0.01" placeholder="0,00" value="${i.valorReal || ''}" onchange="atualizarValorRealMercado('${i.id}', this.value)">
+        </div>
+        <div class="form-group" style="margin:0;">
+          <label>Observação rápida</label>
+          <input type="text" class="form-control" placeholder="Ex.: promoção, marca trocada" value="${String(i.obsCompra || '').replace(/"/g, '&quot;')}" onchange="atualizarObsCompraMercado('${i.id}', this.value)">
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function atualizarResumoMercadoHeader() {
+  const { totalPrevisto, totalReal, dif } = totaisMercado();
+  const tEl = document.getElementById('mercadoTotalLista'); if (tEl) tEl.innerText = formatMoeda(totalPrevisto);
+  const cEl = document.getElementById('mktCount'); if (cEl) cEl.innerText = listaMercado.length;
+  const realEl = document.getElementById('mktTotalReal'); if (realEl) realEl.innerText = formatMoeda(totalReal);
+  const difEl = document.getElementById('mktTotalDif');
+  if (difEl) {
+    if (!totalReal) { difEl.innerText = '—'; difEl.className = ''; }
+    else {
+      difEl.innerText = formatMoeda(dif);
+      difEl.className = dif > 0 ? 'c-up' : dif < 0 ? 'c-down' : '';
+    }
+  }
+  const mes = getMesGlobal();
+  const gastosMercado = getLancamentosFiltrados(mes).filter(l => l.tipo === 'despesa' && (((l.categoria || '').toLowerCase().includes('mercado')) || ((l.categoria || '').toLowerCase().includes('alimenta')))).reduce((sum, l) => sum + l.valor, 0);
+  const gastoEl = document.getElementById('mercadoGastoMes'); if (gastoEl) gastoEl.innerText = formatMoeda(gastosMercado);
+}
+
+function renderListaMercado() {
+  normalizarListaMercado();
+  atualizarResumoMercadoHeader();
+  const el = document.getElementById('listaMercadoHtml');
+  if (el) {
+    el.innerHTML = listaMercado.length
+      ? listaMercado.map(i => renderItemMercadoCard(i)).join('')
+      : '<div class="pro-card">Sua lista está vazia. Use as sugestões rápidas ou adicione itens manualmente.</div>';
+  }
+  renderModoCompraMercado();
+  renderHistoricoMercado();
+  renderPromocoesMercado();
+  renderDicaInteligenteMercado();
+}
+
+function renderModoCompraMercado(mensagem) {
+  const el = document.getElementById('modoCompraHtml');
+  if (!el) return;
+  if (mensagem) {
+    el.innerHTML = `<div class="pro-card">${escapeHtmlMercado(mensagem)}</div>`;
+    return;
+  }
+  if (!listaMercado.length) {
+    el.innerHTML = '<div class="pro-card">Adicione itens à lista antes de iniciar a compra.</div>';
+    return;
+  }
+  el.innerHTML = listaMercado.map(i => renderModoCompraItem(i)).join('');
+}
+
 function abrirAbaMercado(nomeAba, evt) {
-  if(evt && typeof evt.preventDefault === 'function') evt.preventDefault();
+  if (evt && typeof evt.preventDefault === 'function') evt.preventDefault();
   const alvo = abasMercado[nomeAba] ? nomeAba : 'lista';
   Object.keys(abasMercado).forEach(nome => {
     const tab = document.getElementById(abasMercado[nome].tab);
     const panel = document.getElementById(abasMercado[nome].panel);
-    if(tab) tab.classList.toggle('active', nome === alvo);
-    if(panel) panel.classList.toggle('active', nome === alvo);
+    if (tab) tab.classList.toggle('active', nome === alvo);
+    if (panel) panel.classList.toggle('active', nome === alvo);
   });
-  if(alvo === 'modo-compra') renderModoCompraMercado();
-  if(alvo === 'historico') renderHistoricoMercado();
-  if(alvo === 'hub') renderPromocoesMercado();
-}
-
-function mktTab(nomeAba) {
-  abrirAbaMercado(nomeAba, window.event);
-}
-
-function adicionarItemMercado() {
-  const i = document.getElementById('inputItemMercado');
-  if(!i) return;
-  const nome = i.value.trim();
-  const pre = document.getElementById('inputPrecoMercado');
-  const qtd = document.getElementById('inputQtdMercado');
-  const uni = document.getElementById('inputUnidadeMercado');
-  const mer = document.getElementById('selectMercadoDestino');
-  const obs = document.getElementById('inputObsMercado');
-  if(!nome) return;
-  normalizarListaMercado();
-  listaMercado.push({
-    id: generateId(),
-    nome,
-    qtd: Number(qtd && qtd.value) || 1,
-    unidade: uni ? uni.value : 'un',
-    preco: Number(pre && pre.value) || 0,
-    mercado: mer ? mer.value : '',
-    obs: obs ? obs.value.trim() : '',
-    marcado: false,
-    valorReal: 0
-  });
-  salvarListaMercado();
-  i.value = '';
-  if(qtd) qtd.value = '1';
-  if(uni) uni.value = 'un';
-  if(pre) pre.value = '';
-  if(mer) mer.value = '';
-  if(obs) obs.value = '';
-  renderListaMercado();
-  showToast("Item adicionado!");
-}
-
-function alternarItemMercado(id) {
-  normalizarListaMercado();
-  const item = listaMercado.find(i => i.id === id);
-  if(item) {
-    item.marcado = !item.marcado;
-    salvarListaMercado();
-    renderListaMercado();
-  }
-}
-
-function removerItemMercado(id) {
-  normalizarListaMercado();
-  listaMercado = listaMercado.filter(i => i.id !== id);
-  salvarListaMercado();
-  renderListaMercado();
-}
-
-function limparListaMercado(evt) {
-  if(evt && typeof evt.preventDefault === 'function') evt.preventDefault();
-  if(!confirm("Deseja limpar todos os itens da lista de mercado?")) return;
-  listaMercado = [];
-  salvarListaMercado();
-  renderListaMercado();
-  showToast("Lista de mercado limpa.");
+  if (alvo === 'modo-compra') renderModoCompraMercado();
+  if (alvo === 'historico') renderHistoricoMercado();
+  if (alvo === 'hub') { renderPromocoesMercado(); renderDicaInteligenteMercado(); }
 }
 
 function iniciarModoCompra(evt) {
-  if(evt && typeof evt.preventDefault === 'function') evt.preventDefault();
+  if (evt && typeof evt.preventDefault === 'function') evt.preventDefault();
   normalizarListaMercado();
   abrirAbaMercado('modo-compra');
-  if(listaMercado.length === 0) {
-    renderModoCompraMercado("Adicione itens à lista antes de iniciar a compra.");
-    return showToast("Adicione itens à lista antes de iniciar a compra.", "warning");
+  if (!listaMercado.length) {
+    showToast('Adicione itens à lista antes de iniciar a compra.', 'warning');
+    return renderModoCompraMercado('Adicione itens à lista antes de iniciar a compra.');
   }
   renderModoCompraMercado();
 }
 
+function limparListaMercado(evt) {
+  if (evt && typeof evt.preventDefault === 'function') evt.preventDefault();
+  if (!confirm('Deseja limpar todos os itens da lista de mercado?')) return;
+  listaMercado = [];
+  salvarListaMercado();
+  cancelarEdicaoMercado();
+  renderListaMercado();
+  showToast('Lista limpa.');
+}
+
 function listaMercadoVaziaExportacao() {
   normalizarListaMercado();
-  if(listaMercado.length > 0) return false;
-  showToast("Não há itens para exportar.", "warning");
+  if (listaMercado.length) return false;
+  showToast('Não há itens para exportar.', 'warning');
   return true;
 }
 
 function openModalDownload(evt) {
-  if(evt && typeof evt.preventDefault === 'function') evt.preventDefault();
-  if(listaMercadoVaziaExportacao()) return;
-  const modal = document.getElementById('modalDownloadLista');
-  if(modal) modal.classList.add('open');
+  if (evt && typeof evt.preventDefault === 'function') evt.preventDefault();
+  if (listaMercadoVaziaExportacao()) return;
+  document.getElementById('modalDownloadLista')?.classList.add('open');
 }
 
 function closeModalDownload() {
-  const modal = document.getElementById('modalDownloadLista');
-  if(modal) modal.classList.remove('open');
+  document.getElementById('modalDownloadLista')?.classList.remove('open');
 }
 
 function baixarArquivoMercado(nome, conteudo, tipo) {
@@ -2672,224 +2926,234 @@ function baixarArquivoMercado(nome, conteudo, tipo) {
 }
 
 function baixarTXT() {
-  if(listaMercadoVaziaExportacao()) return;
-  let txt = "MINHA LISTA DE COMPRAS - FINANCASCASA\n";
-  txt += "Gerado em: " + new Date().toLocaleDateString('pt-BR') + "\n\n";
-  let total = 0;
+  if (listaMercadoVaziaExportacao()) return;
+  let txt = 'MINHA LISTA DE COMPRAS - FINANCASCASA\n';
+  txt += 'Gerado em: ' + new Date().toLocaleDateString('pt-BR') + '\n\n';
+  const { totalPrevisto } = totaisMercado();
   listaMercado.forEach(i => {
-    const check = i.marcado ? "[X]" : "[ ]";
-    const qtd = `${i.qtd || 1} ${i.unidade || 'un'}`;
-    const valor = i.preco ? ` | ${formatMoeda(i.preco)}` : "";
-    const mercado = i.mercado ? ` (${i.mercado})` : "";
-    const obs = i.obs ? ` | Obs: ${i.obs}` : "";
-    txt += `${check} ${i.nome} - ${qtd}${mercado}${valor}${obs}\n`;
-    total += i.preco || 0;
+    txt += `[${labelStatusCompra(i.statusCompra)}] ${i.nome} - ${i.qtd || 1} ${i.unidade || 'un'}${i.mercado ? ' (' + i.mercado + ')' : ''}${i.preco ? ' | ' + formatMoeda(i.preco) : ''}${i.obs ? ' | Obs: ' + i.obs : ''}\n`;
   });
-  txt += `\nTotal Estimado: ${formatMoeda(total)}\n`;
+  txt += `\nTotal previsto: ${formatMoeda(totalPrevisto)}\n`;
   baixarArquivoMercado(`Lista_Mercado_${new Date().toISOString().split('T')[0]}.txt`, txt, 'text/plain;charset=utf-8');
   closeModalDownload();
 }
 
-function escaparCSV(valor) {
-  return `"${String(valor ?? '').replace(/"/g, '""')}"`;
-}
-
 function baixarCSV() {
-  if(listaMercadoVaziaExportacao()) return;
+  if (listaMercadoVaziaExportacao()) return;
   const linhas = [['produto', 'quantidade', 'unidade', 'valor estimado', 'mercado', 'observação', 'status']];
   listaMercado.forEach(i => linhas.push([
-    i.nome,
-    i.qtd || 1,
-    i.unidade || 'un',
-    (Number(i.preco) || 0).toFixed(2).replace('.', ','),
-    i.mercado || '',
-    i.obs || '',
-    i.marcado ? 'comprado' : 'pendente'
+    i.nome, i.qtd || 1, i.unidade || 'un', (Number(i.preco) || 0).toFixed(2).replace('.', ','),
+    i.mercado || '', i.obs || '', labelStatusCompra(i.statusCompra)
   ]));
-  const csv = linhas.map(l => l.map(escaparCSV).join(';')).join('\n');
+  const csv = linhas.map(l => l.map(v => `"${String(v ?? '').replace(/"/g, '""')}"`).join(';')).join('\n');
   baixarArquivoMercado(`Lista_Mercado_${new Date().toISOString().split('T')[0]}.csv`, csv, 'text/csv;charset=utf-8');
   closeModalDownload();
 }
 
 function imprimirLista() {
-  if(listaMercadoVaziaExportacao()) return;
+  if (listaMercadoVaziaExportacao()) return;
   const printEl = document.getElementById('print-lista');
   const mod = document.getElementById('mod-mercado');
-  const total = listaMercado.reduce((sum, i) => sum + (Number(i.preco) || 0), 0);
-  if(printEl) {
+  const { totalPrevisto } = totaisMercado();
+  if (printEl) {
     printEl.innerHTML = `<div style="font-family:Arial,sans-serif;padding:24px;">
       <h1 style="font-size:22px;margin:0 0 8px;">Lista de Mercado</h1>
       <div style="font-size:12px;margin-bottom:18px;">Gerado em ${new Date().toLocaleDateString('pt-BR')}</div>
       <table style="width:100%;border-collapse:collapse;">
-        <thead><tr><th>Status</th><th>Produto</th><th>Qtd.</th><th>Valor Est.</th><th>Mercado</th><th>Obs.</th></tr></thead>
-        <tbody>${listaMercado.map(i => `<tr><td>${i.marcado ? 'Comprado' : 'Pendente'}</td><td>${escapeHtmlMercado(i.nome)}</td><td>${escapeHtmlMercado(i.qtd || 1)} ${escapeHtmlMercado(i.unidade || 'un')}</td><td>${formatMoeda(i.preco || 0)}</td><td>${escapeHtmlMercado(i.mercado || '-')}</td><td>${escapeHtmlMercado(i.obs || '-')}</td></tr>`).join('')}</tbody>
+        <thead><tr><th>Status</th><th>Produto</th><th>Qtd.</th><th>Valor est.</th><th>Mercado</th><th>Obs.</th></tr></thead>
+        <tbody>${listaMercado.map(i => `<tr><td>${labelStatusCompra(i.statusCompra)}</td><td>${escapeHtmlMercado(i.nome)}</td><td>${escapeHtmlMercado(i.qtd || 1)} ${escapeHtmlMercado(i.unidade || 'un')}</td><td>${formatMoeda(i.preco || 0)}</td><td>${escapeHtmlMercado(i.mercado || '-')}</td><td>${escapeHtmlMercado(i.obs || '-')}</td></tr>`).join('')}</tbody>
       </table>
-      <h2 style="font-size:16px;margin-top:18px;">Total estimado: ${formatMoeda(total)}</h2>
+      <h2 style="font-size:16px;margin-top:18px;">Total previsto: ${formatMoeda(totalPrevisto)}</h2>
     </div>`;
   }
-  if(mod) mod.classList.add('mkt-printing');
+  if (mod) mod.classList.add('mkt-printing');
   closeModalDownload();
   window.print();
   setTimeout(() => {
-    if(mod) mod.classList.remove('mkt-printing');
-    if(printEl) printEl.innerHTML = '';
+    if (mod) mod.classList.remove('mkt-printing');
+    if (printEl) printEl.innerHTML = '';
   }, 500);
-}
-
-function baixarListaMercado() {
-  baixarTXT();
-}
-
-function renderListaMercado() {
-  normalizarListaMercado();
-  let h = '';
-  let total = 0;
-  let totalReal = 0;
-  listaMercado.forEach(i => {
-    total += i.preco || 0;
-    totalReal += i.valorReal || 0;
-    const estilo = i.marcado ? `text-decoration: line-through; opacity: 0.6;` : ``;
-    const lblPreco = i.preco ? `<span style="font-size:12px;font-weight:bold;color:var(--danger);background:#fee2e2;padding:2px 6px;border-radius:4px;margin-left:8px;">${formatMoeda(i.preco)}</span>` : '';
-    const lblMercado = i.mercado ? `<span style="font-size:11px;color:#fff;background:var(--primary);padding:2px 6px;border-radius:4px;margin-left:8px;">${escapeHtmlMercado(i.mercado)}</span>` : '';
-    const obs = i.obs ? `<div style="font-size:12px;color:var(--text-light);width:100%;">${escapeHtmlMercado(i.obs)}</div>` : '';
-    h += `<div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:#f8fafc;border:1px solid var(--border);border-radius:6px;transition:0.2s;">
-      <div style="display:flex;align-items:center;gap:10px;cursor:pointer;flex:1;flex-wrap:wrap;" onclick="alternarItemMercado('${i.id}')">
-        <input type="checkbox" ${i.marcado ? 'checked' : ''} style="width:18px;height:18px;pointer-events:none;">
-        <span style="${estilo} font-size:14px;font-weight:600;display:flex;align-items:center;flex-wrap:wrap;">${escapeHtmlMercado(i.nome)} <small style="color:var(--text-light);margin-left:6px;">${escapeHtmlMercado(i.qtd)} ${escapeHtmlMercado(i.unidade)}</small> ${lblPreco} ${lblMercado}</span>${obs}
-      </div>
-      <button class="btn btn-sm btn-danger" style="padding:4px 8px;font-size:10px;" onclick="removerItemMercado('${i.id}')">×</button>
-    </div>`;
-  });
-  const el = document.getElementById('listaMercadoHtml');
-  if(el) el.innerHTML = h || `<div style="padding:20px;text-align:center;color:var(--text-light);font-size:14px;">Sua lista está vazia. Comece adicionando itens!</div>`;
-  const tEl = document.getElementById('mercadoTotalLista'); if(tEl) tEl.innerText = formatMoeda(total);
-  const cEl = document.getElementById('mktCount'); if(cEl) cEl.innerText = listaMercado.length;
-  const realEl = document.getElementById('mktTotalReal'); if(realEl) realEl.innerText = formatMoeda(totalReal);
-  const difEl = document.getElementById('mktTotalDif');
-  if(difEl) {
-    const dif = totalReal - total;
-    difEl.innerText = totalReal ? formatMoeda(dif) : '—';
-    difEl.style.color = dif > 0 ? 'var(--danger)' : 'var(--success)';
-  }
-  const mes = getMesGlobal();
-  const gastosMercado = getLancamentosFiltrados(mes).filter(l => l.tipo === 'despesa' && (((l.categoria || '').toLowerCase().includes('mercado')) || ((l.categoria || '').toLowerCase().includes('alimenta')))).reduce((sum, l) => sum + l.valor, 0);
-  const gastoEl = document.getElementById('mercadoGastoMes'); if(gastoEl) gastoEl.innerText = formatMoeda(gastosMercado);
-  renderModoCompraMercado();
-  renderHistoricoMercado();
-  renderPromocoesMercado();
-}
-
-function renderModoCompraMercado(mensagem) {
-  const el = document.getElementById('modoCompraHtml');
-  if(!el) return;
-  normalizarListaMercado();
-  if(mensagem) {
-    el.innerHTML = `<div style="padding:20px;text-align:center;color:var(--text-light);font-size:14px;">${escapeHtmlMercado(mensagem)}</div>`;
-    return;
-  }
-  if(listaMercado.length === 0) {
-    el.innerHTML = `<div style="padding:20px;text-align:center;color:var(--text-light);font-size:14px;">Adicione itens à lista antes de iniciar a compra.</div>`;
-    return;
-  }
-  el.innerHTML = listaMercado.map(i => `<div style="display:grid;grid-template-columns:auto 1fr 120px;gap:10px;align-items:center;padding:10px;background:#f8fafc;border:1px solid var(--border);border-radius:6px;">
-    <input type="checkbox" ${i.marcado ? 'checked' : ''} onchange="alternarItemMercado('${i.id}')" style="width:20px;height:20px;">
-    <div>
-      <strong style="${i.marcado ? 'text-decoration:line-through;opacity:.65;' : ''}">${escapeHtmlMercado(i.nome)}</strong>
-      <div style="font-size:12px;color:var(--text-light);">${escapeHtmlMercado(i.qtd || 1)} ${escapeHtmlMercado(i.unidade || 'un')} - Previsto: ${formatMoeda(i.preco || 0)}${i.mercado ? ' - ' + escapeHtmlMercado(i.mercado) : ''}</div>
-    </div>
-    <input type="number" class="form-control" min="0" step="0.01" placeholder="Valor real" value="${i.valorReal || ''}" onchange="atualizarValorRealMercado('${i.id}', this.value)">
-  </div>`).join('');
-}
-
-function atualizarValorRealMercado(id, valor) {
-  normalizarListaMercado();
-  const item = listaMercado.find(i => i.id === id);
-  if(!item) return;
-  item.valorReal = Number(valor) || 0;
-  salvarListaMercado();
-  renderListaMercado();
 }
 
 function openModalFinalizar() {
   normalizarListaMercado();
-  const totalReal = listaMercado.reduce((sum, i) => sum + (Number(i.valorReal) || 0), 0);
-  const totalPrevisto = listaMercado.reduce((sum, i) => sum + (Number(i.preco) || 0), 0);
-  const totalEl = document.getElementById('mktFinTotal');
-  if(totalEl) totalEl.innerText = formatMoeda(totalReal || totalPrevisto);
-  const modal = document.getElementById('modalFinalizar');
-  if(modal) modal.classList.add('open');
+  if (!listaMercado.length) return showToast('A lista está vazia.', 'warning');
+  const { totalPrevisto, totalReal, dif } = totaisMercado();
+  const totalUsado = totalReal || totalPrevisto;
+  const resEl = document.getElementById('mktFinResumo');
+  if (resEl) {
+    resEl.innerHTML = `
+      <div class="mkt-resumo-box"><span>Total previsto</span><strong>${formatMoeda(totalPrevisto)}</strong></div>
+      <div class="mkt-resumo-box"><span>Total real</span><strong>${formatMoeda(totalReal || totalPrevisto)}</strong></div>
+      <div class="mkt-resumo-box"><span>Diferença</span><strong class="${dif > 0 ? 'c-up' : dif < 0 ? 'c-down' : ''}">${totalReal ? formatMoeda(dif) : '—'}</strong></div>`;
+  }
+  document.getElementById('modalFinalizar')?.classList.add('open');
 }
 
 function closeFinalizar() {
-  const modal = document.getElementById('modalFinalizar');
-  if(modal) modal.classList.remove('open');
+  document.getElementById('modalFinalizar')?.classList.remove('open');
+}
+
+function descricaoCompraMercado() {
+  const mes = getMesGlobal() || hojeISO().slice(0, 7);
+  const [a, m] = mes.split('-').map(Number);
+  const label = new Date(a, (m || 1) - 1, 1).toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
+  return `Compra de Mercado - ${label}`;
 }
 
 function confirmarFinalizarCompra(lancarFinanceiro) {
   normalizarListaMercado();
-  if(listaMercado.length === 0) return closeFinalizar();
-  const totalReal = listaMercado.reduce((sum, i) => sum + (Number(i.valorReal) || Number(i.preco) || 0), 0);
-  if(!Array.isArray(historicoCopras)) historicoCopras = [];
+  if (!listaMercado.length) return closeFinalizar();
+  const { totalPrevisto, totalReal } = totaisMercado();
+  const total = totalReal || totalPrevisto;
+  if (!Array.isArray(historicoCopras)) historicoCopras = [];
   historicoCopras.push({
     id: generateId(),
     data: new Date().toISOString(),
-    total: totalReal,
+    totalPrevisto,
+    totalReal: total,
+    diferenca: total - totalPrevisto,
+    total,
     itens: listaMercado.map(i => ({ ...i })),
     pagamento: (document.getElementById('mktFinPgto') || {}).value || '',
     responsavel: (document.getElementById('mktFinResp') || {}).value || ''
   });
   salvarLocal('historicoCopras', historicoCopras);
-  if(lancarFinanceiro) showToast("Compra salva no histórico. Lançamentos financeiros não foram alterados.");
+  if (lancarFinanceiro && total > 0) {
+    const cat = categorias.includes('Alimentação') ? 'Alimentação' : (categorias.includes('Mercado') ? 'Mercado' : 'Alimentação');
+    dados.push({
+      id: generateId(),
+      descricao: descricaoCompraMercado(),
+      tipo: 'despesa',
+      categoria: cat,
+      valor: total,
+      vencimento: hojeISO(),
+      status: 'pago',
+      formaPagamento: (document.getElementById('mktFinPgto') || {}).value || 'Outro',
+      responsavel: (document.getElementById('mktFinResp') || {}).value || '',
+      observacao: 'Lançado pela Lista de Mercado'
+    });
+    salvarLocal('dados', dados);
+  }
   listaMercado = [];
   salvarListaMercado();
   closeFinalizar();
   abrirAbaMercado('historico');
-  renderListaMercado();
+  processarDadosGlobais();
+  showToast(lancarFinanceiro ? 'Compra finalizada e lançada no financeiro!' : 'Compra salva no histórico!');
 }
 
 function renderHistoricoMercado() {
   const el = document.getElementById('historicoComprasHtml');
-  if(!el) return;
-  if(!Array.isArray(historicoCopras)) historicoCopras = [];
-  el.innerHTML = historicoCopras.length ? historicoCopras.slice().reverse().map(h => `<div style="padding:12px;border:1px solid var(--border);border-radius:6px;margin-bottom:8px;background:#f8fafc;">
-    <strong>${formatMoeda(h.total || 0)}</strong>
-    <div style="font-size:12px;color:var(--text-light);">${new Date(h.data).toLocaleDateString('pt-BR')} - ${(h.itens || []).length} itens${h.responsavel ? ' - ' + escapeHtmlMercado(h.responsavel) : ''}</div>
-  </div>`).join('') : `<div style="padding:20px;text-align:center;color:var(--text-light);font-size:14px;">Nenhuma compra no histórico.</div>`;
+  if (!el) return;
+  if (!Array.isArray(historicoCopras)) historicoCopras = [];
+  el.innerHTML = historicoCopras.length ? historicoCopras.slice().reverse().map(h => {
+    const prev = h.totalPrevisto != null ? h.totalPrevisto : (h.itens || []).reduce((s, i) => s + (Number(i.preco) || 0), 0);
+    const real = h.totalReal != null ? h.totalReal : h.total || 0;
+    const dif = h.diferenca != null ? h.diferenca : real - prev;
+    return `<div class="hist-card">
+      <div>
+        <strong>${formatMoeda(real)}</strong>
+        <div class="pro-muted" style="margin-top:4px;">${new Date(h.data).toLocaleDateString('pt-BR')} · ${(h.itens || []).length} itens</div>
+        <div class="hist-card-grid">
+          <div class="mini-stat"><span>Previsto</span><strong>${formatMoeda(prev)}</strong></div>
+          <div class="mini-stat"><span>Real</span><strong>${formatMoeda(real)}</strong></div>
+          <div class="mini-stat"><span>Diferença</span><strong class="${dif > 0 ? 'c-red' : dif < 0 ? 'c-green' : ''}">${formatMoeda(dif)}</strong></div>
+          <div class="mini-stat"><span>Pagamento</span><strong style="font-size:13px;">${escapeHtmlMercado(h.pagamento || '-')}</strong></div>
+        </div>
+      </div>
+      <div class="action-cell" style="flex-direction:column;align-items:flex-end;">
+        <button type="button" class="btn btn-outline btn-sm" onclick="visualizarHistoricoCompra('${h.id}')">Visualizar</button>
+        <button type="button" class="btn btn-danger btn-sm" onclick="excluirHistoricoCompra('${h.id}')">Excluir</button>
+      </div>
+    </div>`;
+  }).join('') : '<div class="pro-card">Nenhuma compra no histórico.</div>';
+}
+
+function visualizarHistoricoCompra(id) {
+  const h = historicoCopras.find(x => x.id === id);
+  if (!h) return;
+  document.getElementById('modalHistoricoTitulo').innerText = `Compra de ${new Date(h.data).toLocaleDateString('pt-BR')}`;
+  document.getElementById('modalHistoricoConteudo').innerHTML = `<div class="pro-summary-strip" style="margin-bottom:14px;">
+    <div class="mini-stat"><span>Previsto</span><strong>${formatMoeda(h.totalPrevisto || 0)}</strong></div>
+    <div class="mini-stat"><span>Real</span><strong>${formatMoeda(h.totalReal || h.total || 0)}</strong></div>
+    <div class="mini-stat"><span>Itens</span><strong>${(h.itens || []).length}</strong></div>
+  </div>${(h.itens || []).map(i => `<div class="mkt-item-card ${classeCardCompra(i.statusCompra || 'pendente')}" style="margin-bottom:8px;">
+    <strong>${escapeHtmlMercado(i.nome)}</strong>
+    <div class="pro-muted">${escapeHtmlMercado(i.qtd || 1)} ${escapeHtmlMercado(i.unidade || 'un')} · Previsto ${formatMoeda(i.preco || 0)} · Real ${formatMoeda(valorRealItemMercado(i))}</div>
+    ${i.obsCompra || i.obs ? `<div class="pro-muted">${escapeHtmlMercado(i.obsCompra || i.obs)}</div>` : ''}
+  </div>`).join('')}`;
+  document.getElementById('modalHistoricoCompra').classList.add('open');
+}
+
+function fecharModalHistoricoCompra() {
+  document.getElementById('modalHistoricoCompra')?.classList.remove('open');
+}
+
+function excluirHistoricoCompra(id) {
+  if (!confirm('Excluir esta compra do histórico?')) return;
+  historicoCopras = historicoCopras.filter(h => h.id !== id);
+  salvarLocal('historicoCopras', historicoCopras);
+  renderHistoricoMercado();
+  showToast('Compra excluída do histórico.', 'warning');
+}
+
+function renderDicaInteligenteMercado() {
+  const el = document.getElementById('mktDicaInteligente');
+  const header = document.getElementById('mktDicaIA');
+  if (!el && !header) return;
+  normalizarListaMercado();
+  const pendentes = listaMercado.filter(i => i.statusCompra === 'pendente');
+  const nomes = listaMercado.map(i => i.nome.toLowerCase());
+  const promos = Array.isArray(promocoesMercado) ? promocoesMercado : [];
+  const matches = promos.filter(p => nomes.some(n => p.desc.toLowerCase().includes(n.split(' ')[0])));
+  let dica = 'Monte sua lista com quantidade e valor estimado para comparar previsão e gasto real na finalização.';
+  if (pendentes.length) {
+    const caros = [...pendentes].sort((a, b) => (b.preco || 0) - (a.preco || 0))[0];
+    dica = `Você tem ${pendentes.length} item(ns) pendente(s). Priorize ${caros.nome}${caros.preco ? ' (' + formatMoeda(caros.preco) + ')' : ''} e confira promoções anotadas antes de pagar.`;
+  }
+  if (matches.length) dica += ` Há ${matches.length} promoção(ões) anotada(s) relacionada(s) aos itens da sua lista.`;
+  if (el) el.innerHTML = `<strong style="color:#166534;">Dica inteligente</strong><p style="font-size:13px;color:#15803d;margin-top:6px;line-height:1.6;">${escapeHtmlMercado(dica)}</p>`;
+  if (header) header.innerText = dica;
 }
 
 function adicionarPromocao() {
   const input = document.getElementById('inputPromoDesc');
-  if(!input || !input.value.trim()) return;
-  if(!Array.isArray(promocoesMercado)) promocoesMercado = [];
+  if (!input || !input.value.trim()) return showToast('Descreva a promoção.', 'warning');
+  if (!Array.isArray(promocoesMercado)) promocoesMercado = [];
   promocoesMercado.push({ id: generateId(), desc: input.value.trim(), data: new Date().toISOString() });
   salvarLocal('promocoesMercado', promocoesMercado);
   input.value = '';
   renderPromocoesMercado();
+  renderDicaInteligenteMercado();
+  showToast('Promoção salva!');
 }
 
 function removerPromocao(id) {
   promocoesMercado = (Array.isArray(promocoesMercado) ? promocoesMercado : []).filter(p => p.id !== id);
   salvarLocal('promocoesMercado', promocoesMercado);
   renderPromocoesMercado();
+  renderDicaInteligenteMercado();
 }
 
 function renderPromocoesMercado() {
   const el = document.getElementById('promocoesMercadoHtml');
-  if(!el) return;
-  if(!Array.isArray(promocoesMercado)) promocoesMercado = [];
-  el.innerHTML = promocoesMercado.length ? promocoesMercado.map(p => `<div style="display:flex;justify-content:space-between;gap:8px;align-items:center;padding:10px;border:1px solid var(--border);border-radius:6px;margin-bottom:8px;background:#f8fafc;">
-    <span>${escapeHtmlMercado(p.desc)}</span>
-    <button class="btn btn-sm btn-danger" onclick="removerPromocao('${p.id}')">×</button>
-  </div>`).join('') : `<div style="padding:16px;text-align:center;color:var(--text-light);font-size:13px;">Nenhuma promoção anotada.</div>`;
+  if (!el) return;
+  if (!Array.isArray(promocoesMercado)) promocoesMercado = [];
+  el.innerHTML = promocoesMercado.length ? promocoesMercado.slice().reverse().map(p => `<div class="hub-promo-card">
+    <div><strong>${escapeHtmlMercado(p.desc)}</strong><div class="pro-muted" style="margin-top:4px;">${new Date(p.data).toLocaleDateString('pt-BR')}</div></div>
+    <button type="button" class="btn btn-danger btn-sm" onclick="removerPromocao('${p.id}')">Excluir</button>
+  </div>`).join('') : '<div class="pro-card">Nenhuma promoção anotada.</div>';
 }
 
-function copiarLista() {
-  if(listaMercadoVaziaExportacao()) return;
-  const texto = listaMercado.map(i => `${i.marcado ? '[X]' : '[ ]'} ${i.nome} - ${i.qtd || 1} ${i.unidade || 'un'}`).join('\n');
-  if(navigator.clipboard) navigator.clipboard.writeText(texto).then(() => showToast("Lista copiada!"));
+function renderSugestoesMercado() {
+  const el = document.getElementById('mktSugestoes');
+  if (!el) return;
+  el.innerHTML = SUGESTOES_MERCADO.map(s => `<button type="button" class="sug-btn" onclick="aplicarSugestaoMercado('${s.replace(/'/g, "\\'")}')">${escapeHtmlMercado(s)}</button>`).join('');
 }
 
 function inicializarEventosMercado() {
+  renderSugestoesMercado();
   [
     ['btnIniciarCompra', iniciarModoCompra],
     ['btnExportarLista', openModalDownload],
@@ -2900,12 +3164,9 @@ function inicializarEventosMercado() {
     ['abaHubOfertas', evt => abrirAbaMercado('hub', evt)]
   ].forEach(([id, handler]) => {
     const el = document.getElementById(id);
-    if(el && !el.dataset.mercadoEventoOk) {
+    if (el && !el.dataset.mercadoEventoOk) {
       el.dataset.mercadoEventoOk = '1';
-      el.addEventListener('click', evt => {
-        evt.preventDefault();
-        handler(evt);
-      });
+      el.addEventListener('click', evt => { evt.preventDefault(); handler(evt); });
     }
   });
   renderListaMercado();
@@ -2919,8 +3180,16 @@ window.limparListaMercado = limparListaMercado;
 window.baixarTXT = baixarTXT;
 window.baixarCSV = baixarCSV;
 window.imprimirLista = imprimirLista;
+window.aplicarSugestaoMercado = aplicarSugestaoMercado;
+window.editarItemMercado = editarItemMercado;
+window.cancelarEdicaoMercado = cancelarEdicaoMercado;
+window.setStatusCompra = setStatusCompra;
+window.visualizarHistoricoCompra = visualizarHistoricoCompra;
+window.excluirHistoricoCompra = excluirHistoricoCompra;
+window.fecharModalHistoricoCompra = fecharModalHistoricoCompra;
+window.confirmarFinalizarCompra = confirmarFinalizarCompra;
 
-if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', inicializarEventosMercado);
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', inicializarEventosMercado);
 else inicializarEventosMercado();
 
 function gerarRelatorioTela() { /* Logica simples local mantida */ document.getElementById('relatorioViewArea').innerHTML = `Relatório gerado sobre ${dados.length} lançamentos. Baixe CSV.`; }
@@ -3878,7 +4147,6 @@ function renderCategorias() {
     </div>`;
   }).join('') : '<div class="pro-card">Nenhuma categoria cadastrada.</div>';
 }
-function confirmarFinalizarCompra(lancarFinanceiro){normalizarListaMercado();if(listaMercado.length===0)return closeFinalizar();const total=listaMercado.reduce((s,i)=>s+(Number(i.valorReal)||Number(i.preco)||0),0);historicoCopras.push({id:generateId(),data:new Date().toISOString(),total,itens:listaMercado.map(i=>({...i})),pagamento:(document.getElementById('mktFinPgto')||{}).value||'',responsavel:(document.getElementById('mktFinResp')||{}).value||''});salvarLocal('historicoCopras',historicoCopras);if(lancarFinanceiro&&total>0){const cat=categorias.includes('Alimentação')?'Alimentação':(categorias.includes('AlimentaÃ§Ã£o')?'AlimentaÃ§Ã£o':'Mercado');dados.push({id:generateId(),descricao:'Compra de mercado',tipo:'despesa',categoria:cat,valor:total,vencimento:hojeISO(),status:'pago',formaPagamento:(document.getElementById('mktFinPgto')||{}).value||'Outro',responsavel:(document.getElementById('mktFinResp')||{}).value||'',observacao:'Lancado pela Lista de Mercado'});salvarLocal('dados',dados);}listaMercado=[];salvarListaMercado();closeFinalizar();abrirAbaMercado('historico');processarDadosGlobais();showToast('Compra finalizada!');}
 function gerarRelatorioTela(){const tipo=document.getElementById('tipoRelatorio')?.value||'geral';let l=getLancamentosFiltrados();if(tipo==='receitas')l=l.filter(i=>i.tipo==='receita');if(tipo==='despesas')l=l.filter(i=>i.tipo==='despesa');if(tipo==='pagas')l=l.filter(i=>calcularStatus(i)==='pago');if(tipo==='pendentes')l=l.filter(i=>calcularStatus(i)==='pendente');if(tipo==='atrasadas')l=l.filter(i=>calcularStatus(i)==='atrasado');const r=resumoLancamentos(l),cat=agruparPorCategoria(l);relatorioViewArea.classList.add('report-preview');relatorioViewArea.innerHTML=`<h2 style="margin-bottom:8px;">Relatorio financeiro</h2><p class="pro-muted">Periodo: ${getMesGlobal()||'todos'} - tipo: ${esc(tipo)}</p><div class="pro-summary-strip" style="margin-top:14px;"><div class="mini-stat"><span>Receitas</span><strong class="c-green">${formatMoeda(r.rec)}</strong></div><div class="mini-stat"><span>Despesas</span><strong class="c-red">${formatMoeda(r.des)}</strong></div><div class="mini-stat"><span>Saldo</span><strong class="${r.saldo>=0?'c-green':'c-red'}">${formatMoeda(r.saldo)}</strong></div><div class="mini-stat"><span>Itens</span><strong>${l.length}</strong></div></div><h3 style="margin:14px 0 8px;">Categorias</h3>${Object.keys(cat).length?Object.entries(cat).sort((a,b)=>b[1]-a[1]).map(([c,v])=>`<div class="bar-container"><div class="bar-header"><span>${esc(c)}</span><span>${formatMoeda(v)}</span></div><div class="bar-track"><div class="bar-fill bg-danger" style="width:${clamp((v/(r.des||1))*100,0,100)}%"></div></div></div>`).join(''):'<div class="pro-card">Sem despesas neste recorte.</div>'}`;}
 function exportarRelatorioCSV(){const l=getLancamentosFiltrados();const rows=[['descricao','tipo','categoria','vencimento','valor','status','pagamento','responsavel','observacao']];l.forEach(i=>rows.push([i.descricao,i.tipo,i.categoria,i.vencimento,i.valor,calcularStatus(i),i.formaPagamento||'',i.responsavel||'',i.observacao||'']));baixarArquivo(`relatorio_financas_${new Date().toISOString().slice(0,10)}.csv`,rows.map(r=>r.map(csvValor).join(';')).join('\n'),'text/csv;charset=utf-8');}
 function exportarRelatorioJSON(){baixarArquivo(`relatorio_financas_${new Date().toISOString().slice(0,10)}.json`,JSON.stringify(getLancamentosFiltrados(),null,2),'application/json;charset=utf-8');}
