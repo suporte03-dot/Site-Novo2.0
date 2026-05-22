@@ -1391,6 +1391,8 @@ let promocoesMercado = carregarLocal('promocoesMercado', []);
 if(!Array.isArray(promocoesMercado)) promocoesMercado = [];
 
 let categorias = carregarLocal('categorias', ['Moradia', 'Alimentação', 'Transporte', 'Saúde', 'Educação', 'Lazer', 'Outros']);
+let categoriasDetalhes = carregarLocal('categoriasDetalhes', {});
+if (!categoriasDetalhes || typeof categoriasDetalhes !== 'object') categoriasDetalhes = {};
 if (!Array.isArray(categorias) || categorias.length === 0) {
   categorias = ['Moradia', 'Alimentação', 'Transporte', 'Saúde', 'Educação', 'Lazer', 'Outros'];
   salvarLocal('categorias', categorias);
@@ -2031,28 +2033,36 @@ function renderDashboard() {
   document.getElementById('dashRankingHtml').innerHTML = rH||'<div style="padding:20px;">Sem gastos.</div>';
 }
 
-function renderLancamentos() {
-  const mes = getMesGlobal(); let lista = getLancamentosFiltrados(mes); const busca = document.getElementById('buscaLanc').value.toLowerCase();
-  if(busca) lista = lista.filter(i => i.descricao.toLowerCase().includes(busca)); lista.sort((a,b) => (a.vencimento && b.vencimento) ? (new Date(a.vencimento) - new Date(b.vencimento)) : 0);
-  let tb='', lst='';
-  lista.forEach(i => {
-    const st = calcularStatus(i); const corV = i.tipo==='receita'?'c-green':'c-red';
-    const btnPagar = st!=='pago' ? `<button class="btn btn-success btn-sm" onclick="pagarLancamento('${i.id}')">✅ Pagar</button>` : '';
-    const btnEdit = `<button class="btn btn-warning btn-sm" onclick="editarLancamento('${i.id}')">✏️ Editar</button>`;
-    const btnDel = `<button class="btn btn-danger btn-sm" onclick="excluirLancamento('${i.id}')">🗑</button>`;
-    tb += `<tr><td><strong>${i.descricao}</strong></td><td>${i.categoria}</td><td>${formatData(i.vencimento)}</td><td class="${corV}"><strong>${formatMoeda(i.valor)}</strong></td><td>${getBadgeHtml(st)}</td><td><div class="flex gap-2">${btnPagar}${btnEdit}${btnDel}</div></td></tr>`;
-    lst += `<div class="mobile-card"><div class="mobile-card-header"><span>${i.descricao}</span><strong class="${corV}">${formatMoeda(i.valor)}</strong></div><div class="mobile-card-actions">${btnPagar}${btnEdit}${btnDel}</div></div>`;
-  });
-  document.getElementById('listaLancTabela').innerHTML = tb||'<tr><td colspan="6" align="center">Vazio.</td></tr>'; document.getElementById('listaLancMobile').innerHTML = lst||'<div class="panel">Vazio.</div>';
-}
 function editarLancamento(id) {
-  const item = dados.find(d=>d.id===id); if(!item) return; editLancId = id;
-  const pForm = document.getElementById('panelFormLanc'); pForm.classList.add('panel-edit-mode');
-  document.getElementById('formLancTitle').innerText = "✏️ Editando"; document.getElementById('btnSalvarLanc').innerText = "Salvar Edição"; document.getElementById('btnSalvarLanc').className = "btn btn-warning"; document.getElementById('btnCancelLanc').classList.remove('hidden');
-  document.getElementById('fDesc').value=item.descricao; document.getElementById('fValor').value=item.valor; document.getElementById('fVenc').value=item.vencimento; document.getElementById('fTipo').value=item.tipo; document.getElementById('fCat').value=item.categoria; document.getElementById('fStatus').value=item.status; document.getElementById('fPgto').value=item.formaPagamento||'Outro'; document.getElementById('fResp').value=item.responsavel||''; document.getElementById('fObs').value=item.observacao||'';
+  const item = dados.find(d => d.id === id);
+  if (!item) return;
+  editLancId = id;
+  const pForm = document.getElementById('panelFormLanc');
+  pForm.classList.add('panel-edit-mode');
+  document.getElementById('formLancTitle').innerText = 'Editar Lançamento';
+  document.getElementById('btnSalvarLanc').innerText = 'Salvar Alterações';
+  document.getElementById('btnSalvarLanc').className = 'btn btn-warning';
+  document.getElementById('btnCancelLanc').classList.remove('hidden');
+  document.getElementById('fDesc').value = item.descricao;
+  document.getElementById('fValor').value = item.valor;
+  document.getElementById('fVenc').value = item.vencimento;
+  document.getElementById('fTipo').value = item.tipo;
+  document.getElementById('fCat').value = item.categoria;
+  document.getElementById('fStatus').value = item.status;
+  document.getElementById('fPgto').value = item.formaPagamento || 'Outro';
+  document.getElementById('fResp').value = item.responsavel || '';
+  document.getElementById('fObs').value = item.observacao || '';
   pForm.scrollIntoView({ behavior: 'smooth' });
 }
-function cancelarEdicaoLancamento() { editLancId = null; document.getElementById('panelFormLanc').classList.remove('panel-edit-mode'); document.getElementById('formLancTitle').innerText = "Novo Lançamento"; document.getElementById('btnSalvarLanc').innerText = "Salvar Lançamento"; document.getElementById('btnSalvarLanc').className = "btn btn-primary"; document.getElementById('btnCancelLanc').classList.add('hidden'); limparFormLanc(); }
+function cancelarEdicaoLancamento() {
+  editLancId = null;
+  document.getElementById('panelFormLanc').classList.remove('panel-edit-mode');
+  document.getElementById('formLancTitle').innerText = 'Novo Lançamento';
+  document.getElementById('btnSalvarLanc').innerText = 'Salvar Lançamento';
+  document.getElementById('btnSalvarLanc').className = 'btn btn-primary';
+  document.getElementById('btnCancelLanc').classList.add('hidden');
+  limparFormLanc();
+}
 function limparFormLanc() { ['fDesc','fValor','fVenc','fResp','fObs'].forEach(id => document.getElementById(id).value = ''); document.getElementById('fStatus').value = 'pendente'; }
 
 /* LISTA DE MERCADO */
@@ -2538,7 +2548,6 @@ function renderOrcamento() {
 function renderFuturo() { let tb=''; futuros.forEach(i => tb += `<tr><td>${i.descricao}</td><td>${formatData(i.data)}</td><td class="${i.tipo==='receita'?'c-green':'c-red'}">${formatMoeda(i.valor)}</td><td><button class="btn btn-sm btn-success" onclick="efetivarFuturo('${i.id}')">Efetivar</button> <button class="btn btn-sm btn-danger" onclick="excluirFuturo('${i.id}')">Excluir</button></td></tr>`); document.getElementById('listFuturoTabela').innerHTML = tb; }
 function renderRecorrentes() { let tb=''; recorrentes.forEach(i => tb += `<tr><td>${i.descricao}</td><td>Dia ${i.dia}</td><td>${formatMoeda(i.valor)}</td><td><button class="btn btn-sm btn-danger" onclick="excluirRecorrente('${i.id}')">Excluir</button></td></tr>`); document.getElementById('listRecorrenteTabela').innerHTML = tb; }
 function renderParcelamentos() { let tb = ''; parcelamentos.forEach(i => tb += `<tr><td>${i.descricao}</td><td>${formatMoeda(i.valorTotal)}</td><td>${i.parcelas}</td><td>${formatData(i.dataCriacao)}</td></tr>`); document.getElementById('listParcelamentosGerados').innerHTML = tb; }
-function renderCategorias() { let h = ''; categorias.forEach(c => h += `<div style="background:var(--bg); padding:8px 15px; border-radius:20px; font-size:13px; font-weight:600; display:flex; gap:8px;">${c} <button style="background:none; border:none; color:var(--danger); cursor:pointer;" onclick="removerCategoria('${c}')">&times;</button></div>`); document.getElementById('listaCategoriasHtml').innerHTML = h; }
 function gerarRelatorioTela() { /* Logica simples local mantida */ document.getElementById('relatorioViewArea').innerHTML = `Relatório gerado sobre ${dados.length} lançamentos. Baixe CSV.`; }
 function exportarRelatorioCSV() { /* Simplificado */ showToast("CSV baixado!"); }
 
@@ -2574,8 +2583,6 @@ function analisarIA() { iaContext.qtdAlertas = getLancamentosFiltrados(getMesGlo
 function enviarMensagemIA() { const i = document.getElementById('chatInput'); if(!i.value) return; const b = document.getElementById('chatMessages'); b.innerHTML += `<div class="chat-message chat-user">${i.value}</div><div class="chat-message chat-ai">Análise na nuvem ativada: Considere revisar os relatórios.</div>`; i.value=''; b.scrollTop=b.scrollHeight; }
 function autoAjuda(t) { document.getElementById('chatMessages').innerHTML += `<div class="chat-message chat-ai">Ação recomendada verificando seu saldo e categorias...</div>`; }
 /* ===== CAMADA PRO VISUAL E FUNCIONAL - LOCAL ===== */
-let categoriasDetalhes = carregarLocal('categoriasDetalhes', {});
-if(!categoriasDetalhes || typeof categoriasDetalhes !== 'object') categoriasDetalhes = {};
 let backupPendente = null;
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function escAttr(v){return esc(v).replace(/`/g,'&#96;');}
@@ -2594,15 +2601,10 @@ function aprimorarEstruturaVisual(){
   const iaTitle=Array.from(document.querySelectorAll('#mod-assistente .panel-title')).find(e=>e.textContent.includes('Autoajuda'));
   if(iaTitle&&!document.getElementById('btnBaixarAnaliseIA'))iaTitle.insertAdjacentHTML('beforeend','<button class="btn btn-outline btn-sm" id="btnBaixarAnaliseIA" onclick="baixarAnaliseIA()">Baixar analise</button>');
   iaTitle?.parentElement?.querySelector('.flex')?.classList.add('autohelp-grid');
-  const mov=document.querySelector('#mod-lancamentos .layout-lancamentos > .panel:nth-child(2)');
-  if(mov&&!document.getElementById('lancResumoFiltrado')){
-    mov.querySelector('.panel-title')?.insertAdjacentHTML('afterend',`<div class="pro-filter"><div class="form-group"><label>Busca</label><input id="buscaLancPro" class="form-control" placeholder="Descricao, categoria..." oninput="document.getElementById('buscaLanc').value=this.value;renderLancamentos()"></div><div class="form-group"><label>Tipo</label><select id="fLancTipo" class="form-control" onchange="renderLancamentos()"><option value="">Todos</option><option value="receita">Receitas</option><option value="despesa">Despesas</option></select></div><div class="form-group"><label>Status</label><select id="fLancStatus" class="form-control" onchange="renderLancamentos()"><option value="">Todos</option><option value="pendente">Pendentes</option><option value="pago">Pagos</option><option value="atrasado">Atrasados</option></select></div><div class="form-group"><label>Categoria</label><select id="fLancCategoria" class="form-control" onchange="renderLancamentos()"><option value="">Todas</option></select></div><div class="form-group"><label>A partir de</label><input type="date" id="fLancInicio" class="form-control" onchange="renderLancamentos()"></div></div><div class="pro-summary-strip" id="lancResumoFiltrado"></div>`);
-  }
   const meta=document.querySelector('#mod-metas .grid-2 .panel:first-child .form-group');if(meta&&!document.getElementById('fMetaNome'))meta.insertAdjacentHTML('beforebegin','<div class="form-group"><label>Nome da meta</label><input id="fMetaNome" class="form-control" placeholder="Reserva, viagem, reforma..."></div>');
   const fut=document.querySelector('#mod-planejamento .grid-2 .panel:nth-child(2) .panel-title');if(fut&&!document.getElementById('futuroCardsHtml'))fut.insertAdjacentHTML('afterend','<div id="futuroResumoHtml" class="pro-summary-strip"></div><div id="futuroCardsHtml" class="card-grid"></div>');
   const rec=document.querySelector('#mod-recorrentes .grid-2 .panel:nth-child(2) .panel-title');if(rec&&!document.getElementById('recorrentesCardsHtml')){rec.insertAdjacentHTML('beforeend','<button class="btn btn-success btn-sm" onclick="gerarRecorrentesMes()">Gerar mes</button>');rec.insertAdjacentHTML('afterend','<div id="recorrentesCardsHtml" class="card-grid"></div>');}
   const par=document.querySelector('#mod-parcelamentos .grid-2 .panel:nth-child(2) .panel-title');if(par&&!document.getElementById('parcelamentosCardsHtml'))par.insertAdjacentHTML('afterend','<div id="parcelamentosCardsHtml" class="card-grid"></div>');
-  const cat=document.querySelector('#mod-categorias .grid-2 .panel:first-child .form-group');if(cat&&!document.getElementById('fNovaCatIcon'))cat.insertAdjacentHTML('afterend','<div class="form-row"><div class="form-group"><label>Icone</label><input id="fNovaCatIcon" class="form-control" maxlength="2" placeholder="C"></div><div class="form-group"><label>Cor</label><input type="color" id="fNovaCatCor" class="form-control" value="#6366f1"></div></div>');
   const rel=document.querySelector('#mod-relatorios .panel-title .flex');if(rel&&!document.getElementById('btnRelJson'))rel.insertAdjacentHTML('beforeend','<button class="btn btn-outline btn-sm" id="btnRelJson" onclick="exportarRelatorioJSON()">Baixar JSON</button>');
   const conf=document.querySelector('#mod-configuracoes .panel');if(conf&&!document.getElementById('configTema')){conf.style.maxWidth='760px';conf.insertAdjacentHTML('beforeend',`<div class="form-row"><div class="form-group"><label>Tema</label><select id="configTema" class="form-control" onchange="salvarConfigTema()"><option value="claro">Claro</option><option value="escuro">Escuro</option></select></div><div class="form-group"><label>Densidade</label><select id="configDensidade" class="form-control" onchange="salvarConfigPreferencias()"><option value="normal">Normal</option><option value="compacto">Compacto</option></select></div></div><div class="panel" style="margin:10px 0 0;padding:14px;background:#fff7ed;border-color:#fed7aa;"><div class="panel-title" style="margin-bottom:10px;">Zona de seguranca</div><button class="btn btn-danger" onclick="limparTodosDados()">Limpar todos os dados locais</button></div>`);}
   const tema=document.getElementById('configTema');if(tema)tema.value=config.tema||'claro';const dens=document.getElementById('configDensidade');if(dens)dens.value=config.densidade||'normal';
@@ -2610,9 +2612,68 @@ function aprimorarEstruturaVisual(){
 }
 function salvarConfigTema(){config.tema=document.getElementById('configTema').value;salvarLocal('config',config);document.body.classList.toggle('theme-dark',config.tema==='escuro');}
 function salvarConfigPreferencias(){config.densidade=document.getElementById('configDensidade').value;salvarLocal('config',config);document.body.classList.toggle('modo-compacto',config.densidade==='compacto');}
-function filtrarLancamentosAvancado(){let l=getLancamentosFiltrados(getMesGlobal());const b=(document.getElementById('buscaLancPro')?.value||document.getElementById('buscaLanc')?.value||'').toLowerCase();const t=document.getElementById('fLancTipo')?.value||'';const s=document.getElementById('fLancStatus')?.value||'';const c=document.getElementById('fLancCategoria')?.value||'';const ini=document.getElementById('fLancInicio')?.value||'';if(b)l=l.filter(i=>`${i.descricao} ${i.categoria} ${i.responsavel||''} ${i.observacao||''}`.toLowerCase().includes(b));if(t)l=l.filter(i=>i.tipo===t);if(s)l=l.filter(i=>calcularStatus(i)===s);if(c)l=l.filter(i=>i.categoria===c);if(ini)l=l.filter(i=>i.vencimento>=ini);return l;}
+function filtrarLancamentosAvancado(){
+  let l = getLancamentosFiltrados(getMesGlobal());
+  const b = (document.getElementById('buscaLancPro')?.value || document.getElementById('buscaLanc')?.value || '').toLowerCase();
+  const t = document.getElementById('fLancTipo')?.value || '';
+  const s = document.getElementById('fLancStatus')?.value || '';
+  const c = document.getElementById('fLancCategoria')?.value || '';
+  const ini = document.getElementById('fLancInicio')?.value || '';
+  const fim = document.getElementById('fLancFim')?.value || '';
+  const pgto = document.getElementById('fLancPgto')?.value || '';
+  if (b) l = l.filter(i => `${i.descricao} ${i.categoria} ${i.responsavel || ''} ${i.observacao || ''}`.toLowerCase().includes(b));
+  if (t) l = l.filter(i => i.tipo === t);
+  if (s) l = l.filter(i => calcularStatus(i) === s);
+  if (c) l = l.filter(i => i.categoria === c);
+  if (ini) l = l.filter(i => i.vencimento && i.vencimento >= ini);
+  if (fim) l = l.filter(i => i.vencimento && i.vencimento <= fim);
+  if (pgto) l = l.filter(i => (i.formaPagamento || 'Outro') === pgto);
+  return l;
+}
 function renderDashboard(){const l=getLancamentosFiltrados();const r=resumoLancamentos(l);const atras=l.filter(i=>calcularStatus(i)==='atrasado').length;const pend=l.filter(i=>calcularStatus(i)==='pendente').length;const cat=agruparPorCategoria(l);const maior=Object.entries(cat).sort((a,b)=>b[1]-a[1])[0];const tx=r.rec?clamp((r.des/r.rec)*100,0,999):0;dashReceitas.innerText=formatMoeda(r.rec);dashDespesas.innerText=formatMoeda(r.des);dashSaldo.innerText=formatMoeda(r.saldo);dashSaldo.className=r.saldo>=0?'c-green':'c-red';dashPendentes.innerText=pend+atras;dashPagas.innerText=r.pago;dashSaudeCard.innerText=!l.length?'-':atras?'Critica':r.saldo>=0?'Boa':'Atencao';dashSaudeCard.style.color=atras?'var(--danger)':r.saldo>=0?'var(--success)':'var(--warning)';dashResumoIAHtml.innerHTML=`<div class="pro-summary-strip"><div class="mini-stat"><span>Comprometimento</span><strong>${tx.toFixed(1)}%</strong></div><div class="mini-stat"><span>Maior categoria</span><strong>${maior?esc(maior[0]):'-'}</strong></div><div class="mini-stat"><span>Em aberto</span><strong>${r.aberto}</strong></div><div class="mini-stat"><span>Saldo</span><strong class="${r.saldo>=0?'c-green':'c-red'}">${formatMoeda(r.saldo)}</strong></div></div><div class="ia-alert ${atras?'danger':r.saldo>=0?'success':'warning'}">${atras?`Existem ${atras} lancamento(s) atrasado(s).`:r.saldo>=0?'Periodo positivo. Acompanhe vencimentos e metas.':'Despesas acima das receitas. Revise prioridades.'}</div>`;const hoje=new Date();hoje.setHours(0,0,0,0);const lim=new Date(hoje);lim.setDate(lim.getDate()+7);const prox=l.filter(i=>i.vencimento&&calcularStatus(i)!=='pago'&&new Date(i.vencimento+'T00:00:00')<=lim).sort((a,b)=>new Date(a.vencimento)-new Date(b.vencimento)).slice(0,6);dashProxVencHtml.innerHTML=prox.length?prox.map(i=>`<div class="list-row"><div class="pro-card-title"><span>${esc(i.descricao)}</span><strong class="${i.tipo==='receita'?'c-green':'c-red'}">${formatMoeda(i.valor)}</strong></div><div class="pro-muted">${formatData(i.vencimento)} - ${esc(i.categoria)} - ${calcularStatus(i)}</div></div>`).join(''):'<div class="pro-card">Tudo em dia nos proximos 7 dias.</div>';dashCategoriasHtml.innerHTML=Object.keys(cat).length?Object.entries(cat).sort((a,b)=>b[1]-a[1]).map(([c,v])=>`<div class="bar-container"><div class="bar-header"><span>${esc(c)}</span><span>${formatMoeda(v)}</span></div><div class="bar-track"><div class="bar-fill bg-danger" style="width:${clamp((v/(r.des||1))*100,0,100)}%"></div></div></div>`).join(''):'<div class="pro-card">Sem despesas.</div>';dashRankingHtml.innerHTML=l.filter(i=>i.tipo==='despesa').sort((a,b)=>b.valor-a.valor).slice(0,6).map((i,n)=>`<div class="list-row"><div class="pro-card-title"><span>${n+1}. ${esc(i.descricao)}</span><strong class="c-red">${formatMoeda(i.valor)}</strong></div><div class="pro-muted">${esc(i.categoria)} - ${formatData(i.vencimento)}</div></div>`).join('')||'<div class="pro-card">Sem despesas.</div>';}
-function renderLancamentos(){const cs=document.getElementById('fLancCategoria');if(cs){const a=cs.value;cs.innerHTML='<option value="">Todas</option>'+[...new Set(categorias)].sort().map(c=>`<option value="${escAttr(c)}">${esc(c)}</option>`).join('');cs.value=a;}const bp=document.getElementById('buscaLancPro'),bs=document.getElementById('buscaLanc');if(bp&&bs&&bs.value!==bp.value)bp.value=bs.value;const l=filtrarLancamentosAvancado().sort((a,b)=>new Date(a.vencimento||0)-new Date(b.vencimento||0));const r=resumoLancamentos(l);const re=document.getElementById('lancResumoFiltrado');if(re)re.innerHTML=`<div class="mini-stat"><span>Receitas</span><strong class="c-green">${formatMoeda(r.rec)}</strong></div><div class="mini-stat"><span>Despesas</span><strong class="c-red">${formatMoeda(r.des)}</strong></div><div class="mini-stat"><span>Saldo</span><strong class="${r.saldo>=0?'c-green':'c-red'}">${formatMoeda(r.saldo)}</strong></div><div class="mini-stat"><span>Em aberto</span><strong>${r.aberto}</strong></div>`;let tb='',lst='';l.forEach(i=>{const st=calcularStatus(i),cor=i.tipo==='receita'?'c-green':'c-red';const p=st!=='pago'?`<button class="btn btn-success btn-sm" onclick="pagarLancamento('${i.id}')">Pagar</button>`:'';const e=`<button class="btn btn-warning btn-sm" onclick="editarLancamento('${i.id}')">Editar</button>`;const d=`<button class="btn btn-danger btn-sm btn-icon" onclick="excluirLancamento('${i.id}')">X</button>`;tb+=`<tr><td><strong>${esc(i.descricao)}</strong><div class="pro-muted">${esc(i.responsavel||'')}</div></td><td>${esc(i.categoria)}</td><td>${formatData(i.vencimento)}</td><td class="${cor}"><strong>${formatMoeda(i.valor)}</strong></td><td>${getBadgeHtml(st)}</td><td><div class="action-cell">${p}${e}${d}</div></td></tr>`;lst+=`<div class="mobile-card"><div class="mobile-card-header"><span>${esc(i.descricao)}</span><strong class="${cor}">${formatMoeda(i.valor)}</strong></div><div class="mobile-card-info">${esc(i.categoria)} - ${formatData(i.vencimento)} - ${st}</div><div class="mobile-card-actions">${p}${e}${d}</div></div>`;});listaLancTabela.innerHTML=tb||'<tr><td colspan="6" align="center">Nenhum lancamento.</td></tr>';listaLancMobile.innerHTML=lst||'<div class="panel">Nenhum lancamento.</div>';}
+function renderLancamentos() {
+  const cs = document.getElementById('fLancCategoria');
+  if (cs) {
+    const a = cs.value;
+    cs.innerHTML = '<option value="">Todas</option>' + [...new Set(categorias)].sort((x, y) => x.localeCompare(y, 'pt-BR')).map(c => `<option value="${escAttr(c)}">${esc(c)}</option>`).join('');
+    cs.value = a;
+  }
+  sincronizarBuscaLanc();
+  const l = filtrarLancamentosAvancado().sort((a, b) => new Date(a.vencimento || 0) - new Date(b.vencimento || 0));
+  const r = resumoLancamentos(l);
+  const re = document.getElementById('lancResumoFiltrado');
+  if (re) {
+    re.innerHTML = `<div class="mini-stat"><span>Receitas filtradas</span><strong class="c-green">${formatMoeda(r.rec)}</strong></div>
+      <div class="mini-stat"><span>Despesas filtradas</span><strong class="c-red">${formatMoeda(r.des)}</strong></div>
+      <div class="mini-stat"><span>Saldo filtrado</span><strong class="${r.saldo >= 0 ? 'c-green' : 'c-red'}">${formatMoeda(r.saldo)}</strong></div>
+      <div class="mini-stat"><span>Em aberto</span><strong>${r.aberto}</strong></div>`;
+  }
+  let tb = '', lst = '';
+  l.forEach(i => {
+    const st = calcularStatus(i);
+    const cor = i.tipo === 'receita' ? 'c-green' : 'c-red';
+    const tipoPill = `<span class="tipo-pill ${i.tipo}">${i.tipo === 'receita' ? 'Receita' : 'Despesa'}</span>`;
+    const p = st !== 'pago' ? `<button type="button" class="btn btn-success btn-sm" onclick="pagarLancamento('${escAttr(i.id)}')">Pagar</button>` : '';
+    const e = `<button type="button" class="btn btn-warning btn-sm" onclick="editarLancamento('${escAttr(i.id)}')">Editar</button>`;
+    const d = `<button type="button" class="btn btn-danger btn-sm" onclick="excluirLancamento('${escAttr(i.id)}')">Excluir</button>`;
+    tb += `<tr>
+      <td><strong>${esc(i.descricao)}</strong>${i.responsavel ? `<div class="pro-muted">${esc(i.responsavel)}</div>` : ''}</td>
+      <td>${esc(i.categoria)}</td>
+      <td>${formatData(i.vencimento)}</td>
+      <td class="col-valor ${cor}"><strong>${formatMoeda(i.valor)}</strong></td>
+      <td class="col-status">${getBadgeHtml(st)}</td>
+      <td class="col-acoes"><div class="action-cell">${p}${e}${d}</div></td>
+    </tr>`;
+    lst += `<div class="mobile-card">
+      <div class="mobile-card-header"><span>${esc(i.descricao)}</span><strong class="${cor}">${formatMoeda(i.valor)}</strong></div>
+      <div class="mobile-card-info">${tipoPill} ${esc(i.categoria)} · ${formatData(i.vencimento)} · ${getBadgeHtml(st)}</div>
+      <div class="mobile-card-actions">${p}${e}${d}</div>
+    </div>`;
+  });
+  document.getElementById('listaLancTabela').innerHTML = tb || '<tr><td colspan="6" class="empty-row">Nenhum lançamento encontrado.</td></tr>';
+  document.getElementById('listaLancMobile').innerHTML = lst || '<div class="pro-card">Nenhum lançamento encontrado.</div>';
+  atualizarChipsLanc();
+}
 function getMetasMes(m=getMesGlobal()){const raw=metas[m];if(Array.isArray(raw))return raw;if(Number(raw)>0)return[{id:'principal',nome:'Meta do mes',valor:Number(raw)}];return[];}
 function salvarMeta(){const m=getMesGlobal(),v=Number(fMetaValor.value);if(!m||!v)return showToast('Informe mes e valor.','warning');const nome=(document.getElementById('fMetaNome')?.value||'Meta do mes').trim();const l=getMetasMes(m).filter(x=>x.id!=='principal');l.push({id:generateId(),nome,valor:v});metas[m]=l;salvarLocal('metas',metas);fMetaValor.value='';const n=document.getElementById('fMetaNome');if(n)n.value='';processarDadosGlobais();showToast('Meta salva!');}
 function removerMeta(id){const m=getMesGlobal();metas[m]=getMetasMes(m).filter(x=>x.id!==id);if(!metas[m].length)delete metas[m];salvarLocal('metas',metas);processarDadosGlobais();}
@@ -2623,8 +2684,37 @@ function renderRecorrentes(){const cards=document.getElementById('recorrentesCar
 function gerarRecorrenteIndividual(id){const r=recorrentes.find(i=>i.id===id);if(!r)return;const venc=proximoRecorrente(r.dia);if(dados.some(d=>d.recorrenteId===id&&d.vencimento===venc))return showToast('Lancamento ja gerado para este mes.','warning');dados.push({id:generateId(),recorrenteId:id,descricao:r.descricao,tipo:'despesa',categoria:r.categoria,valor:Number(r.valor),vencimento:venc,status:'pendente'});salvarLocal('dados',dados);processarDadosGlobais();showToast('Lancamento recorrente gerado!');}
 function gerarRecorrentesMes(){recorrentes.forEach(r=>gerarRecorrenteIndividual(r.id));}
 function renderParcelamentos(){const cards=document.getElementById('parcelamentosCardsHtml');if(cards)cards.innerHTML=parcelamentos.length?parcelamentos.map(p=>{const pagos=dados.filter(d=>d.descricao&&d.descricao.startsWith(`${p.descricao} (`)&&calcularStatus(d)==='pago').length;const pct=p.parcelas?(pagos/p.parcelas)*100:0;const pago=(Number(p.valorTotal||0)/Number(p.parcelas||1))*pagos;return`<div class="pro-card"><div class="pro-card-title"><span>${esc(p.descricao)}</span><strong>${formatMoeda(p.valorTotal)}</strong></div><div class="pro-muted">${pagos}/${p.parcelas} parcelas pagas - restante ${formatMoeda((p.valorTotal||0)-pago)}</div><div class="bar-track" style="margin-top:10px;"><div class="bar-fill bg-info" style="width:${clamp(pct,0,100)}%"></div></div></div>`}).join(''):'<div class="pro-card">Nenhum parcelamento.</div>';listParcelamentosGerados.innerHTML=parcelamentos.map(i=>`<tr><td>${esc(i.descricao)}</td><td>${formatMoeda(i.valorTotal)}</td><td>${i.parcelas}</td><td>${formatData(i.dataCriacao)}</td></tr>`).join('')||'<tr><td colspan="4">Nenhum parcelamento.</td></tr>';}
-function adicionarCategoria(){const nc=fNovaCat.value.trim();if(!nc)return;if(categorias.includes(nc))return showToast('Categoria ja existe.','warning');categorias.push(nc);categoriasDetalhes[nc]={icone:document.getElementById('fNovaCatIcon')?.value||nc[0].toUpperCase(),cor:document.getElementById('fNovaCatCor')?.value||'#6366f1'};salvarLocal('categorias',categorias);salvarLocal('categoriasDetalhes',categoriasDetalhes);fNovaCat.value='';processarDadosGlobais();showToast('Categoria adicionada!');}
-function renderCategorias(){listaCategoriasHtml.classList.add('chip-list');listaCategoriasHtml.innerHTML=categorias.map(c=>`<div class="chip-card"><div class="chip-main"><span class="chip-icon" style="background:${corCategoria(c)}">${esc(iconCategoria(c))}</span><div><strong>${esc(c)}</strong><div class="pro-muted">${dados.filter(i=>i.categoria===c).length} uso(s)</div></div></div><button class="btn btn-danger btn-sm btn-icon" onclick="removerCategoria('${escAttr(c)}')">X</button></div>`).join('');}
+function renderCategorias() {
+  const el = document.getElementById('listaCategoriasHtml');
+  if (!el) return;
+  el.className = 'cat-grid';
+  const sorted = [...categorias].sort((a, b) => a.localeCompare(b, 'pt-BR'));
+  el.innerHTML = sorted.length ? sorted.map(c => {
+    const st = statsCategoriaMes(c);
+    const padrao = CATEGORIAS_PADRAO.includes(c);
+    const usoTotal = dados.filter(i => i.categoria === c).length;
+    const btnDel = padrao ? '' : `<button type="button" class="btn btn-danger btn-sm" onclick="removerCategoria('${escAttr(c)}')">Excluir</button>`;
+    return `<div class="cat-card${padrao ? ' is-default' : ''}">
+      <div class="cat-card-head">
+        <span class="chip-icon" style="background:${corCategoria(c)}">${esc(iconCategoria(c))}</span>
+        <div style="flex:1;min-width:0;">
+          <strong>${esc(c)}</strong>
+          ${padrao ? '<div class="pro-muted" style="margin-top:4px;">Categoria padrão</div>' : ''}
+        </div>
+      </div>
+      <div class="cat-card-stats">
+        <div class="cat-stat-box"><span>Lançamentos no mês</span><strong>${st.qtd}</strong></div>
+        <div class="cat-stat-box"><span>Movimentado no mês</span><strong>${formatMoeda(st.movimentado)}</strong></div>
+        <div class="cat-stat-box"><span>Despesas no mês</span><strong class="c-red">${formatMoeda(st.totalDesp)}</strong></div>
+        <div class="cat-stat-box"><span>Uso total</span><strong>${usoTotal}</strong></div>
+      </div>
+      <div class="cat-card-actions">
+        <button type="button" class="btn btn-outline btn-sm" onclick="editarCategoria('${escAttr(c)}')">Editar</button>
+        ${btnDel}
+      </div>
+    </div>`;
+  }).join('') : '<div class="pro-card">Nenhuma categoria cadastrada.</div>';
+}
 function confirmarFinalizarCompra(lancarFinanceiro){normalizarListaMercado();if(listaMercado.length===0)return closeFinalizar();const total=listaMercado.reduce((s,i)=>s+(Number(i.valorReal)||Number(i.preco)||0),0);historicoCopras.push({id:generateId(),data:new Date().toISOString(),total,itens:listaMercado.map(i=>({...i})),pagamento:(document.getElementById('mktFinPgto')||{}).value||'',responsavel:(document.getElementById('mktFinResp')||{}).value||''});salvarLocal('historicoCopras',historicoCopras);if(lancarFinanceiro&&total>0){const cat=categorias.includes('Alimentação')?'Alimentação':(categorias.includes('AlimentaÃ§Ã£o')?'AlimentaÃ§Ã£o':'Mercado');dados.push({id:generateId(),descricao:'Compra de mercado',tipo:'despesa',categoria:cat,valor:total,vencimento:hojeISO(),status:'pago',formaPagamento:(document.getElementById('mktFinPgto')||{}).value||'Outro',responsavel:(document.getElementById('mktFinResp')||{}).value||'',observacao:'Lancado pela Lista de Mercado'});salvarLocal('dados',dados);}listaMercado=[];salvarListaMercado();closeFinalizar();abrirAbaMercado('historico');processarDadosGlobais();showToast('Compra finalizada!');}
 function gerarRelatorioTela(){const tipo=document.getElementById('tipoRelatorio')?.value||'geral';let l=getLancamentosFiltrados();if(tipo==='receitas')l=l.filter(i=>i.tipo==='receita');if(tipo==='despesas')l=l.filter(i=>i.tipo==='despesa');if(tipo==='pagas')l=l.filter(i=>calcularStatus(i)==='pago');if(tipo==='pendentes')l=l.filter(i=>calcularStatus(i)==='pendente');if(tipo==='atrasadas')l=l.filter(i=>calcularStatus(i)==='atrasado');const r=resumoLancamentos(l),cat=agruparPorCategoria(l);relatorioViewArea.classList.add('report-preview');relatorioViewArea.innerHTML=`<h2 style="margin-bottom:8px;">Relatorio financeiro</h2><p class="pro-muted">Periodo: ${getMesGlobal()||'todos'} - tipo: ${esc(tipo)}</p><div class="pro-summary-strip" style="margin-top:14px;"><div class="mini-stat"><span>Receitas</span><strong class="c-green">${formatMoeda(r.rec)}</strong></div><div class="mini-stat"><span>Despesas</span><strong class="c-red">${formatMoeda(r.des)}</strong></div><div class="mini-stat"><span>Saldo</span><strong class="${r.saldo>=0?'c-green':'c-red'}">${formatMoeda(r.saldo)}</strong></div><div class="mini-stat"><span>Itens</span><strong>${l.length}</strong></div></div><h3 style="margin:14px 0 8px;">Categorias</h3>${Object.keys(cat).length?Object.entries(cat).sort((a,b)=>b[1]-a[1]).map(([c,v])=>`<div class="bar-container"><div class="bar-header"><span>${esc(c)}</span><span>${formatMoeda(v)}</span></div><div class="bar-track"><div class="bar-fill bg-danger" style="width:${clamp((v/(r.des||1))*100,0,100)}%"></div></div></div>`).join(''):'<div class="pro-card">Sem despesas neste recorte.</div>'}`;}
 function exportarRelatorioCSV(){const l=getLancamentosFiltrados();const rows=[['descricao','tipo','categoria','vencimento','valor','status','pagamento','responsavel','observacao']];l.forEach(i=>rows.push([i.descricao,i.tipo,i.categoria,i.vencimento,i.valor,calcularStatus(i),i.formaPagamento||'',i.responsavel||'',i.observacao||'']));baixarArquivo(`relatorio_financas_${new Date().toISOString().slice(0,10)}.csv`,rows.map(r=>r.map(csvValor).join(';')).join('\n'),'text/csv;charset=utf-8');}
