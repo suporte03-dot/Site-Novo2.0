@@ -143,13 +143,102 @@
   .sidebar-menu {
     flex: 1;
     overflow-y: auto;
-    padding: 14px 12px 20px;
+    padding: 12px 10px 20px;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 10px;
   }
   .sidebar-menu::-webkit-scrollbar { width: 4px; }
   .sidebar-menu::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.12); border-radius: 4px; }
+  .menu-section {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    overflow: hidden;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+  .menu-section-head {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    text-align: left;
+    transition: background 0.2s, border-color 0.2s;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .menu-section-head:hover { background: rgba(255, 255, 255, 0.07); }
+  .menu-section-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    flex-shrink: 0;
+    font-weight: 800;
+  }
+  .menu-section[data-section="geral"] .menu-section-icon { background: rgba(26, 95, 74, 0.28); color: #6ee7b7; }
+  .menu-section[data-section="financeiro"] .menu-section-icon { background: rgba(3, 105, 161, 0.28); color: #7dd3fc; }
+  .menu-section[data-section="utilitarios"] .menu-section-icon { background: rgba(180, 83, 9, 0.28); color: #fcd34d; }
+  .menu-section[data-section="sistema"] .menu-section-icon { background: rgba(100, 116, 139, 0.28); color: #cbd5e1; }
+  .menu-section[data-section="geral"] { border-color: rgba(26, 95, 74, 0.35); }
+  .menu-section[data-section="financeiro"] { border-color: rgba(3, 105, 161, 0.35); }
+  .menu-section[data-section="utilitarios"] { border-color: rgba(180, 83, 9, 0.35); }
+  .menu-section[data-section="sistema"] { border-color: rgba(100, 116, 139, 0.35); }
+  .menu-section-title-wrap { flex: 1; min-width: 0; }
+  .menu-section-title {
+    display: block;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--sidebar-text-active);
+    line-height: 1.2;
+  }
+  .menu-section-sub {
+    display: block;
+    font-size: 10px;
+    color: rgba(148, 163, 184, 0.75);
+    margin-top: 2px;
+    font-weight: 500;
+  }
+  .menu-section-count {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--sidebar-text);
+    background: rgba(255, 255, 255, 0.08);
+    padding: 2px 7px;
+    border-radius: 999px;
+    flex-shrink: 0;
+  }
+  .menu-section-chevron {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--sidebar-text);
+    background: rgba(255, 255, 255, 0.06);
+    flex-shrink: 0;
+    transition: transform 0.25s ease, background 0.2s;
+  }
+  .menu-section-head:hover .menu-section-chevron { background: rgba(255, 255, 255, 0.1); color: var(--sidebar-text-active); }
+  .menu-section.collapsed .menu-section-chevron { transform: rotate(-90deg); }
+  .menu-section.collapsed .menu-section-body { display: none; }
+  .menu-section.collapsed .menu-section-head { border-bottom-color: transparent; }
+  .menu-section-body {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 8px;
+  }
   .menu-section-label {
     font-size: 10px;
     font-weight: 700;
@@ -1231,23 +1320,74 @@
       <div id="lblGrupoId">Modo local · offline</div>
     </div>
     <div class="sidebar-menu">
-      <div class="menu-section-label">Visão geral</div>
-      <button type="button" class="menu-item active" data-module="dashboard"><span class="menu-dot" aria-hidden="true"></span><span class="menu-label">Dashboard</span></button>
-      <button type="button" class="menu-item" data-module="assistente"><span class="menu-dot" aria-hidden="true"></span><span class="menu-label">Assistente</span><span class="menu-badge hidden" id="badgeIA">0</span></button>
-      <div class="menu-section-label">Financeiro</div>
-      <button type="button" class="menu-item" data-module="lancamentos"><span class="menu-dot" aria-hidden="true"></span><span class="menu-label">Lançamentos</span><span class="menu-badge hidden" id="badgeLanc">0</span></button>
-      <button type="button" class="menu-item" data-module="metas"><span class="menu-dot" aria-hidden="true"></span><span class="menu-label">Metas do mês</span></button>
-      <button type="button" class="menu-item" data-module="gastos"><span class="menu-dot" aria-hidden="true"></span><span class="menu-label">Controle de gastos</span></button>
-      <button type="button" class="menu-item" data-module="planejamento"><span class="menu-dot" aria-hidden="true"></span><span class="menu-label">Planejamento</span></button>
-      <button type="button" class="menu-item" data-module="recorrentes"><span class="menu-dot" aria-hidden="true"></span><span class="menu-label">Recorrentes</span></button>
-      <button type="button" class="menu-item" data-module="parcelamentos"><span class="menu-dot" aria-hidden="true"></span><span class="menu-label">Parcelamentos</span></button>
-      <div class="menu-section-label">Utilitários</div>
-      <button type="button" class="menu-item" data-module="mercado"><span class="menu-dot" aria-hidden="true"></span><span class="menu-label">Lista de mercado</span></button>
-      <button type="button" class="menu-item" data-module="categorias"><span class="menu-dot" aria-hidden="true"></span><span class="menu-label">Categorias</span></button>
-      <button type="button" class="menu-item" data-module="relatorios"><span class="menu-dot" aria-hidden="true"></span><span class="menu-label">Relatórios</span><span class="menu-badge badge-static">CSV</span></button>
-      <div class="menu-section-label">Sistema</div>
-      <button type="button" class="menu-item" data-module="configuracoes"><span class="menu-dot" aria-hidden="true"></span><span class="menu-label">Configurações</span></button>
-      <button type="button" class="menu-item" data-module="backup"><span class="menu-dot" aria-hidden="true"></span><span class="menu-label">Backup</span></button>
+      <div class="menu-section" data-section="geral" id="menuSecGeral">
+        <button type="button" class="menu-section-head" onclick="toggleMenuSection('geral')" aria-expanded="true" aria-controls="menuBodyGeral">
+          <span class="menu-section-icon" aria-hidden="true">◎</span>
+          <span class="menu-section-title-wrap">
+            <span class="menu-section-title">Visão geral</span>
+            <span class="menu-section-sub">Dashboard e assistente</span>
+          </span>
+          <span class="menu-section-count">2</span>
+          <span class="menu-section-chevron" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></span>
+        </button>
+        <div class="menu-section-body" id="menuBodyGeral">
+          <button type="button" class="menu-item active" data-module="dashboard" data-section="geral"><span class="menu-dot" aria-hidden="true"></span><span class="menu-label">Dashboard</span></button>
+          <button type="button" class="menu-item" data-module="assistente" data-section="geral"><span class="menu-dot" aria-hidden="true"></span><span class="menu-label">Assistente</span><span class="menu-badge hidden" id="badgeIA">0</span></button>
+        </div>
+      </div>
+
+      <div class="menu-section" data-section="financeiro" id="menuSecFinanceiro">
+        <button type="button" class="menu-section-head" onclick="toggleMenuSection('financeiro')" aria-expanded="true" aria-controls="menuBodyFinanceiro">
+          <span class="menu-section-icon" aria-hidden="true">₿</span>
+          <span class="menu-section-title-wrap">
+            <span class="menu-section-title">Financeiro</span>
+            <span class="menu-section-sub">Lançamentos, metas e contas</span>
+          </span>
+          <span class="menu-section-count">6</span>
+          <span class="menu-section-chevron" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></span>
+        </button>
+        <div class="menu-section-body" id="menuBodyFinanceiro">
+          <button type="button" class="menu-item" data-module="lancamentos" data-section="financeiro"><span class="menu-dot" aria-hidden="true"></span><span class="menu-label">Lançamentos</span><span class="menu-badge hidden" id="badgeLanc">0</span></button>
+          <button type="button" class="menu-item" data-module="metas" data-section="financeiro"><span class="menu-dot" aria-hidden="true"></span><span class="menu-label">Metas do mês</span></button>
+          <button type="button" class="menu-item" data-module="gastos" data-section="financeiro"><span class="menu-dot" aria-hidden="true"></span><span class="menu-label">Controle de gastos</span></button>
+          <button type="button" class="menu-item" data-module="planejamento" data-section="financeiro"><span class="menu-dot" aria-hidden="true"></span><span class="menu-label">Planejamento</span></button>
+          <button type="button" class="menu-item" data-module="recorrentes" data-section="financeiro"><span class="menu-dot" aria-hidden="true"></span><span class="menu-label">Recorrentes</span></button>
+          <button type="button" class="menu-item" data-module="parcelamentos" data-section="financeiro"><span class="menu-dot" aria-hidden="true"></span><span class="menu-label">Parcelamentos</span></button>
+        </div>
+      </div>
+
+      <div class="menu-section" data-section="utilitarios" id="menuSecUtilitarios">
+        <button type="button" class="menu-section-head" onclick="toggleMenuSection('utilitarios')" aria-expanded="true" aria-controls="menuBodyUtilitarios">
+          <span class="menu-section-icon" aria-hidden="true">◫</span>
+          <span class="menu-section-title-wrap">
+            <span class="menu-section-title">Utilitários</span>
+            <span class="menu-section-sub">Mercado, categorias e relatórios</span>
+          </span>
+          <span class="menu-section-count">3</span>
+          <span class="menu-section-chevron" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></span>
+        </button>
+        <div class="menu-section-body" id="menuBodyUtilitarios">
+          <button type="button" class="menu-item" data-module="mercado" data-section="utilitarios"><span class="menu-dot" aria-hidden="true"></span><span class="menu-label">Lista de mercado</span></button>
+          <button type="button" class="menu-item" data-module="categorias" data-section="utilitarios"><span class="menu-dot" aria-hidden="true"></span><span class="menu-label">Categorias</span></button>
+          <button type="button" class="menu-item" data-module="relatorios" data-section="utilitarios"><span class="menu-dot" aria-hidden="true"></span><span class="menu-label">Relatórios</span><span class="menu-badge badge-static">CSV</span></button>
+        </div>
+      </div>
+
+      <div class="menu-section" data-section="sistema" id="menuSecSistema">
+        <button type="button" class="menu-section-head" onclick="toggleMenuSection('sistema')" aria-expanded="true" aria-controls="menuBodySistema">
+          <span class="menu-section-icon" aria-hidden="true">⚙</span>
+          <span class="menu-section-title-wrap">
+            <span class="menu-section-title">Sistema</span>
+            <span class="menu-section-sub">Configurações e backup</span>
+          </span>
+          <span class="menu-section-count">2</span>
+          <span class="menu-section-chevron" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></span>
+        </button>
+        <div class="menu-section-body" id="menuBodySistema">
+          <button type="button" class="menu-item" data-module="configuracoes" data-section="sistema"><span class="menu-dot" aria-hidden="true"></span><span class="menu-label">Configurações</span></button>
+          <button type="button" class="menu-item" data-module="backup" data-section="sistema"><span class="menu-dot" aria-hidden="true"></span><span class="menu-label">Backup</span></button>
+        </div>
+      </div>
     </div>
   </aside>
 
@@ -2319,8 +2459,9 @@ if (!config || typeof config !== 'object') {
   config = { modo: 'auto', inicio: 'dashboard' };
   salvarLocal('config', config);
 }
-const CONFIG_PADRAO = { modo: 'auto', inicio: 'dashboard', tema: 'claro', densidade: 'normal', moeda: 'BRL', mesInicial: '', mostrarExemplo: false, ultimoBackup: '' };
+const CONFIG_PADRAO = { modo: 'auto', inicio: 'dashboard', tema: 'claro', densidade: 'normal', moeda: 'BRL', mesInicial: '', mostrarExemplo: false, ultimoBackup: '', menuSections: { geral: true, financeiro: true, utilitarios: true, sistema: true } };
 Object.keys(CONFIG_PADRAO).forEach(k => { if (config[k] === undefined) config[k] = CONFIG_PADRAO[k]; });
+if (!config.menuSections || typeof config.menuSections !== 'object') config.menuSections = { ...CONFIG_PADRAO.menuSections };
 salvarLocal('config', config);
 
 let editLancId = null;
@@ -2357,6 +2498,7 @@ document.addEventListener('DOMContentLoaded', () => {
       abrirModulo(modulo);
     });
   });
+  aplicarMenuSections();
 
   if (USAR_LOGIN) {
     if(!supabase || SUPABASE_URL === 'SUA_URL_SUPABASE_AQUI') {
@@ -2877,6 +3019,29 @@ const titulosModulos = {
 
 function toggleSidebarPC() { document.getElementById('sidebar').classList.toggle('collapsed-pc'); }
 function toggleMenu() { document.getElementById('sidebar').classList.toggle('open'); document.getElementById('overlayMenu').classList.toggle('active'); }
+const MODULO_MENU_SECAO = { dashboard:'geral', assistente:'geral', lancamentos:'financeiro', metas:'financeiro', gastos:'financeiro', planejamento:'financeiro', recorrentes:'financeiro', parcelamentos:'financeiro', mercado:'utilitarios', categorias:'utilitarios', relatorios:'utilitarios', configuracoes:'sistema', backup:'sistema' };
+function aplicarMenuSections(){
+  if(!config.menuSections) config.menuSections={...CONFIG_PADRAO.menuSections};
+  document.querySelectorAll('.menu-section[data-section]').forEach(sec=>{
+    const id=sec.dataset.section;
+    const aberta=config.menuSections[id]!==false;
+    sec.classList.toggle('collapsed',!aberta);
+    const head=sec.querySelector('.menu-section-head');
+    if(head) head.setAttribute('aria-expanded',aberta?'true':'false');
+  });
+}
+function toggleMenuSection(id){
+  if(!config.menuSections) config.menuSections={...CONFIG_PADRAO.menuSections};
+  const aberta=config.menuSections[id]!==false;
+  config.menuSections[id]=!aberta;
+  salvarLocal('config',config);
+  aplicarMenuSections();
+}
+function expandirSecaoMenu(modulo){
+  const sec=MODULO_MENU_SECAO[modulo];
+  if(!sec||!config.menuSections) return;
+  if(config.menuSections[sec]===false){config.menuSections[sec]=true;salvarLocal('config',config);aplicarMenuSections();}
+}
 
 function abrirModulo(modulo) {
   if(!modulo) return;
@@ -2885,6 +3050,8 @@ function abrirModulo(modulo) {
   if(modulo === 'config') modulo = 'configuracoes';
   if(modulo === 'orcamento') modulo = 'gastos';
   if(modulo === 'futuro') modulo = 'planejamento';
+
+  expandirSecaoMenu(modulo);
 
   document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active')); 
   const btn = document.querySelector(`.menu-item[data-module="${modulo}"]`); 
@@ -3633,6 +3800,7 @@ function aprimorarEstruturaVisual(){
   document.body.classList.toggle('theme-dark',config.tema==='escuro');
   document.body.classList.toggle('modo-compacto',config.densidade==='compacto');
   sincronizarConfigUI();
+  aplicarMenuSections();
 }
 function sincronizarConfigUI(){
   const tema=document.getElementById('configTema'); if(tema) tema.value=config.tema||'claro';
@@ -3647,7 +3815,7 @@ function salvarConfigTema(){config.tema=document.getElementById('configTema').va
 function salvarConfigPreferencias(){config.densidade=document.getElementById('configDensidade').value;salvarLocal('config',config);document.body.classList.toggle('modo-compacto',config.densidade==='compacto');}
 function salvarConfigMoeda(){config.moeda=document.getElementById('configMoeda').value;salvarLocal('config',config);processarDadosGlobais();}
 function salvarConfigMesInicial(){config.mesInicial=document.getElementById('configMesInicial').value||'';salvarLocal('config',config);if(config.mesInicial){document.getElementById('filtroGlobalMes').value=config.mesInicial;processarDadosGlobais();}}
-function restaurarConfigPadrao(){if(!confirm('Restaurar as configurações padrão? Os dados financeiros não serão apagados.'))return;const keep={mostrarExemplo:!!config.mostrarExemplo,ultimoBackup:config.ultimoBackup||''};config={...CONFIG_PADRAO,...keep};salvarLocal('config',config);sincronizarConfigUI();document.body.classList.toggle('theme-dark',config.tema==='escuro');document.body.classList.toggle('modo-compacto',config.densidade==='compacto');aplicarModoVisualizacao();if(config.mesInicial)document.getElementById('filtroGlobalMes').value=config.mesInicial;processarDadosGlobais();showToast('Configurações restauradas.');}
+function restaurarConfigPadrao(){if(!confirm('Restaurar as configurações padrão? Os dados financeiros não serão apagados.'))return;const keep={mostrarExemplo:!!config.mostrarExemplo,ultimoBackup:config.ultimoBackup||''};config={...CONFIG_PADRAO,...keep};salvarLocal('config',config);sincronizarConfigUI();aplicarMenuSections();document.body.classList.toggle('theme-dark',config.tema==='escuro');document.body.classList.toggle('modo-compacto',config.densidade==='compacto');aplicarModoVisualizacao();if(config.mesInicial)document.getElementById('filtroGlobalMes').value=config.mesInicial;processarDadosGlobais();showToast('Configurações restauradas.');}
 function temDadosExemplo(){return dados.some(i=>i._exemplo)||futuros.some(i=>i._exemplo)||listaMercado.some(i=>i._exemplo)||Object.values(metas).some(m=>Array.isArray(m)&&m.some(i=>i._exemplo));}
 function gerarDadosExemplo(){
   if(temDadosExemplo())return;
