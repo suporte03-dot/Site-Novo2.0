@@ -792,6 +792,136 @@
   body.theme-dark .backup-preview { background:#0b1220; }
   @media(max-width:1100px) { .metric-grid, .pro-summary-strip { grid-template-columns:repeat(2,1fr); } .pro-filter { grid-template-columns:1fr 1fr; } }
   @media(max-width:680px) { .metric-grid, .pro-summary-strip, .pro-filter { grid-template-columns:1fr; } .module-hero { align-items:flex-start; flex-direction:column; } }
+
+  /* ===== ETAPA 3: METAS, ORÇAMENTO E PLANEJAMENTO ===== */
+  .mod-layout { display: grid; grid-template-columns: minmax(300px, 380px) 1fr; gap: 22px; align-items: start; }
+  body.modo-celular .mod-layout { grid-template-columns: 1fr; }
+  .goal-card, .budget-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    background: var(--card-bg);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .goal-card-head, .budget-card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+  .goal-card-metrics, .budget-card-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .goal-metric, .budget-metric {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+  }
+  .goal-metric span, .budget-metric span { display: block; font-size: 10px; font-weight: 700; text-transform: uppercase; color: var(--text-light); }
+  .goal-metric strong, .budget-metric strong { display: block; margin-top: 4px; font-size: 15px; color: var(--dark); }
+  .goal-status, .budget-status, .fut-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .goal-status-progress, .budget-status-ok, .fut-status-ok { background: var(--success-soft); color: var(--success); }
+  .goal-status-risk, .budget-status-warn, .fut-status-warn { background: var(--warning-soft, #fef3c7); color: var(--warning); }
+  .goal-status-done { background: var(--primary-soft, #e8f3ef); color: var(--primary); }
+  .budget-status-over, .fut-status-cancel { background: var(--danger-soft); color: var(--danger); }
+  .fut-status-muted { background: var(--bg); color: var(--text-light); border: 1px solid var(--border); }
+  .timeline-wrap { display: flex; flex-direction: column; gap: 18px; }
+  .timeline-month { border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; background: var(--card-bg); }
+  .timeline-month-head {
+    padding: 12px 16px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--dark);
+    text-transform: capitalize;
+  }
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    align-items: center;
+  }
+  .timeline-item:last-child { border-bottom: none; }
+  .timeline-item-main strong { display: block; color: var(--dark); margin-bottom: 4px; }
+  .timeline-item-actions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+  .fut-form-actions, .meta-form-actions, .orc-form-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+
+  /* ===== ETAPA 4: RECORRENTES E PARCELAMENTOS ===== */
+  .auto-card, .par-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    background: var(--card-bg);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .auto-card.is-inactive { opacity: 0.72; border-style: dashed; }
+  .auto-card-head, .par-card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+  .auto-card-metrics, .par-card-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .auto-metric, .par-metric {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+  }
+  .auto-metric span, .par-metric span { display: block; font-size: 10px; font-weight: 700; text-transform: uppercase; color: var(--text-light); }
+  .auto-metric strong, .par-metric strong { display: block; margin-top: 4px; font-size: 15px; color: var(--dark); }
+  .auto-status, .par-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .auto-status-ativo, .par-status-ativo { background: var(--success-soft); color: var(--success); }
+  .auto-status-inativo, .par-status-inativo { background: var(--bg); color: var(--text-light); border: 1px solid var(--border); }
+  .par-status-done { background: var(--primary-soft, #e8f3ef); color: var(--primary); }
+  .auto-card-actions, .par-card-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .section-block { margin-bottom: 22px; }
+  .section-block-title {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--dark);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .prox-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+  .prox-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--bg);
+    font-size: 13px;
+  }
+  .par-list-modal { max-height: 360px; overflow: auto; display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+  .par-list-item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    align-items: center;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--bg);
+  }
+  .rec-form-actions, .par-form-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
 </style>
 </head>
 <body class="modo-pc">
@@ -1092,37 +1222,300 @@
 
       <!-- Metas -->
       <section id="mod-metas" class="module hidden">
-        <div class="grid-2">
-          <div class="panel"><div class="panel-title">Definir Meta de Economia</div><p style="font-size:13px; color:var(--text-light); margin-bottom:15px;">Configure uma meta de saldo para o mês filtrado.</p><div class="form-group"><label>Valor da Meta (R$)</label><input type="number" id="fMetaValor" class="form-control"></div><button class="btn btn-primary" onclick="salvarMeta()">Salvar Meta</button></div>
-          <div class="panel"><div class="panel-title">Progresso da Meta</div><div id="metaProgressoHtml"></div></div>
+        <div class="module-hero">
+          <div>
+            <p class="dash-eyebrow">Objetivos</p>
+            <h3 class="dash-hero-title">Metas do Mês</h3>
+            <p class="dash-hero-desc">Defina metas de economia para o período selecionado no topo e acompanhe o progresso com base no saldo do mês.</p>
+          </div>
+        </div>
+        <div class="mod-layout">
+          <div class="panel" id="panelFormMeta">
+            <div class="panel-title" id="formMetaTitle">Nova meta</div>
+            <div class="form-group">
+              <label for="fMetaNome">Nome da meta *</label>
+              <input type="text" id="fMetaNome" class="form-control" placeholder="Reserva, viagem, reforma...">
+            </div>
+            <div class="form-group">
+              <label for="fMetaValor">Valor da meta (R$) *</label>
+              <input type="number" id="fMetaValor" class="form-control" step="0.01" min="0" placeholder="0,00">
+            </div>
+            <div class="meta-form-actions">
+              <button type="button" class="btn btn-primary" id="btnSalvarMeta" onclick="salvarMeta()">Salvar meta</button>
+              <button type="button" class="btn btn-outline hidden" id="btnCancelMeta" onclick="cancelarEdicaoMeta()">Cancelar edição</button>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Painel de metas</div>
+            <div class="pro-summary-strip" id="metaResumoGeral"></div>
+            <div id="metaProgressoHtml" class="goal-grid"></div>
+          </div>
         </div>
       </section>
       <!-- Controle de Gastos -->
       <section id="mod-gastos" class="module hidden">
-        <div class="grid-2">
-          <div class="panel"><div class="panel-title">Definir Limite por Categoria</div><div class="form-group"><label>Categoria</label><select id="fOrcCat" class="form-control"></select></div><div class="form-group"><label>Limite Mensal (R$)</label><input type="number" id="fOrcValor" class="form-control"></div><button class="btn btn-primary" onclick="salvarOrcamento()">Definir Limite</button></div>
-          <div class="panel"><div class="panel-title">Acompanhamento do Mês</div><div id="orcamentoProgressoHtml"></div></div>
+        <div class="module-hero">
+          <div>
+            <p class="dash-eyebrow">Orçamento</p>
+            <h3 class="dash-hero-title">Controle de Gastos</h3>
+            <p class="dash-hero-desc">Defina limites mensais por categoria e acompanhe consumo, saldo restante e alertas visuais.</p>
+          </div>
+        </div>
+        <div class="mod-layout">
+          <div class="panel" id="panelFormOrc">
+            <div class="panel-title" id="formOrcTitle">Definir limite</div>
+            <div class="form-group">
+              <label for="fOrcCat">Categoria *</label>
+              <select id="fOrcCat" class="form-control"></select>
+            </div>
+            <div class="form-group">
+              <label for="fOrcValor">Limite mensal (R$) *</label>
+              <input type="number" id="fOrcValor" class="form-control" step="0.01" min="0" placeholder="0,00">
+            </div>
+            <div class="orc-form-actions">
+              <button type="button" class="btn btn-primary" id="btnSalvarOrc" onclick="salvarOrcamento()">Definir limite</button>
+              <button type="button" class="btn btn-outline hidden" id="btnCancelOrc" onclick="cancelarEdicaoOrcamento()">Cancelar edição</button>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Painel de orçamento</div>
+            <div class="pro-summary-strip" id="orcResumoGeral"></div>
+            <div id="orcamentoProgressoHtml" class="card-grid"></div>
+          </div>
         </div>
       </section>
       <!-- Futuro -->
       <section id="mod-planejamento" class="module hidden">
-        <div class="grid-2">
-          <div class="panel"><div class="panel-title">Adicionar Plano</div><div class="form-group"><label>Descrição</label><input type="text" id="fFutDesc" class="form-control"></div><div class="form-row"><div class="form-group"><label>Tipo</label><select id="fFutTipo" class="form-control"><option value="despesa">Despesa</option><option value="receita">Receita</option></select></div><div class="form-group"><label>Categoria</label><select id="fFutCat" class="form-control"></select></div></div><div class="form-row"><div class="form-group"><label>Valor Previsto</label><input type="number" id="fFutValor" class="form-control"></div><div class="form-group"><label>Data Prevista</label><input type="date" id="fFutData" class="form-control"></div></div><button class="btn btn-primary" onclick="salvarFuturo()">Adicionar Planejamento</button></div>
-          <div class="panel"><div class="panel-title">Lista de Planejamentos</div><div class="view-tabela table-responsive"><table><thead><tr><th>Descrição</th><th>Data</th><th>Valor</th><th>Ação</th></tr></thead><tbody id="listFuturoTabela"></tbody></table></div></div>
+        <div class="module-hero">
+          <div>
+            <p class="dash-eyebrow">Agenda</p>
+            <h3 class="dash-hero-title">Planejamento Futuro</h3>
+            <p class="dash-hero-desc">Organize receitas e despesas previstas, visualize por mês e transforme planos em lançamentos quando chegar a hora.</p>
+          </div>
+        </div>
+        <div class="mod-layout">
+          <div class="panel" id="panelFormFut">
+            <div class="panel-title" id="formFutTitle">Novo planejamento</div>
+            <div class="form-section">
+              <div class="form-section-title">Dados principais</div>
+              <div class="form-group">
+                <label for="fFutDesc">Descrição *</label>
+                <input type="text" id="fFutDesc" class="form-control" placeholder="Ex.: IPVA, bônus anual...">
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="fFutTipo">Tipo</label>
+                  <select id="fFutTipo" class="form-control"><option value="despesa">Despesa</option><option value="receita">Receita</option></select>
+                </div>
+                <div class="form-group">
+                  <label for="fFutCat">Categoria</label>
+                  <select id="fFutCat" class="form-control"></select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="fFutValor">Valor previsto (R$) *</label>
+                  <input type="number" id="fFutValor" class="form-control" step="0.01" min="0" placeholder="0,00">
+                </div>
+                <div class="form-group">
+                  <label for="fFutData">Data prevista *</label>
+                  <input type="date" id="fFutData" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="form-section">
+              <div class="form-section-title">Detalhes</div>
+              <div class="form-group">
+                <label for="fFutObs">Observação</label>
+                <input type="text" id="fFutObs" class="form-control" placeholder="Detalhes opcionais">
+              </div>
+              <div class="form-group">
+                <label for="fFutStatus">Status</label>
+                <select id="fFutStatus" class="form-control">
+                  <option value="pendente">Pendente</option>
+                  <option value="cancelado">Cancelado</option>
+                </select>
+              </div>
+            </div>
+            <div class="fut-form-actions">
+              <button type="button" class="btn btn-primary" id="btnSalvarFut" onclick="salvarFuturo()">Adicionar planejamento</button>
+              <button type="button" class="btn btn-outline hidden" id="btnCancelFut" onclick="cancelarEdicaoFuturo()">Cancelar edição</button>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Agenda financeira</div>
+            <div class="pro-summary-strip" id="futuroResumoHtml"></div>
+            <div id="futuroTimelineHtml" class="timeline-wrap"></div>
+            <div class="view-tabela table-responsive" style="margin-top:16px;">
+              <table>
+                <thead><tr><th>Descrição</th><th>Data</th><th>Valor</th><th>Status</th><th>Ações</th></tr></thead>
+                <tbody id="listFuturoTabela"></tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </section>
       <!-- Recorrentes -->
       <section id="mod-recorrentes" class="module hidden">
-        <div class="grid-2">
-          <div class="panel"><div class="panel-title">Nova Recorrência Mensal fixa</div><div class="form-group"><label>Descrição</label><input type="text" id="fRecDesc" class="form-control"></div><div class="form-row"><div class="form-group"><label>Categoria</label><select id="fRecCat" class="form-control"></select></div><div class="form-group"><label>Valor</label><input type="number" id="fRecValor" class="form-control"></div></div><div class="form-group"><label>Dia do Vencimento (1-31)</label><input type="number" id="fRecDia" class="form-control" min="1" max="31"></div><button class="btn btn-primary" onclick="salvarRecorrente()">Cadastrar Recorrente</button></div>
-          <div class="panel"><div class="panel-title">Minhas Recorrências</div><div class="view-tabela table-responsive"><table><thead><tr><th>Descrição</th><th>Dia</th><th>Valor</th><th>Ações</th></tr></thead><tbody id="listRecorrenteTabela"></tbody></table></div></div>
+        <div class="module-hero">
+          <div>
+            <p class="dash-eyebrow">Automação</p>
+            <h3 class="dash-hero-title">Contas Recorrentes</h3>
+            <p class="dash-hero-desc">Cadastre contas fixas mensais e gere lançamentos automaticamente, evitando duplicidade no mesmo mês.</p>
+          </div>
+        </div>
+        <div class="mod-layout">
+          <div class="panel" id="panelFormRec">
+            <div class="panel-title" id="formRecTitle">Nova conta recorrente</div>
+            <div class="form-section">
+              <div class="form-section-title">Dados principais</div>
+              <div class="form-group">
+                <label for="fRecDesc">Descrição *</label>
+                <input type="text" id="fRecDesc" class="form-control" placeholder="Ex.: Aluguel, internet...">
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="fRecCat">Categoria *</label>
+                  <select id="fRecCat" class="form-control"></select>
+                </div>
+                <div class="form-group">
+                  <label for="fRecValor">Valor (R$) *</label>
+                  <input type="number" id="fRecValor" class="form-control" step="0.01" min="0" placeholder="0,00">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="fRecDia">Dia de vencimento (1–31) *</label>
+                <input type="number" id="fRecDia" class="form-control" min="1" max="31" placeholder="10">
+              </div>
+            </div>
+            <div class="form-section">
+              <div class="form-section-title">Pagamento e controle</div>
+              <div class="form-group">
+                <label for="fRecPgto">Forma de pagamento</label>
+                <select id="fRecPgto" class="form-control">
+                  <option>Pix</option><option>Boleto</option><option>Cartão Crédito</option>
+                  <option>Cartão Débito</option><option>Dinheiro</option><option>Débito Auto</option><option>Outro</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="fRecResp">Responsável</label>
+                <input type="text" id="fRecResp" class="form-control" placeholder="Quem paga esta conta?">
+              </div>
+              <div class="form-group">
+                <label for="fRecAtivo">Status</label>
+                <select id="fRecAtivo" class="form-control">
+                  <option value="ativo">Ativo</option>
+                  <option value="inativo">Inativo</option>
+                </select>
+              </div>
+            </div>
+            <div class="rec-form-actions">
+              <button type="button" class="btn btn-primary" id="btnSalvarRec" onclick="salvarRecorrente()">Cadastrar recorrente</button>
+              <button type="button" class="btn btn-outline hidden" id="btnCancelRec" onclick="cancelarEdicaoRecorrente()">Cancelar edição</button>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Painel de recorrências</div>
+            <div class="pro-summary-strip" id="recResumoGeral"></div>
+            <div id="recProximasHtml" class="prox-list"></div>
+            <div class="section-block" style="margin-top:18px;">
+              <div class="section-block-title">
+                <span>Contas cadastradas</span>
+                <button type="button" class="btn btn-success btn-sm" onclick="gerarRecorrentesMes()">Gerar mês (ativas)</button>
+              </div>
+              <div id="recorrentesGrid" class="card-grid"></div>
+            </div>
+            <div class="view-tabela table-responsive" style="margin-top:16px;">
+              <table>
+                <thead><tr><th>Descrição</th><th>Próximo venc.</th><th>Valor</th><th>Status</th><th>Ações</th></tr></thead>
+                <tbody id="listRecorrenteTabela"></tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </section>
       <!-- Parcelamentos -->
       <section id="mod-parcelamentos" class="module hidden">
-        <div class="grid-2">
-          <div class="panel"><div class="panel-title">Nova Compra Parcelada</div><div class="form-group"><label>Descrição da Compra</label><input type="text" id="fParDesc" class="form-control"></div><div class="form-row"><div class="form-group"><label>Valor TOTAL (R$)</label><input type="number" id="fParValor" class="form-control"></div><div class="form-group"><label>Qtd. Parcelas</label><input type="number" id="fParQtd" class="form-control" min="2" value="2"></div></div><div class="form-row"><div class="form-group"><label>Data 1ª Parcela</label><input type="date" id="fParData" class="form-control"></div><div class="form-group"><label>Categoria</label><select id="fParCat" class="form-control"></select></div></div><button class="btn btn-primary" onclick="gerarParcelamento()">Gerar Parcelas</button></div>
-          <div class="panel"><div class="panel-title">Histórico de Parceladas</div><div class="table-responsive"><table><thead><tr><th>Compra</th><th>Valor Total</th><th>Parcelas</th><th>Criado em</th></tr></thead><tbody id="listParcelamentosGerados"></tbody></table></div></div>
+        <div class="modal-overlay hidden" id="modalParcelas">
+          <div class="modal-box" style="max-width:560px;">
+            <div class="modal-title" id="modalParcelasTitle">Parcelas</div>
+            <div id="modalParcelasLista" class="par-list-modal"></div>
+            <button type="button" class="btn btn-outline" style="width:100%;" onclick="fecharModalParcelas()">Fechar</button>
+          </div>
+        </div>
+        <div class="module-hero">
+          <div>
+            <p class="dash-eyebrow">Automação</p>
+            <h3 class="dash-hero-title">Parcelamentos</h3>
+            <p class="dash-hero-desc">Controle compras parceladas, acompanhe progresso de pagamento e marque parcelas individualmente.</p>
+          </div>
+        </div>
+        <div class="mod-layout">
+          <div class="panel" id="panelFormPar">
+            <div class="panel-title">Novo parcelamento</div>
+            <div class="form-section">
+              <div class="form-section-title">Compra</div>
+              <div class="form-group">
+                <label for="fParDesc">Descrição *</label>
+                <input type="text" id="fParDesc" class="form-control" placeholder="Ex.: Geladeira, notebook...">
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="fParValor">Valor total (R$) *</label>
+                  <input type="number" id="fParValor" class="form-control" step="0.01" min="0" placeholder="0,00">
+                </div>
+                <div class="form-group">
+                  <label for="fParQtd">Quantidade de parcelas *</label>
+                  <input type="number" id="fParQtd" class="form-control" min="2" value="2">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="fParData">Primeira data de vencimento *</label>
+                  <input type="date" id="fParData" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="fParCat">Categoria *</label>
+                  <select id="fParCat" class="form-control"></select>
+                </div>
+              </div>
+            </div>
+            <div class="form-section">
+              <div class="form-section-title">Pagamento</div>
+              <div class="form-group">
+                <label for="fParPgto">Forma de pagamento</label>
+                <select id="fParPgto" class="form-control">
+                  <option>Pix</option><option>Boleto</option><option>Cartão Crédito</option>
+                  <option>Cartão Débito</option><option>Dinheiro</option><option>Débito Auto</option><option>Outro</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="fParResp">Responsável</label>
+                <input type="text" id="fParResp" class="form-control" placeholder="Quem efetuou a compra?">
+              </div>
+            </div>
+            <div class="par-form-actions">
+              <button type="button" class="btn btn-primary" onclick="gerarParcelamento()">Gerar parcelas</button>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Painel de parcelamentos</div>
+            <div class="pro-summary-strip" id="parResumoGeral"></div>
+            <div class="section-block">
+              <div class="section-block-title"><span>Parcelamentos ativos</span></div>
+              <div id="parcelamentosAtivosHtml" class="card-grid"></div>
+            </div>
+            <div class="section-block">
+              <div class="section-block-title"><span>Parcelamentos concluídos</span></div>
+              <div id="parcelamentosConcluidosHtml" class="card-grid"></div>
+            </div>
+            <div class="view-tabela table-responsive" style="margin-top:8px;">
+              <table>
+                <thead><tr><th>Compra</th><th>Progresso</th><th>Valor total</th><th>Status</th><th>Ações</th></tr></thead>
+                <tbody id="listParcelamentosGerados"></tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </section>
       <!-- Lista de Mercado -->
@@ -2530,24 +2923,6 @@ window.imprimirLista = imprimirLista;
 if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', inicializarEventosMercado);
 else inicializarEventosMercado();
 
-function renderMetas() {
-  const mes = getMesGlobal(); const v = metas[mes] || 0; document.getElementById('fMetaValor').value = v || '';
-  if(!v) return document.getElementById('metaProgressoHtml').innerHTML = '<div style="padding:20px;">Nenhuma meta.</div>';
-  const fDados = getLancamentosFiltrados(mes); const saldo = fDados.filter(i=>i.tipo==='receita').reduce((s,i)=>s+i.valor,0) - fDados.filter(i=>i.tipo==='despesa').reduce((s,i)=>s+i.valor,0);
-  const pct = Math.max(0, Math.min(100, (saldo / v) * 100));
-  document.getElementById('metaProgressoHtml').innerHTML = `Meta: ${formatMoeda(v)} <br> Saldo: ${formatMoeda(saldo)} <br> <div class="bar-track mt-3"><div class="bar-fill ${saldo>=v?'bg-success':'bg-warning'}" style="width:${pct}%"></div></div>`;
-}
-function renderOrcamento() {
-  const mes = getMesGlobal(); const orcMes = orcamentos[mes] || {}; let h = ''; const fDados = getLancamentosFiltrados(mes); let catDesc = {};
-  fDados.filter(i=>i.tipo==='despesa').forEach(i=>catDesc[i.categoria] = (catDesc[i.categoria]||0)+i.valor);
-  Object.keys(orcMes).forEach(c => { const lim = orcMes[c]; const gas = catDesc[c]||0; const pct = Math.min(100, (gas/lim)*100);
-    h += `<div style="margin-bottom:15px;"><strong>${c}</strong>: Limite ${formatMoeda(lim)} | Gasto ${formatMoeda(gas)} <div class="bar-track" style="margin-top:5px;"><div class="bar-fill ${pct>=100?'bg-danger':(pct>80?'bg-warning':'bg-success')}" style="width:${pct}%"></div></div><button class="btn btn-sm btn-outline mt-3" onclick="removerOrcamento('${c}')">Remover Limite</button></div><hr>`;
-  });
-  document.getElementById('orcamentoProgressoHtml').innerHTML = h || '<div style="padding:20px;">Sem orçamentos.</div>';
-}
-function renderFuturo() { let tb=''; futuros.forEach(i => tb += `<tr><td>${i.descricao}</td><td>${formatData(i.data)}</td><td class="${i.tipo==='receita'?'c-green':'c-red'}">${formatMoeda(i.valor)}</td><td><button class="btn btn-sm btn-success" onclick="efetivarFuturo('${i.id}')">Efetivar</button> <button class="btn btn-sm btn-danger" onclick="excluirFuturo('${i.id}')">Excluir</button></td></tr>`); document.getElementById('listFuturoTabela').innerHTML = tb; }
-function renderRecorrentes() { let tb=''; recorrentes.forEach(i => tb += `<tr><td>${i.descricao}</td><td>Dia ${i.dia}</td><td>${formatMoeda(i.valor)}</td><td><button class="btn btn-sm btn-danger" onclick="excluirRecorrente('${i.id}')">Excluir</button></td></tr>`); document.getElementById('listRecorrenteTabela').innerHTML = tb; }
-function renderParcelamentos() { let tb = ''; parcelamentos.forEach(i => tb += `<tr><td>${i.descricao}</td><td>${formatMoeda(i.valorTotal)}</td><td>${i.parcelas}</td><td>${formatData(i.dataCriacao)}</td></tr>`); document.getElementById('listParcelamentosGerados').innerHTML = tb; }
 function gerarRelatorioTela() { /* Logica simples local mantida */ document.getElementById('relatorioViewArea').innerHTML = `Relatório gerado sobre ${dados.length} lançamentos. Baixe CSV.`; }
 function exportarRelatorioCSV() { /* Simplificado */ showToast("CSV baixado!"); }
 
@@ -2601,10 +2976,6 @@ function aprimorarEstruturaVisual(){
   const iaTitle=Array.from(document.querySelectorAll('#mod-assistente .panel-title')).find(e=>e.textContent.includes('Autoajuda'));
   if(iaTitle&&!document.getElementById('btnBaixarAnaliseIA'))iaTitle.insertAdjacentHTML('beforeend','<button class="btn btn-outline btn-sm" id="btnBaixarAnaliseIA" onclick="baixarAnaliseIA()">Baixar analise</button>');
   iaTitle?.parentElement?.querySelector('.flex')?.classList.add('autohelp-grid');
-  const meta=document.querySelector('#mod-metas .grid-2 .panel:first-child .form-group');if(meta&&!document.getElementById('fMetaNome'))meta.insertAdjacentHTML('beforebegin','<div class="form-group"><label>Nome da meta</label><input id="fMetaNome" class="form-control" placeholder="Reserva, viagem, reforma..."></div>');
-  const fut=document.querySelector('#mod-planejamento .grid-2 .panel:nth-child(2) .panel-title');if(fut&&!document.getElementById('futuroCardsHtml'))fut.insertAdjacentHTML('afterend','<div id="futuroResumoHtml" class="pro-summary-strip"></div><div id="futuroCardsHtml" class="card-grid"></div>');
-  const rec=document.querySelector('#mod-recorrentes .grid-2 .panel:nth-child(2) .panel-title');if(rec&&!document.getElementById('recorrentesCardsHtml')){rec.insertAdjacentHTML('beforeend','<button class="btn btn-success btn-sm" onclick="gerarRecorrentesMes()">Gerar mes</button>');rec.insertAdjacentHTML('afterend','<div id="recorrentesCardsHtml" class="card-grid"></div>');}
-  const par=document.querySelector('#mod-parcelamentos .grid-2 .panel:nth-child(2) .panel-title');if(par&&!document.getElementById('parcelamentosCardsHtml'))par.insertAdjacentHTML('afterend','<div id="parcelamentosCardsHtml" class="card-grid"></div>');
   const rel=document.querySelector('#mod-relatorios .panel-title .flex');if(rel&&!document.getElementById('btnRelJson'))rel.insertAdjacentHTML('beforeend','<button class="btn btn-outline btn-sm" id="btnRelJson" onclick="exportarRelatorioJSON()">Baixar JSON</button>');
   const conf=document.querySelector('#mod-configuracoes .panel');if(conf&&!document.getElementById('configTema')){conf.style.maxWidth='760px';conf.insertAdjacentHTML('beforeend',`<div class="form-row"><div class="form-group"><label>Tema</label><select id="configTema" class="form-control" onchange="salvarConfigTema()"><option value="claro">Claro</option><option value="escuro">Escuro</option></select></div><div class="form-group"><label>Densidade</label><select id="configDensidade" class="form-control" onchange="salvarConfigPreferencias()"><option value="normal">Normal</option><option value="compacto">Compacto</option></select></div></div><div class="panel" style="margin:10px 0 0;padding:14px;background:#fff7ed;border-color:#fed7aa;"><div class="panel-title" style="margin-bottom:10px;">Zona de seguranca</div><button class="btn btn-danger" onclick="limparTodosDados()">Limpar todos os dados locais</button></div>`);}
   const tema=document.getElementById('configTema');if(tema)tema.value=config.tema||'claro';const dens=document.getElementById('configDensidade');if(dens)dens.value=config.densidade||'normal';
@@ -2674,16 +3045,808 @@ function renderLancamentos() {
   document.getElementById('listaLancMobile').innerHTML = lst || '<div class="pro-card">Nenhum lançamento encontrado.</div>';
   atualizarChipsLanc();
 }
-function getMetasMes(m=getMesGlobal()){const raw=metas[m];if(Array.isArray(raw))return raw;if(Number(raw)>0)return[{id:'principal',nome:'Meta do mes',valor:Number(raw)}];return[];}
-function salvarMeta(){const m=getMesGlobal(),v=Number(fMetaValor.value);if(!m||!v)return showToast('Informe mes e valor.','warning');const nome=(document.getElementById('fMetaNome')?.value||'Meta do mes').trim();const l=getMetasMes(m).filter(x=>x.id!=='principal');l.push({id:generateId(),nome,valor:v});metas[m]=l;salvarLocal('metas',metas);fMetaValor.value='';const n=document.getElementById('fMetaNome');if(n)n.value='';processarDadosGlobais();showToast('Meta salva!');}
-function removerMeta(id){const m=getMesGlobal();metas[m]=getMetasMes(m).filter(x=>x.id!==id);if(!metas[m].length)delete metas[m];salvarLocal('metas',metas);processarDadosGlobais();}
-function renderMetas(){const l=getMetasMes();const saldo=resumoLancamentos(getLancamentosFiltrados()).saldo;metaProgressoHtml.innerHTML=l.length?`<div class="goal-grid">${l.map(m=>{const p=m.valor?clamp((saldo/m.valor)*100,0,100):0;return`<div class="pro-card"><div class="pro-card-title"><span>${esc(m.nome)}</span><button class="btn btn-danger btn-sm btn-icon" onclick="removerMeta('${m.id}')">X</button></div><div class="metric-card" style="box-shadow:none;margin-top:10px;"><div class="k">Objetivo</div><div class="v">${formatMoeda(m.valor)}</div><div class="s">Saldo atual: ${formatMoeda(saldo)}</div></div><div class="bar-track"><div class="bar-fill ${saldo>=m.valor?'bg-success':'bg-warning'}" style="width:${p}%"></div></div><div class="pro-muted" style="margin-top:8px;">${p.toFixed(1)}% atingido</div></div>`}).join('')}</div>`:'<div class="pro-card">Nenhuma meta cadastrada.</div>';}
-function renderOrcamento(){const mes=getMesGlobal(),orc=orcamentos[mes]||{},cat=agruparPorCategoria(getLancamentosFiltrados(mes));orcamentoProgressoHtml.innerHTML=Object.keys(orc).length?`<div class="card-grid">${Object.keys(orc).sort().map(c=>{const lim=Number(orc[c]||0),gas=Number(cat[c]||0),p=lim?(gas/lim)*100:0;return`<div class="pro-card"><div class="pro-card-title"><span>${esc(c)}</span><button class="btn btn-outline btn-sm" onclick="removerOrcamento('${escAttr(c)}')">Remover</button></div><div class="pro-muted">Limite ${formatMoeda(lim)} - gasto ${formatMoeda(gas)}</div><div class="bar-track" style="margin-top:10px;"><div class="bar-fill ${p>=100?'bg-danger':p>=80?'bg-warning':'bg-success'}" style="width:${clamp(p,0,100)}%"></div></div><div class="pro-muted" style="margin-top:8px;">${p.toFixed(1)}% consumido</div></div>`}).join('')}</div>`:'<div class="pro-card">Defina limites por categoria para acompanhar consumo.</div>';}
-function renderFuturo(){const total=futuros.reduce((s,i)=>s+Number(i.valor||0),0);const rs=document.getElementById('futuroResumoHtml');if(rs)rs.innerHTML=`<div class="mini-stat"><span>Total futuro</span><strong>${formatMoeda(total)}</strong></div><div class="mini-stat"><span>Planos</span><strong>${futuros.length}</strong></div><div class="mini-stat"><span>Receitas</span><strong class="c-green">${formatMoeda(futuros.filter(i=>i.tipo==='receita').reduce((s,i)=>s+i.valor,0))}</strong></div><div class="mini-stat"><span>Despesas</span><strong class="c-red">${formatMoeda(futuros.filter(i=>i.tipo==='despesa').reduce((s,i)=>s+i.valor,0))}</strong></div>`;const cards=document.getElementById('futuroCardsHtml');if(cards)cards.innerHTML=futuros.length?futuros.sort((a,b)=>String(a.data).localeCompare(String(b.data))).map(i=>`<div class="pro-card"><div class="pro-card-title"><span>${esc(i.descricao)}</span><strong class="${i.tipo==='receita'?'c-green':'c-red'}">${formatMoeda(i.valor)}</strong></div><div class="pro-muted">${formatData(i.data)} - ${esc(i.categoria)}</div><div class="hero-actions" style="margin-top:10px;"><button class="btn btn-success btn-sm" onclick="efetivarFuturo('${i.id}')">Transformar em lancamento</button><button class="btn btn-danger btn-sm" onclick="excluirFuturo('${i.id}')">Excluir</button></div></div>`).join(''):'<div class="pro-card">Nenhum planejamento futuro.</div>';listFuturoTabela.innerHTML=futuros.map(i=>`<tr><td>${esc(i.descricao)}</td><td>${formatData(i.data)}</td><td class="${i.tipo==='receita'?'c-green':'c-red'}">${formatMoeda(i.valor)}</td><td><button class="btn btn-sm btn-success" onclick="efetivarFuturo('${i.id}')">Efetivar</button> <button class="btn btn-sm btn-danger" onclick="excluirFuturo('${i.id}')">Excluir</button></td></tr>`).join('')||'<tr><td colspan="4">Nenhum planejamento.</td></tr>';}
-function renderRecorrentes(){const cards=document.getElementById('recorrentesCardsHtml');if(cards)cards.innerHTML=recorrentes.length?recorrentes.map(i=>`<div class="pro-card"><div class="pro-card-title"><span>${esc(i.descricao)}</span><strong>${formatMoeda(i.valor)}</strong></div><div class="pro-muted">Proximo vencimento: ${formatData(proximoRecorrente(i.dia))} - ${esc(i.categoria)}</div><div class="hero-actions" style="margin-top:10px;"><button class="btn btn-primary btn-sm" onclick="gerarRecorrenteIndividual('${i.id}')">Gerar lancamento</button><button class="btn btn-danger btn-sm" onclick="excluirRecorrente('${i.id}')">Excluir</button></div></div>`).join(''):'<div class="pro-card">Nenhuma conta recorrente.</div>';listRecorrenteTabela.innerHTML=recorrentes.map(i=>`<tr><td>${esc(i.descricao)}</td><td>${formatData(proximoRecorrente(i.dia))}</td><td>${formatMoeda(i.valor)}</td><td><button class="btn btn-sm btn-primary" onclick="gerarRecorrenteIndividual('${i.id}')">Gerar</button> <button class="btn btn-sm btn-danger" onclick="excluirRecorrente('${i.id}')">Excluir</button></td></tr>`).join('')||'<tr><td colspan="4">Nenhuma recorrencia.</td></tr>';}
-function gerarRecorrenteIndividual(id){const r=recorrentes.find(i=>i.id===id);if(!r)return;const venc=proximoRecorrente(r.dia);if(dados.some(d=>d.recorrenteId===id&&d.vencimento===venc))return showToast('Lancamento ja gerado para este mes.','warning');dados.push({id:generateId(),recorrenteId:id,descricao:r.descricao,tipo:'despesa',categoria:r.categoria,valor:Number(r.valor),vencimento:venc,status:'pendente'});salvarLocal('dados',dados);processarDadosGlobais();showToast('Lancamento recorrente gerado!');}
-function gerarRecorrentesMes(){recorrentes.forEach(r=>gerarRecorrenteIndividual(r.id));}
-function renderParcelamentos(){const cards=document.getElementById('parcelamentosCardsHtml');if(cards)cards.innerHTML=parcelamentos.length?parcelamentos.map(p=>{const pagos=dados.filter(d=>d.descricao&&d.descricao.startsWith(`${p.descricao} (`)&&calcularStatus(d)==='pago').length;const pct=p.parcelas?(pagos/p.parcelas)*100:0;const pago=(Number(p.valorTotal||0)/Number(p.parcelas||1))*pagos;return`<div class="pro-card"><div class="pro-card-title"><span>${esc(p.descricao)}</span><strong>${formatMoeda(p.valorTotal)}</strong></div><div class="pro-muted">${pagos}/${p.parcelas} parcelas pagas - restante ${formatMoeda((p.valorTotal||0)-pago)}</div><div class="bar-track" style="margin-top:10px;"><div class="bar-fill bg-info" style="width:${clamp(pct,0,100)}%"></div></div></div>`}).join(''):'<div class="pro-card">Nenhum parcelamento.</div>';listParcelamentosGerados.innerHTML=parcelamentos.map(i=>`<tr><td>${esc(i.descricao)}</td><td>${formatMoeda(i.valorTotal)}</td><td>${i.parcelas}</td><td>${formatData(i.dataCriacao)}</td></tr>`).join('')||'<tr><td colspan="4">Nenhum parcelamento.</td></tr>';}
+let editMetaId = null;
+let editOrcCat = null;
+let editFutId = null;
+
+function getMetasMes(m = getMesGlobal()) {
+  const raw = metas[m];
+  if (Array.isArray(raw)) return raw;
+  if (Number(raw) > 0) return [{ id: 'principal', nome: 'Meta do mês', valor: Number(raw) }];
+  return [];
+}
+
+function statusMetaInfo(atingido, valor) {
+  const pct = valor ? (atingido / valor) * 100 : 0;
+  if (pct >= 100) return { label: 'Concluída', cls: 'goal-status-done', bar: 'bg-success' };
+  if (pct >= 50) return { label: 'Em risco', cls: 'goal-status-risk', bar: 'bg-warning' };
+  return { label: 'Em andamento', cls: 'goal-status-progress', bar: 'bg-info' };
+}
+
+function badgeMetaStatus(st) {
+  return `<span class="goal-status ${st.cls}">${esc(st.label)}</span>`;
+}
+
+function resumoMetasGeral(lista, saldo) {
+  const totalPlanejado = lista.reduce((s, m) => s + Number(m.valor || 0), 0);
+  const pctGeral = totalPlanejado ? clamp((saldo / totalPlanejado) * 100, 0, 999) : 0;
+  return { qtd: lista.length, totalPlanejado, totalAtingido: saldo, pctGeral };
+}
+
+function editarMeta(id) {
+  const m = getMetasMes().find(x => x.id === id);
+  if (!m) return;
+  editMetaId = id;
+  document.getElementById('fMetaNome').value = m.nome;
+  document.getElementById('fMetaValor').value = m.valor;
+  document.getElementById('formMetaTitle').innerText = 'Editar meta';
+  document.getElementById('btnSalvarMeta').innerText = 'Salvar alterações';
+  document.getElementById('btnCancelMeta').classList.remove('hidden');
+  document.getElementById('panelFormMeta').scrollIntoView({ behavior: 'smooth' });
+}
+
+function cancelarEdicaoMeta() {
+  editMetaId = null;
+  document.getElementById('fMetaNome').value = '';
+  document.getElementById('fMetaValor').value = '';
+  document.getElementById('formMetaTitle').innerText = 'Nova meta';
+  document.getElementById('btnSalvarMeta').innerText = 'Salvar meta';
+  document.getElementById('btnCancelMeta').classList.add('hidden');
+}
+
+function salvarMeta() {
+  const m = getMesGlobal();
+  const v = Number(document.getElementById('fMetaValor').value);
+  const nome = (document.getElementById('fMetaNome').value || 'Meta do mês').trim();
+  if (!m || !v || v <= 0) return showToast('Informe mês e valor da meta.', 'warning');
+  if (!nome) return showToast('Informe o nome da meta.', 'warning');
+  let l = getMetasMes(m);
+  if (editMetaId) {
+    const idx = l.findIndex(x => x.id === editMetaId);
+    if (idx === -1) return cancelarEdicaoMeta();
+    l[idx] = { ...l[idx], nome, valor: v };
+  } else {
+    l = l.filter(x => x.id !== 'principal');
+    l.push({ id: generateId(), nome, valor: v });
+  }
+  metas[m] = l;
+  salvarLocal('metas', metas);
+  cancelarEdicaoMeta();
+  processarDadosGlobais();
+  showToast('Meta salva!');
+}
+
+function removerMeta(id) {
+  if (!confirm('Excluir esta meta?')) return;
+  const m = getMesGlobal();
+  metas[m] = getMetasMes(m).filter(x => x.id !== id);
+  if (!metas[m].length) delete metas[m];
+  salvarLocal('metas', metas);
+  if (editMetaId === id) cancelarEdicaoMeta();
+  processarDadosGlobais();
+  showToast('Meta excluída.', 'warning');
+}
+
+function renderMetas() {
+  const lista = getMetasMes();
+  const saldo = resumoLancamentos(getLancamentosFiltrados()).saldo;
+  const rg = resumoMetasGeral(lista, saldo);
+  const resEl = document.getElementById('metaResumoGeral');
+  if (resEl) {
+    resEl.innerHTML = `<div class="mini-stat"><span>Total de metas</span><strong>${rg.qtd}</strong></div>
+      <div class="mini-stat"><span>Valor planejado</span><strong>${formatMoeda(rg.totalPlanejado)}</strong></div>
+      <div class="mini-stat"><span>Total atingido</span><strong class="${rg.totalAtingido >= 0 ? 'c-green' : 'c-red'}">${formatMoeda(rg.totalAtingido)}</strong></div>
+      <div class="mini-stat"><span>Percentual geral</span><strong>${rg.pctGeral.toFixed(1)}%</strong></div>`;
+  }
+  const el = document.getElementById('metaProgressoHtml');
+  if (!el) return;
+  el.innerHTML = lista.length ? lista.map(meta => {
+    const atingido = saldo;
+    const pct = meta.valor ? clamp((atingido / meta.valor) * 100, 0, 100) : 0;
+    const st = statusMetaInfo(atingido, meta.valor);
+    return `<div class="goal-card">
+      <div class="goal-card-head">
+        <div><strong>${esc(meta.nome)}</strong><div style="margin-top:6px;">${badgeMetaStatus(st)}</div></div>
+        <div class="action-cell">
+          <button type="button" class="btn btn-outline btn-sm" onclick="editarMeta('${escAttr(meta.id)}')">Editar</button>
+          <button type="button" class="btn btn-danger btn-sm" onclick="removerMeta('${escAttr(meta.id)}')">Excluir</button>
+        </div>
+      </div>
+      <div class="goal-card-metrics">
+        <div class="goal-metric"><span>Valor da meta</span><strong>${formatMoeda(meta.valor)}</strong></div>
+        <div class="goal-metric"><span>Valor atingido</span><strong class="${atingido >= 0 ? 'c-green' : 'c-red'}">${formatMoeda(atingido)}</strong></div>
+        <div class="goal-metric"><span>Percentual</span><strong>${pct.toFixed(1)}%</strong></div>
+        <div class="goal-metric"><span>Status</span><strong>${esc(st.label)}</strong></div>
+      </div>
+      <div class="bar-track"><div class="bar-fill ${st.bar}" style="width:${pct}%"></div></div>
+    </div>`;
+  }).join('') : '<div class="pro-card">Nenhuma meta cadastrada para este mês.</div>';
+}
+
+function statusOrcamentoInfo(pct) {
+  if (pct >= 100) return { label: 'Ultrapassado', cls: 'budget-status-over', bar: 'bg-danger' };
+  if (pct >= 80) return { label: 'Atenção', cls: 'budget-status-warn', bar: 'bg-warning' };
+  return { label: 'Dentro do limite', cls: 'budget-status-ok', bar: 'bg-success' };
+}
+
+function resumoOrcamentoGeral(orc, cat) {
+  const cats = Object.keys(orc);
+  let totalLimite = 0, totalGasto = 0, acima = 0, atencao = 0;
+  cats.forEach(c => {
+    const lim = Number(orc[c] || 0);
+    const gas = Number(cat[c] || 0);
+    const pct = lim ? (gas / lim) * 100 : 0;
+    totalLimite += lim;
+    totalGasto += gas;
+    if (pct >= 100) acima++;
+    else if (pct >= 80) atencao++;
+  });
+  return { totalLimite, totalGasto, acima, atencao, qtd: cats.length };
+}
+
+function editarOrcamento(cat) {
+  const mes = getMesGlobal();
+  const lim = orcamentos[mes]?.[cat];
+  if (lim == null) return;
+  editOrcCat = cat;
+  document.getElementById('fOrcCat').value = cat;
+  document.getElementById('fOrcCat').disabled = true;
+  document.getElementById('fOrcValor').value = lim;
+  document.getElementById('formOrcTitle').innerText = 'Editar limite';
+  document.getElementById('btnSalvarOrc').innerText = 'Salvar alterações';
+  document.getElementById('btnCancelOrc').classList.remove('hidden');
+  document.getElementById('panelFormOrc').scrollIntoView({ behavior: 'smooth' });
+}
+
+function cancelarEdicaoOrcamento() {
+  editOrcCat = null;
+  document.getElementById('fOrcValor').value = '';
+  document.getElementById('fOrcCat').disabled = false;
+  document.getElementById('formOrcTitle').innerText = 'Definir limite';
+  document.getElementById('btnSalvarOrc').innerText = 'Definir limite';
+  document.getElementById('btnCancelOrc').classList.add('hidden');
+}
+
+function salvarOrcamento() {
+  const mes = getMesGlobal();
+  const c = editOrcCat || document.getElementById('fOrcCat').value;
+  const v = Number(document.getElementById('fOrcValor').value);
+  if (!mes || !c || !v || v <= 0) return showToast('Informe categoria e limite válido.', 'warning');
+  if (!orcamentos[mes]) orcamentos[mes] = {};
+  orcamentos[mes][c] = v;
+  salvarLocal('orcamentos', orcamentos);
+  cancelarEdicaoOrcamento();
+  processarDadosGlobais();
+  showToast('Limite salvo!');
+}
+
+function renderOrcamento() {
+  const mes = getMesGlobal();
+  const orc = orcamentos[mes] || {};
+  const cat = agruparPorCategoria(getLancamentosFiltrados(mes));
+  const rg = resumoOrcamentoGeral(orc, cat);
+  const resEl = document.getElementById('orcResumoGeral');
+  if (resEl) {
+    resEl.innerHTML = `<div class="mini-stat"><span>Total de limites</span><strong>${formatMoeda(rg.totalLimite)}</strong></div>
+      <div class="mini-stat"><span>Total gasto</span><strong class="c-red">${formatMoeda(rg.totalGasto)}</strong></div>
+      <div class="mini-stat"><span>Acima do limite</span><strong class="c-red">${rg.acima}</strong></div>
+      <div class="mini-stat"><span>Em atenção</span><strong>${rg.atencao}</strong></div>`;
+  }
+  const el = document.getElementById('orcamentoProgressoHtml');
+  if (!el) return;
+  const cats = Object.keys(orc).sort((a, b) => a.localeCompare(b, 'pt-BR'));
+  el.innerHTML = cats.length ? cats.map(c => {
+    const lim = Number(orc[c] || 0);
+    const gas = Number(cat[c] || 0);
+    const rest = lim - gas;
+    const pct = lim ? (gas / lim) * 100 : 0;
+    const st = statusOrcamentoInfo(pct);
+    return `<div class="budget-card">
+      <div class="budget-card-head">
+        <div>
+          <strong>${esc(c)}</strong>
+          <div style="margin-top:6px;"><span class="budget-status ${st.cls}">${esc(st.label)}</span></div>
+        </div>
+        <div class="action-cell">
+          <button type="button" class="btn btn-outline btn-sm" onclick="editarOrcamento('${escAttr(c)}')">Editar</button>
+          <button type="button" class="btn btn-danger btn-sm" onclick="removerOrcamento('${escAttr(c)}')">Excluir</button>
+        </div>
+      </div>
+      <div class="budget-card-metrics">
+        <div class="budget-metric"><span>Limite mensal</span><strong>${formatMoeda(lim)}</strong></div>
+        <div class="budget-metric"><span>Gasto atual</span><strong class="c-red">${formatMoeda(gas)}</strong></div>
+        <div class="budget-metric"><span>Saldo restante</span><strong class="${rest >= 0 ? 'c-green' : 'c-red'}">${formatMoeda(rest)}</strong></div>
+        <div class="budget-metric"><span>Percentual usado</span><strong>${pct.toFixed(1)}%</strong></div>
+      </div>
+      <div class="bar-track"><div class="bar-fill ${st.bar}" style="width:${clamp(pct, 0, 100)}%"></div></div>
+    </div>`;
+  }).join('') : '<div class="pro-card">Defina limites por categoria para acompanhar o consumo.</div>';
+}
+
+function diasAteData(data) {
+  if (!data) return null;
+  const hoje = new Date(); hoje.setHours(0, 0, 0, 0);
+  const alvo = new Date(data + 'T00:00:00');
+  return Math.ceil((alvo - hoje) / 86400000);
+}
+
+function statusFuturoInfo(item) {
+  if ((item.status || 'pendente') === 'cancelado') return { label: 'Cancelado', cls: 'fut-status-cancel' };
+  const dias = diasAteData(item.data);
+  if (dias != null && dias < 0) return { label: 'Passado', cls: 'fut-status-warn' };
+  if (dias != null && dias <= 30) return { label: 'Próximos 30 dias', cls: 'fut-status-ok' };
+  return { label: 'Agendado', cls: 'fut-status-muted' };
+}
+
+function badgeFuturoStatus(st) {
+  return `<span class="fut-status ${st.cls}">${esc(st.label)}</span>`;
+}
+
+function resumoFuturoHorizonte(lista) {
+  const ativos = lista.filter(i => (i.status || 'pendente') !== 'cancelado');
+  const sumRange = (max) => ativos.filter(i => {
+    const d = diasAteData(i.data);
+    return d != null && d >= 0 && d <= max;
+  }).reduce((s, i) => s + Number(i.valor || 0), 0);
+  return {
+    d30: sumRange(30),
+    d60: sumRange(60),
+    d90: sumRange(90),
+    total: ativos.reduce((s, i) => s + Number(i.valor || 0), 0)
+  };
+}
+
+function limparFormFuturo() {
+  ['fFutDesc', 'fFutValor', 'fFutData', 'fFutObs'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+  const st = document.getElementById('fFutStatus'); if (st) st.value = 'pendente';
+  const tp = document.getElementById('fFutTipo'); if (tp) tp.value = 'despesa';
+}
+
+function editarFuturo(id) {
+  const item = futuros.find(f => f.id === id);
+  if (!item) return;
+  editFutId = id;
+  document.getElementById('fFutDesc').value = item.descricao || '';
+  document.getElementById('fFutTipo').value = item.tipo || 'despesa';
+  document.getElementById('fFutCat').value = item.categoria || '';
+  document.getElementById('fFutValor').value = item.valor || '';
+  document.getElementById('fFutData').value = item.data || '';
+  document.getElementById('fFutObs').value = item.observacao || '';
+  document.getElementById('fFutStatus').value = item.status || 'pendente';
+  document.getElementById('formFutTitle').innerText = 'Editar planejamento';
+  document.getElementById('btnSalvarFut').innerText = 'Salvar alterações';
+  document.getElementById('btnCancelFut').classList.remove('hidden');
+  document.getElementById('panelFormFut').scrollIntoView({ behavior: 'smooth' });
+}
+
+function cancelarEdicaoFuturo() {
+  editFutId = null;
+  limparFormFuturo();
+  document.getElementById('formFutTitle').innerText = 'Novo planejamento';
+  document.getElementById('btnSalvarFut').innerText = 'Adicionar planejamento';
+  document.getElementById('btnCancelFut').classList.add('hidden');
+}
+
+function salvarFuturo() {
+  const obj = {
+    id: editFutId || generateId(),
+    descricao: document.getElementById('fFutDesc').value.trim(),
+    tipo: document.getElementById('fFutTipo').value,
+    categoria: document.getElementById('fFutCat').value,
+    valor: Number(document.getElementById('fFutValor').value),
+    data: document.getElementById('fFutData').value,
+    observacao: document.getElementById('fFutObs').value.trim(),
+    status: document.getElementById('fFutStatus').value || 'pendente'
+  };
+  if (!obj.descricao || !obj.valor || !obj.data || obj.valor <= 0) return showToast('Preencha descrição, valor e data.', 'warning');
+  if (editFutId) {
+    const idx = futuros.findIndex(f => f.id === editFutId);
+    if (idx !== -1) futuros[idx] = obj;
+  } else {
+    futuros.push(obj);
+  }
+  salvarLocal('futuros', futuros);
+  cancelarEdicaoFuturo();
+  processarDadosGlobais();
+  showToast('Planejamento salvo!');
+}
+
+function renderFuturoCardActions(item) {
+  const cancelado = (item.status || 'pendente') === 'cancelado';
+  const efetivar = cancelado ? '' : `<button type="button" class="btn btn-success btn-sm" onclick="efetivarFuturo('${escAttr(item.id)}')">Transformar em lançamento</button>`;
+  return `${efetivar}
+    <button type="button" class="btn btn-outline btn-sm" onclick="editarFuturo('${escAttr(item.id)}')">Editar</button>
+    <button type="button" class="btn btn-danger btn-sm" onclick="excluirFuturo('${escAttr(item.id)}')">Excluir</button>`;
+}
+
+function renderFuturo() {
+  const rs = resumoFuturoHorizonte(futuros);
+  const resEl = document.getElementById('futuroResumoHtml');
+  if (resEl) {
+    resEl.innerHTML = `<div class="mini-stat"><span>Próximos 30 dias</span><strong>${formatMoeda(rs.d30)}</strong></div>
+      <div class="mini-stat"><span>Próximos 60 dias</span><strong>${formatMoeda(rs.d60)}</strong></div>
+      <div class="mini-stat"><span>Próximos 90 dias</span><strong>${formatMoeda(rs.d90)}</strong></div>
+      <div class="mini-stat"><span>Total previsto</span><strong>${formatMoeda(rs.total)}</strong></div>`;
+  }
+  const timeline = document.getElementById('futuroTimelineHtml');
+  if (timeline) {
+    const byMonth = {};
+    [...futuros].sort((a, b) => String(a.data).localeCompare(String(b.data))).forEach(i => {
+      const mes = (i.data || '').slice(0, 7) || 'sem-data';
+      if (!byMonth[mes]) byMonth[mes] = [];
+      byMonth[mes].push(i);
+    });
+    const meses = Object.keys(byMonth).sort();
+    timeline.innerHTML = meses.length ? meses.map(mes => {
+      const label = mes === 'sem-data' ? 'Sem data' : new Date(mes + '-01T00:00:00').toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
+      const items = byMonth[mes].map(i => {
+        const st = statusFuturoInfo(i);
+        const cor = i.tipo === 'receita' ? 'c-green' : 'c-red';
+        return `<div class="timeline-item">
+          <div class="timeline-item-main">
+            <strong>${esc(i.descricao)}</strong>
+            <div class="pro-muted">${esc(i.categoria)} · ${formatData(i.data)} · ${i.tipo === 'receita' ? 'Receita' : 'Despesa'}</div>
+            ${i.observacao ? `<div class="pro-muted" style="margin-top:4px;">${esc(i.observacao)}</div>` : ''}
+            <div style="margin-top:6px;">${badgeFuturoStatus(st)}</div>
+          </div>
+          <div>
+            <div class="${cor}" style="font-weight:800;text-align:right;margin-bottom:8px;">${formatMoeda(i.valor)}</div>
+            <div class="timeline-item-actions">${renderFuturoCardActions(i)}</div>
+          </div>
+        </div>`;
+      }).join('');
+      return `<div class="timeline-month"><div class="timeline-month-head">${esc(label)}</div>${items}</div>`;
+    }).join('') : '<div class="pro-card">Nenhum planejamento futuro cadastrado.</div>';
+  }
+  const tb = document.getElementById('listFuturoTabela');
+  if (tb) {
+    tb.innerHTML = futuros.length ? [...futuros].sort((a, b) => String(a.data).localeCompare(String(b.data))).map(i => {
+      const st = statusFuturoInfo(i);
+      const cor = i.tipo === 'receita' ? 'c-green' : 'c-red';
+      return `<tr>
+        <td><strong>${esc(i.descricao)}</strong>${i.observacao ? `<div class="pro-muted">${esc(i.observacao)}</div>` : ''}</td>
+        <td>${formatData(i.data)}</td>
+        <td class="${cor}"><strong>${formatMoeda(i.valor)}</strong></td>
+        <td>${badgeFuturoStatus(st)}</td>
+        <td><div class="action-cell">${renderFuturoCardActions(i)}</div></td>
+      </tr>`;
+    }).join('') : '<tr><td colspan="5">Nenhum planejamento.</td></tr>';
+  }
+}
+let editRecId = null;
+
+function recorrenteAtivo(r) {
+  return (r.ativo || 'ativo') !== 'inativo' && r.status !== 'inativo';
+}
+
+function proximoVencRecorrente(r) {
+  return proximoRecorrente(r.dia);
+}
+
+function jaGeradoRecorrenteMes(id) {
+  const r = recorrentes.find(x => x.id === id);
+  if (!r) return false;
+  const venc = proximoVencRecorrente(r);
+  return dados.some(d => d.recorrenteId === id && d.vencimento === venc);
+}
+
+function resumoRecorrentes() {
+  const ativas = recorrentes.filter(recorrenteAtivo);
+  const totalMensal = ativas.reduce((s, r) => s + Number(r.valor || 0), 0);
+  const proximas = ativas.map(r => ({ ...r, proximo: proximoVencRecorrente(r), gerado: jaGeradoRecorrenteMes(r.id) }))
+    .sort((a, b) => a.proximo.localeCompare(b.proximo))
+    .slice(0, 5);
+  return { totalMensal, qtdAtivas: ativas.length, proximas };
+}
+
+function limparFormRecorrente() {
+  ['fRecDesc', 'fRecValor', 'fRecDia', 'fRecResp'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+  const pg = document.getElementById('fRecPgto'); if (pg) pg.value = 'Pix';
+  const st = document.getElementById('fRecAtivo'); if (st) st.value = 'ativo';
+}
+
+function editarRecorrente(id) {
+  const r = recorrentes.find(x => x.id === id);
+  if (!r) return;
+  editRecId = id;
+  document.getElementById('fRecDesc').value = r.descricao || '';
+  document.getElementById('fRecCat').value = r.categoria || '';
+  document.getElementById('fRecValor').value = r.valor || '';
+  document.getElementById('fRecDia').value = r.dia || '';
+  document.getElementById('fRecPgto').value = r.formaPagamento || 'Outro';
+  document.getElementById('fRecResp').value = r.responsavel || '';
+  document.getElementById('fRecAtivo').value = recorrenteAtivo(r) ? 'ativo' : 'inativo';
+  document.getElementById('formRecTitle').innerText = 'Editar conta recorrente';
+  document.getElementById('btnSalvarRec').innerText = 'Salvar alterações';
+  document.getElementById('btnCancelRec').classList.remove('hidden');
+  document.getElementById('panelFormRec').scrollIntoView({ behavior: 'smooth' });
+}
+
+function cancelarEdicaoRecorrente() {
+  editRecId = null;
+  limparFormRecorrente();
+  document.getElementById('formRecTitle').innerText = 'Nova conta recorrente';
+  document.getElementById('btnSalvarRec').innerText = 'Cadastrar recorrente';
+  document.getElementById('btnCancelRec').classList.add('hidden');
+}
+
+function salvarRecorrente() {
+  const obj = {
+    id: editRecId || generateId(),
+    descricao: document.getElementById('fRecDesc').value.trim(),
+    categoria: document.getElementById('fRecCat').value,
+    valor: Number(document.getElementById('fRecValor').value),
+    dia: Number(document.getElementById('fRecDia').value),
+    formaPagamento: document.getElementById('fRecPgto').value || 'Outro',
+    responsavel: document.getElementById('fRecResp').value.trim(),
+    ativo: document.getElementById('fRecAtivo').value || 'ativo'
+  };
+  if (!obj.descricao || !obj.valor || !obj.dia || obj.valor <= 0 || obj.dia < 1 || obj.dia > 31) {
+    return showToast('Preencha descrição, valor e dia válido (1–31).', 'warning');
+  }
+  if (editRecId) {
+    const idx = recorrentes.findIndex(r => r.id === editRecId);
+    if (idx !== -1) recorrentes[idx] = obj;
+  } else {
+    recorrentes.push(obj);
+  }
+  salvarLocal('recorrentes', recorrentes);
+  cancelarEdicaoRecorrente();
+  processarDadosGlobais();
+  showToast('Conta recorrente salva!');
+}
+
+function excluirRecorrente(id) {
+  if (!confirm('Excluir esta conta recorrente?')) return;
+  recorrentes = recorrentes.filter(r => r.id !== id);
+  salvarLocal('recorrentes', recorrentes);
+  if (editRecId === id) cancelarEdicaoRecorrente();
+  processarDadosGlobais();
+  showToast('Conta excluída.', 'warning');
+}
+
+function gerarRecorrenteIndividual(id) {
+  const r = recorrentes.find(i => i.id === id);
+  if (!r) return;
+  if (!recorrenteAtivo(r)) return showToast('Conta inativa. Ative para gerar lançamento.', 'warning');
+  const venc = proximoVencRecorrente(r);
+  if (jaGeradoRecorrenteMes(id)) return showToast('Lançamento já gerado para este mês.', 'warning');
+  dados.push({
+    id: generateId(),
+    recorrenteId: id,
+    descricao: r.descricao,
+    tipo: 'despesa',
+    categoria: r.categoria,
+    valor: Number(r.valor),
+    vencimento: venc,
+    status: 'pendente',
+    formaPagamento: r.formaPagamento || 'Outro',
+    responsavel: r.responsavel || ''
+  });
+  salvarLocal('dados', dados);
+  processarDadosGlobais();
+  showToast('Lançamento recorrente gerado!');
+}
+
+function gerarRecorrentesMes() {
+  let gerados = 0;
+  recorrentes.filter(recorrenteAtivo).forEach(r => {
+    if (jaGeradoRecorrenteMes(r.id)) return;
+    const venc = proximoVencRecorrente(r);
+    dados.push({
+      id: generateId(),
+      recorrenteId: r.id,
+      descricao: r.descricao,
+      tipo: 'despesa',
+      categoria: r.categoria,
+      valor: Number(r.valor),
+      vencimento: venc,
+      status: 'pendente',
+      formaPagamento: r.formaPagamento || 'Outro',
+      responsavel: r.responsavel || ''
+    });
+    gerados++;
+  });
+  if (gerados) {
+    salvarLocal('dados', dados);
+    processarDadosGlobais();
+    showToast(`${gerados} lançamento(s) gerado(s)!`);
+  } else {
+    showToast('Nenhuma conta pendente de geração neste mês.', 'warning');
+  }
+}
+
+function renderRecorrenteCard(r) {
+  const ativo = recorrenteAtivo(r);
+  const proximo = proximoVencRecorrente(r);
+  const gerado = jaGeradoRecorrenteMes(r.id);
+  const stCls = ativo ? 'auto-status-ativo' : 'auto-status-inativo';
+  const stLabel = ativo ? 'Ativo' : 'Inativo';
+  const btnGerar = ativo && !gerado
+    ? `<button type="button" class="btn btn-success btn-sm" onclick="gerarRecorrenteIndividual('${escAttr(r.id)}')">Gerar este mês</button>`
+    : (gerado ? `<span class="pro-muted" style="font-size:12px;">Já gerado no mês</span>` : '');
+  return `<div class="auto-card${ativo ? '' : ' is-inactive'}">
+    <div class="auto-card-head">
+      <div>
+        <strong>${esc(r.descricao)}</strong>
+        <div style="margin-top:6px;"><span class="auto-status ${stCls}">${stLabel}</span></div>
+      </div>
+      <strong>${formatMoeda(r.valor)}</strong>
+    </div>
+    <div class="auto-card-metrics">
+      <div class="auto-metric"><span>Vencimento</span><strong>Dia ${r.dia}</strong></div>
+      <div class="auto-metric"><span>Próxima geração</span><strong>${formatData(proximo)}</strong></div>
+      <div class="auto-metric"><span>Categoria</span><strong>${esc(r.categoria)}</strong></div>
+      <div class="auto-metric"><span>Pagamento</span><strong>${esc(r.formaPagamento || 'Outro')}</strong></div>
+    </div>
+    <div class="auto-card-actions">
+      ${btnGerar}
+      <button type="button" class="btn btn-outline btn-sm" onclick="editarRecorrente('${escAttr(r.id)}')">Editar</button>
+      <button type="button" class="btn btn-danger btn-sm" onclick="excluirRecorrente('${escAttr(r.id)}')">Excluir</button>
+    </div>
+  </div>`;
+}
+
+function renderRecorrentes() {
+  const rs = resumoRecorrentes();
+  const resEl = document.getElementById('recResumoGeral');
+  if (resEl) {
+    resEl.innerHTML = `<div class="mini-stat"><span>Total recorrente mensal</span><strong class="c-red">${formatMoeda(rs.totalMensal)}</strong></div>
+      <div class="mini-stat"><span>Contas ativas</span><strong>${rs.qtdAtivas}</strong></div>
+      <div class="mini-stat"><span>Total cadastradas</span><strong>${recorrentes.length}</strong></div>
+      <div class="mini-stat"><span>Próximas fixas</span><strong>${rs.proximas.length}</strong></div>`;
+  }
+  const proxEl = document.getElementById('recProximasHtml');
+  if (proxEl) {
+    proxEl.innerHTML = rs.proximas.length
+      ? `<div class="pro-muted" style="margin-bottom:6px;">Próximas contas fixas</div>` + rs.proximas.map(r =>
+          `<div class="prox-item"><span>${esc(r.descricao)} · ${formatData(r.proximo)}</span><strong>${formatMoeda(r.valor)}</strong></div>`
+        ).join('')
+      : '';
+  }
+  const grid = document.getElementById('recorrentesGrid');
+  if (grid) {
+    grid.innerHTML = recorrentes.length
+      ? recorrentes.map(r => renderRecorrenteCard(r)).join('')
+      : '<div class="pro-card">Nenhuma conta recorrente cadastrada.</div>';
+  }
+  const tb = document.getElementById('listRecorrenteTabela');
+  if (tb) {
+    tb.innerHTML = recorrentes.length ? recorrentes.map(r => {
+      const ativo = recorrenteAtivo(r);
+      return `<tr>
+        <td><strong>${esc(r.descricao)}</strong><div class="pro-muted">${esc(r.categoria)}</div></td>
+        <td>${formatData(proximoVencRecorrente(r))}</td>
+        <td><strong>${formatMoeda(r.valor)}</strong></td>
+        <td><span class="auto-status ${ativo ? 'auto-status-ativo' : 'auto-status-inativo'}">${ativo ? 'Ativo' : 'Inativo'}</span></td>
+        <td><div class="action-cell">
+          ${ativo && !jaGeradoRecorrenteMes(r.id) ? `<button type="button" class="btn btn-success btn-sm" onclick="gerarRecorrenteIndividual('${escAttr(r.id)}')">Gerar</button>` : ''}
+          <button type="button" class="btn btn-outline btn-sm" onclick="editarRecorrente('${escAttr(r.id)}')">Editar</button>
+          <button type="button" class="btn btn-danger btn-sm" onclick="excluirRecorrente('${escAttr(r.id)}')">Excluir</button>
+        </div></td>
+      </tr>`;
+    }).join('') : '<tr><td colspan="5">Nenhuma recorrência.</td></tr>';
+  }
+}
+
+function lancamentosParcelamento(p) {
+  const byId = dados.filter(d => d.parcelamentoId === p.id);
+  if (byId.length) return byId.sort((a, b) => String(a.vencimento).localeCompare(String(b.vencimento)));
+  return dados.filter(d => d.descricao && d.descricao.startsWith(`${p.descricao} (`))
+    .sort((a, b) => String(a.vencimento).localeCompare(String(b.vencimento)));
+}
+
+function statsParcelamento(p) {
+  const lista = lancamentosParcelamento(p);
+  const total = Number(p.parcelas || lista.length || 0);
+  const pagos = lista.filter(d => calcularStatus(d) === 'pago').length;
+  const valorParcela = total ? Number(p.valorTotal || 0) / total : 0;
+  const totalPago = lista.filter(d => calcularStatus(d) === 'pago').reduce((s, d) => s + Number(d.valor || 0), 0);
+  const restante = Math.max(0, Number(p.valorTotal || 0) - totalPago);
+  const proxima = lista.find(d => calcularStatus(d) !== 'pago');
+  const concluido = total > 0 && pagos >= total;
+  const pct = total ? (pagos / total) * 100 : 0;
+  return { lista, pagos, total, valorParcela, totalPago, restante, proxima, concluido, pct };
+}
+
+function gerarParcelamento() {
+  const desc = document.getElementById('fParDesc').value.trim();
+  const valorTotal = Number(document.getElementById('fParValor').value);
+  const qtd = Number(document.getElementById('fParQtd').value);
+  const dataInicio = document.getElementById('fParData').value;
+  const cat = document.getElementById('fParCat').value;
+  const pgto = document.getElementById('fParPgto').value || 'Outro';
+  const resp = document.getElementById('fParResp').value.trim();
+  if (!desc || !valorTotal || !qtd || !dataInicio || qtd < 2) {
+    return showToast('Preencha descrição, valor, parcelas (≥2) e data inicial.', 'warning');
+  }
+  const valorParcela = valorTotal / qtd;
+  const parId = generateId();
+  let d = new Date(dataInicio + 'T00:00:00');
+  for (let i = 1; i <= qtd; i++) {
+    const dStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    dados.push({
+      id: generateId(),
+      parcelamentoId: parId,
+      descricao: `${desc} (${i}/${qtd})`,
+      tipo: 'despesa',
+      categoria: cat,
+      valor: valorParcela,
+      vencimento: dStr,
+      status: 'pendente',
+      formaPagamento: pgto,
+      responsavel: resp
+    });
+    d.setMonth(d.getMonth() + 1);
+  }
+  parcelamentos.push({
+    id: parId,
+    descricao: desc,
+    valorTotal,
+    parcelas: qtd,
+    dataCriacao: new Date().toISOString(),
+    dataInicio,
+    categoria: cat,
+    formaPagamento: pgto,
+    responsavel: resp
+  });
+  salvarLocal('dados', dados);
+  salvarLocal('parcelamentos', parcelamentos);
+  ['fParDesc', 'fParValor', 'fParData', 'fParResp'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+  const q = document.getElementById('fParQtd'); if (q) q.value = '2';
+  processarDadosGlobais();
+  showToast('Parcelas geradas!');
+}
+
+function gerarParcelasPendentes(parId) {
+  const p = parcelamentos.find(x => x.id === parId);
+  if (!p) return;
+  const existentes = lancamentosParcelamento(p);
+  if (existentes.length >= Number(p.parcelas)) return showToast('Parcelas já geradas.', 'warning');
+  const qtd = Number(p.parcelas);
+  const valorParcela = Number(p.valorTotal) / qtd;
+  const inicio = p.dataInicio || existentes[0]?.vencimento || hojeISO();
+  let d = new Date(inicio + 'T00:00:00');
+  const numsExistentes = new Set(existentes.map(l => {
+    const m = l.descricao.match(/\((\d+)\/\d+\)/);
+    return m ? Number(m[1]) : null;
+  }).filter(Boolean));
+  let criadas = 0;
+  for (let i = 1; i <= qtd; i++) {
+    if (numsExistentes.has(i)) { d.setMonth(d.getMonth() + 1); continue; }
+    const dStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    dados.push({
+      id: generateId(),
+      parcelamentoId: parId,
+      descricao: `${p.descricao} (${i}/${qtd})`,
+      tipo: 'despesa',
+      categoria: p.categoria || 'Outros',
+      valor: valorParcela,
+      vencimento: dStr,
+      status: 'pendente',
+      formaPagamento: p.formaPagamento || 'Outro',
+      responsavel: p.responsavel || ''
+    });
+    criadas++;
+    d.setMonth(d.getMonth() + 1);
+  }
+  if (!criadas) return showToast('Nenhuma parcela pendente para gerar.', 'warning');
+  salvarLocal('dados', dados);
+  processarDadosGlobais();
+  showToast(`${criadas} parcela(s) gerada(s)!`);
+}
+
+function marcarParcelaPaga(lancId) {
+  const item = dados.find(d => d.id === lancId);
+  if (!item) return;
+  item.status = 'pago';
+  salvarLocal('dados', dados);
+  processarDadosGlobais();
+  const p = parcelamentos.find(x => x.id === item.parcelamentoId);
+  if (p) verParcelas(p.id);
+  showToast('Parcela marcada como paga!');
+}
+
+function verParcelas(parId) {
+  const p = parcelamentos.find(x => x.id === parId);
+  if (!p) return;
+  const st = statsParcelamento(p);
+  document.getElementById('modalParcelasTitle').innerText = `Parcelas — ${p.descricao}`;
+  document.getElementById('modalParcelasLista').innerHTML = st.lista.length ? st.lista.map(l => {
+    const pago = calcularStatus(l) === 'pago';
+    return `<div class="par-list-item">
+      <div>
+        <strong>${esc(l.descricao)}</strong>
+        <div class="pro-muted">${formatData(l.vencimento)} · ${esc(l.categoria)}</div>
+      </div>
+      <div style="text-align:right;">
+        <strong class="c-red">${formatMoeda(l.valor)}</strong>
+        <div style="margin-top:6px;">${getBadgeHtml(calcularStatus(l))}</div>
+        ${!pago ? `<button type="button" class="btn btn-success btn-sm" style="margin-top:6px;" onclick="marcarParcelaPaga('${escAttr(l.id)}')">Marcar paga</button>` : ''}
+      </div>
+    </div>`;
+  }).join('') : '<div class="pro-card">Nenhuma parcela vinculada. Use "Gerar parcelas".</div>';
+  document.getElementById('modalParcelas').classList.remove('hidden');
+}
+
+function fecharModalParcelas() {
+  document.getElementById('modalParcelas').classList.add('hidden');
+}
+
+function marcarProximaParcelaPaga(parId) {
+  const st = statsParcelamento(parcelamentos.find(x => x.id === parId));
+  if (!st.proxima) return showToast('Nenhuma parcela pendente.', 'warning');
+  marcarParcelaPaga(st.proxima.id);
+}
+
+function renderParcelamentoCard(p) {
+  const st = statsParcelamento(p);
+  const stCls = st.concluido ? 'par-status-done' : 'par-status-ativo';
+  const stLabel = st.concluido ? 'Concluído' : 'Ativo';
+  const semLanc = st.lista.length === 0;
+  return `<div class="par-card">
+    <div class="par-card-head">
+      <div>
+        <strong>${esc(p.descricao)}</strong>
+        <div style="margin-top:6px;"><span class="par-status ${stCls}">${stLabel}</span></div>
+      </div>
+      <strong>${formatMoeda(p.valorTotal)}</strong>
+    </div>
+    <div class="pro-muted">${st.pagos}/${st.total} parcelas pagas · parcela ${formatMoeda(st.valorParcela)}</div>
+    <div class="par-card-metrics">
+      <div class="par-metric"><span>Total pago</span><strong class="c-green">${formatMoeda(st.totalPago)}</strong></div>
+      <div class="par-metric"><span>Total restante</span><strong class="c-red">${formatMoeda(st.restante)}</strong></div>
+      <div class="par-metric"><span>Próxima parcela</span><strong>${st.proxima ? formatData(st.proxima.vencimento) : '—'}</strong></div>
+      <div class="par-metric"><span>Progresso</span><strong>${st.pct.toFixed(0)}%</strong></div>
+    </div>
+    <div class="bar-track"><div class="bar-fill ${st.concluido ? 'bg-success' : 'bg-info'}" style="width:${clamp(st.pct, 0, 100)}%"></div></div>
+    <div class="par-card-actions">
+      ${semLanc ? `<button type="button" class="btn btn-primary btn-sm" onclick="gerarParcelasPendentes('${escAttr(p.id)}')">Gerar parcelas</button>` : ''}
+      <button type="button" class="btn btn-outline btn-sm" onclick="verParcelas('${escAttr(p.id)}')">Ver parcelas</button>
+      ${!st.concluido && st.proxima ? `<button type="button" class="btn btn-success btn-sm" onclick="marcarProximaParcelaPaga('${escAttr(p.id)}')">Marcar próxima paga</button>` : ''}
+    </div>
+  </div>`;
+}
+
+function renderParcelamentos() {
+  const ativos = [];
+  const concluidos = [];
+  parcelamentos.forEach(p => {
+    if (statsParcelamento(p).concluido) concluidos.push(p);
+    else ativos.push(p);
+  });
+  const totalPrevisto = parcelamentos.reduce((s, p) => s + Number(p.valorTotal || 0), 0);
+  const totalPago = parcelamentos.reduce((s, p) => s + statsParcelamento(p).totalPago, 0);
+  const resEl = document.getElementById('parResumoGeral');
+  if (resEl) {
+    resEl.innerHTML = `<div class="mini-stat"><span>Parcelamentos</span><strong>${parcelamentos.length}</strong></div>
+      <div class="mini-stat"><span>Ativos</span><strong>${ativos.length}</strong></div>
+      <div class="mini-stat"><span>Concluídos</span><strong>${concluidos.length}</strong></div>
+      <div class="mini-stat"><span>Total pago</span><strong class="c-green">${formatMoeda(totalPago)}</strong></div>`;
+  }
+  const elA = document.getElementById('parcelamentosAtivosHtml');
+  const elC = document.getElementById('parcelamentosConcluidosHtml');
+  if (elA) elA.innerHTML = ativos.length ? ativos.map(p => renderParcelamentoCard(p)).join('') : '<div class="pro-card">Nenhum parcelamento ativo.</div>';
+  if (elC) elC.innerHTML = concluidos.length ? concluidos.map(p => renderParcelamentoCard(p)).join('') : '<div class="pro-card">Nenhum parcelamento concluído ainda.</div>';
+  const tb = document.getElementById('listParcelamentosGerados');
+  if (tb) {
+    tb.innerHTML = parcelamentos.length ? parcelamentos.map(p => {
+      const st = statsParcelamento(p);
+      const stCls = st.concluido ? 'par-status-done' : 'par-status-ativo';
+      return `<tr>
+        <td><strong>${esc(p.descricao)}</strong><div class="pro-muted">${esc(p.categoria || '')}</div></td>
+        <td>${st.pagos}/${st.total}</td>
+        <td><strong>${formatMoeda(p.valorTotal)}</strong></td>
+        <td><span class="par-status ${stCls}">${st.concluido ? 'Concluído' : 'Ativo'}</span></td>
+        <td><div class="action-cell">
+          ${st.lista.length === 0 ? `<button type="button" class="btn btn-primary btn-sm" onclick="gerarParcelasPendentes('${escAttr(p.id)}')">Gerar</button>` : ''}
+          <button type="button" class="btn btn-outline btn-sm" onclick="verParcelas('${escAttr(p.id)}')">Ver</button>
+          ${st.proxima ? `<button type="button" class="btn btn-success btn-sm" onclick="marcarProximaParcelaPaga('${escAttr(p.id)}')">Pagar</button>` : ''}
+        </div></td>
+      </tr>`;
+    }).join('') : '<tr><td colspan="5">Nenhum parcelamento.</td></tr>';
+  }
+}
 function renderCategorias() {
   const el = document.getElementById('listaCategoriasHtml');
   if (!el) return;
