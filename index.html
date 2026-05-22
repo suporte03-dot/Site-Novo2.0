@@ -704,6 +704,87 @@
   body.modo-celular .modules-wrapper { padding: 16px; }
   body.modo-celular .dash-hero-title { font-size: 18px; }
   body.modo-celular .module-hero { flex-direction: column; align-items: flex-start; }
+
+  /* ===== ETAPA 2: LANÇAMENTOS E CATEGORIAS ===== */
+  .form-section { margin-bottom: 20px; padding-bottom: 18px; border-bottom: 1px solid var(--border); }
+  .form-section:last-of-type { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+  .form-section-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--text-light);
+    margin-bottom: 14px;
+  }
+  .lanc-layout { display: grid; grid-template-columns: minmax(320px, 400px) 1fr; gap: 22px; align-items: start; }
+  body.modo-celular .lanc-layout { grid-template-columns: 1fr; }
+  .lanc-list-panel { min-width: 0; }
+  .lanc-filters { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-bottom: 14px; }
+  .lanc-filters .form-group { margin-bottom: 0; }
+  .lanc-filters .span-2 { grid-column: span 2; }
+  .lanc-filters .span-3 { grid-column: 1 / -1; }
+  @media (max-width: 900px) { .lanc-filters { grid-template-columns: 1fr 1fr; } .lanc-filters .span-2 { grid-column: span 1; } }
+  @media (max-width: 560px) { .lanc-filters { grid-template-columns: 1fr; } }
+  .lanc-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+  .lanc-chip {
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+    color: var(--text-light);
+    padding: 7px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: var(--transition);
+  }
+  .lanc-chip:hover { border-color: var(--border-strong); color: var(--text); }
+  .lanc-chip.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+  .lanc-summary { margin-bottom: 16px; }
+  .table-lanc { min-width: 720px; }
+  .table-lanc th { position: sticky; top: 0; z-index: 1; }
+  .table-lanc .col-valor { text-align: right; white-space: nowrap; }
+  .table-lanc .col-status { text-align: center; }
+  .table-lanc .col-acoes { text-align: right; width: 200px; }
+  .table-lanc td.col-valor { text-align: right; font-variant-numeric: tabular-nums; }
+  .table-lanc td.col-status { text-align: center; }
+  .tipo-pill {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 3px 8px;
+    border-radius: 999px;
+    margin-top: 4px;
+  }
+  .tipo-pill.receita { background: var(--success-soft); color: var(--success); }
+  .tipo-pill.despesa { background: var(--danger-soft); color: var(--danger); }
+  .cat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+  .cat-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    background: var(--card-bg);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .cat-card.is-default { border-style: dashed; }
+  .cat-card-head { display: flex; align-items: flex-start; gap: 12px; }
+  .cat-card-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .cat-stat-box {
+    background: var(--bg);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+  }
+  .cat-stat-box span { display: block; font-size: 10px; font-weight: 600; text-transform: uppercase; color: var(--text-light); }
+  .cat-stat-box strong { display: block; margin-top: 4px; font-size: 15px; color: var(--dark); }
+  .cat-card-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .cat-form-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+
   .autohelp-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:10px; }
   .report-preview { border:1px solid var(--border); border-radius:12px; padding:18px; background:#fff; }
   body.theme-dark .report-preview { background:#0b1220; }
@@ -862,33 +943,145 @@
       </section>
 
       <section id="mod-lancamentos" class="module hidden">
-        <div class="layout-lancamentos">
+        <div class="module-hero">
+          <div>
+            <p class="dash-eyebrow">Movimentações</p>
+            <h3 class="dash-hero-title">Lançamentos</h3>
+            <p class="dash-hero-desc">Cadastre receitas e despesas, filtre por período e acompanhe o status de cada compromisso.</p>
+          </div>
+        </div>
+        <div class="lanc-layout">
           <div class="panel" id="panelFormLanc">
             <div class="panel-title" id="formLancTitle">Novo Lançamento</div>
-            <div class="form-group">
-              <label>Descrição *</label>
-              <input type="text" id="fDesc" class="form-control" list="sugestoesDescricao" placeholder="Comece a digitar...">
-              <datalist id="sugestoesDescricao"></datalist>
+
+            <div class="form-section">
+              <div class="form-section-title">Dados principais</div>
+              <div class="form-group">
+                <label for="fDesc">Descrição *</label>
+                <input type="text" id="fDesc" class="form-control" list="sugestoesDescricao" placeholder="Ex.: Conta de luz, salário...">
+                <datalist id="sugestoesDescricao"></datalist>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="fTipo">Tipo</label>
+                  <select id="fTipo" class="form-control"><option value="despesa">Despesa</option><option value="receita">Receita</option></select>
+                </div>
+                <div class="form-group">
+                  <label for="fCat">Categoria *</label>
+                  <select id="fCat" class="form-control"></select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="fValor">Valor (R$) *</label>
+                  <input type="number" id="fValor" class="form-control" step="0.01" min="0" placeholder="0,00">
+                </div>
+                <div class="form-group">
+                  <label for="fVenc">Vencimento *</label>
+                  <input type="date" id="fVenc" class="form-control">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="fStatus">Status</label>
+                <select id="fStatus" class="form-control"><option value="pendente">Pendente</option><option value="pago">Pago</option></select>
+              </div>
             </div>
-            <div class="form-row"><div class="form-group"><label>Tipo</label><select id="fTipo" class="form-control"><option value="despesa">Despesa</option><option value="receita">Receita</option></select></div><div class="form-group"><label>Categoria *</label><select id="fCat" class="form-control"></select></div></div>
-            <div class="form-row"><div class="form-group"><label>Valor (R$) *</label><input type="number" id="fValor" class="form-control" step="0.01" placeholder="0.00"></div><div class="form-group"><label>Vencimento *</label><input type="date" id="fVenc" class="form-control"></div></div>
-            <div class="form-row"><div class="form-group"><label>Status</label><select id="fStatus" class="form-control"><option value="pendente">Pendente</option><option value="pago">Pago</option></select></div><div class="form-group"><label>Pgto.</label><select id="fPgto" class="form-control"><option>Pix</option><option>Boleto</option><option>Cartão Crédito</option><option>Cartão Débito</option><option>Dinheiro</option><option>Débito Auto</option><option>Outro</option></select></div></div>
-            <div class="form-group"><label>Responsável</label><input type="text" id="fResp" class="form-control" placeholder="Quem efetuou/efetuará?"></div>
-            <div class="form-group"><label>Observação</label><input type="text" id="fObs" class="form-control" placeholder="Detalhes opcionais..."></div>
+
+            <div class="form-section">
+              <div class="form-section-title">Pagamento</div>
+              <div class="form-group">
+                <label for="fPgto">Forma de pagamento</label>
+                <select id="fPgto" class="form-control">
+                  <option>Pix</option><option>Boleto</option><option>Cartão Crédito</option>
+                  <option>Cartão Débito</option><option>Dinheiro</option><option>Débito Auto</option><option>Outro</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="fResp">Responsável</label>
+                <input type="text" id="fResp" class="form-control" placeholder="Quem efetuou ou efetuará?">
+              </div>
+            </div>
+
+            <div class="form-section">
+              <div class="form-section-title">Observações</div>
+              <div class="form-group">
+                <label for="fObs">Observação</label>
+                <input type="text" id="fObs" class="form-control" placeholder="Detalhes opcionais">
+              </div>
+            </div>
+
             <div class="flex gap-2 mt-3">
-              <button class="btn btn-primary" style="flex:1; padding: 14px; font-size:15px;" onclick="salvarLancamento()" id="btnSalvarLanc">Salvar Lançamento</button>
-              <button class="btn btn-outline hidden" id="btnCancelLanc" style="padding: 14px; font-size:15px;" onclick="cancelarEdicaoLancamento()">Cancelar</button>
+              <button type="button" class="btn btn-primary" style="flex:1;" onclick="salvarLancamento()" id="btnSalvarLanc">Salvar Lançamento</button>
+              <button type="button" class="btn btn-outline hidden" id="btnCancelLanc" onclick="cancelarEdicaoLancamento()">Cancelar Edição</button>
             </div>
           </div>
-          
-          <div class="panel">
-            <div class="panel-title flex justify-between items-center" style="flex-wrap:wrap; gap:10px;">
-              <span>Movimentações</span>
-              <input type="text" id="buscaLanc" class="form-control" style="width:250px; border-radius:20px; padding:8px 15px;" placeholder="🔍 Buscar..." oninput="renderLancamentos()">
+
+          <div class="panel lanc-list-panel">
+            <div class="panel-title">Movimentações do período</div>
+
+            <div class="lanc-chips" id="lancChipsBar">
+              <button type="button" class="lanc-chip active" data-chip="" onclick="aplicarChipLanc('')">Todos</button>
+              <button type="button" class="lanc-chip" data-chip="receita" onclick="aplicarChipLanc('receita')">Receitas</button>
+              <button type="button" class="lanc-chip" data-chip="despesa" onclick="aplicarChipLanc('despesa')">Despesas</button>
+              <button type="button" class="lanc-chip" data-chip="pago" onclick="aplicarChipLanc('pago')">Pagas</button>
+              <button type="button" class="lanc-chip" data-chip="pendente" onclick="aplicarChipLanc('pendente')">Pendentes</button>
+              <button type="button" class="lanc-chip" data-chip="atrasado" onclick="aplicarChipLanc('atrasado')">Atrasadas</button>
             </div>
+
+            <div class="lanc-filters">
+              <div class="form-group span-3">
+                <label for="buscaLanc">Busca</label>
+                <input type="text" id="buscaLanc" class="form-control" placeholder="Descrição, categoria ou responsável" oninput="sincronizarBuscaLanc(); renderLancamentos()">
+                <input type="hidden" id="buscaLancPro" value="">
+              </div>
+              <div class="form-group">
+                <label for="fLancTipo">Tipo</label>
+                <select id="fLancTipo" class="form-control" onchange="atualizarChipsLanc(); renderLancamentos()">
+                  <option value="">Todos</option><option value="receita">Receitas</option><option value="despesa">Despesas</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="fLancStatus">Status</label>
+                <select id="fLancStatus" class="form-control" onchange="atualizarChipsLanc(); renderLancamentos()">
+                  <option value="">Todos</option><option value="pendente">Pendentes</option><option value="pago">Pagas</option><option value="atrasado">Atrasadas</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="fLancCategoria">Categoria</label>
+                <select id="fLancCategoria" class="form-control" onchange="renderLancamentos()"><option value="">Todas</option></select>
+              </div>
+              <div class="form-group">
+                <label for="fLancInicio">Data inicial</label>
+                <input type="date" id="fLancInicio" class="form-control" onchange="renderLancamentos()">
+              </div>
+              <div class="form-group">
+                <label for="fLancFim">Data final</label>
+                <input type="date" id="fLancFim" class="form-control" onchange="renderLancamentos()">
+              </div>
+              <div class="form-group">
+                <label for="fLancPgto">Forma de pagamento</label>
+                <select id="fLancPgto" class="form-control" onchange="renderLancamentos()">
+                  <option value="">Todas</option>
+                  <option>Pix</option><option>Boleto</option><option>Cartão Crédito</option>
+                  <option>Cartão Débito</option><option>Dinheiro</option><option>Débito Auto</option><option>Outro</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="pro-summary-strip lanc-summary" id="lancResumoFiltrado"></div>
+
             <div class="table-responsive view-tabela">
-              <table>
-                <thead><tr><th style="width:25%;">Descrição</th><th>Cat.</th><th>Venc.</th><th>Valor</th><th>Status</th><th style="text-align:right;">Ações</th></tr></thead>
+              <table class="table-lanc">
+                <thead>
+                  <tr>
+                    <th>Descrição</th>
+                    <th>Categoria</th>
+                    <th>Vencimento</th>
+                    <th class="col-valor">Valor</th>
+                    <th class="col-status">Status</th>
+                    <th class="col-acoes">Ações</th>
+                  </tr>
+                </thead>
                 <tbody id="listaLancTabela"></tbody>
               </table>
             </div>
@@ -1077,9 +1270,40 @@
 
       <!-- Categorias -->
       <section id="mod-categorias" class="module hidden">
+        <div class="module-hero">
+          <div>
+            <p class="dash-eyebrow">Organização</p>
+            <h3 class="dash-hero-title">Categorias</h3>
+            <p class="dash-hero-desc">Classifique lançamentos por tipo de gasto ou receita. Estatísticas referem-se ao mês selecionado no topo.</p>
+          </div>
+        </div>
         <div class="grid-2">
-          <div class="panel"><div class="panel-title">Adicionar Categoria</div><div class="form-group"><label>Nome da Categoria</label><input type="text" id="fNovaCat" class="form-control"></div><button class="btn btn-primary" onclick="adicionarCategoria()">Adicionar</button></div>
-          <div class="panel"><div class="panel-title">Categorias (Sincronizadas)</div><div id="listaCategoriasHtml" style="display:flex; flex-wrap:wrap; gap:8px;"></div></div>
+          <div class="panel">
+            <div class="panel-title" id="formCatTitle">Nova categoria</div>
+            <div class="form-group">
+              <label for="fNovaCat">Nome da categoria *</label>
+              <input type="text" id="fNovaCat" class="form-control" placeholder="Ex.: Assinaturas, Pets...">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="fNovaCatIcon">Ícone (1–2 caracteres)</label>
+                <input type="text" id="fNovaCatIcon" class="form-control" maxlength="2" placeholder="A">
+              </div>
+              <div class="form-group">
+                <label for="fNovaCatCor">Cor</label>
+                <input type="color" id="fNovaCatCor" class="form-control" value="#1a5f4a">
+              </div>
+            </div>
+            <div class="cat-form-actions">
+              <button type="button" class="btn btn-primary" id="btnSalvarCat" onclick="adicionarCategoria()">Adicionar categoria</button>
+              <button type="button" class="btn btn-outline hidden" id="btnCancelCat" onclick="cancelarEdicaoCategoria()">Cancelar edição</button>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Suas categorias</div>
+            <p class="pro-muted" style="margin-bottom:14px;">Categorias padrão não podem ser excluídas. Categorias em uso exigem confirmação para remover.</p>
+            <div id="listaCategoriasHtml" class="cat-grid"></div>
+          </div>
         </div>
       </section>
       <!-- Relatórios -->
