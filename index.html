@@ -995,6 +995,182 @@
   .dash-panel-tight { padding: 0; overflow: hidden; }
   .dash-panel-tight .panel-title { padding: 14px 18px 8px; margin: 0; border-bottom: 1px solid var(--border); }
   .dash-panel-body { padding: 0 18px 16px; font-size: 13px; line-height: 1.55; color: var(--text-light); }
+
+  /* ===== ETAPA 9: MÓDULOS PRO + NARRATIVA ===== */
+  .mod-hero-pro {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px;
+    padding: 16px 20px;
+    margin-bottom: 14px;
+    border-radius: var(--radius-lg);
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 55%, #f1f5f9 100%);
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    box-shadow: var(--shadow);
+  }
+  body.theme-dark .mod-hero-pro { background: linear-gradient(135deg, var(--card-bg) 0%, #111827 100%); border-color: var(--border); }
+  .mod-hero-pro-body { min-width: 0; flex: 1; }
+  .mod-hero-pro-meta { margin-bottom: 6px; }
+  .mod-hero-month {
+    display: inline-flex;
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-light);
+    background: rgba(15, 23, 42, 0.04);
+    border: 1px solid var(--border);
+  }
+  .mod-hero-eyebrow {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--primary);
+    margin-bottom: 4px;
+  }
+  .mod-hero-title {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--dark);
+    letter-spacing: -0.03em;
+    margin-bottom: 4px;
+    line-height: 1.25;
+  }
+  .mod-hero-desc { font-size: 13px; color: var(--text-light); line-height: 1.5; max-width: 560px; }
+  .mod-hero-pro-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: flex-end;
+    flex-shrink: 0;
+  }
+  .sc-trend { display: block; padding-left: 4px; margin-top: 2px; }
+  .kpi-trend {
+    display: inline-flex;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 999px;
+    line-height: 1.3;
+  }
+  .kpi-trend-up { color: var(--success); background: var(--success-soft); }
+  .kpi-trend-down { color: var(--danger); background: var(--danger-soft); }
+  .kpi-trend-neutral { color: var(--text-muted); background: rgba(148, 163, 184, 0.12); }
+  .dash-compare-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .dash-compare-card {
+    padding: 14px 16px;
+    border-radius: var(--radius);
+    background: var(--card-bg);
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    box-shadow: var(--shadow);
+  }
+  .dash-compare-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .dash-compare-values {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+  .dash-compare-current { font-size: 17px; font-weight: 700; color: var(--dark); letter-spacing: -0.02em; }
+  .dash-compare-prev { font-size: 12px; color: var(--text-muted); }
+  .dash-compare-bar {
+    display: flex;
+    height: 6px;
+    border-radius: 999px;
+    overflow: hidden;
+    background: var(--bg-soft);
+    gap: 2px;
+  }
+  .dash-compare-bar span {
+    display: block;
+    height: 100%;
+    border-radius: 999px;
+    min-width: 4px;
+    transition: width 0.4s ease;
+  }
+  .dash-compare-bar .bar-prev { background: rgba(148, 163, 184, 0.45); }
+  .dash-compare-bar .bar-cur { background: var(--primary); }
+  .dash-compare-bar.bar-rec .bar-cur { background: var(--success); }
+  .dash-compare-bar.bar-des .bar-cur { background: var(--danger); }
+  .dash-spark-wrap { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
+  .dash-spark-label { font-size: 10px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+  .dash-spark { display: flex; align-items: flex-end; gap: 4px; height: 36px; }
+  .dash-spark-col { flex: 1; display: flex; align-items: flex-end; height: 100%; min-width: 0; }
+  .dash-spark-bar {
+    width: 100%;
+    border-radius: 4px 4px 2px 2px;
+    min-height: 4px;
+    transition: height 0.35s ease;
+  }
+  .dash-spark-bar.up { background: linear-gradient(180deg, #34d399, var(--success)); }
+  .dash-spark-bar.down { background: linear-gradient(180deg, #fca5a5, var(--danger)); }
+  .dash-spark-bar.flat { background: rgba(148, 163, 184, 0.35); }
+  .dash-action-list { display: flex; flex-direction: column; gap: 8px; }
+  .dash-action-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+    transition: box-shadow var(--transition);
+  }
+  .dash-action-item:hover { box-shadow: var(--shadow); }
+  .dash-action-item.priority-high { border-color: rgba(180, 35, 24, 0.25); background: linear-gradient(90deg, #fef2f2 0%, #fff 100%); }
+  body.theme-dark .dash-action-item.priority-high { background: rgba(180, 35, 24, 0.08); }
+  .dash-action-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: var(--bg-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .dash-action-body { flex: 1; min-width: 0; }
+  .dash-action-title { font-size: 13px; font-weight: 700; color: var(--dark); margin-bottom: 2px; }
+  .dash-action-desc { font-size: 12px; color: var(--text-light); line-height: 1.45; }
+  .dash-action-item .btn { flex-shrink: 0; align-self: center; }
+  .dash-onboard {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 14px 18px;
+    margin-bottom: 14px;
+    border-radius: var(--radius-lg);
+    background: linear-gradient(90deg, var(--primary-light) 0%, #fff 100%);
+    border: 1px solid rgba(26, 95, 74, 0.18);
+  }
+  body.theme-dark .dash-onboard { background: rgba(26, 95, 74, 0.12); }
+  .dash-onboard.hidden { display: none !important; }
+  .dash-onboard-text { font-size: 13px; color: var(--text); line-height: 1.5; }
+  .dash-onboard-text strong { color: var(--dark); }
+  @media (max-width: 760px) {
+    .mod-hero-pro { flex-direction: column; align-items: flex-start; }
+    .mod-hero-pro-actions { width: 100%; justify-content: flex-start; }
+    .dash-compare-strip { grid-template-columns: 1fr; }
+  }
+
   .panel-title { gap: 10px; }
   .module-hero h3 { font-size:20px; color:var(--dark); margin-bottom:4px; }
   .module-hero p { font-size:13px; color:var(--text-light); line-height:1.5; }
@@ -1028,7 +1204,8 @@
   body.modo-celular .top-header { padding: 14px 16px; }
   body.modo-celular .modules-wrapper { padding: 14px; }
   body.modo-celular .dash-hero-title { font-size: 18px; }
-  body.modo-celular .module-hero { flex-direction: column; align-items: flex-start; }
+  body.modo-celular .mod-hero-pro { flex-direction: column; align-items: flex-start; }
+  body.modo-celular .mod-hero-pro-actions { width: 100%; justify-content: flex-start; }
   body.modo-celular .dash-hero-fin { grid-template-columns: 1fr; padding: 16px; gap: 14px; }
   body.modo-celular .dash-balance-value { font-size: 26px; }
   body.modo-celular .dash-kpi-grid { grid-template-columns: 1fr; }
@@ -1639,9 +1816,13 @@
 
       <!-- MÓDULO 1: DASHBOARD -->
       <section id="mod-dashboard" class="module active">
+        <div id="dashOnboarding" class="dash-onboard hidden">
+          <p class="dash-onboard-text"><strong>Primeiro passo:</strong> cadastre receitas e despesas do mês para desbloquear comparativos, alertas e recomendações personalizadas.</p>
+          <button type="button" class="btn btn-primary btn-sm" onclick="focarNovoLancamento();fecharOnboardingDash()">Começar agora</button>
+        </div>
         <div class="dash-hero-fin">
           <div class="dash-hero-content">
-            <p class="dash-hero-greeting">Olá, bem-vindo ao <span>FinançasCasa</span>.</p>
+            <p class="dash-hero-greeting" id="dashHeroGreeting">Olá, bem-vindo ao <span>FinançasCasa</span>.</p>
             <div class="dash-hero-meta">
               <span class="dash-hero-month-pill" id="dashHeroMes">—</span>
               <span class="dash-hero-status-pill status-neutral" id="dashHeroStatus">Aguardando dados</span>
@@ -1658,26 +1839,39 @@
           <aside class="dash-hero-balance" aria-label="Saldo líquido do período">
             <span class="dash-balance-eyebrow">Saldo líquido</span>
             <strong class="dash-balance-value" id="dashSaldo">R$ 0,00</strong>
+            <span class="sc-trend" id="dashTrendSaldo"></span>
             <span class="dash-balance-sub" id="dashHeroSaldoSub">Receitas menos despesas do mês selecionado.</span>
           </aside>
         </div>
 
         <div class="grid-summary dash-kpi-grid mb-3">
-          <div class="summary-card sc-primary sc-primary-receita sc-receita sc-success"><div class="sc-header"><span>Receitas</span></div><strong class="c-green" id="dashReceitas">R$ 0,00</strong></div>
-          <div class="summary-card sc-primary sc-primary-despesa sc-danger"><div class="sc-header"><span>Despesas</span></div><strong class="c-red" id="dashDespesas">R$ 0,00</strong></div>
+          <div class="summary-card sc-primary sc-primary-receita sc-receita sc-success"><div class="sc-header"><span>Receitas</span></div><strong class="c-green" id="dashReceitas">R$ 0,00</strong><span class="sc-trend" id="dashTrendReceitas"></span></div>
+          <div class="summary-card sc-primary sc-primary-despesa sc-danger"><div class="sc-header"><span>Despesas</span></div><strong class="c-red" id="dashDespesas">R$ 0,00</strong><span class="sc-trend" id="dashTrendDespesas"></span></div>
           <div class="summary-card sc-secondary sc-warning"><div class="sc-header"><span>Pendentes e atrasadas</span></div><strong id="dashPendentes">0</strong></div>
           <div class="summary-card sc-secondary sc-success"><div class="sc-header"><span>Contas pagas</span></div><strong id="dashPagas">0</strong></div>
           <div class="summary-card sc-secondary sc-info"><div class="sc-header"><span>Saúde financeira</span></div><strong id="dashSaudeCard">Sem dados suficientes</strong></div>
         </div>
 
+        <div id="dashCompareHtml" class="dash-compare-strip"></div>
+
+        <div class="grid-2 mb-3">
+          <div class="panel dash-panel-tight">
+            <div class="panel-title">Próximas ações</div>
+            <div id="dashProximasAcoesHtml" class="dash-panel-body"></div>
+          </div>
+          <div class="panel dash-panel-tight">
+            <div class="panel-title">Próximos vencimentos · 7 dias</div>
+            <div id="dashProxVencHtml" class="dash-panel-body"></div>
+          </div>
+        </div>
         <div class="grid-2 mb-3">
           <div class="panel">
             <div class="panel-title">Resumo inteligente</div>
             <div id="dashResumoIAHtml" class="dash-panel-body" style="padding:0 0 4px;"></div>
           </div>
           <div class="panel dash-panel-tight">
-            <div class="panel-title">Próximos vencimentos · 7 dias</div>
-            <div id="dashProxVencHtml" class="dash-panel-body"></div>
+            <div class="panel-title">Evolução do saldo · 6 meses</div>
+            <div id="dashSparkHtml" class="dash-panel-body"></div>
           </div>
         </div>
         <div class="grid-2">
@@ -1694,15 +1888,17 @@
 
       <!-- MÓDULO: ASSISTENTE IA -->
       <section id="mod-assistente" class="module hidden">
-        <div class="module-hero">
-          <div>
-            <p class="dash-eyebrow">Inteligência local</p>
-            <h3 class="dash-hero-title">Assistente IA FinançasCasa</h3>
-            <p class="dash-hero-desc">Análises, alertas e recomendações geradas localmente com base nos seus dados — sem API externa e sem envio de informações.</p>
+        <div class="mod-hero-pro">
+          <div class="mod-hero-pro-body">
+            <div class="mod-hero-pro-meta"><span class="mod-hero-month">—</span></div>
+            <p class="mod-hero-eyebrow">Inteligência local</p>
+            <h3 class="mod-hero-title">Assistente IA FinançasCasa</h3>
+            <p class="mod-hero-desc">Análises, alertas e recomendações geradas localmente — sem API externa.</p>
           </div>
-          <div class="ia-export-panel no-print">
-            <button type="button" class="btn btn-outline btn-sm" onclick="baixarAnaliseIA()">Baixar análise TXT</button>
-            <button type="button" class="btn btn-primary btn-sm" onclick="imprimirAnaliseIA()">Imprimir / PDF</button>
+          <div class="mod-hero-pro-actions no-print">
+            <button type="button" class="btn btn-primary btn-sm" onclick="autoAjuda('analisar')">Analisar meu mês</button>
+            <button type="button" class="btn btn-ghost btn-sm" onclick="baixarAnaliseIA()">Baixar TXT</button>
+            <button type="button" class="btn btn-ghost btn-sm" onclick="imprimirAnaliseIA()">Imprimir</button>
           </div>
         </div>
 
@@ -1753,11 +1949,16 @@
       </section>
 
       <section id="mod-lancamentos" class="module hidden">
-        <div class="module-hero">
-          <div>
-            <p class="dash-eyebrow">Movimentações</p>
-            <h3 class="dash-hero-title">Lançamentos</h3>
-            <p class="dash-hero-desc">Cadastre receitas e despesas, filtre por período e acompanhe o status de cada compromisso.</p>
+        <div class="mod-hero-pro">
+          <div class="mod-hero-pro-body">
+            <div class="mod-hero-pro-meta"><span class="mod-hero-month">—</span></div>
+            <p class="mod-hero-eyebrow">Movimentações</p>
+            <h3 class="mod-hero-title">Lançamentos</h3>
+            <p class="mod-hero-desc">Cadastre receitas e despesas, filtre por período e acompanhe o status de cada compromisso.</p>
+          </div>
+          <div class="mod-hero-pro-actions no-print">
+            <button type="button" class="btn btn-primary btn-sm" onclick="focarNovoLancamento()">Novo lançamento</button>
+            <button type="button" class="btn btn-ghost btn-sm" onclick="abrirModulo('relatorios')">Relatório</button>
           </div>
         </div>
         <div class="lanc-layout">
@@ -1902,11 +2103,16 @@
 
       <!-- Metas -->
       <section id="mod-metas" class="module hidden">
-        <div class="module-hero">
-          <div>
-            <p class="dash-eyebrow">Objetivos</p>
-            <h3 class="dash-hero-title">Metas do Mês</h3>
-            <p class="dash-hero-desc">Defina metas de economia para o período selecionado no topo e acompanhe o progresso com base no saldo do mês.</p>
+        <div class="mod-hero-pro">
+          <div class="mod-hero-pro-body">
+            <div class="mod-hero-pro-meta"><span class="mod-hero-month">—</span></div>
+            <p class="mod-hero-eyebrow">Objetivos</p>
+            <h3 class="mod-hero-title">Metas do Mês</h3>
+            <p class="mod-hero-desc">Defina metas de economia e acompanhe o progresso com base no saldo do período.</p>
+          </div>
+          <div class="mod-hero-pro-actions no-print">
+            <button type="button" class="btn btn-primary btn-sm" onclick="focarNovaMeta()">Nova meta</button>
+            <button type="button" class="btn btn-ghost btn-sm" onclick="abrirModulo('dashboard')">Dashboard</button>
           </div>
         </div>
         <div class="mod-layout">
@@ -1934,11 +2140,16 @@
       </section>
       <!-- Controle de Gastos -->
       <section id="mod-gastos" class="module hidden">
-        <div class="module-hero">
-          <div>
-            <p class="dash-eyebrow">Orçamento</p>
-            <h3 class="dash-hero-title">Controle de Gastos</h3>
-            <p class="dash-hero-desc">Defina limites mensais por categoria e acompanhe consumo, saldo restante e alertas visuais.</p>
+        <div class="mod-hero-pro">
+          <div class="mod-hero-pro-body">
+            <div class="mod-hero-pro-meta"><span class="mod-hero-month">—</span></div>
+            <p class="mod-hero-eyebrow">Orçamento</p>
+            <h3 class="mod-hero-title">Controle de Gastos</h3>
+            <p class="mod-hero-desc">Defina limites por categoria e acompanhe consumo, saldo restante e alertas.</p>
+          </div>
+          <div class="mod-hero-pro-actions no-print">
+            <button type="button" class="btn btn-primary btn-sm" onclick="focarNovoOrcamento()">Definir limite</button>
+            <button type="button" class="btn btn-ghost btn-sm" onclick="abrirModulo('lancamentos')">Lançamentos</button>
           </div>
         </div>
         <div class="mod-layout">
@@ -1966,11 +2177,16 @@
       </section>
       <!-- Futuro -->
       <section id="mod-planejamento" class="module hidden">
-        <div class="module-hero">
-          <div>
-            <p class="dash-eyebrow">Agenda</p>
-            <h3 class="dash-hero-title">Planejamento Futuro</h3>
-            <p class="dash-hero-desc">Organize receitas e despesas previstas, visualize por mês e transforme planos em lançamentos quando chegar a hora.</p>
+        <div class="mod-hero-pro">
+          <div class="mod-hero-pro-body">
+            <div class="mod-hero-pro-meta"><span class="mod-hero-month">—</span></div>
+            <p class="mod-hero-eyebrow">Agenda</p>
+            <h3 class="mod-hero-title">Planejamento Futuro</h3>
+            <p class="mod-hero-desc">Organize receitas e despesas previstas e transforme planos em lançamentos.</p>
+          </div>
+          <div class="mod-hero-pro-actions no-print">
+            <button type="button" class="btn btn-primary btn-sm" onclick="focarNovoFuturo()">Adicionar planejamento</button>
+            <button type="button" class="btn btn-ghost btn-sm" onclick="abrirModulo('lancamentos')">Lançamentos</button>
           </div>
         </div>
         <div class="mod-layout">
@@ -2037,11 +2253,16 @@
       </section>
       <!-- Recorrentes -->
       <section id="mod-recorrentes" class="module hidden">
-        <div class="module-hero">
-          <div>
-            <p class="dash-eyebrow">Automação</p>
-            <h3 class="dash-hero-title">Contas Recorrentes</h3>
-            <p class="dash-hero-desc">Cadastre contas fixas mensais e gere lançamentos automaticamente, evitando duplicidade no mesmo mês.</p>
+        <div class="mod-hero-pro">
+          <div class="mod-hero-pro-body">
+            <div class="mod-hero-pro-meta"><span class="mod-hero-month">—</span></div>
+            <p class="mod-hero-eyebrow">Automação</p>
+            <h3 class="mod-hero-title">Contas Recorrentes</h3>
+            <p class="mod-hero-desc">Cadastre contas fixas mensais e gere lançamentos automaticamente.</p>
+          </div>
+          <div class="mod-hero-pro-actions no-print">
+            <button type="button" class="btn btn-primary btn-sm" onclick="focarNovoRecorrente()">Nova recorrente</button>
+            <button type="button" class="btn btn-ghost btn-sm" onclick="abrirModulo('lancamentos')">Lançamentos</button>
           </div>
         </div>
         <div class="mod-layout">
@@ -2123,11 +2344,16 @@
             <button type="button" class="btn btn-outline" style="width:100%;" onclick="fecharModalParcelas()">Fechar</button>
           </div>
         </div>
-        <div class="module-hero">
-          <div>
-            <p class="dash-eyebrow">Automação</p>
-            <h3 class="dash-hero-title">Parcelamentos</h3>
-            <p class="dash-hero-desc">Controle compras parceladas, acompanhe progresso de pagamento e marque parcelas individualmente.</p>
+        <div class="mod-hero-pro">
+          <div class="mod-hero-pro-body">
+            <div class="mod-hero-pro-meta"><span class="mod-hero-month">—</span></div>
+            <p class="mod-hero-eyebrow">Automação</p>
+            <h3 class="mod-hero-title">Parcelamentos</h3>
+            <p class="mod-hero-desc">Controle compras parceladas, acompanhe progresso e marque parcelas individualmente.</p>
+          </div>
+          <div class="mod-hero-pro-actions no-print">
+            <button type="button" class="btn btn-primary btn-sm" onclick="focarNovoParcelamento()">Novo parcelamento</button>
+            <button type="button" class="btn btn-ghost btn-sm" onclick="abrirModulo('lancamentos')">Lançamentos</button>
           </div>
         </div>
         <div class="mod-layout">
@@ -2244,11 +2470,16 @@
         </div>
         <div id="print-lista"></div>
 
-        <div class="module-hero">
-          <div>
-            <p class="dash-eyebrow">Compras</p>
-            <h3 class="dash-hero-title">Lista de Mercado</h3>
-            <p class="dash-hero-desc">Organize itens, acompanhe a compra em tempo real e registre o gasto no financeiro quando quiser.</p>
+        <div class="mod-hero-pro">
+          <div class="mod-hero-pro-body">
+            <div class="mod-hero-pro-meta"><span class="mod-hero-month">—</span></div>
+            <p class="mod-hero-eyebrow">Compras</p>
+            <h3 class="mod-hero-title">Lista de Mercado</h3>
+            <p class="mod-hero-desc">Organize itens, use o Modo Compra e registre o gasto no financeiro quando quiser.</p>
+          </div>
+          <div class="mod-hero-pro-actions no-print">
+            <button type="button" class="btn btn-primary btn-sm" onclick="focarItemMercado()">Adicionar item</button>
+            <button type="button" class="btn btn-ghost btn-sm" onclick="abrirModulo('lancamentos')">Lançamentos</button>
           </div>
         </div>
 
@@ -2385,11 +2616,16 @@
 
       <!-- Categorias -->
       <section id="mod-categorias" class="module hidden">
-        <div class="module-hero">
-          <div>
-            <p class="dash-eyebrow">Organização</p>
-            <h3 class="dash-hero-title">Categorias</h3>
-            <p class="dash-hero-desc">Classifique lançamentos por tipo de gasto ou receita. Estatísticas referem-se ao mês selecionado no topo.</p>
+        <div class="mod-hero-pro">
+          <div class="mod-hero-pro-body">
+            <div class="mod-hero-pro-meta"><span class="mod-hero-month">—</span></div>
+            <p class="mod-hero-eyebrow">Organização</p>
+            <h3 class="mod-hero-title">Categorias</h3>
+            <p class="mod-hero-desc">Classifique lançamentos por tipo. Estatísticas referem-se ao mês selecionado no topo.</p>
+          </div>
+          <div class="mod-hero-pro-actions no-print">
+            <button type="button" class="btn btn-primary btn-sm" onclick="document.getElementById('fNovaCat')?.focus()">Nova categoria</button>
+            <button type="button" class="btn btn-ghost btn-sm" onclick="abrirModulo('lancamentos')">Lançamentos</button>
           </div>
         </div>
         <div class="grid-2">
@@ -2423,11 +2659,16 @@
       </section>
       <!-- Relatórios -->
       <section id="mod-relatorios" class="module hidden">
-        <div class="module-hero">
-          <div>
-            <p class="dash-eyebrow">Exportação</p>
-            <h3 class="dash-hero-title">Relatórios</h3>
-            <p class="dash-hero-desc">Filtre o período, visualize a prévia com totalizadores e exporte em CSV, JSON ou impressão/PDF.</p>
+        <div class="mod-hero-pro">
+          <div class="mod-hero-pro-body">
+            <div class="mod-hero-pro-meta"><span class="mod-hero-month">—</span></div>
+            <p class="mod-hero-eyebrow">Exportação</p>
+            <h3 class="mod-hero-title">Relatórios</h3>
+            <p class="mod-hero-desc">Filtre o período, visualize a prévia e exporte em CSV, JSON ou impressão.</p>
+          </div>
+          <div class="mod-hero-pro-actions no-print">
+            <button type="button" class="btn btn-primary btn-sm" onclick="gerarRelatorioTela();imprimirRelatorio()">Imprimir / PDF</button>
+            <button type="button" class="btn btn-ghost btn-sm" onclick="exportarRelatorioCSV()">CSV</button>
           </div>
         </div>
         <div class="rel-layout">
@@ -2507,11 +2748,16 @@
       </section>
       <!-- Config -->
       <section id="mod-configuracoes" class="module hidden">
-        <div class="module-hero">
-          <div>
-            <p class="dash-eyebrow">Preferências</p>
-            <h3 class="dash-hero-title">Configurações</h3>
-            <p class="dash-hero-desc">Personalize aparência, moeda, navegação e gerencie os dados locais do FinançasCasa.</p>
+        <div class="mod-hero-pro">
+          <div class="mod-hero-pro-body">
+            <div class="mod-hero-pro-meta"><span class="mod-hero-month">—</span></div>
+            <p class="mod-hero-eyebrow">Preferências</p>
+            <h3 class="mod-hero-title">Configurações</h3>
+            <p class="mod-hero-desc">Personalize aparência, moeda, navegação e gerencie os dados locais.</p>
+          </div>
+          <div class="mod-hero-pro-actions no-print">
+            <button type="button" class="btn btn-primary btn-sm" onclick="irParaBackup()">Fazer backup</button>
+            <button type="button" class="btn btn-ghost btn-sm" onclick="abrirModulo('dashboard')">Dashboard</button>
           </div>
         </div>
         <div class="config-warning">Os dados estão salvos localmente neste navegador. Faça backup regularmente.</div>
@@ -2584,11 +2830,16 @@
       </section>
       <!-- Backup Local -->
       <section id="mod-backup" class="module hidden">
-        <div class="module-hero">
-          <div>
-            <p class="dash-eyebrow">Segurança</p>
-            <h3 class="dash-hero-title">Backup e Importação</h3>
-            <p class="dash-hero-desc">Exporte uma cópia completa dos dados ou restaure um backup anterior com prévia e confirmação.</p>
+        <div class="mod-hero-pro">
+          <div class="mod-hero-pro-body">
+            <div class="mod-hero-pro-meta"><span class="mod-hero-month">—</span></div>
+            <p class="mod-hero-eyebrow">Segurança</p>
+            <h3 class="mod-hero-title">Backup e Importação</h3>
+            <p class="mod-hero-desc">Exporte uma cópia completa ou restaure um backup com prévia e confirmação.</p>
+          </div>
+          <div class="mod-hero-pro-actions no-print">
+            <button type="button" class="btn btn-primary btn-sm" onclick="exportarBackupJSON()">Baixar backup</button>
+            <button type="button" class="btn btn-ghost btn-sm" onclick="document.getElementById('inputFileBackup')?.click()">Importar</button>
           </div>
         </div>
         <div class="config-warning">Os dados estão salvos localmente neste navegador. Faça backup regularmente.</div>
@@ -4049,6 +4300,100 @@ function aplicarKpiCard(el,valor,temDados,moeda){
   el.className='';
   el.innerText=moeda?formatMoeda(valor):String(valor);
 }
+function mesAnteriorReferencia(mes){
+  if(!mes) return '';
+  const p=mes.split('-'); if(p.length<2) return '';
+  const d=new Date(Number(p[0]),Number(p[1])-2,1);
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+}
+function saudacaoHorario(){
+  const h=new Date().getHours();
+  if(h<12) return 'Bom dia';
+  if(h<18) return 'Boa tarde';
+  return 'Boa noite';
+}
+function formatTrendHtml(atual,anterior,opts={}){
+  if(!getMesGlobal()) return '<span class="kpi-trend kpi-trend-neutral">Selecione um mês</span>';
+  const ant=Number(anterior||0), cur=Number(atual||0);
+  if(!ant && !cur) return '<span class="kpi-trend kpi-trend-neutral">Sem movimentação anterior</span>';
+  let variacao=ant===0?(cur>0?100:0):((cur-ant)/Math.abs(ant))*100;
+  const inv=opts.invert||false;
+  if(Math.abs(variacao)<0.5) return '<span class="kpi-trend kpi-trend-neutral">≈ estável vs mês ant.</span>';
+  const subiu=variacao>0;
+  const positivo=inv?!subiu:subiu;
+  const cls=positivo?'kpi-trend-up':'kpi-trend-down';
+  const sinal=subiu?'+':'';
+  return `<span class="kpi-trend ${cls}">${subiu?'↑':'↓'} ${sinal}${variacao.toFixed(0)}% vs mês ant.</span>`;
+}
+function montarComparativoStrip(r,rAnt,mes,mesAnt){
+  if(!mes) return '<div class="dash-compare-card" style="grid-column:1/-1"><p class="pro-muted" style="margin:0;">Selecione um mês no topo para comparar com o período anterior.</p></div>';
+  const mesAntNome=mesAnt?(formatMesExtenso(mesAnt).split(' de ')[0]):'—';
+  const card=(label,cur,prev,barClass,invert)=>{
+    const max=Math.max(Math.abs(cur),Math.abs(prev),1);
+    const wPrev=Math.max(4,Math.round((Math.abs(prev)/max)*100));
+    const wCur=Math.max(4,Math.round((Math.abs(cur)/max)*100));
+    return `<div class="dash-compare-card"><div class="dash-compare-label">${label}</div><div class="dash-compare-values"><span class="dash-compare-current">${formatMoeda(cur)}</span><span class="dash-compare-prev">${mesAntNome}: ${formatMoeda(prev)}</span></div>${formatTrendHtml(cur,prev,{invert})}<div class="dash-compare-bar ${barClass}"><span class="bar-prev" style="width:${wPrev}%" title="Mês anterior"></span><span class="bar-cur" style="width:${wCur}%" title="Mês atual"></span></div></div>`;
+  };
+  return card('Receitas',r.rec,rAnt.rec,'bar-rec',false)+card('Despesas',r.des,rAnt.des,'bar-des',true)+card('Saldo líquido',r.saldo,rAnt.saldo,'',false);
+}
+function montarProximasAcoes(l,r,atras,pend,maior){
+  const acoes=[];
+  if(!l.length){
+    acoes.push({p:1,icon:'💳',title:'Cadastrar primeiro lançamento',desc:'Comece registrando receitas e despesas do mês.',btn:'focarNovoLancamento()',label:'Novo lançamento',hi:false});
+  }else{
+    l.filter(i=>calcularStatus(i)==='atrasado').slice(0,2).forEach(i=>{
+      acoes.push({p:0,icon:'⚠️',title:`Regularizar: ${i.descricao}`,desc:`${formatData(i.vencimento)} · ${formatMoeda(i.valor)}`,btn:"abrirModulo('lancamentos')",label:'Ver conta',hi:true});
+    });
+    if(r.saldo<0) acoes.push({p:2,icon:'📉',title:'Revisar despesas do mês',desc:`Saldo negativo de ${formatMoeda(Math.abs(r.saldo))}.`,btn:"abrirModulo('gastos')",label:'Ver orçamento',hi:false});
+    const hoje=new Date(); hoje.setHours(0,0,0,0);
+    const lim3=new Date(hoje); lim3.setDate(lim3.getDate()+3);
+    l.filter(i=>i.vencimento&&calcularStatus(i)!=='pago'&&calcularStatus(i)!=='atrasado'&&new Date(i.vencimento+'T00:00:00')<=lim3).slice(0,2).forEach(i=>{
+      acoes.push({p:3,icon:'📅',title:`Vence em breve: ${i.descricao}`,desc:`${formatData(i.vencimento)} · ${formatMoeda(i.valor)}`,btn:"abrirModulo('lancamentos')",label:'Ver',hi:false});
+    });
+    const metas=getMetasMes();
+    const totalMetas=metas.reduce((s,m)=>s+Number(m.valor||0),0);
+    if(metas.length&&r.saldo<totalMetas) acoes.push({p:4,icon:'🎯',title:'Metas abaixo do esperado',desc:'O saldo do mês ainda não cobre suas metas de economia.',btn:"abrirModulo('metas')",label:'Ver metas',hi:false});
+    if(maior&&r.des>0) acoes.push({p:5,icon:'🏷️',title:`Maior gasto: ${maior[0]}`,desc:`${formatMoeda(maior[1])} neste mês — vale revisar.`,btn:"abrirModulo('gastos')",label:'Orçamento',hi:false});
+    if(!atras&&r.saldo>=0&&!pend&&!acoes.length) acoes.push({p:6,icon:'✅',title:'Mês organizado',desc:'Contas em dia. Que tal reforçar metas ou exportar um relatório?',btn:"abrirModulo('relatorios')",label:'Relatório',hi:false});
+  }
+  acoes.sort((a,b)=>a.p-b.p);
+  const top=acoes.slice(0,4);
+  if(!top.length) return emptyStateHtml({icon:'✅',title:'Nada pendente',msg:'Seu mês está em ordem.',btnLabel:'Novo lançamento',btn:'focarNovoLancamento()'});
+  return '<div class="dash-action-list">'+top.map(a=>`<div class="dash-action-item${a.hi?' priority-high':''}"><div class="dash-action-icon">${a.icon}</div><div class="dash-action-body"><div class="dash-action-title">${esc(a.title)}</div><div class="dash-action-desc">${esc(a.desc)}</div></div><button type="button" class="btn btn-sm ${a.hi?'btn-danger':'btn-outline'}" onclick="${a.btn}">${esc(a.label)}</button></div>`).join('')+'</div>';
+}
+function montarSparklineSaldo(){
+  let m=getMesGlobal()||hojeISO().slice(0,7);
+  const meses=[];
+  for(let i=0;i<6;i++){ if(!m) break; meses.unshift(m); m=mesAnteriorReferencia(m); }
+  if(!meses.length) return emptyStateHtml({icon:'📈',title:'Sem histórico',msg:'Cadastre lançamentos em meses diferentes para ver a evolução.',btnLabel:'Novo lançamento',btn:'focarNovoLancamento()'});
+  const saldos=meses.map(mx=>resumoLancamentos(getLancamentosFiltrados(mx)).saldo);
+  const max=Math.max(...saldos.map(v=>Math.abs(v)),1);
+  const bars=meses.map((mx,i)=>{
+    const v=saldos[i];
+    const h=clamp(Math.round(Math.abs(v)/max*100),v?10:4,100);
+    const cls=v>0?'up':v<0?'down':'flat';
+    return `<div class="dash-spark-col" title="${formatMesExtenso(mx)}: ${formatMoeda(v)}"><div class="dash-spark-bar ${cls}" style="height:${h}%"></div></div>`;
+  }).join('');
+  return `<div class="dash-spark">${bars}</div><p class="pro-muted" style="margin-top:10px;font-size:12px;">Saldo líquido dos últimos ${meses.length} meses — passe o mouse nas barras para detalhes.</p>`;
+}
+function atualizarHeroesModulos(){
+  const mes=getMesGlobal();
+  const txt=formatMesExtenso(mes);
+  document.querySelectorAll('.mod-hero-month').forEach(el=>{el.textContent=mes?txt:'Todos os períodos';});
+  const sub=document.querySelector('.header-subtitle');
+  if(sub) sub.textContent=mes?`Referência: ${txt}`:'Período aberto · selecione um mês para filtrar';
+}
+function verificarOnboardingDash(){
+  const el=document.getElementById('dashOnboarding');
+  if(!el) return;
+  try{if(sessionStorage.getItem('financasCasa_onboard_ok')){el.classList.add('hidden');return;}}catch(e){}
+  if(!dados.length) el.classList.remove('hidden'); else el.classList.add('hidden');
+}
+function fecharOnboardingDash(){
+  try{sessionStorage.setItem('financasCasa_onboard_ok','1');}catch(e){}
+  document.getElementById('dashOnboarding')?.classList.add('hidden');
+}
+window.fecharOnboardingDash=fecharOnboardingDash;
 function hojeISO(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
 function baixarArquivo(nome,conteudo,tipo){const b=new Blob([conteudo],{type:tipo});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download=nome;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(u);}
 function csvValor(v){return `"${String(v??'').replace(/"/g,'""')}"`;}
@@ -4265,17 +4610,22 @@ function filtrarLancamentosAvancado(){
 function renderDashboard(){
   const l=getLancamentosFiltrados();
   const r=resumoLancamentos(l);
+  const mes=getMesGlobal();
+  const mesAnt=mesAnteriorReferencia(mes);
+  const lAnt=mesAnt?getLancamentosFiltrados(mesAnt):[];
+  const rAnt=resumoLancamentos(lAnt);
   const atras=l.filter(i=>calcularStatus(i)==='atrasado').length;
   const pend=l.filter(i=>calcularStatus(i)==='pendente').length;
   const cat=agruparPorCategoria(l);
   const maior=Object.entries(cat).sort((a,b)=>b[1]-a[1])[0];
   const tx=r.rec?clamp((r.des/r.rec)*100,0,999):0;
   const temDados=!!l.length;
-  const mes=getMesGlobal();
+  const heroGreet=document.getElementById('dashHeroGreeting');
   const heroMes=document.getElementById('dashHeroMes');
   const heroStatus=document.getElementById('dashHeroStatus');
   const heroFrase=document.getElementById('dashHeroFrase');
   const heroSaldoSub=document.getElementById('dashHeroSaldoSub');
+  if(heroGreet) heroGreet.innerHTML=`${saudacaoHorario()}, bem-vindo ao <span>FinançasCasa</span>.`;
   if(heroMes) heroMes.textContent=formatMesExtenso(mes);
   if(heroFrase) heroFrase.textContent=gerarInsightDashboard(l,r,atras,pend);
   if(heroStatus){
@@ -4283,10 +4633,18 @@ function renderDashboard(){
     heroStatus.textContent=st.txt;
     heroStatus.className='dash-hero-status-pill '+st.cls;
   }
+  const elTrendRec=document.getElementById('dashTrendReceitas');
+  const elTrendDes=document.getElementById('dashTrendDespesas');
+  const elTrendSal=document.getElementById('dashTrendSaldo');
   if(temDados){
     dashSaldo.innerText=formatMoeda(r.saldo);
     dashSaldo.className='dash-balance-value '+(r.saldo>=0?'c-green':'c-red');
-    if(heroSaldoSub) heroSaldoSub.textContent=r.saldo>=0?'Receitas cobrem as despesas deste mês.':'Despesas acima das receitas no período selecionado.';
+    if(heroSaldoSub){
+      const diff=r.saldo-rAnt.saldo;
+      heroSaldoSub.textContent=r.saldo>=0
+        ?(mesAnt&&lAnt.length?`Receitas cobrem despesas · saldo ${diff>=0?'subiu':'caiu'} ${formatMoeda(Math.abs(diff))} vs mês anterior.`:'Receitas cobrem as despesas deste mês.')
+        :'Despesas acima das receitas no período selecionado.';
+    }
     dashReceitas.innerText=formatMoeda(r.rec);
     dashReceitas.className='c-green';
     dashDespesas.innerText=formatMoeda(r.des);
@@ -4298,6 +4656,9 @@ function renderDashboard(){
     dashSaudeCard.innerText=atras?'Crítica':r.saldo>=0?'Boa':'Atenção';
     dashSaudeCard.className='';
     dashSaudeCard.style.color=atras?'var(--danger)':r.saldo>=0?'var(--success)':'var(--warning)';
+    if(elTrendRec) elTrendRec.innerHTML=formatTrendHtml(r.rec,rAnt.rec);
+    if(elTrendDes) elTrendDes.innerHTML=formatTrendHtml(r.des,rAnt.des,{invert:true});
+    if(elTrendSal) elTrendSal.innerHTML=formatTrendHtml(r.saldo,rAnt.saldo);
   }else{
     dashSaldo.innerText='Sem dados suficientes';
     dashSaldo.className='dash-balance-value kpi-empty';
@@ -4311,7 +4672,16 @@ function renderDashboard(){
     dashSaudeCard.innerText='Sem dados suficientes';
     dashSaudeCard.className='kpi-empty';
     dashSaudeCard.style.color='var(--text-muted)';
+    if(elTrendRec) elTrendRec.innerHTML='';
+    if(elTrendDes) elTrendDes.innerHTML='';
+    if(elTrendSal) elTrendSal.innerHTML='';
   }
+  const elCompare=document.getElementById('dashCompareHtml');
+  if(elCompare) elCompare.innerHTML=montarComparativoStrip(r,rAnt,mes,mesAnt);
+  const elAcoes=document.getElementById('dashProximasAcoesHtml');
+  if(elAcoes) elAcoes.innerHTML=montarProximasAcoes(l,r,atras,pend,maior);
+  const elSpark=document.getElementById('dashSparkHtml');
+  if(elSpark) elSpark.innerHTML=montarSparklineSaldo();
   dashResumoIAHtml.innerHTML=!l.length?emptyStateHtml({icon:'📊',title:'Sem lançamentos no período',msg:'Cadastre movimentações para ver indicadores e alertas inteligentes.',btnLabel:'Novo lançamento',btn:'focarNovoLancamento()'}):`<div class="pro-summary-strip"><div class="mini-stat"><span>Comprometimento</span><strong>${tx.toFixed(1)}%</strong></div><div class="mini-stat"><span>Maior categoria</span><strong>${maior?esc(maior[0]):'Sem dados'}</strong></div><div class="mini-stat"><span>Em aberto</span><strong>${r.aberto}</strong></div><div class="mini-stat"><span>Saldo</span><strong class="${r.saldo>=0?'c-green':'c-red'}">${formatMoeda(r.saldo)}</strong></div></div><div class="ia-alert ${atras?'danger':r.saldo>=0?'success':'warning'}">${atras?`Existem ${atras} lançamento(s) atrasado(s).`:r.saldo>=0?'Período positivo. Acompanhe vencimentos e metas.':'Despesas acima das receitas. Revise prioridades.'}</div>`;
   const hoje=new Date(); hoje.setHours(0,0,0,0);
   const lim=new Date(hoje); lim.setDate(lim.getDate()+7);
@@ -4319,6 +4689,7 @@ function renderDashboard(){
   dashProxVencHtml.innerHTML=prox.length?prox.map(i=>`<div class="list-row"><div class="pro-card-title"><span>${esc(i.descricao)}</span><strong class="${i.tipo==='receita'?'c-green':'c-red'}">${formatMoeda(i.valor)}</strong></div><div class="pro-muted">${formatData(i.vencimento)} · ${esc(i.categoria)} · ${calcularStatus(i)}</div></div>`).join(''):emptyStateHtml({icon:'✅',title:'Tudo em dia',msg:'Nenhum vencimento pendente nos próximos 7 dias.',btnLabel:'Ver lançamentos',btn:"abrirModulo('lancamentos')"});
   dashCategoriasHtml.innerHTML=Object.keys(cat).length?Object.entries(cat).sort((a,b)=>b[1]-a[1]).map(([c,v])=>`<div class="bar-container"><div class="bar-header"><span>${esc(c)}</span><span>${formatMoeda(v)}</span></div><div class="bar-track"><div class="bar-fill bg-danger" style="width:${clamp((v/(r.des||1))*100,0,100)}%"></div></div></div>`).join(''):emptyStateHtml({icon:'📉',title:'Sem despesas no período',msg:'Não há despesas registradas para este mês.',btnLabel:'Novo lançamento',btn:'focarNovoLancamento()'});
   dashRankingHtml.innerHTML=l.filter(i=>i.tipo==='despesa').sort((a,b)=>b.valor-a.valor).slice(0,6).map((i,n)=>`<div class="list-row"><div class="pro-card-title"><span>${n+1}. ${esc(i.descricao)}</span><strong class="c-red">${formatMoeda(i.valor)}</strong></div><div class="pro-muted">${esc(i.categoria)} · ${formatData(i.vencimento)}</div></div>`).join('')||emptyStateHtml({icon:'📉',title:'Sem despesas no período',msg:'Cadastre despesas para ver o ranking do mês.',btnLabel:'Novo lançamento',btn:'focarNovoLancamento()'});
+  verificarOnboardingDash();
 }
 function renderLancamentos() {
   const cs = document.getElementById('fLancCategoria');
@@ -5421,7 +5792,7 @@ function confirmarImportacaoBackup(){
   showToast('Backup importado com sucesso!');
 }
 function limparTodosDados(){if(!confirm('Deseja apagar todos os dados locais do FinançasCasa? Esta ação não pode ser desfeita.'))return;if(!confirm('Confirme novamente: todos os lançamentos, metas, listas e configurações serão removidos.'))return;['dados','metas','orcamentos','futuros','recorrentes','parcelamentos','categorias','categoriasDetalhes','listaMercado','historicoCopras','promocoesMercado','chatHistorico'].forEach(k=>localStorage.removeItem('financasCasa_'+k));location.reload();}
-processarDadosGlobais=function(){aprimorarEstruturaVisual();popularSelectCategorias();popularDatalistDescricao();analisarIA();renderDashboard();renderLancamentos();renderMetas();renderOrcamento();renderFuturo();renderRecorrentes();renderParcelamentos();renderCategorias();renderListaMercado();renderBackupInfo();gerarRelatorioTela();const mes=getMesGlobal(),qtd=getLancamentosFiltrados(mes).length;if(badgeLanc){if(qtd>0){badgeLanc.innerText=qtd;badgeLanc.classList.remove('hidden');}else badgeLanc.classList.add('hidden');}if(badgeIA){if(iaContext.qtdAlertas>0){badgeIA.innerText=iaContext.qtdAlertas;badgeIA.classList.remove('hidden');badgeIA.classList.add('badge-alert');}else badgeIA.classList.add('hidden');}if(!appValidado){validarAppLocal();appValidado=true;}};
+processarDadosGlobais=function(){aprimorarEstruturaVisual();popularSelectCategorias();popularDatalistDescricao();analisarIA();renderDashboard();renderLancamentos();renderMetas();renderOrcamento();renderFuturo();renderRecorrentes();renderParcelamentos();renderCategorias();renderListaMercado();renderBackupInfo();gerarRelatorioTela();atualizarHeroesModulos();const mes=getMesGlobal(),qtd=getLancamentosFiltrados(mes).length;if(badgeLanc){if(qtd>0){badgeLanc.innerText=qtd;badgeLanc.classList.remove('hidden');}else badgeLanc.classList.add('hidden');}if(badgeIA){if(iaContext.qtdAlertas>0){badgeIA.innerText=iaContext.qtdAlertas;badgeIA.classList.remove('hidden');badgeIA.classList.add('badge-alert');}else badgeIA.classList.add('hidden');}if(!appValidado){validarAppLocal();appValidado=true;}};
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>{aprimorarEstruturaVisual();document.body.classList.toggle('modo-compacto',config.densidade==='compacto');document.body.classList.toggle('theme-dark',config.tema==='escuro');processarDadosGlobais();});else{aprimorarEstruturaVisual();document.body.classList.toggle('modo-compacto',config.densidade==='compacto');document.body.classList.toggle('theme-dark',config.tema==='escuro');processarDadosGlobais();}
 </script>
 </body>
