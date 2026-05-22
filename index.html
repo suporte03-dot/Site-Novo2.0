@@ -1662,18 +1662,141 @@ async function excluirLancamento(id) {
   showToast("Excluído", "warning"); 
 }
 
-async function adicionarCategoria() {
-  const nc = document.getElementById('fNovaCat').value.trim(); if(!nc) return;
-  if(categorias.includes(nc)) return showToast("Categoria já existe.", "warning");
-  if(USAR_SUPABASE && supabase && currentGroupId) { await supabase.from('categorias').insert([{ grupo_id: currentGroupId, nome: nc }]); carregarTudoSupabase(); }
-  else { categorias.push(nc); salvarLocal('categorias', categorias); processarDadosGlobais(); }
-  document.getElementById('fNovaCat').value = ''; showToast("Adicionada!"); 
+const CATEGORIAS_PADRAO = ['Moradia', 'Alimentação', 'Transporte', 'Saúde', 'Educação', 'Lazer', 'Outros'];
+let editCatOriginal = null;
+
+function statsCategoriaMes(nome) {
+  const mes = getMesGlobal();
+  const lista = getLancamentosFiltrados(mes).filter(i => i.categoria === nome);
+  const qtd = lista.length;
+  const totalDesp = lista.filter(i => i.tipo === 'despesa').reduce((s, i) => s + Number(i.valor || 0), 0);
+  const totalRec = lista.filter(i => i.tipo === 'receita').reduce((s, i) => s + Number(i.valor || 0), 0);
+  return { qtd, totalDesp, totalRec, movimentado: totalDesp + totalRec };
 }
+
+function sincronizarBuscaLanc() {
+  const b = document.getElementById('buscaLanc');
+  const bp = document.getElementById('buscaLancPro');
+  if (b && bp) bp.value = b.value;
+}
+
+function atualizarChipsLanc() {
+  const t = document.getElementById('fLancTipo')?.value || '';
+  const s = document.getElementById('fLancStatus')?.value || '';
+  let chip = '';
+  if (t === 'receita' || t === 'despesa') chip = t;
+  else if (['pago', 'pendente', 'atrasado'].includes(s)) chip = s;
+  document.querySelectorAll('.lanc-chip').forEach(b => {
+    b.classList.toggle('active', b.dataset.chip === chip);
+  });
+}
+
+function aplicarChipLanc(chip) {
+  const tipo = document.getElementById('fLancTipo');
+  const status = document.getElementById('fLancStatus');
+  if (!tipo || !status) return;
+  tipo.value = '';
+  status.value = '';
+  if (chip === 'receita' || chip === 'despesa') tipo.value = chip;
+  else if (['pago', 'pendente', 'atrasado'].includes(chip)) status.value = chip;
+  document.querySelectorAll('.lanc-chip').forEach(b => {
+    b.classList.toggle('active', b.dataset.chip === chip);
+  });
+  renderLancamentos();
+}
+
+async function adicionarCategoria() {
+  const nc = document.getElementById('fNovaCat').value.trim();
+  if (!nc) return showToast('Informe o nome da categoria.', 'warning');
+
+  if (editCatOriginal) {
+    if (nc !== editCatOriginal && categorias.includes(nc)) return showToast('Categoria já existe.', 'warning');
+    const idx = categorias.indexOf(editCatOriginal);
+    if (idx === -1) return cancelarEdicaoCategoria();
+    dados.forEach(d => { if (d.categoria === editCatOriginal) d.categoria = nc; });
+    if (categoriasDetalhes[editCatOriginal]) {
+      categoriasDetalhes[nc] = { ...categoriasDetalhes[editCatOriginal] };
+      delete categoriasDetalhes[editCatOriginal];
+    }
+    categorias[idx] = nc;
+    if (USAR_SUPABASE && supabase && currentGroupId) { /* offline */ }
+    else {
+      salvarLocal('dados', dados);
+      salvarLocal('categorias', categorias);
+      salvarLocal('categoriasDetalhes', categoriasDetalhes);
+      processarDadosGlobais();
+    }
+    cancelarEdicaoCategoria();
+    showToast('Categoria atualizada!');
+    return;
+  }
+
+  if (categorias.includes(nc)) return showToast('Categoria já existe.', 'warning');
+  const det = {
+    icone: (document.getElementById('fNovaCatIcon')?.value || nc[0]).trim().slice(0, 2).toUpperCase() || nc[0].toUpperCase(),
+    cor: document.getElementById('fNovaCatCor')?.value || '#1a5f4a'
+  };
+  if (USAR_SUPABASE && supabase && currentGroupId) { await supabase.from('categorias').insert([{ grupo_id: currentGroupId, nome: nc }]); carregarTudoSupabase(); }
+  else {
+    categorias.push(nc);
+    categoriasDetalhes[nc] = det;
+    salvarLocal('categorias', categorias);
+    salvarLocal('categoriasDetalhes', categoriasDetalhes);
+    processarDadosGlobais();
+  }
+  document.getElementById('fNovaCat').value = '';
+  const ic = document.getElementById('fNovaCatIcon'); if (ic) ic.value = '';
+  showToast('Categoria adicionada!');
+}
+
+function editarCategoria(cat) {
+  editCatOriginal = cat;
+  document.getElementById('fNovaCat').value = cat;
+  const ic = document.getElementById('fNovaCatIcon');
+  const co = document.getElementById('fNovaCatCor');
+  if (ic) ic.value = iconCategoria(cat);
+  if (co) co.value = corCategoria(cat);
+  const t = document.getElementById('formCatTitle'); if (t) t.innerText = 'Editar categoria';
+  const b = document.getElementById('btnSalvarCat'); if (b) b.innerText = 'Salvar alterações';
+  document.getElementById('btnCancelCat')?.classList.remove('hidden');
+  document.getElementById('fNovaCat')?.focus();
+}
+
+function cancelarEdicaoCategoria() {
+  editCatOriginal = null;
+  document.getElementById('fNovaCat').value = '';
+  const ic = document.getElementById('fNovaCatIcon'); if (ic) ic.value = '';
+  const co = document.getElementById('fNovaCatCor'); if (co) co.value = '#1a5f4a';
+  const t = document.getElementById('formCatTitle'); if (t) t.innerText = 'Nova categoria';
+  const b = document.getElementById('btnSalvarCat'); if (b) b.innerText = 'Adicionar categoria';
+  document.getElementById('btnCancelCat')?.classList.add('hidden');
+}
+
 async function removerCategoria(cat) {
-  if(!confirm(`Excluir a categoria "${cat}"?`)) return;
-  if(USAR_SUPABASE && supabase && currentGroupId) { await supabase.from('categorias').delete().eq('grupo_id', currentGroupId).eq('nome', cat); carregarTudoSupabase(); }
-  else { categorias = categorias.filter(c=>c!==cat); salvarLocal('categorias', categorias); processarDadosGlobais(); }
-  showToast("Excluída."); 
+  if (CATEGORIAS_PADRAO.includes(cat)) {
+    return showToast('Categorias padrão não podem ser excluídas.', 'warning');
+  }
+  const usoTotal = dados.filter(d => d.categoria === cat).length;
+  const st = statsCategoriaMes(cat);
+  let msg = `Excluir a categoria "${cat}"?`;
+  if (usoTotal > 0) {
+    msg = `A categoria "${cat}" está em ${usoTotal} lançamento(s) no sistema`;
+    if (st.qtd > 0) msg += ` (${st.qtd} no mês atual, total ${formatMoeda(st.movimentado)})`;
+    msg += '. Deseja excluir mesmo assim? Os lançamentos manterão o nome da categoria até você editá-los.';
+  }
+  if (!confirm(msg)) return;
+  if (USAR_SUPABASE && supabase && currentGroupId) {
+    await supabase.from('categorias').delete().eq('grupo_id', currentGroupId).eq('nome', cat);
+    carregarTudoSupabase();
+  } else {
+    categorias = categorias.filter(c => c !== cat);
+    delete categoriasDetalhes[cat];
+    salvarLocal('categorias', categorias);
+    salvarLocal('categoriasDetalhes', categoriasDetalhes);
+    processarDadosGlobais();
+  }
+  if (editCatOriginal === cat) cancelarEdicaoCategoria();
+  showToast('Categoria excluída.', 'warning');
 }
 
 async function salvarMeta() {
