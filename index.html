@@ -59,7 +59,7 @@
   }
   
   /* Estrutura Principal */
-  .app-layout { display: flex; height: 100vh; width: 100vw; }
+  .app-layout { display: flex; height: 100vh; width: 100vw; min-height: 0; overflow: visible; }
   
   /* Sidebar */
   .sidebar {
@@ -75,17 +75,17 @@
     margin-left: 0;
     border-right: 1px solid var(--sidebar-border);
     min-height: 0;
-    overflow: hidden;
+    overflow: visible;
   }
   .sidebar.collapsed-pc { margin-left: calc(var(--sidebar-w) * -1); }
 
   .btn-collapse-pc {
     position: absolute;
-    right: -13px;
+    right: -14px;
     top: 50%;
     transform: translateY(-50%);
-    width: 26px;
-    height: 26px;
+    width: 28px;
+    height: 28px;
     background: var(--card-bg);
     color: var(--text-light);
     border: 1px solid var(--border);
@@ -94,9 +94,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1001;
+    z-index: 1100;
     transition: var(--transition);
-    box-shadow: var(--shadow);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    pointer-events: auto;
   }
   .btn-collapse-pc:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
   .btn-collapse-pc svg { transition: transform 0.3s ease; }
@@ -109,6 +110,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    flex-shrink: 0;
   }
   .sidebar-brand {
     display: flex;
@@ -145,16 +147,23 @@
   .sidebar-menu {
     flex: 1 1 auto;
     min-height: 0;
+    max-height: calc(100vh - 130px);
     overflow-y: auto;
     overflow-x: hidden;
-    padding: 12px 10px 24px;
+    padding: 12px 8px 32px 10px;
     display: flex;
     flex-direction: column;
     gap: 10px;
     -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.35) rgba(255, 255, 255, 0.06);
   }
-  .sidebar-menu::-webkit-scrollbar { width: 4px; }
-  .sidebar-menu::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.12); border-radius: 4px; }
+  .sidebar-menu::-webkit-scrollbar { width: 8px; }
+  .sidebar-menu::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.06); border-radius: 8px; margin: 4px 0; }
+  .sidebar-menu::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.32); border-radius: 8px; border: 2px solid transparent; background-clip: padding-box; }
+  .sidebar-menu::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.5); border: 2px solid transparent; background-clip: padding-box; }
   .menu-section {
     flex-shrink: 0;
     flex-grow: 0;
@@ -669,7 +678,9 @@
   body.modo-celular table { min-width: 520px; }
   body.modo-celular .report-table { min-width: 100%; width: 100%; }
   body.modo-celular .table-responsive { max-width: 100%; -webkit-overflow-scrolling: touch; }
-  body.modo-pc .sidebar { position: sticky; top: 0; height: 100vh; max-height: 100vh; overflow: hidden; align-self: flex-start; }
+  body.modo-pc .sidebar { position: sticky; top: 0; height: 100vh; max-height: 100vh; overflow: visible; align-self: flex-start; }
+  body.modo-pc .btn-collapse-pc { display: flex; }
+  body.modo-celular .btn-collapse-pc { display: none; }
   body.modo-pc .modules-wrapper { padding: 28px 32px 40px; }
   body.modo-pc .panel { margin-bottom: 0; }
 
