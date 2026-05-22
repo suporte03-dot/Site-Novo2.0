@@ -473,14 +473,20 @@
     text-align: center;
   }
   .empty-state {
-    padding: 28px 20px;
+    padding: 32px 24px;
     text-align: center;
     color: var(--text-light);
     font-size: 13px;
     background: var(--bg);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-lg);
     border: 1px dashed var(--border);
   }
+  .empty-state-icon { font-size: 32px; line-height: 1; margin-bottom: 12px; opacity: 0.9; }
+  .empty-state-title { font-size: 15px; font-weight: 800; color: var(--dark); margin-bottom: 8px; }
+  .empty-state-text { font-size: 13px; line-height: 1.55; color: var(--text-light); margin: 0 0 16px; max-width: 360px; margin-left: auto; margin-right: auto; }
+  .empty-state-btn { min-width: 160px; }
+  .empty-row td { padding: 0 !important; border: none !important; background: transparent !important; }
+  body.theme-dark .empty-state { background: rgba(255,255,255,0.03); }
   .c-green { color: var(--success) !important; font-weight: 700; }
   .c-red { color: var(--danger) !important; font-weight: 700; }
   .bg-success { background: var(--success-soft); color: var(--success); }
@@ -535,10 +541,10 @@
   .layout-lancamentos { display: grid; grid-template-columns: 380px 1fr; gap: 25px; align-items: start; }
   body.modo-celular .layout-lancamentos { grid-template-columns: 1fr; }
 
-  body.modo-celular .view-tabela { display: none; }
+  body.modo-celular .view-tabela.has-mobile-alt { display: none !important; }
   body.modo-celular .view-lista { display: block; }
-  body.modo-pc .view-tabela { display: block; }
   body.modo-pc .view-lista { display: none; }
+  body.modo-pc .view-tabela { display: block; }
   
   .mobile-card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 18px; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.04); display: flex; flex-direction: column; gap: 10px; }
   .mobile-card-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
@@ -549,6 +555,18 @@
 
   .overlay-menu { display: none; position: fixed; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.5); z-index: 999; }
   body.modo-celular .overlay-menu.active { display: block; }
+  body.modo-celular { overflow-x: hidden; }
+  body.modo-celular .main-content { overflow-x: hidden; }
+  body.modo-celular .modules-wrapper { overflow-x: hidden; }
+  body.modo-celular .btn { min-height: 44px; padding-top: 10px; padding-bottom: 10px; }
+  body.modo-celular .btn-sm { min-height: 40px; }
+  body.modo-celular .ia-help-btn { min-height: 44px; padding: 12px 14px; font-size: 13px; }
+  body.modo-celular table { min-width: 520px; }
+  body.modo-celular .report-table { min-width: 100%; width: 100%; }
+  body.modo-celular .table-responsive { max-width: 100%; -webkit-overflow-scrolling: touch; }
+  body.modo-pc .sidebar { position: sticky; top: 0; height: 100vh; overflow-y: auto; align-self: flex-start; }
+  body.modo-pc .modules-wrapper { padding: 28px 32px 40px; }
+  body.modo-pc .panel { margin-bottom: 0; }
 
   /* Toast Notifications - Premium */
   #toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
@@ -1174,6 +1192,15 @@
     body.print-ia .ia-print-area { display: block !important; border: none !important; box-shadow: none !important; }
     body.print-ia { background: #fff !important; color: #000 !important; }
   }
+
+  /* ===== ETAPA 8: POLIMENTO FINAL ===== */
+  .modules-wrapper { width: 100%; }
+  .panel + .panel { margin-top: 0; }
+  .table-lanc { min-width: 760px; }
+  body.modo-celular .mobile-card { box-shadow: var(--shadow); }
+  body.modo-celular .global-filter { flex-wrap: wrap; gap: 8px; }
+  body.modo-celular .global-filter input[type="month"] { min-width: 0; flex: 1; }
+  .validacao-offline { display: none; }
 </style>
 </head>
 <body class="modo-pc">
@@ -1484,7 +1511,7 @@
 
             <div class="pro-summary-strip lanc-summary" id="lancResumoFiltrado"></div>
 
-            <div class="table-responsive view-tabela">
+            <div class="table-responsive view-tabela has-mobile-alt">
               <table class="table-lanc">
                 <thead>
                   <tr>
@@ -3212,7 +3239,7 @@ function renderListaMercado() {
   if (el) {
     el.innerHTML = listaMercado.length
       ? listaMercado.map(i => renderItemMercadoCard(i)).join('')
-      : '<div class="pro-card">Sua lista está vazia. Use as sugestões rápidas ou adicione itens manualmente.</div>';
+      : emptyStateHtml({icon:'🛒',title:'Sua lista está vazia',msg:'Use as sugestões rápidas ou adicione itens manualmente à lista de mercado.',btnLabel:'Adicionar item',btn:'focarItemMercado()'});
   }
   renderModoCompraMercado();
   renderHistoricoMercado();
@@ -3228,7 +3255,7 @@ function renderModoCompraMercado(mensagem) {
     return;
   }
   if (!listaMercado.length) {
-    el.innerHTML = '<div class="pro-card">Adicione itens à lista antes de iniciar a compra.</div>';
+    el.innerHTML = emptyStateHtml({icon:'🛒',title:'Lista vazia',msg:'Adicione itens à lista antes de iniciar o Modo Compra.',btnLabel:'Adicionar item',btn:'focarItemMercado()'});
     return;
   }
   el.innerHTML = listaMercado.map(i => renderModoCompraItem(i)).join('');
@@ -3440,7 +3467,7 @@ function renderHistoricoMercado() {
         <button type="button" class="btn btn-danger btn-sm" onclick="excluirHistoricoCompra('${h.id}')">Excluir</button>
       </div>
     </div>`;
-  }).join('') : '<div class="pro-card">Nenhuma compra no histórico.</div>';
+  }).join('') : emptyStateHtml({icon:'📦',title:'Nenhuma compra no histórico',msg:'Finalize compras no Modo Compra para registrar o histórico.',btnLabel:'Ir para lista',btn:"abrirModulo('mercado')"});
 }
 
 function visualizarHistoricoCompra(id) {
@@ -3516,7 +3543,7 @@ function renderPromocoesMercado() {
   el.innerHTML = promocoesMercado.length ? promocoesMercado.slice().reverse().map(p => `<div class="hub-promo-card">
     <div><strong>${escapeHtmlMercado(p.desc)}</strong><div class="pro-muted" style="margin-top:4px;">${new Date(p.data).toLocaleDateString('pt-BR')}</div></div>
     <button type="button" class="btn btn-danger btn-sm" onclick="removerPromocao('${p.id}')">Excluir</button>
-  </div>`).join('') : '<div class="pro-card">Nenhuma promoção anotada.</div>';
+  </div>`).join('') : emptyStateHtml({icon:'🏷️',title:'Nenhuma promoção anotada',msg:'Salve ofertas do Hub para consultar depois.',btnLabel:'Abrir Hub',btn:"abrirModulo('mercado');abrirAbaMercado('hub')"});
 }
 
 function renderSugestoesMercado() {
@@ -3571,6 +3598,27 @@ let relatorioAtual = { titulo: '', tipo: 'geral', periodo: '', emitido: '', resu
 let iaContext = { qtdAlertas: 0 };
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function escAttr(v){return esc(v).replace(/`/g,'&#96;');}
+function emptyStateHtml(o){
+  if(typeof o==='string') o={msg:o};
+  const icon=o.icon||'📋', title=o.title||'', msg=o.msg||'';
+  const btn=o.btn?`<button type="button" class="btn btn-primary btn-sm empty-state-btn" onclick="${o.btn}">${esc(o.btnLabel||'Começar')}</button>`:'';
+  return `<div class="empty-state"><div class="empty-state-icon" aria-hidden="true">${icon}</div>${title?`<div class="empty-state-title">${esc(title)}</div>`:''}<p class="empty-state-text">${esc(msg)}</p>${btn}</div>`;
+}
+function emptyStateRow(cols,o){return `<tr class="empty-row"><td colspan="${cols}">${emptyStateHtml(o)}</td></tr>`;}
+function focarNovoLancamento(){abrirModulo('lancamentos');setTimeout(()=>document.getElementById('panelFormLanc')?.scrollIntoView({behavior:'smooth'}),120);}
+function focarNovaMeta(){abrirModulo('metas');setTimeout(()=>document.getElementById('fMetaNome')?.focus(),120);}
+function focarNovoOrcamento(){abrirModulo('gastos');setTimeout(()=>document.getElementById('fOrcValor')?.focus(),120);}
+function focarNovoFuturo(){abrirModulo('planejamento');setTimeout(()=>document.getElementById('fFutDesc')?.focus(),120);}
+function focarNovoRecorrente(){abrirModulo('recorrentes');setTimeout(()=>document.getElementById('fRecDesc')?.focus(),120);}
+function focarNovoParcelamento(){abrirModulo('parcelamentos');setTimeout(()=>document.getElementById('fParDesc')?.focus(),120);}
+function focarItemMercado(){abrirModulo('mercado');setTimeout(()=>document.getElementById('inputItemMercado')?.focus(),120);}
+function irParaBackup(){abrirModulo('backup');}
+function validarAppLocal(){
+  ['dashboard','assistente','lancamentos','metas','gastos','planejamento','recorrentes','parcelamentos','mercado','categorias','relatorios','configuracoes','backup'].forEach(m=>{
+    if(!document.getElementById('mod-'+m)) console.warn('[FinançasCasa] Módulo ausente:',m);
+  });
+  try{localStorage.setItem('financasCasa_ping','1');localStorage.removeItem('financasCasa_ping');}catch(e){console.error('[FinançasCasa] localStorage indisponível:',e);}
+}
 function clamp(v,min,max){return Math.max(min,Math.min(max,v));}
 function hojeISO(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
 function baixarArquivo(nome,conteudo,tipo){const b=new Blob([conteudo],{type:tipo});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download=nome;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(u);}
@@ -3676,7 +3724,7 @@ function aplicarTipoRelatorio(l,tipo){
   return l;
 }
 function montarTabelaRelatorio(colunas,linhas){
-  if(!linhas.length) return '<div class="pro-card">Nenhum registro encontrado para os filtros selecionados.</div>';
+  if(!linhas.length) return emptyStateHtml({icon:'📊',title:'Nenhum relatório disponível',msg:'Não há registros para os filtros selecionados. Ajuste o período ou cadastre lançamentos.',btnLabel:'Novo lançamento',btn:'focarNovoLancamento()'});
   return `<div class="report-table-wrap"><table class="report-table"><thead><tr>${colunas.map(c=>`<th>${esc(c.label)}</th>`).join('')}</tr></thead><tbody>${linhas.map(row=>`<tr>${colunas.map(c=>`<td>${row[c.key]??''}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 }
 function obterDadosRelatorio(tipo){
@@ -3784,7 +3832,7 @@ function filtrarLancamentosAvancado(){
   if (pgto) l = l.filter(i => (i.formaPagamento || 'Outro') === pgto);
   return l;
 }
-function renderDashboard(){const l=getLancamentosFiltrados();const r=resumoLancamentos(l);const atras=l.filter(i=>calcularStatus(i)==='atrasado').length;const pend=l.filter(i=>calcularStatus(i)==='pendente').length;const cat=agruparPorCategoria(l);const maior=Object.entries(cat).sort((a,b)=>b[1]-a[1])[0];const tx=r.rec?clamp((r.des/r.rec)*100,0,999):0;dashReceitas.innerText=formatMoeda(r.rec);dashDespesas.innerText=formatMoeda(r.des);dashSaldo.innerText=formatMoeda(r.saldo);dashSaldo.className=r.saldo>=0?'c-green':'c-red';dashPendentes.innerText=pend+atras;dashPagas.innerText=r.pago;dashSaudeCard.innerText=!l.length?'-':atras?'Critica':r.saldo>=0?'Boa':'Atencao';dashSaudeCard.style.color=atras?'var(--danger)':r.saldo>=0?'var(--success)':'var(--warning)';dashResumoIAHtml.innerHTML=`<div class="pro-summary-strip"><div class="mini-stat"><span>Comprometimento</span><strong>${tx.toFixed(1)}%</strong></div><div class="mini-stat"><span>Maior categoria</span><strong>${maior?esc(maior[0]):'-'}</strong></div><div class="mini-stat"><span>Em aberto</span><strong>${r.aberto}</strong></div><div class="mini-stat"><span>Saldo</span><strong class="${r.saldo>=0?'c-green':'c-red'}">${formatMoeda(r.saldo)}</strong></div></div><div class="ia-alert ${atras?'danger':r.saldo>=0?'success':'warning'}">${atras?`Existem ${atras} lancamento(s) atrasado(s).`:r.saldo>=0?'Periodo positivo. Acompanhe vencimentos e metas.':'Despesas acima das receitas. Revise prioridades.'}</div>`;const hoje=new Date();hoje.setHours(0,0,0,0);const lim=new Date(hoje);lim.setDate(lim.getDate()+7);const prox=l.filter(i=>i.vencimento&&calcularStatus(i)!=='pago'&&new Date(i.vencimento+'T00:00:00')<=lim).sort((a,b)=>new Date(a.vencimento)-new Date(b.vencimento)).slice(0,6);dashProxVencHtml.innerHTML=prox.length?prox.map(i=>`<div class="list-row"><div class="pro-card-title"><span>${esc(i.descricao)}</span><strong class="${i.tipo==='receita'?'c-green':'c-red'}">${formatMoeda(i.valor)}</strong></div><div class="pro-muted">${formatData(i.vencimento)} - ${esc(i.categoria)} - ${calcularStatus(i)}</div></div>`).join(''):'<div class="pro-card">Tudo em dia nos proximos 7 dias.</div>';dashCategoriasHtml.innerHTML=Object.keys(cat).length?Object.entries(cat).sort((a,b)=>b[1]-a[1]).map(([c,v])=>`<div class="bar-container"><div class="bar-header"><span>${esc(c)}</span><span>${formatMoeda(v)}</span></div><div class="bar-track"><div class="bar-fill bg-danger" style="width:${clamp((v/(r.des||1))*100,0,100)}%"></div></div></div>`).join(''):'<div class="pro-card">Sem despesas.</div>';dashRankingHtml.innerHTML=l.filter(i=>i.tipo==='despesa').sort((a,b)=>b.valor-a.valor).slice(0,6).map((i,n)=>`<div class="list-row"><div class="pro-card-title"><span>${n+1}. ${esc(i.descricao)}</span><strong class="c-red">${formatMoeda(i.valor)}</strong></div><div class="pro-muted">${esc(i.categoria)} - ${formatData(i.vencimento)}</div></div>`).join('')||'<div class="pro-card">Sem despesas.</div>';}
+function renderDashboard(){const l=getLancamentosFiltrados();const r=resumoLancamentos(l);const atras=l.filter(i=>calcularStatus(i)==='atrasado').length;const pend=l.filter(i=>calcularStatus(i)==='pendente').length;const cat=agruparPorCategoria(l);const maior=Object.entries(cat).sort((a,b)=>b[1]-a[1])[0];const tx=r.rec?clamp((r.des/r.rec)*100,0,999):0;dashReceitas.innerText=formatMoeda(r.rec);dashDespesas.innerText=formatMoeda(r.des);dashSaldo.innerText=formatMoeda(r.saldo);dashSaldo.className=r.saldo>=0?'c-green':'c-red';dashPendentes.innerText=pend+atras;dashPagas.innerText=r.pago;dashSaudeCard.innerText=!l.length?'-':atras?'Critica':r.saldo>=0?'Boa':'Atencao';dashSaudeCard.style.color=atras?'var(--danger)':r.saldo>=0?'var(--success)':'var(--warning)';dashResumoIAHtml.innerHTML=!l.length?emptyStateHtml({icon:'📊',title:'Sem lançamentos no período',msg:'Cadastre movimentações para ver indicadores e alertas.',btnLabel:'Novo lançamento',btn:'focarNovoLancamento()'}):`<div class="pro-summary-strip"><div class="mini-stat"><span>Comprometimento</span><strong>${tx.toFixed(1)}%</strong></div><div class="mini-stat"><span>Maior categoria</span><strong>${maior?esc(maior[0]):'-'}</strong></div><div class="mini-stat"><span>Em aberto</span><strong>${r.aberto}</strong></div><div class="mini-stat"><span>Saldo</span><strong class="${r.saldo>=0?'c-green':'c-red'}">${formatMoeda(r.saldo)}</strong></div></div><div class="ia-alert ${atras?'danger':r.saldo>=0?'success':'warning'}">${atras?`Existem ${atras} lancamento(s) atrasado(s).`:r.saldo>=0?'Periodo positivo. Acompanhe vencimentos e metas.':'Despesas acima das receitas. Revise prioridades.'}</div>`;const hoje=new Date();hoje.setHours(0,0,0,0);const lim=new Date(hoje);lim.setDate(lim.getDate()+7);const prox=l.filter(i=>i.vencimento&&calcularStatus(i)!=='pago'&&new Date(i.vencimento+'T00:00:00')<=lim).sort((a,b)=>new Date(a.vencimento)-new Date(b.vencimento)).slice(0,6);dashProxVencHtml.innerHTML=prox.length?prox.map(i=>`<div class="list-row"><div class="pro-card-title"><span>${esc(i.descricao)}</span><strong class="${i.tipo==='receita'?'c-green':'c-red'}">${formatMoeda(i.valor)}</strong></div><div class="pro-muted">${formatData(i.vencimento)} - ${esc(i.categoria)} - ${calcularStatus(i)}</div></div>`).join(''):emptyStateHtml({icon:'✅',title:'Tudo em dia',msg:'Nenhum vencimento pendente nos próximos 7 dias.',btnLabel:'Ver lançamentos',btn:"abrirModulo('lancamentos')"});dashCategoriasHtml.innerHTML=Object.keys(cat).length?Object.entries(cat).sort((a,b)=>b[1]-a[1]).map(([c,v])=>`<div class="bar-container"><div class="bar-header"><span>${esc(c)}</span><span>${formatMoeda(v)}</span></div><div class="bar-track"><div class="bar-fill bg-danger" style="width:${clamp((v/(r.des||1))*100,0,100)}%"></div></div></div>`).join(''):emptyStateHtml({icon:'📉',title:'Sem despesas',msg:'Não há despesas registradas neste período.',btnLabel:'Novo lançamento',btn:'focarNovoLancamento()'});dashRankingHtml.innerHTML=l.filter(i=>i.tipo==='despesa').sort((a,b)=>b.valor-a.valor).slice(0,6).map((i,n)=>`<div class="list-row"><div class="pro-card-title"><span>${n+1}. ${esc(i.descricao)}</span><strong class="c-red">${formatMoeda(i.valor)}</strong></div><div class="pro-muted">${esc(i.categoria)} - ${formatData(i.vencimento)}</div></div>`).join('')||emptyStateHtml({icon:'📉',title:'Sem despesas',msg:'Cadastre despesas para ver o ranking do período.',btnLabel:'Novo lançamento',btn:'focarNovoLancamento()'});}/strong></div><div class="mini-stat"><span>Em aberto</span><strong>${r.aberto}</strong></div><div class="mini-stat"><span>Saldo</span><strong class="${r.saldo>=0?'c-green':'c-red'}">${formatMoeda(r.saldo)}</strong></div></div><div class="ia-alert ${atras?'danger':r.saldo>=0?'success':'warning'}">${atras?`Existem ${atras} lancamento(s) atrasado(s).`:r.saldo>=0?'Periodo positivo. Acompanhe vencimentos e metas.':'Despesas acima das receitas. Revise prioridades.'}</div>`;const hoje=new Date();hoje.setHours(0,0,0,0);const lim=new Date(hoje);lim.setDate(lim.getDate()+7);const prox=l.filter(i=>i.vencimento&&calcularStatus(i)!=='pago'&&new Date(i.vencimento+'T00:00:00')<=lim).sort((a,b)=>new Date(a.vencimento)-new Date(b.vencimento)).slice(0,6);dashProxVencHtml.innerHTML=prox.length?prox.map(i=>`<div class="list-row"><div class="pro-card-title"><span>${esc(i.descricao)}</span><strong class="${i.tipo==='receita'?'c-green':'c-red'}">${formatMoeda(i.valor)}</strong></div><div class="pro-muted">${formatData(i.vencimento)} - ${esc(i.categoria)} - ${calcularStatus(i)}</div></div>`).join(''):'<div class="pro-card">Tudo em dia nos proximos 7 dias.</div>';dashCategoriasHtml.innerHTML=Object.keys(cat).length?Object.entries(cat).sort((a,b)=>b[1]-a[1]).map(([c,v])=>`<div class="bar-container"><div class="bar-header"><span>${esc(c)}</span><span>${formatMoeda(v)}</span></div><div class="bar-track"><div class="bar-fill bg-danger" style="width:${clamp((v/(r.des||1))*100,0,100)}%"></div></div></div>`).join(''):'<div class="pro-card">Sem despesas.</div>';dashRankingHtml.innerHTML=l.filter(i=>i.tipo==='despesa').sort((a,b)=>b.valor-a.valor).slice(0,6).map((i,n)=>`<div class="list-row"><div class="pro-card-title"><span>${n+1}. ${esc(i.descricao)}</span><strong class="c-red">${formatMoeda(i.valor)}</strong></div><div class="pro-muted">${esc(i.categoria)} - ${formatData(i.vencimento)}</div></div>`).join('')||'<div class="pro-card">Sem despesas.</div>';}
 function renderLancamentos() {
   const cs = document.getElementById('fLancCategoria');
   if (cs) {
@@ -3824,8 +3872,8 @@ function renderLancamentos() {
       <div class="mobile-card-actions">${p}${e}${d}</div>
     </div>`;
   });
-  document.getElementById('listaLancTabela').innerHTML = tb || '<tr><td colspan="6" class="empty-row">Nenhum lançamento encontrado.</td></tr>';
-  document.getElementById('listaLancMobile').innerHTML = lst || '<div class="pro-card">Nenhum lançamento encontrado.</div>';
+  document.getElementById('listaLancTabela').innerHTML = tb || emptyStateRow(6,{icon:'💳',title:'Nenhum lançamento encontrado',msg:'Cadastre receitas e despesas para acompanhar o mês selecionado.',btnLabel:'Novo lançamento',btn:'focarNovoLancamento()'});
+  document.getElementById('listaLancMobile').innerHTML = lst || emptyStateHtml({icon:'💳',title:'Nenhum lançamento encontrado',msg:'Cadastre receitas e despesas para acompanhar o mês selecionado.',btnLabel:'Novo lançamento',btn:'focarNovoLancamento()'});
   atualizarChipsLanc();
 }
 let editMetaId = null;
@@ -3943,7 +3991,7 @@ function renderMetas() {
       </div>
       <div class="bar-track"><div class="bar-fill ${st.bar}" style="width:${pct}%"></div></div>
     </div>`;
-  }).join('') : '<div class="pro-card">Nenhuma meta cadastrada para este mês.</div>';
+  }).join('') : emptyStateHtml({icon:'🎯',title:'Nenhuma meta cadastrada',msg:'Defina metas de economia para o mês e acompanhe o progresso.',btnLabel:'Criar meta',btn:'focarNovaMeta()'});
 }
 
 function statusOrcamentoInfo(pct) {
@@ -4043,7 +4091,7 @@ function renderOrcamento() {
       </div>
       <div class="bar-track"><div class="bar-fill ${st.bar}" style="width:${clamp(pct, 0, 100)}%"></div></div>
     </div>`;
-  }).join('') : '<div class="pro-card">Defina limites por categoria para acompanhar o consumo.</div>';
+  }).join('') : emptyStateHtml({icon:'📉',title:'Nenhum gasto definido',msg:'Defina limites mensais por categoria para controlar o consumo.',btnLabel:'Definir limite',btn:'focarNovoOrcamento()'});
 }
 
 function diasAteData(data) {
@@ -4179,7 +4227,7 @@ function renderFuturo() {
         </div>`;
       }).join('');
       return `<div class="timeline-month"><div class="timeline-month-head">${esc(label)}</div>${items}</div>`;
-    }).join('') : '<div class="pro-card">Nenhum planejamento futuro cadastrado.</div>';
+    }).join('') : emptyStateHtml({icon:'🗓️',title:'Nenhum planejamento futuro',msg:'Registre receitas e despesas previstas para os próximos meses.',btnLabel:'Adicionar planejamento',btn:'focarNovoFuturo()'});
   }
   const tb = document.getElementById('listFuturoTabela');
   if (tb) {
@@ -4193,7 +4241,7 @@ function renderFuturo() {
         <td>${badgeFuturoStatus(st)}</td>
         <td><div class="action-cell">${renderFuturoCardActions(i)}</div></td>
       </tr>`;
-    }).join('') : '<tr><td colspan="5">Nenhum planejamento.</td></tr>';
+    }).join('') : emptyStateRow(5,{icon:'🗓️',title:'Nenhum planejamento',msg:'Cadastre compromissos futuros na timeline ou na tabela.',btnLabel:'Adicionar planejamento',btn:'focarNovoFuturo()'});
   }
 }
 let editRecId = null;
@@ -4391,7 +4439,7 @@ function renderRecorrentes() {
   if (grid) {
     grid.innerHTML = recorrentes.length
       ? recorrentes.map(r => renderRecorrenteCard(r)).join('')
-      : '<div class="pro-card">Nenhuma conta recorrente cadastrada.</div>';
+      : emptyStateHtml({icon:'🔁',title:'Nenhuma conta recorrente',msg:'Cadastre contas fixas mensais e gere lançamentos automaticamente.',btnLabel:'Cadastrar recorrente',btn:'focarNovoRecorrente()'});
   }
   const tb = document.getElementById('listRecorrenteTabela');
   if (tb) {
@@ -4609,8 +4657,8 @@ function renderParcelamentos() {
   }
   const elA = document.getElementById('parcelamentosAtivosHtml');
   const elC = document.getElementById('parcelamentosConcluidosHtml');
-  if (elA) elA.innerHTML = ativos.length ? ativos.map(p => renderParcelamentoCard(p)).join('') : '<div class="pro-card">Nenhum parcelamento ativo.</div>';
-  if (elC) elC.innerHTML = concluidos.length ? concluidos.map(p => renderParcelamentoCard(p)).join('') : '<div class="pro-card">Nenhum parcelamento concluído ainda.</div>';
+  if (elA) elA.innerHTML = ativos.length ? ativos.map(p => renderParcelamentoCard(p)).join('') : emptyStateHtml({icon:'💳',title:'Nenhum parcelamento ativo',msg:'Cadastre compras parceladas para acompanhar o progresso.',btnLabel:'Novo parcelamento',btn:'focarNovoParcelamento()'});
+  if (elC) elC.innerHTML = concluidos.length ? concluidos.map(p => renderParcelamentoCard(p)).join('') : emptyStateHtml({icon:'✅',title:'Nenhum parcelamento concluído',msg:'Quando todas as parcelas forem pagas, eles aparecerão aqui.',btnLabel:'Novo parcelamento',btn:'focarNovoParcelamento()'});
   const tb = document.getElementById('listParcelamentosGerados');
   if (tb) {
     tb.innerHTML = parcelamentos.length ? parcelamentos.map(p => {
@@ -4627,7 +4675,7 @@ function renderParcelamentos() {
           ${st.proxima ? `<button type="button" class="btn btn-success btn-sm" onclick="marcarProximaParcelaPaga('${escAttr(p.id)}')">Pagar</button>` : ''}
         </div></td>
       </tr>`;
-    }).join('') : '<tr><td colspan="5">Nenhum parcelamento.</td></tr>';
+    }).join('') : emptyStateRow(5,{icon:'💳',title:'Nenhum parcelamento',msg:'Cadastre parcelamentos para gerar e acompanhar as parcelas.',btnLabel:'Novo parcelamento',btn:'focarNovoParcelamento()'});
   }
 }
 function renderCategorias() {
@@ -4659,7 +4707,7 @@ function renderCategorias() {
         ${btnDel}
       </div>
     </div>`;
-  }).join('') : '<div class="pro-card">Nenhuma categoria cadastrada.</div>';
+  }).join('') : emptyStateHtml({icon:'🏷️',title:'Nenhuma categoria cadastrada',msg:'As categorias padrão serão restauradas automaticamente ou você pode criar novas.',btnLabel:'Importar backup',btn:'irParaBackup()'});
 }
 function baixarAnaliseIA(){baixarArquivo(`analise_ia_financas_${new Date().toISOString().slice(0,10)}.txt`,montarTextoAnaliseIA(),'text/plain;charset=utf-8');showToast('Análise TXT baixada.');}
 function imprimirAnaliseIA(){const area=document.getElementById('iaPrintArea');if(area){area.innerHTML=`<div class="rel-print-header"><h1>FinançasCasa</h1><p><strong>Análise do Assistente IA</strong></p><p>Emitido em: ${esc(new Date().toLocaleString('pt-BR'))}</p></div><pre style="white-space:pre-wrap;font-family:inherit;font-size:13px;line-height:1.6;">${esc(montarTextoAnaliseIA())}</pre>`;}document.body.classList.add('print-ia');window.print();setTimeout(()=>document.body.classList.remove('print-ia'),700);}
