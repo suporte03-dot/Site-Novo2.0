@@ -4,11 +4,15 @@ Gestão financeira residencial 100% offline (HTML + CSS + JS em `index.html`).
 
 ## Desenvolvimento local
 
+**Windows:** dê duplo clique em `start.bat` ou, no terminal:
+
 ```bash
 node serve.js
 ```
 
 Abra `http://localhost:8000/` (Ctrl+F5 para limpar cache).
+
+Se aparecer *“conexão recusada”*, o servidor parou — execute `start.bat` ou `node serve.js` de novo na pasta do projeto e recarregue a página.
 
 ## Publicar no GitHub Pages
 

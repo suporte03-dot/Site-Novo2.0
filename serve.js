@@ -36,6 +36,14 @@ http.createServer((req, res) => {
     res.writeHead(200, { 'Content-Type': MIME[path.extname(filePath)] || 'application/octet-stream' });
     res.end(data);
   });
-}).listen(PORT, () => {
+}).listen(PORT, '127.0.0.1', () => {
   console.log(`FinançasCasa → http://localhost:${PORT}/`);
+  console.log('Pressione Ctrl+C para encerrar.');
+}).on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.error(`Porta ${PORT} já está em uso. Feche o outro servidor ou use: set PORT=8001 && node serve.js`);
+    process.exit(1);
+  }
+  console.error(err);
+  process.exit(1);
 });
