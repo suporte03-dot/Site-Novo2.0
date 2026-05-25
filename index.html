@@ -43,6 +43,7 @@
     --border-strong: #cdd5df;
     --border-subtle: rgba(15, 23, 42, 0.06);
     --sidebar-w: 292px;
+    --sidebar-rail-w: 56px;
     --radius: 12px;
     --radius-sm: 8px;
     --radius-lg: 16px;
@@ -87,7 +88,7 @@
     color: var(--sidebar-text);
     display: flex;
     flex-direction: column;
-    transition: margin-left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1), margin-left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 1000;
     flex-shrink: 0;
     position: relative;
@@ -96,8 +97,29 @@
     min-height: 0;
     overflow: visible;
   }
-  .sidebar.collapsed-pc { margin-left: calc(var(--sidebar-w) * -1); }
+  .sidebar.collapsed-pc {
+    width: var(--sidebar-rail-w);
+    overflow: hidden;
+  }
   body.sidebar-collapsed-pc .main-content { transition: margin var(--transition); }
+  body.modo-pc .sidebar.collapsed-pc .sidebar-header {
+    padding: 14px 6px 10px;
+    align-items: center;
+  }
+  body.modo-pc .sidebar.collapsed-pc .sidebar-brand {
+    justify-content: center;
+    gap: 0;
+    min-height: 40px;
+  }
+  body.modo-pc .sidebar.collapsed-pc .brand-text,
+  body.modo-pc .sidebar.collapsed-pc #lblGrupoId,
+  body.modo-pc .sidebar.collapsed-pc .sidebar-menu {
+    display: none !important;
+  }
+  body.modo-pc .sidebar.collapsed-pc .brand-mark {
+    width: 40px;
+    height: 40px;
+  }
 
   .btn-collapse-pc {
     position: absolute;
@@ -121,14 +143,6 @@
   }
   .btn-collapse-pc:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
   .btn-collapse-pc svg { transition: transform 0.3s ease; }
-  .sidebar.collapsed-pc .btn-collapse-pc {
-    position: fixed;
-    left: 10px;
-    top: 72px;
-    right: auto;
-    z-index: 1200;
-    box-shadow: var(--shadow);
-  }
   .sidebar.collapsed-pc .btn-collapse-pc svg { transform: rotate(180deg); }
 
   .sidebar-header {
@@ -228,30 +242,6 @@
     box-shadow: 0 0 8px rgba(74, 222, 128, 0.55);
     flex-shrink: 0;
   }
-  .brand-fab-collapsed {
-    position: fixed;
-    left: 10px;
-    top: 16px;
-    width: 42px;
-    height: 42px;
-    z-index: 1199;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(145deg, #1e5c4b 0%, #0c3539 100%);
-    color: #fff;
-    font-size: 14px;
-    font-weight: 800;
-    border: 1px solid rgba(134, 196, 168, 0.25);
-  }
-  body.sidebar-collapsed-pc .brand-fab-collapsed { display: flex; }
-  body.sidebar-collapsed-pc .brand-fab-collapsed.is-svg { background: transparent; border: none; }
-  body.sidebar-collapsed-pc .brand-fab-collapsed .brand-mark-svg { border-radius: 12px; }
-  .brand-fab-collapsed.has-img { background: #fff; padding: 3px; }
-  .brand-fab-collapsed.has-img img { width: 100%; height: 100%; object-fit: contain; border-radius: 9px; }
   .sidebar-menu {
     flex: 1 1 auto;
     min-height: 0;
@@ -2740,7 +2730,6 @@
   }
   body.modo-celular .sidebar-header { padding-top: 16px; }
   body.modo-celular .sidebar-menu { padding-bottom: max(24px, env(safe-area-inset-bottom)); }
-  body.sidebar-collapsed-pc .modules-wrapper { padding-left: 28px; }
   @media (max-width: 720px) {
     .top-header { flex-wrap: wrap; }
     .header-toolbar { width: 100%; }
@@ -5043,8 +5032,33 @@ function getBadgeHtml(st) {
 
 function aplicarModoVisualizacao() {
   const isMobile = window.innerWidth < 768; const modoFinal = config.modo === 'auto' ? (isMobile ? 'celular' : 'pc') : config.modo;
-  if (modoFinal === 'celular') { document.body.classList.add('modo-celular'); document.body.classList.remove('modo-pc'); }
-  else { document.body.classList.add('modo-pc'); document.body.classList.remove('modo-celular'); document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlayMenu').classList.remove('active'); }
+  const sb = document.getElementById('sidebar');
+  if (modoFinal === 'celular') {
+    document.body.classList.add('modo-celular');
+    document.body.classList.remove('modo-pc');
+    if (sb) sb.classList.remove('collapsed-pc');
+    document.body.classList.remove('sidebar-collapsed-pc');
+  } else {
+    document.body.classList.add('modo-pc');
+    document.body.classList.remove('modo-celular');
+    if (sb) sb.classList.remove('open');
+    document.getElementById('overlayMenu').classList.remove('active');
+  }
+  limparMarcaFlutuante();
+}
+function limparMarcaFlutuante(){
+  document.getElementById('brandFabCollapsed')?.remove();
+}
+function sincronizarSidebarPC(){
+  const sb = document.getElementById('sidebar');
+  if(!sb || !document.body.classList.contains('modo-pc')){
+    sb?.classList.remove('collapsed-pc');
+    document.body.classList.remove('sidebar-collapsed-pc');
+    limparMarcaFlutuante();
+    return;
+  }
+  document.body.classList.toggle('sidebar-collapsed-pc', sb.classList.contains('collapsed-pc'));
+  limparMarcaFlutuante();
 }
 const titulosModulos = {
   dashboard: "Dashboard",
@@ -5093,8 +5107,7 @@ function atualizarHeaderContext(modulo) {
 function toggleSidebarPC() {
   const sb = document.getElementById('sidebar');
   sb.classList.toggle('collapsed-pc');
-  document.body.classList.toggle('sidebar-collapsed-pc', sb.classList.contains('collapsed-pc'));
-  atualizarMarcaRecolhida();
+  sincronizarSidebarPC();
 }
 function toggleMenu() {
   const open = document.getElementById('sidebar').classList.toggle('open');
@@ -6125,6 +6138,7 @@ function aprimorarEstruturaVisual(){
   document.body.classList.toggle('modo-compacto',config.densidade==='compacto');
   sincronizarConfigUI();
   aplicarMenuSections();
+  sincronizarSidebarPC();
   if(!window._menuEscBound){
     window._menuEscBound=true;
     document.addEventListener('keydown',e=>{
@@ -6190,34 +6204,6 @@ function renderBrandMarkEl(el, nome, logo, imgData, uid){
   el.textContent=logo;
   if(/\p{Extended_Pictographic}/u.test(logo)) el.classList.add('is-emoji');
 }
-function atualizarMarcaRecolhida(){
-  let fab=document.getElementById('brandFabCollapsed');
-  if(!document.body.classList.contains('sidebar-collapsed-pc')){
-    if(fab) fab.remove();
-    return;
-  }
-  if(!fab){
-    fab=document.createElement('div');
-    fab.id='brandFabCollapsed';
-    fab.className='brand-fab-collapsed';
-    document.body.appendChild(fab);
-  }
-  fab.classList.remove('is-svg');
-  fab.innerHTML='';
-  if(config.appLogoImg){
-    fab.classList.add('has-img');
-    const img=document.createElement('img');
-    img.src=config.appLogoImg; img.alt=getAppNome();
-    fab.appendChild(img);
-    return;
-  }
-  if(usaLogoSvgPadrao()){
-    fab.classList.add('is-svg');
-    fab.innerHTML=svgMarcaPremium('Fab');
-    return;
-  }
-  fab.textContent=getAppLogo();
-}
 function aplicarMarcaApp(){
   const nome=getAppNome(), sub=getAppSubtitulo(), logo=getAppLogo();
   const imgData=config.appLogoImg||'';
@@ -6233,7 +6219,7 @@ function aplicarMarcaApp(){
   renderBrandMarkEl(document.getElementById('configBrandPreviewMark'), nome, logo, imgData, 'Preview');
   const btnRem=document.getElementById('btnRemoverLogoImg');
   if(btnRem) btnRem.classList.toggle('hidden', !imgData);
-  atualizarMarcaRecolhida();
+  sincronizarSidebarPC();
 }
 function processarLogoImagem(file, cb){
   if(!file || !String(file.type||'').startsWith('image/')){ showToast('Selecione uma imagem PNG, JPG ou WebP.', 'warning'); return; }
