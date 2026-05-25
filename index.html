@@ -43,7 +43,6 @@
     --border-strong: #cdd5df;
     --border-subtle: rgba(15, 23, 42, 0.06);
     --sidebar-w: 292px;
-    --sidebar-rail-w: 56px;
     --radius: 12px;
     --radius-sm: 8px;
     --radius-lg: 16px;
@@ -88,7 +87,7 @@
     color: var(--sidebar-text);
     display: flex;
     flex-direction: column;
-    transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1), margin-left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: margin-left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 1000;
     flex-shrink: 0;
     position: relative;
@@ -97,29 +96,8 @@
     min-height: 0;
     overflow: visible;
   }
-  .sidebar.collapsed-pc {
-    width: var(--sidebar-rail-w);
-    overflow: hidden;
-  }
+  .sidebar.collapsed-pc { margin-left: calc(var(--sidebar-w) * -1); }
   body.sidebar-collapsed-pc .main-content { transition: margin var(--transition); }
-  body.modo-pc .sidebar.collapsed-pc .sidebar-header {
-    padding: 14px 6px 10px;
-    align-items: center;
-  }
-  body.modo-pc .sidebar.collapsed-pc .sidebar-brand {
-    justify-content: center;
-    gap: 0;
-    min-height: 40px;
-  }
-  body.modo-pc .sidebar.collapsed-pc .brand-text,
-  body.modo-pc .sidebar.collapsed-pc #lblGrupoId,
-  body.modo-pc .sidebar.collapsed-pc .sidebar-menu {
-    display: none !important;
-  }
-  body.modo-pc .sidebar.collapsed-pc .brand-mark {
-    width: 40px;
-    height: 40px;
-  }
 
   .btn-collapse-pc {
     position: absolute;
@@ -143,6 +121,14 @@
   }
   .btn-collapse-pc:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
   .btn-collapse-pc svg { transition: transform 0.3s ease; }
+  .sidebar.collapsed-pc .btn-collapse-pc {
+    position: fixed;
+    left: 10px;
+    top: 16px;
+    right: auto;
+    z-index: 1200;
+    box-shadow: var(--shadow);
+  }
   .sidebar.collapsed-pc .btn-collapse-pc svg { transform: rotate(180deg); }
 
   .sidebar-header {
