@@ -222,27 +222,45 @@
     min-height: 44px;
   }
   .menu-section.collapsed .menu-section-head { border-radius: var(--radius-sm); }
-  .menu-section-head:hover { background: rgba(255, 255, 255, 0.04); }
+  .menu-section-head:hover { background: rgba(255, 255, 255, 0.06); }
+  .menu-section:not(.collapsed) .menu-section-head {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
   .menu-section-icon {
-    width: 24px;
-    height: 24px;
-    border-radius: 7px;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
+    font-size: 13px;
     flex-shrink: 0;
-    font-weight: 600;
-    opacity: 0.75;
-    background: transparent;
-    color: var(--sidebar-text);
+    font-weight: 700;
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.08);
+    color: #e2e8f0;
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
-  .menu-section[data-section="geral"] .menu-section-icon,
-  .menu-section[data-section="financeiro"] .menu-section-icon,
-  .menu-section[data-section="utilitarios"] .menu-section-icon,
+  .menu-section[data-section="geral"] .menu-section-icon {
+    background: rgba(56, 189, 248, 0.18);
+    color: #7dd3fc;
+    border-color: rgba(56, 189, 248, 0.35);
+  }
+  .menu-section[data-section="financeiro"] .menu-section-icon {
+    background: rgba(30, 92, 75, 0.35);
+    color: #86efac;
+    border-color: rgba(134, 196, 168, 0.4);
+  }
+  .menu-section[data-section="utilitarios"] .menu-section-icon {
+    background: rgba(251, 191, 36, 0.16);
+    color: #fcd34d;
+    border-color: rgba(251, 191, 36, 0.35);
+  }
   .menu-section[data-section="sistema"] .menu-section-icon {
-    background: transparent;
-    color: rgba(148, 163, 184, 0.55);
+    background: rgba(167, 139, 250, 0.18);
+    color: #c4b5fd;
+    border-color: rgba(167, 139, 250, 0.35);
   }
   .menu-section-title-wrap { flex: 1; min-width: 0; }
   .menu-section-title {
@@ -258,30 +276,47 @@
   .menu-section-count {
     font-size: 11px;
     font-weight: 700;
-    color: rgba(203, 213, 225, 0.75);
-    background: rgba(255, 255, 255, 0.06);
+    color: #e2e8f0;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.14);
     padding: 0 7px;
-    min-width: 20px;
-    height: 20px;
+    min-width: 22px;
+    height: 22px;
     line-height: 20px;
     border-radius: 999px;
     flex-shrink: 0;
     text-align: center;
   }
   .menu-section-chevron {
-    width: 22px;
-    height: 22px;
-    border-radius: 4px;
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: rgba(148, 163, 184, 0.45);
-    background: transparent;
+    color: #cbd5e1;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     flex-shrink: 0;
-    transition: transform 0.22s ease, color var(--transition);
-    opacity: 0.8;
+    transition: transform 0.22s ease, color var(--transition), background var(--transition), border-color var(--transition);
+    opacity: 1;
   }
-  .menu-section-head:hover .menu-section-chevron { color: rgba(148, 163, 184, 0.75); }
+  .menu-section-chevron svg { width: 14px; height: 14px; stroke-width: 2.5; }
+  .menu-section-head:hover .menu-section-chevron {
+    color: #f8fafc;
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.22);
+  }
+  .menu-section:not(.collapsed) .menu-section-chevron {
+    color: #86efac;
+    background: rgba(30, 92, 75, 0.28);
+    border-color: rgba(134, 196, 168, 0.35);
+  }
+  .menu-section:not(.collapsed) .menu-section-head:hover .menu-section-chevron {
+    color: #bbf7d0;
+    background: rgba(30, 92, 75, 0.38);
+    border-color: rgba(134, 196, 168, 0.5);
+  }
   .menu-section.collapsed .menu-section-chevron { transform: rotate(-90deg); }
   .menu-section.collapsed .menu-section-body { display: none; }
   .menu-section-body {
@@ -301,7 +336,8 @@
     color: rgba(226, 232, 240, 0.88);
   }
   .menu-section:has(.menu-item.active):not(.collapsed) .menu-section-head {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(30, 92, 75, 0.12);
+    border-color: rgba(134, 196, 168, 0.2);
   }
   .menu-section-label {
     font-size: 10px;
@@ -2964,7 +3000,7 @@
             <span class="menu-section-sub">Dashboard e assistente</span>
           </span>
           <span class="menu-section-count">2</span>
-          <span class="menu-section-chevron" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></span>
+          <span class="menu-section-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
         </button>
         <div class="menu-section-body" id="menuBodyGeral">
           <button type="button" class="menu-item active" data-module="dashboard" data-section="geral"><span class="menu-dot" aria-hidden="true"></span><span class="menu-label">Dashboard</span></button>
@@ -2980,7 +3016,7 @@
             <span class="menu-section-sub">Lançamentos, metas e contas</span>
           </span>
           <span class="menu-section-count">6</span>
-          <span class="menu-section-chevron" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></span>
+          <span class="menu-section-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
         </button>
         <div class="menu-section-body" id="menuBodyFinanceiro">
           <button type="button" class="menu-item" data-module="lancamentos" data-section="financeiro"><span class="menu-dot" aria-hidden="true"></span><span class="menu-label">Lançamentos</span><span class="menu-badge hidden" id="badgeLanc">0</span></button>
@@ -3000,7 +3036,7 @@
             <span class="menu-section-sub">Mercado, categorias e relatórios</span>
           </span>
           <span class="menu-section-count">3</span>
-          <span class="menu-section-chevron" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></span>
+          <span class="menu-section-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
         </button>
         <div class="menu-section-body" id="menuBodyUtilitarios">
           <button type="button" class="menu-item" data-module="mercado" data-section="utilitarios"><span class="menu-dot" aria-hidden="true"></span><span class="menu-label">Lista de mercado</span></button>
@@ -3017,7 +3053,7 @@
             <span class="menu-section-sub">Configurações e backup</span>
           </span>
           <span class="menu-section-count">2</span>
-          <span class="menu-section-chevron" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></span>
+          <span class="menu-section-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
         </button>
         <div class="menu-section-body" id="menuBodySistema">
           <button type="button" class="menu-item" data-module="configuracoes" data-section="sistema"><span class="menu-dot" aria-hidden="true"></span><span class="menu-label">Configurações</span></button>
