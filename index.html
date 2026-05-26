@@ -225,7 +225,7 @@
     letter-spacing: 0.01em;
   }
   #lblGrupoId {
-    font-size: 12px;
+    font-size: 11px;
     color: rgba(203, 213, 225, 0.82);
     font-weight: 500;
     padding: 7px 12px;
@@ -237,6 +237,33 @@
     align-items: center;
     gap: 8px;
     align-self: flex-start;
+    cursor: help;
+  }
+  .sidebar-local-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+    width: 100%;
+  }
+  .sidebar-backup-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(134, 196, 168, 0.28);
+    background: rgba(30, 92, 75, 0.22);
+    color: #bbf7d0;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background var(--transition), border-color var(--transition);
+  }
+  .sidebar-backup-link:hover {
+    background: rgba(30, 92, 75, 0.38);
+    border-color: rgba(134, 196, 168, 0.45);
   }
   #lblGrupoId::before {
     content: '';
@@ -348,20 +375,7 @@
     line-height: 1.3;
   }
   .menu-section-sub { display: block; font-size: 12px; font-weight: 500; color: rgba(203, 213, 225, 0.72); margin-top: 3px; line-height: 1.35; }
-  .menu-section-count {
-    font-size: 12px;
-    font-weight: 700;
-    color: #e2e8f0;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    padding: 0 7px;
-    min-width: 22px;
-    height: 22px;
-    line-height: 20px;
-    border-radius: 999px;
-    flex-shrink: 0;
-    text-align: center;
-  }
+  .menu-section-count { display: none; }
   .menu-section-chevron {
     width: 26px;
     height: 26px;
@@ -1432,24 +1446,158 @@
   #mod-dashboard:not(.dash-empty-mode) .dash-empty-only { display: none !important; }
   #mod-dashboard.dash-empty-mode .dash-hero-fin {
     grid-template-columns: 1fr;
-    background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 48%, #ecfdf5 100%);
-    padding: 20px 22px;
-    margin-bottom: 12px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-xs);
+    padding: 16px 18px;
+    margin-bottom: 10px;
   }
   body.theme-dark #mod-dashboard.dash-empty-mode .dash-hero-fin {
-    background: linear-gradient(135deg, var(--card-bg) 0%, rgba(26, 95, 74, 0.12) 100%);
+    background: var(--card-bg);
   }
-  #mod-dashboard.dash-empty-mode .dash-hero-actions-secondary { display: none !important; }
-  #mod-dashboard.dash-empty-mode .dash-hero-actions .btn-primary {
-    padding: 11px 22px;
-    font-size: 14px;
-    font-weight: 700;
-  }
+  #mod-dashboard.dash-empty-mode .dash-hero-greeting span { color: var(--dark); font-weight: 700; }
   #mod-dashboard.dash-empty-mode .dash-hero-insight {
-    font-size: 14px;
-    color: var(--text);
+    font-size: 13px;
+    color: var(--text-light);
     max-width: 640px;
+    margin-bottom: 12px;
   }
+  .dash-quick-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .dash-quick-btn-primary {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: var(--radius);
+    border: 1px solid var(--primary);
+    background: var(--primary);
+    color: #fff;
+    cursor: pointer;
+    font-family: inherit;
+    text-align: left;
+    transition: background var(--transition), box-shadow var(--transition), transform var(--transition);
+    box-shadow: 0 2px 8px rgba(30, 92, 75, 0.22);
+  }
+  .dash-quick-btn-primary:hover {
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(30, 92, 75, 0.28);
+  }
+  .dash-quick-btn-primary .dash-quick-label { color: #fff; font-size: 13px; font-weight: 700; }
+  .dash-quick-btn-primary .dash-quick-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.16);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .dash-quick-secondary {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .dash-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .dash-summary-card {
+    padding: 12px 14px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+  .dash-summary-card span {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+  }
+  .dash-summary-card strong {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--dark);
+    letter-spacing: -0.02em;
+  }
+  .dash-summary-card.is-rec strong { color: var(--success); }
+  .dash-summary-card.is-des strong { color: var(--danger); }
+  .dash-summary-card.is-saldo strong { color: var(--text); }
+  .dash-empty-charts-hint {
+    font-size: 12px;
+    color: var(--text-light);
+    margin: 0 0 12px;
+    line-height: 1.45;
+  }
+  .dash-empty-charts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .dash-chart-placeholder {
+    padding: 16px 14px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--surface-muted);
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .dash-chart-placeholder-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--dark);
+    letter-spacing: -0.01em;
+  }
+  .dash-chart-placeholder-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    flex: 1;
+    min-height: 56px;
+    opacity: 0.35;
+  }
+  .dash-chart-placeholder-bars span {
+    flex: 1;
+    border-radius: 4px 4px 0 0;
+    background: var(--border-strong);
+    min-height: 12px;
+  }
+  .dash-chart-placeholder-bars span:nth-child(1) { height: 38%; }
+  .dash-chart-placeholder-bars span:nth-child(2) { height: 62%; }
+  .dash-chart-placeholder-bars span:nth-child(3) { height: 48%; }
+  .dash-chart-placeholder-bars span:nth-child(4) { height: 72%; }
+  .dash-rec-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: var(--primary-light);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+  .dash-action-item .dash-rec-icon { font-size: 11px; }
   #mod-dashboard.dash-empty-mode .grid-2.mb-3 { grid-template-columns: 1fr; }
   .dash-start-panel {
     padding: 20px 22px !important;
@@ -2787,6 +2935,11 @@
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 8px;
   }
+  .dash-quick-actions:not(.dash-quick-actions-hier) {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+  }
   .dash-quick-btn {
     display: flex;
     flex-direction: column;
@@ -2886,38 +3039,20 @@
   .dash-panel-compact { padding: 14px 16px !important; margin-bottom: 0 !important; }
   .dash-panel-compact .panel-title { margin-bottom: 10px; padding-bottom: 8px; font-size: 12px; }
   .dash-panel-compact .dash-panel-body { padding: 0; font-size: 13px; line-height: 1.5; }
-  .dash-onboard-exec {
-    padding: 18px 20px;
-    margin-bottom: 10px;
-    border-radius: var(--radius-lg);
-    border: 1px dashed var(--border-strong);
-    background: var(--surface-muted);
-  }
-  .dash-onboard-head { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
-  .dash-onboard-icon {
-    width: 40px; height: 40px; border-radius: 12px;
-    background: var(--primary-light); color: var(--primary);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px; flex-shrink: 0;
-  }
-  .dash-onboard-head h4 { font-size: 15px; font-weight: 700; color: var(--dark); margin-bottom: 3px; letter-spacing: -0.02em; }
-  .dash-onboard-sub { font-size: 12px; color: var(--text-light); line-height: 1.45; }
-  .dash-onboard-steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-bottom: 10px; }
-  .dash-onboard-step {
-    display: flex; flex-direction: column; align-items: flex-start; gap: 3px;
-    padding: 12px; border-radius: var(--radius); border: 1px solid var(--border);
-    background: var(--card-bg); cursor: pointer; font-family: inherit; text-align: left;
-    transition: border-color var(--transition), box-shadow var(--transition);
-  }
-  .dash-onboard-step:hover { border-color: var(--primary); box-shadow: var(--shadow-xs); }
-  .dash-onboard-step strong { font-size: 12px; color: var(--dark); }
-  .dash-onboard-step span:last-child { font-size: 10px; color: var(--text-light); line-height: 1.35; }
-  .dash-onboard-hint { font-size: 11px; color: var(--text-muted); line-height: 1.45; }
+  .dash-onboard-exec { display: none !important; }
   #mod-dashboard.dash-empty-mode .dash-exec-hero {
     grid-template-columns: 1fr;
     margin-bottom: 8px;
   }
-  #mod-dashboard.dash-empty-mode .dash-quick-actions { grid-template-columns: repeat(2, 1fr); }
+  #mod-dashboard.dash-empty-mode .dash-quick-actions-hier .dash-quick-secondary { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  @media (max-width: 1100px) {
+    .dash-summary-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .dash-empty-charts-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 720px) {
+    .dash-summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    #mod-dashboard.dash-empty-mode .dash-quick-actions-hier .dash-quick-secondary { grid-template-columns: 1fr; }
+  }
   .dash-venc-list { display: flex; flex-direction: column; gap: 6px; }
   .dash-venc-item {
     display: grid;
@@ -3078,7 +3213,10 @@
         </div>
         <button class="btn-menu hidden" id="btnCloseMenu" onclick="toggleMenu()" type="button" style="margin-left:auto;color:var(--sidebar-text-active);background:transparent;border:none;font-size:18px;cursor:pointer;" aria-label="Fechar menu">×</button>
       </div>
-      <div id="lblGrupoId">Modo local · offline</div>
+      <div class="sidebar-local-wrap">
+        <div id="lblGrupoId" title="Seus dados estão salvos apenas neste dispositivo.">Modo local · offline</div>
+        <button type="button" class="sidebar-backup-link" onclick="irParaBackup()" title="Exportar cópia dos seus dados">↗ Fazer backup</button>
+      </div>
     </div>
     <div class="sidebar-menu">
       <div class="menu-section" data-section="geral" id="menuSecGeral">
@@ -3191,11 +3329,19 @@
               </div>
             </div>
             <p class="dash-hero-insight" id="dashHeroFrase">Carregando resumo do período…</p>
-            <div class="dash-quick-actions" id="dashQuickActions">
-              <button type="button" class="dash-quick-btn" onclick="focarNovoLancamento()"><span class="dash-quick-icon">💳</span><span class="dash-quick-label">Novo lançamento</span></button>
-              <button type="button" class="dash-quick-btn" onclick="focarNovaMeta()"><span class="dash-quick-icon">🎯</span><span class="dash-quick-label">Criar meta</span></button>
-              <button type="button" class="dash-quick-btn" onclick="focarNovoOrcamento()"><span class="dash-quick-icon">📊</span><span class="dash-quick-label">Definir limite</span></button>
-              <button type="button" class="dash-quick-btn" onclick="irParaBackup()"><span class="dash-quick-icon">📥</span><span class="dash-quick-label">Importar backup</span></button>
+            <div class="dash-quick-actions dash-quick-actions-hier dash-empty-only" id="dashQuickActions">
+              <button type="button" class="dash-quick-btn-primary" onclick="focarNovoLancamento()"><span class="dash-quick-icon" aria-hidden="true">+</span><span class="dash-quick-label">Novo lançamento</span></button>
+              <div class="dash-quick-secondary">
+                <button type="button" class="dash-quick-btn" onclick="focarNovaMeta()"><span class="dash-quick-label">Criar meta</span></button>
+                <button type="button" class="dash-quick-btn" onclick="focarNovoOrcamento()"><span class="dash-quick-label">Definir limite</span></button>
+                <button type="button" class="dash-quick-btn" onclick="irParaBackup()"><span class="dash-quick-label">Importar backup</span></button>
+              </div>
+            </div>
+            <div class="dash-quick-actions dash-full-only" id="dashQuickActionsFull">
+              <button type="button" class="dash-quick-btn" onclick="focarNovoLancamento()"><span class="dash-quick-label">Novo lançamento</span></button>
+              <button type="button" class="dash-quick-btn" onclick="focarNovaMeta()"><span class="dash-quick-label">Criar meta</span></button>
+              <button type="button" class="dash-quick-btn" onclick="focarNovoOrcamento()"><span class="dash-quick-label">Definir limite</span></button>
+              <button type="button" class="dash-quick-btn" onclick="irParaBackup()"><span class="dash-quick-label">Importar backup</span></button>
             </div>
           </div>
           <aside class="dash-exec-balance dash-hero-balance dash-full-only" aria-label="Saldo líquido do período">
@@ -3212,21 +3358,12 @@
           </aside>
         </div>
 
-        <div class="dash-empty-only dash-onboard-exec">
-          <div class="dash-onboard-head">
-            <div class="dash-onboard-icon" aria-hidden="true">✦</div>
-            <div>
-              <h4 id="dashStartTitle">Configure seu mês em poucos passos</h4>
-              <p class="dash-onboard-sub" id="dashStartSub">Quatro ações para ativar sua visão executiva.</p>
-            </div>
-          </div>
-          <div class="dash-onboard-steps">
-            <button type="button" class="dash-onboard-step" onclick="focarNovoLancamento()"><span class="dash-step-num">1</span><strong>Primeiro lançamento</strong><span>Receita ou despesa</span></button>
-            <button type="button" class="dash-onboard-step" onclick="focarNovaMeta()"><span class="dash-step-num">2</span><strong>Meta do mês</strong><span>Quanto economizar</span></button>
-            <button type="button" class="dash-onboard-step" onclick="focarNovoOrcamento()"><span class="dash-step-num">3</span><strong>Limite por categoria</strong><span>Controle de gastos</span></button>
-            <button type="button" class="dash-onboard-step" onclick="irParaBackup()"><span class="dash-step-num">4</span><strong>Importar backup</strong><span>Restaurar dados</span></button>
-          </div>
-          <p class="dash-onboard-hint" id="dashEmptyHint">Dica: use <strong>Dados de exemplo</strong> em Configurações para explorar sem cadastrar.</p>
+        <div class="dash-empty-only dash-summary-grid" id="dashEmptyKpiGrid" aria-label="Resumo financeiro do mês"></div>
+
+        <div class="dash-empty-only panel dash-panel-compact">
+          <div class="panel-title">Visão gráfica do mês</div>
+          <p class="dash-empty-charts-hint">Os gráficos serão exibidos após o primeiro lançamento.</p>
+          <div class="dash-empty-charts-grid" id="dashEmptyChartsHtml"></div>
         </div>
 
         <div class="dash-kpi-micro dash-full-only" id="dashMicroKpis">
@@ -3275,6 +3412,7 @@
 
         <div class="dash-empty-only panel dash-panel-compact">
           <div class="panel-title">Próximas ações</div>
+          <p class="dash-empty-charts-hint" style="margin-bottom:10px;">Recomendações para começar a usar o painel financeiro.</p>
           <div id="dashProximasAcoesEmptyHtml" class="dash-panel-body"></div>
         </div>
       </section>
@@ -4491,6 +4629,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('authOverlay').classList.remove('active');
     document.getElementById('groupOverlay').classList.remove('active');
     document.getElementById('lblGrupoId').innerText = "Modo local · offline";
+    document.getElementById('lblGrupoId').title = "Seus dados estão salvos apenas neste dispositivo.";
     abrirModulo(config.inicio);
     processarDadosGlobais();
   }
@@ -6064,36 +6203,42 @@ function aplicarModoDashboard(emptyMes,mes,lAnt){
   const greet=document.getElementById('dashHeroGreeting');
   const frase=document.getElementById('dashHeroFrase');
   const status=document.getElementById('dashHeroStatus');
-  const startTitle=document.getElementById('dashStartTitle');
-  const startSub=document.getElementById('dashStartSub');
-  const emptyHint=document.getElementById('dashEmptyHint');
   const mesTxt=formatMesExtenso(mes);
   if(emptyMes){
-    if(greet) greet.innerHTML=`${saudacaoHorario()}! <span>Seu mês ainda não começou.</span>`;
-    if(frase) frase.textContent=mes
-      ?`Sem movimentações em ${mesTxt}. Use as ações abaixo para começar.`
-      :'Selecione um mês no topo e registre seu primeiro lançamento.';
-    if(status){ status.textContent='Aguardando lançamentos'; status.className='dash-hero-status-pill status-neutral'; }
-    if(startTitle) startTitle.textContent=mes?`Ative ${mesTxt}`:'Ative sua visão financeira';
-    if(startSub) startSub.textContent='Quatro passos rápidos para desbloquear KPIs, comparativos e alertas.';
-    if(emptyHint){
-      emptyHint.innerHTML=lAnt.length
-        ?`Há histórico no mês anterior — ao cadastrar ${mesTxt}, o comparativo aparecerá automaticamente.`
-        :'Dica: use <strong>Dados de exemplo</strong> em Configurações para explorar sem cadastrar.';
-    }
+    if(greet) greet.innerHTML=mes
+      ?`<span>Nenhuma movimentação registrada em ${esc(mesTxt)}.</span>`
+      :'<span>Nenhuma movimentação registrada no período.</span>';
+    if(frase) frase.textContent='Comece cadastrando uma receita, despesa, meta ou limite mensal.';
+    if(status){ status.textContent='Sem lançamentos'; status.className='dash-hero-status-pill status-neutral'; }
   }else{
-    if(greet) greet.innerHTML=`${saudacaoHorario()}! <span>Resumo de ${mesTxt}.</span>`;
+    if(greet) greet.innerHTML=`${saudacaoHorario()}! <span>Resumo de ${esc(mesTxt)}.</span>`;
   }
 }
-function montarAcoesOnboarding(){
-  const items=[
-    {icon:'💳',title:'Novo lançamento',desc:'Registre receita ou despesa do mês.',btn:'focarNovoLancamento()',label:'Cadastrar',hi:false},
-    {icon:'🎯',title:'Criar meta',desc:'Defina quanto quer economizar.',btn:'focarNovaMeta()',label:'Meta',hi:false},
-    {icon:'📊',title:'Definir limite',desc:'Orçamento por categoria.',btn:'focarNovoOrcamento()',label:'Limite',hi:false},
-    {icon:'📥',title:'Importar backup',desc:'Restaure dados salvos.',btn:'irParaBackup()',label:'Backup',hi:false}
+function montarEmptyKpiGrid(metasQtd,limitesQtd,vencendo){
+  const cards=[
+    {label:'Receitas',value:formatMoeda(0),cls:'is-rec'},
+    {label:'Despesas',value:formatMoeda(0),cls:'is-des'},
+    {label:'Saldo do mês',value:formatMoeda(0),cls:'is-saldo'},
+    {label:'Metas cadastradas',value:String(metasQtd),cls:''},
+    {label:'Limites cadastrados',value:String(limitesQtd),cls:''},
+    {label:'Contas vencendo',value:String(vencendo),cls:''}
   ];
-  return '<div class="dash-action-list">'+items.map(a=>`<div class="dash-action-item"><div class="dash-action-icon">${a.icon}</div><div class="dash-action-body"><div class="dash-action-title">${esc(a.title)}</div><div class="dash-action-desc">${esc(a.desc)}</div></div><button type="button" class="btn btn-sm btn-outline" onclick="${a.btn}">${esc(a.label)}</button></div>`).join('')+'</div>';
+  return cards.map(c=>`<div class="dash-summary-card ${c.cls}"><span>${esc(c.label)}</span><strong>${esc(c.value)}</strong></div>`).join('');
 }
+function montarEmptyChartsPlaceholder(){
+  const charts=['Receitas x Despesas','Despesas por categoria','Evolução do saldo no mês'];
+  return charts.map(t=>`<div class="dash-chart-placeholder"><div class="dash-chart-placeholder-title">${esc(t)}</div><div class="dash-chart-placeholder-bars" aria-hidden="true"><span></span><span></span><span></span><span></span></div></div>`).join('');
+}
+function montarRecomendacoesDashboard(){
+  const items=[
+    {icon:'L',title:'Cadastre seu primeiro lançamento',desc:'Registre uma receita ou despesa para ativar os indicadores do mês.',btn:'focarNovoLancamento()',label:'Cadastrar'},
+    {icon:'M',title:'Defina uma meta de economia',desc:'Estabeleça quanto deseja guardar neste mês.',btn:'focarNovaMeta()',label:'Meta'},
+    {icon:'O',title:'Configure limites por categoria',desc:'Controle gastos com tetos mensais por categoria.',btn:'focarNovoOrcamento()',label:'Limite'},
+    {icon:'B',title:'Faça backup dos seus dados locais',desc:'Exporte uma cópia para não perder informações neste dispositivo.',btn:'irParaBackup()',label:'Backup'}
+  ];
+  return '<div class="dash-action-list">'+items.map(a=>`<div class="dash-action-item"><div class="dash-rec-icon" aria-hidden="true">${a.icon}</div><div class="dash-action-body"><div class="dash-action-title">${esc(a.title)}</div><div class="dash-action-desc">${esc(a.desc)}</div></div><button type="button" class="btn btn-sm btn-outline" onclick="${a.btn}">${esc(a.label)}</button></div>`).join('')+'</div>';
+}
+function montarAcoesOnboarding(){ return montarRecomendacoesDashboard(); }
 function montarVencimentosDash(lista){
   if(!lista.length) return emptyStateHtml({icon:'✅',title:'Tudo em dia',msg:'Nenhum vencimento pendente nos próximos 7 dias.',btnLabel:'Ver lançamentos',btn:"abrirModulo('lancamentos')"});
   return '<div class="dash-venc-list">'+lista.map(i=>{
@@ -6126,7 +6271,7 @@ function montarResumoPeriodo(r,atras,maior,tx){
 }
 function montarProximasAcoes(l,r,atras,pend,maior){
   const acoes=[];
-  if(!l.length) return montarAcoesOnboarding();
+  if(!l.length) return montarRecomendacoesDashboard();
   l.filter(i=>calcularStatus(i)==='atrasado').slice(0,2).forEach(i=>{
     acoes.push({p:0,icon:'⚠️',title:`Regularizar: ${i.descricao}`,desc:`${formatData(i.vencimento)} · ${formatMoeda(i.valor)}`,btn:"abrirModulo('lancamentos')",label:'Ver conta',hi:true});
   });
@@ -6616,6 +6761,8 @@ function renderDashboard(){
   const heroSaldoSub=document.getElementById('dashHeroSaldoSub');
   const elComprom=document.getElementById('dashComprometimento');
   const elAcoesEmpty=document.getElementById('dashProximasAcoesEmptyHtml');
+  const elEmptyKpi=document.getElementById('dashEmptyKpiGrid');
+  const elEmptyCharts=document.getElementById('dashEmptyChartsHtml');
   if(heroMes) heroMes.textContent=formatMesExtenso(mes);
   if(!emptyMes&&heroFrase) heroFrase.textContent=gerarInsightDashboard(l,r,atras,pend);
   if(!emptyMes&&heroStatus){
@@ -6627,7 +6774,14 @@ function renderDashboard(){
   const elTrendDes=document.getElementById('dashTrendDespesas');
   const elTrendSal=document.getElementById('dashTrendSaldo');
   if(emptyMes){
-    if(elAcoesEmpty) elAcoesEmpty.innerHTML=montarAcoesOnboarding();
+    const metasQtd=getMetasMes(mes).length;
+    const limitesQtd=mes&&orcamentos[mes]?Object.keys(orcamentos[mes]).length:0;
+    const hoje=new Date(); hoje.setHours(0,0,0,0);
+    const lim=new Date(hoje); lim.setDate(lim.getDate()+7);
+    const vencendo=l.filter(i=>i.vencimento&&calcularStatus(i)!=='pago'&&new Date(i.vencimento+'T00:00:00')<=lim).length;
+    if(elEmptyKpi) elEmptyKpi.innerHTML=montarEmptyKpiGrid(metasQtd,limitesQtd,vencendo);
+    if(elEmptyCharts) elEmptyCharts.innerHTML=montarEmptyChartsPlaceholder();
+    if(elAcoesEmpty) elAcoesEmpty.innerHTML=montarRecomendacoesDashboard();
   }else{
     const elSaldo=document.getElementById('dashSaldo');
     const elRec=document.getElementById('dashReceitas');
