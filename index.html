@@ -6617,13 +6617,17 @@ function aplicarModoDashboard(emptyMes,mes,lAnt){
   const greet=document.getElementById('dashHeroGreeting');
   const frase=document.getElementById('dashHeroFrase');
   const status=document.getElementById('dashHeroStatus');
+  const mesPill=document.getElementById('dashHeroMes');
   const mesTxt=formatMesExtenso(mes);
   if(emptyMes){
+    const mesLabel=mes?esc(mesTxt):'Período atual';
+    const statusHtml=`<span class="dash-hero-status-pill status-neutral">Sem lançamentos</span>`;
     if(greet) greet.innerHTML=mes
-      ?`<div class="dash-empty-welcome"><span class="dash-empty-welcome-icon" aria-hidden="true">📋</span><div><h3 class="dash-empty-welcome-title">Nenhuma movimentação em ${esc(mesTxt)}</h3><p class="dash-empty-welcome-sub">Seu painel está pronto. Cadastre receitas e despesas para acompanhar o mês.</p></div></div>`
-      :'<div class="dash-empty-welcome"><span class="dash-empty-welcome-icon" aria-hidden="true">📋</span><div><h3 class="dash-empty-welcome-title">Nenhuma movimentação registrada</h3><p class="dash-empty-welcome-sub">Comece pelo botão abaixo ou importe um backup existente.</p></div></div>';
+      ?`<div class="dash-empty-welcome"><span class="dash-empty-welcome-icon" aria-hidden="true">📋</span><div class="dash-empty-welcome-body"><div class="dash-empty-welcome-top"><h3 class="dash-empty-welcome-title">Nenhuma movimentação em ${esc(mesTxt)}</h3><div class="dash-empty-welcome-meta"><span class="dash-hero-month-pill">${mesLabel}</span>${statusHtml}</div></div><p class="dash-empty-welcome-sub">Seu painel está pronto. Cadastre receitas e despesas para acompanhar o mês.</p></div></div>`
+      :`<div class="dash-empty-welcome"><span class="dash-empty-welcome-icon" aria-hidden="true">📋</span><div class="dash-empty-welcome-body"><div class="dash-empty-welcome-top"><h3 class="dash-empty-welcome-title">Nenhuma movimentação registrada</h3><div class="dash-empty-welcome-meta">${statusHtml}</div></div><p class="dash-empty-welcome-sub">Comece pelo botão abaixo ou importe um backup existente.</p></div></div>`;
     if(frase) frase.textContent='';
     if(status){ status.textContent='Sem lançamentos'; status.className='dash-hero-status-pill status-neutral'; }
+    if(mesPill&&mes) mesPill.textContent=mesTxt;
   }else{
     if(greet) greet.innerHTML=`${saudacaoHorario()}! <span>Resumo de ${esc(mesTxt)}.</span>`;
   }
@@ -6635,7 +6639,7 @@ function montarEmptyKpiGrid(metasQtd,limitesQtd,vencendo){
     {label:'Saldo do mês',value:formatMoeda(0),cls:'is-saldo',icon:'≡'},
     {label:'Metas',value:String(metasQtd),cls:'is-meta',icon:'◎'},
     {label:'Limites',value:String(limitesQtd),cls:'is-limite',icon:'⊟'},
-    {label:'Contas vencendo',value:String(vencendo),cls:vencendo?'is-alert':'',icon:'!'}
+    {label:'Contas vencendo',value:String(vencendo),cls:'is-venc'+(vencendo?'':' is-ok'),icon:'!'}
   ];
   return cards.map(c=>`<div class="dash-summary-card ${c.cls}"><div class="dash-kpi-head"><span class="dash-kpi-icon" aria-hidden="true">${c.icon}</span><span class="dash-kpi-label">${esc(c.label)}</span></div><strong>${esc(c.value)}</strong></div>`).join('');
 }
