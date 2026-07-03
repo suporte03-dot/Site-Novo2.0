@@ -3580,14 +3580,22 @@
   .sidebar #lblGrupoId { color: rgba(168, 180, 196, 0.75); }
   .menu-section-title { color: rgba(203, 213, 225, 0.82); }
   .menu-section-sub { color: rgba(148, 163, 184, 0.65); }
+  @media (max-width: 1100px) {
+    .dash-summary-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    #mod-dashboard.dash-empty-mode .dash-quick-actions-hier { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    #mod-dashboard.dash-empty-mode .dash-quick-actions-hier .dash-quick-secondary { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
   @media (max-width: 720px) {
-    .dash-summary-card strong { font-size: 17px; padding-left: 0; margin-top: 2px; }
-    .dash-summary-card { padding: 11px 12px; }
+    .dash-summary-card strong { font-size: 17px; }
+    .dash-summary-card { padding: 11px 12px; min-height: 70px; }
     .modules-wrapper { padding: 12px 14px 18px; }
+    .dash-summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    #mod-dashboard.dash-empty-mode .dash-quick-actions-hier { grid-template-columns: 1fr; }
+    #mod-dashboard.dash-empty-mode .dash-quick-actions-hier .dash-quick-secondary { grid-template-columns: 1fr; }
+    .dash-empty-welcome-top { flex-direction: column; align-items: flex-start; }
   }
   @media (max-width: 480px) {
     .dash-summary-grid { grid-template-columns: 1fr 1fr; }
-    .dash-empty-welcome { flex-direction: column; align-items: flex-start; }
   }
 </style>
 </head>
