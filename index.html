@@ -3770,32 +3770,30 @@
     position: absolute;
     inset: 0;
     background: url('assets/dash-cover.svg') center center / cover no-repeat;
-    background-color: #0c1f1c;
-    transform: scale(1.02);
+    background-color: #111820;
+    transform: none;
   }
   .dash-cover-shade {
     position: absolute;
     inset: 0;
     background:
-      linear-gradient(105deg, rgba(6, 12, 18, 0.88) 0%, rgba(8, 20, 24, 0.62) 42%, rgba(10, 26, 36, 0.45) 100%),
-      linear-gradient(180deg, transparent 45%, rgba(244, 246, 249, 0.94) 100%);
+      linear-gradient(100deg, rgba(8, 12, 18, 0.82) 0%, rgba(12, 18, 28, 0.55) 48%, rgba(15, 23, 42, 0.35) 100%);
     pointer-events: none;
   }
   body.theme-dark .dash-cover-shade {
     background:
-      linear-gradient(105deg, rgba(4, 8, 12, 0.92) 0%, rgba(6, 16, 20, 0.72) 42%, rgba(8, 18, 26, 0.55) 100%),
-      linear-gradient(180deg, transparent 50%, rgba(12, 17, 23, 0.96) 100%);
+      linear-gradient(100deg, rgba(4, 6, 10, 0.9) 0%, rgba(8, 12, 18, 0.72) 50%, rgba(10, 16, 24, 0.5) 100%);
   }
   .dash-cover-inner {
     position: relative;
     z-index: 2;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
-    gap: 16px;
+    gap: 20px;
     flex-wrap: wrap;
     min-height: var(--dash-cover-h);
-    padding: 22px var(--dash-pad-x) 36px;
+    padding: 20px var(--dash-pad-x) 32px;
   }
   .dash-cover-copy { min-width: 0; flex: 1 1 280px; max-width: 640px; }
   .dash-cover-eyebrow {
@@ -3803,18 +3801,18 @@
     align-items: center;
     gap: 6px;
     font-size: 10px;
-    font-weight: 700;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: rgba(167, 243, 208, 0.85);
-    margin-bottom: 8px;
+    letter-spacing: 0.12em;
+    color: rgba(226, 232, 240, 0.65);
+    margin-bottom: 6px;
   }
   .dash-cover-eyebrow::before {
     content: '';
-    width: 18px;
+    width: 14px;
     height: 2px;
     border-radius: 2px;
-    background: linear-gradient(90deg, #4ade80, transparent);
+    background: rgba(30, 92, 75, 0.85);
   }
   .dash-cover-title {
     font-size: clamp(22px, 3vw, 28px);
@@ -3858,23 +3856,23 @@
   }
   .dash-cover-month-btn svg { width: 14px; height: 14px; opacity: 0.85; flex-shrink: 0; }
   .dash-cover-month-btn:hover {
-    background: rgba(255, 255, 255, 0.14);
-    border-color: rgba(134, 196, 168, 0.35);
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.22);
   }
   .dash-cover-cta {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 10px 16px;
+    padding: 10px 18px;
     border-radius: 10px;
-    border: 1px solid rgba(74, 222, 128, 0.35);
-    background: linear-gradient(135deg, #1e5c4b 0%, #174a3c 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--primary);
     color: #fff;
-    font-size: 12px;
-    font-weight: 700;
+    font-size: 13px;
+    font-weight: 600;
     font-family: inherit;
     cursor: pointer;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
   }
   .dash-cover-cta span {
@@ -3890,24 +3888,30 @@
   }
   .dash-cover-cta:hover {
     transform: translateY(-1px);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.32);
-    background: linear-gradient(135deg, #226b56 0%, #1a5545 100%);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.24);
+    background: var(--primary-hover);
   }
   .dash-kpi-float-wrap {
     position: relative;
     z-index: 3;
-    margin-top: -28px;
-    margin-bottom: 12px;
-    padding: 0 2px;
+    margin-top: -22px;
+    margin-bottom: 14px;
+    padding: 0;
+    max-width: 100%;
   }
   .dash-kpi-float.dash-summary-grid {
     margin-bottom: 0;
-    filter: drop-shadow(0 8px 20px rgba(15, 23, 42, 0.08));
+    gap: 10px;
+    filter: none;
   }
   .dash-kpi-float .dash-summary-card {
     background: var(--card-bg);
-    box-shadow: var(--shadow);
-    border-color: var(--border);
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.04);
+    border-color: rgba(226, 232, 240, 0.95);
+    border-left-width: 3px;
+    border-radius: var(--radius-lg);
+    min-height: 80px;
+    padding: 14px 16px;
   }
   #mod-dashboard .dash-exec-hero.dash-post-cover {
     margin-top: 4px;
@@ -4071,8 +4075,8 @@
           <div class="dash-cover-inner">
             <div class="dash-cover-copy">
               <span class="dash-cover-eyebrow" id="dashCoverEyebrow">ContaLar</span>
-              <h2 class="dash-cover-title">Dashboard Financeiro</h2>
-              <p class="dash-cover-desc">Acompanhe receitas, despesas e saldo do mês em um só lugar.</p>
+              <h2 class="dash-cover-title" id="dashCoverTitle">Visão financeira</h2>
+              <p class="dash-cover-desc" id="dashCoverDesc">Acompanhe receitas, despesas e saldo do mês em um só lugar.</p>
             </div>
             <div class="dash-cover-toolbar">
               <button type="button" class="dash-cover-month-btn" id="dashCoverMonthBtn" onclick="focarFiltroMes()" title="Alterar mês do período">
@@ -4098,17 +4102,12 @@
               </div>
             </div>
             <p class="dash-hero-insight" id="dashHeroFrase">Carregando resumo do período…</p>
-            <div class="dash-empty-only dash-bg-strip">
-              <div class="dash-panel-bg" aria-hidden="true"></div>
-              <div class="dash-panel-shade dash-panel-shade-soft" aria-hidden="true"></div>
-              <div class="dash-bg-strip-inner">
-                <div class="dash-quick-actions dash-quick-actions-hier" id="dashQuickActions">
-                  <button type="button" class="dash-quick-btn-primary" onclick="focarNovoLancamento()"><span class="dash-quick-icon" aria-hidden="true">+</span><span class="dash-quick-label">Novo lançamento</span></button>
-                  <div class="dash-quick-secondary">
-                    <button type="button" class="dash-quick-btn" onclick="focarNovaMeta()"><span class="dash-quick-icon" aria-hidden="true">◎</span><span class="dash-quick-label">Criar meta</span></button>
-                    <button type="button" class="dash-quick-btn" onclick="focarNovoOrcamento()"><span class="dash-quick-icon" aria-hidden="true">⊟</span><span class="dash-quick-label">Definir limite</span></button>
-                    <button type="button" class="dash-quick-btn" onclick="irParaBackup()"><span class="dash-quick-icon" aria-hidden="true">↓</span><span class="dash-quick-label">Importar backup</span></button>
-                  </div>
+            <div class="dash-empty-only dash-quick-strip">
+              <div class="dash-quick-actions dash-quick-actions-hier" id="dashQuickActions">
+                <div class="dash-quick-secondary">
+                  <button type="button" class="dash-quick-btn" onclick="focarNovaMeta()"><span class="dash-quick-icon" aria-hidden="true">◎</span><span class="dash-quick-label">Criar meta</span></button>
+                  <button type="button" class="dash-quick-btn" onclick="focarNovoOrcamento()"><span class="dash-quick-icon" aria-hidden="true">⊟</span><span class="dash-quick-label">Definir limite</span></button>
+                  <button type="button" class="dash-quick-btn" onclick="irParaBackup()"><span class="dash-quick-icon" aria-hidden="true">↓</span><span class="dash-quick-label">Importar backup</span></button>
                 </div>
               </div>
             </div>
@@ -4134,15 +4133,12 @@
         </div>
 
         <div class="dash-empty-only panel dash-panel-compact dash-empty-charts-panel">
-          <div class="dash-panel-bg" aria-hidden="true"></div>
-          <div class="dash-panel-shade" aria-hidden="true"></div>
-          <div class="dash-panel-body-wrap">
-            <div class="panel-title">Visão gráfica do mês</div>
-            <div class="dash-empty-charts-state">
-              <span class="dash-empty-charts-state-icon" aria-hidden="true">📈</span>
-              <p class="dash-empty-charts-hint">Cadastre seu primeiro lançamento para visualizar os gráficos do mês.<em>Receitas, despesas e evolução aparecerão aqui automaticamente.</em></p>
+          <div class="dash-charts-empty">
+            <div class="dash-charts-empty-center">
+              <span class="dash-charts-empty-icon" aria-hidden="true">▦</span>
+              <p class="dash-charts-empty-msg">Cadastre seu primeiro lançamento para visualizar os gráficos do mês.</p>
             </div>
-            <div class="dash-empty-charts-grid" id="dashEmptyChartsHtml"></div>
+            <div class="dash-empty-charts-grid dash-charts-placeholders" id="dashEmptyChartsHtml"></div>
           </div>
         </div>
 
@@ -4191,12 +4187,8 @@
         </div>
 
         <div class="dash-empty-only panel dash-panel-compact dash-empty-actions-panel" style="margin-bottom:0;">
-          <div class="dash-panel-bg" aria-hidden="true"></div>
-          <div class="dash-panel-shade dash-panel-shade-soft" aria-hidden="true"></div>
-          <div class="dash-panel-body-wrap">
-            <div class="panel-title">Próximas ações</div>
-            <div id="dashProximasAcoesEmptyHtml" class="dash-panel-body"></div>
-          </div>
+          <div class="panel-title">Próximas ações</div>
+          <div id="dashProximasAcoesEmptyHtml" class="dash-panel-body"></div>
         </div>
       </section>
 
@@ -6071,6 +6063,11 @@ function atualizarHeaderContext(modulo) {
   const sub = document.getElementById('headerSubtitle');
   const hint = SUBTITULOS_MODULOS[modulo] || 'Gestão financeira residencial';
   if (sub) sub.textContent = hint;
+  document.body.classList.toggle('on-dash-module', modulo === 'dashboard');
+  const pTitle = document.getElementById('pageTitle');
+  if (pTitle && modulo === 'dashboard') {
+    pTitle.textContent = mes ? txt : 'Visão financeira';
+  }
 }
 
 function toggleSidebarPC() {
@@ -6136,7 +6133,7 @@ function abrirModulo(modulo) {
   
   const titulo = titulosModulos[modulo] || "ContaLar";
   const pTitle = document.getElementById('pageTitle');
-  if(pTitle) pTitle.innerText = titulo;
+  if(pTitle && modulo !== 'dashboard') pTitle.innerText = titulo;
   atualizarHeaderContext(modulo);
   
   if(document.body.classList.contains('modo-celular')) {
@@ -6995,11 +6992,9 @@ function aplicarModoDashboard(emptyMes,mes,lAnt){
   const mesPill=document.getElementById('dashHeroMes');
   const mesTxt=formatMesExtenso(mes);
   if(emptyMes){
-    const mesLabel=mes?esc(mesTxt):'Período atual';
-    const statusHtml=`<span class="dash-hero-status-pill status-neutral">Sem lançamentos</span>`;
     if(greet) greet.innerHTML=mes
-      ?`<div class="dash-empty-welcome"><span class="dash-empty-welcome-icon" aria-hidden="true">📋</span><div class="dash-empty-welcome-body"><div class="dash-empty-welcome-top"><h3 class="dash-empty-welcome-title">Nenhuma movimentação em ${esc(mesTxt)}</h3><div class="dash-empty-welcome-meta"><span class="dash-hero-month-pill">${mesLabel}</span>${statusHtml}</div></div><p class="dash-empty-welcome-sub">Seu painel está pronto. Cadastre receitas e despesas para acompanhar o mês.</p></div></div>`
-      :`<div class="dash-empty-welcome"><span class="dash-empty-welcome-icon" aria-hidden="true">📋</span><div class="dash-empty-welcome-body"><div class="dash-empty-welcome-top"><h3 class="dash-empty-welcome-title">Nenhuma movimentação registrada</h3><div class="dash-empty-welcome-meta">${statusHtml}</div></div><p class="dash-empty-welcome-sub">Comece pelo botão abaixo ou importe um backup existente.</p></div></div>`;
+      ?`<div class="dash-empty-welcome"><span class="dash-empty-welcome-icon" aria-hidden="true">○</span><div class="dash-empty-welcome-body"><h3 class="dash-empty-welcome-title">Sem movimentações em ${esc(mesTxt)}</h3><p class="dash-empty-welcome-sub">Cadastre receitas ou despesas para ativar os indicadores do mês.</p></div></div>`
+      :'<div class="dash-empty-welcome"><span class="dash-empty-welcome-icon" aria-hidden="true">○</span><div class="dash-empty-welcome-body"><h3 class="dash-empty-welcome-title">Nenhuma movimentação registrada</h3><p class="dash-empty-welcome-sub">Use o botão <strong>Novo lançamento</strong> na capa para começar.</p></div></div>';
     if(frase) frase.textContent='';
     if(status){ status.textContent='Sem lançamentos'; status.className='dash-hero-status-pill status-neutral'; }
     if(mesPill&&mes) mesPill.textContent=mesTxt;
@@ -7581,8 +7576,10 @@ function renderDashboard(){
   const elKpiStrip=document.getElementById('dashKpiStrip');
   const elEmptyCharts=document.getElementById('dashEmptyChartsHtml');
   const elCoverMonth=document.getElementById('dashCoverMonthLabel');
+  const elCoverTitle=document.getElementById('dashCoverTitle');
   if(heroMes) heroMes.textContent=formatMesExtenso(mes);
   if(elCoverMonth) elCoverMonth.textContent=mes?formatMesExtenso(mes):'Selecionar mês';
+  if(elCoverTitle) elCoverTitle.textContent=mes?formatMesExtenso(mes):'Visão financeira';
   const metasQtd=getMetasMes(mes).length;
   const limitesQtd=mes&&orcamentos[mes]?Object.keys(orcamentos[mes]).length:0;
   const hojeK=new Date(); hojeK.setHours(0,0,0,0);
