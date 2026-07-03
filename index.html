@@ -3299,7 +3299,32 @@
     box-shadow: var(--shadow-xs);
     margin: 0;
     width: 100%;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
   }
+  .dash-empty-welcome::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('assets/dash-cover.svg') right center / cover no-repeat;
+    background-color: #0c1f1c;
+    opacity: 0.14;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .dash-empty-welcome::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, var(--card-bg) 0%, var(--card-bg) 58%, rgba(255, 255, 255, 0.72) 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  body.theme-dark .dash-empty-welcome::after {
+    background: linear-gradient(90deg, var(--card-bg) 0%, var(--card-bg) 55%, rgba(12, 17, 23, 0.55) 100%);
+  }
+  .dash-empty-welcome > * { position: relative; z-index: 1; }
   .dash-empty-welcome-body { flex: 1; min-width: 0; }
   .dash-empty-welcome-top {
     display: flex;
@@ -3316,7 +3341,7 @@
     gap: 6px;
     flex-shrink: 0;
   }
-  body.theme-dark .dash-empty-welcome { background: rgba(255, 255, 255, 0.03); }
+  body.theme-dark .dash-empty-welcome { background: transparent; }
   .dash-empty-welcome-icon {
     width: 40px;
     height: 40px;
@@ -3498,7 +3523,41 @@
   body.theme-dark .dash-quick-secondary .dash-quick-icon { background: rgba(255, 255, 255, 0.06); }
   .dash-quick-secondary .dash-quick-label { font-size: 11px; }
   .dash-empty-charts-panel {
-    padding: 14px 16px !important;
+    position: relative;
+    overflow: hidden;
+    padding: 0 !important;
+    border: 1px solid var(--border);
+  }
+  .dash-panel-bg {
+    position: absolute;
+    inset: 0;
+    background: url('assets/dash-cover.svg') center 35% / cover no-repeat;
+    background-color: #0c1f1c;
+    transform: scale(1.04);
+    pointer-events: none;
+  }
+  .dash-panel-shade {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(155deg, rgba(255, 255, 255, 0.94) 0%, rgba(248, 250, 252, 0.9) 48%, rgba(238, 245, 242, 0.82) 100%);
+    pointer-events: none;
+  }
+  body.theme-dark .dash-panel-shade {
+    background:
+      linear-gradient(155deg, rgba(12, 17, 23, 0.95) 0%, rgba(12, 17, 23, 0.9) 50%, rgba(8, 20, 24, 0.85) 100%);
+  }
+  .dash-panel-body-wrap {
+    position: relative;
+    z-index: 1;
+    padding: 14px 16px;
+  }
+  .dash-empty-charts-panel .panel-title {
+    color: var(--dark);
+    border-bottom-color: rgba(15, 23, 42, 0.08);
+  }
+  body.theme-dark .dash-empty-charts-panel .panel-title {
+    border-bottom-color: rgba(255, 255, 255, 0.08);
   }
   .dash-empty-charts-state {
     display: flex;
@@ -3507,10 +3566,14 @@
     padding: 10px 12px;
     margin-bottom: 12px;
     border-radius: var(--radius-sm);
-    background: var(--surface-muted);
-    border: 1px dashed var(--border);
+    background: rgba(255, 255, 255, 0.65);
+    border: 1px dashed rgba(30, 92, 75, 0.22);
+    backdrop-filter: blur(6px);
   }
-  body.theme-dark .dash-empty-charts-state { background: rgba(255, 255, 255, 0.02); }
+  body.theme-dark .dash-empty-charts-state {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(134, 196, 168, 0.18);
+  }
   .dash-empty-charts-state-icon {
     width: 36px;
     height: 36px;
@@ -3540,14 +3603,29 @@
     margin-top: 2px;
   }
   .dash-chart-placeholder {
+    position: relative;
+    overflow: hidden;
     min-height: 108px;
     padding: 14px;
-    background: var(--card-bg);
+    background: rgba(255, 255, 255, 0.72);
     border-style: dashed;
     border-color: var(--border);
-    opacity: 0.92;
+    opacity: 0.98;
     align-items: stretch;
     justify-content: flex-end;
+    backdrop-filter: blur(4px);
+  }
+  .dash-chart-placeholder::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('assets/dash-cover.svg') right bottom / 140% auto no-repeat;
+    opacity: 0.07;
+    pointer-events: none;
+  }
+  .dash-chart-placeholder > * { position: relative; z-index: 1; }
+  body.theme-dark .dash-chart-placeholder {
+    background: rgba(15, 20, 25, 0.55);
   }
   .dash-chart-placeholder-title {
     font-size: 10px;
@@ -4003,12 +4081,16 @@
         </div>
 
         <div class="dash-empty-only panel dash-panel-compact dash-empty-charts-panel">
-          <div class="panel-title">Visão gráfica do mês</div>
-          <div class="dash-empty-charts-state">
-            <span class="dash-empty-charts-state-icon" aria-hidden="true">📈</span>
-            <p class="dash-empty-charts-hint">Cadastre seu primeiro lançamento para visualizar os gráficos do mês.<em>Receitas, despesas e evolução aparecerão aqui automaticamente.</em></p>
+          <div class="dash-panel-bg" aria-hidden="true"></div>
+          <div class="dash-panel-shade" aria-hidden="true"></div>
+          <div class="dash-panel-body-wrap">
+            <div class="panel-title">Visão gráfica do mês</div>
+            <div class="dash-empty-charts-state">
+              <span class="dash-empty-charts-state-icon" aria-hidden="true">📈</span>
+              <p class="dash-empty-charts-hint">Cadastre seu primeiro lançamento para visualizar os gráficos do mês.<em>Receitas, despesas e evolução aparecerão aqui automaticamente.</em></p>
+            </div>
+            <div class="dash-empty-charts-grid" id="dashEmptyChartsHtml"></div>
           </div>
-          <div class="dash-empty-charts-grid" id="dashEmptyChartsHtml"></div>
         </div>
 
         <div class="dash-kpi-micro dash-full-only" id="dashMicroKpis">
