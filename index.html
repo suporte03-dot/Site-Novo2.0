@@ -3529,10 +3529,32 @@
     padding: 0 !important;
     border: 1px solid var(--border);
   }
+  .dash-empty-actions-panel {
+    position: relative;
+    overflow: hidden;
+    padding: 0 !important;
+    border: 1px solid var(--border);
+  }
+  .dash-empty-actions-panel .panel-title {
+    color: var(--dark);
+    border-bottom-color: rgba(15, 23, 42, 0.08);
+  }
+  body.theme-dark .dash-empty-actions-panel .panel-title {
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+  }
+  .dash-bg-strip .dash-quick-btn,
+  .dash-bg-strip .dash-quick-btn-primary {
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(6px);
+  }
+  body.theme-dark .dash-bg-strip .dash-quick-btn {
+    background: rgba(255, 255, 255, 0.06);
+  }
+  #mod-dashboard.dash-empty-mode .dash-bg-strip .dash-quick-btn-primary { display: none; }
   .dash-panel-bg {
     position: absolute;
     inset: 0;
-    background: url('assets/dash-cover.svg') center 35% / cover no-repeat;
+    background: url('assets/dash-cover.svg') right center / cover no-repeat;
     background-color: #0c1f1c;
     transform: scale(1.04);
     pointer-events: none;
@@ -3591,7 +3613,7 @@
     padding: 10px 12px;
     margin-bottom: 12px;
     border-radius: var(--radius-sm);
-    background: rgba(255, 255, 255, 0.65);
+    background: rgba(255, 255, 255, 0.5);
     border: 1px dashed rgba(30, 92, 75, 0.22);
     backdrop-filter: blur(6px);
   }
@@ -3632,9 +3654,9 @@
     overflow: hidden;
     min-height: 108px;
     padding: 14px;
-    background: rgba(255, 255, 255, 0.72);
+    background: rgba(255, 255, 255, 0.55);
     border-style: dashed;
-    border-color: var(--border);
+    border-color: rgba(30, 92, 75, 0.18);
     opacity: 0.98;
     align-items: stretch;
     justify-content: flex-end;
@@ -4076,12 +4098,18 @@
               </div>
             </div>
             <p class="dash-hero-insight" id="dashHeroFrase">Carregando resumo do período…</p>
-            <div class="dash-quick-actions dash-quick-actions-hier dash-empty-only" id="dashQuickActions">
-              <button type="button" class="dash-quick-btn-primary" onclick="focarNovoLancamento()"><span class="dash-quick-icon" aria-hidden="true">+</span><span class="dash-quick-label">Novo lançamento</span></button>
-              <div class="dash-quick-secondary">
-                <button type="button" class="dash-quick-btn" onclick="focarNovaMeta()"><span class="dash-quick-icon" aria-hidden="true">◎</span><span class="dash-quick-label">Criar meta</span></button>
-                <button type="button" class="dash-quick-btn" onclick="focarNovoOrcamento()"><span class="dash-quick-icon" aria-hidden="true">⊟</span><span class="dash-quick-label">Definir limite</span></button>
-                <button type="button" class="dash-quick-btn" onclick="irParaBackup()"><span class="dash-quick-icon" aria-hidden="true">↓</span><span class="dash-quick-label">Importar backup</span></button>
+            <div class="dash-empty-only dash-bg-strip">
+              <div class="dash-panel-bg" aria-hidden="true"></div>
+              <div class="dash-panel-shade dash-panel-shade-soft" aria-hidden="true"></div>
+              <div class="dash-bg-strip-inner">
+                <div class="dash-quick-actions dash-quick-actions-hier" id="dashQuickActions">
+                  <button type="button" class="dash-quick-btn-primary" onclick="focarNovoLancamento()"><span class="dash-quick-icon" aria-hidden="true">+</span><span class="dash-quick-label">Novo lançamento</span></button>
+                  <div class="dash-quick-secondary">
+                    <button type="button" class="dash-quick-btn" onclick="focarNovaMeta()"><span class="dash-quick-icon" aria-hidden="true">◎</span><span class="dash-quick-label">Criar meta</span></button>
+                    <button type="button" class="dash-quick-btn" onclick="focarNovoOrcamento()"><span class="dash-quick-icon" aria-hidden="true">⊟</span><span class="dash-quick-label">Definir limite</span></button>
+                    <button type="button" class="dash-quick-btn" onclick="irParaBackup()"><span class="dash-quick-icon" aria-hidden="true">↓</span><span class="dash-quick-label">Importar backup</span></button>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="dash-quick-actions dash-quick-actions-inline dash-full-only" id="dashQuickActionsFull">
@@ -4163,8 +4191,12 @@
         </div>
 
         <div class="dash-empty-only panel dash-panel-compact dash-empty-actions-panel" style="margin-bottom:0;">
-          <div class="panel-title">Próximas ações</div>
-          <div id="dashProximasAcoesEmptyHtml" class="dash-panel-body"></div>
+          <div class="dash-panel-bg" aria-hidden="true"></div>
+          <div class="dash-panel-shade dash-panel-shade-soft" aria-hidden="true"></div>
+          <div class="dash-panel-body-wrap">
+            <div class="panel-title">Próximas ações</div>
+            <div id="dashProximasAcoesEmptyHtml" class="dash-panel-body"></div>
+          </div>
         </div>
       </section>
 
