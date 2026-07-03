@@ -3397,7 +3397,7 @@
     line-height: 1.2;
   }
   .dash-summary-card strong {
-    font-size: 19px;
+    font-size: 21px;
     font-weight: 800;
     letter-spacing: -0.03em;
     padding-left: 0;
@@ -3627,8 +3627,9 @@
   /* ===== CAPA DASHBOARD ===== */
   #mod-dashboard {
     --dash-pad-x: 20px;
-    --dash-pad-top: 16px;
-    --dash-cover-h: 220px;
+    --dash-pad-top: 14px;
+    --dash-cover-h: 200px;
+    padding: var(--dash-pad-top) var(--dash-pad-x) 4px;
   }
   body.modo-celular #mod-dashboard { --dash-pad-x: 14px; --dash-pad-top: 12px; --dash-cover-h: 168px; }
   #mod-dashboard .dash-cover-zone {
@@ -4011,10 +4012,10 @@
         </div>
 
         <div class="dash-kpi-micro dash-full-only" id="dashMicroKpis">
-          <div class="dash-micro-item"><span class="dash-micro-label">Pendentes</span><strong id="dashPendentes">0</strong></div>
-          <div class="dash-micro-item"><span class="dash-micro-label">Pagas</span><strong id="dashPagas">0</strong></div>
-          <div class="dash-micro-item"><span class="dash-micro-label">Saúde</span><strong id="dashSaudeCard">—</strong></div>
-          <div class="dash-micro-item"><span class="dash-micro-label">Comprometimento</span><strong id="dashComprometimento">—</strong></div>
+          <div class="dash-micro-item dash-micro-pend"><span class="dash-micro-label">Pendentes</span><strong id="dashPendentes">0</strong></div>
+          <div class="dash-micro-item dash-micro-paid"><span class="dash-micro-label">Pagas</span><strong id="dashPagas">0</strong></div>
+          <div class="dash-micro-item dash-micro-health"><span class="dash-micro-label">Saúde</span><strong id="dashSaudeCard">—</strong></div>
+          <div class="dash-micro-item dash-micro-commit"><span class="dash-micro-label">Comprometimento</span><strong id="dashComprometimento">—</strong></div>
         </div>
 
         <div id="dashCompareWrap" class="hidden dash-full-only">
