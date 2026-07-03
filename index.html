@@ -3721,7 +3721,7 @@
   body.modo-celular .sidebar-local-wrap { flex-direction: column; align-items: flex-start; }
   body.modo-celular .sidebar-backup-link { width: 100%; justify-content: center; }
   @media (max-width: 1100px) {
-    .dash-summary-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .dash-summary-grid:not(.dash-kpi-float) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     #mod-dashboard.dash-empty-mode .dash-quick-actions-hier { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     #mod-dashboard.dash-empty-mode .dash-quick-actions-hier .dash-quick-secondary { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   }
@@ -3729,13 +3729,13 @@
     .dash-summary-card strong { font-size: 17px; }
     .dash-summary-card { padding: 11px 12px; min-height: 70px; }
     .modules-wrapper { padding: 12px 14px 18px; }
-    .dash-summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .dash-summary-grid:not(.dash-kpi-float) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     #mod-dashboard.dash-empty-mode .dash-quick-actions-hier { grid-template-columns: 1fr; }
     #mod-dashboard.dash-empty-mode .dash-quick-actions-hier .dash-quick-secondary { grid-template-columns: 1fr; }
     .dash-empty-welcome-top { flex-direction: column; align-items: flex-start; }
   }
   @media (max-width: 480px) {
-    .dash-summary-grid { grid-template-columns: 1fr 1fr; }
+    .dash-summary-grid:not(.dash-kpi-float) { grid-template-columns: 1fr 1fr; }
   }
 
   /* ===== CAPA DASHBOARD ===== */
@@ -3940,6 +3940,12 @@
     padding: 16px 18px;
     gap: 10px;
   }
+  .dash-kpi-float .dash-summary-card:nth-child(-n+3) {
+    min-height: 96px;
+  }
+  .dash-kpi-float .dash-summary-card:nth-child(-n+3) strong {
+    font-size: 23px;
+  }
   body.theme-dark .dash-kpi-float .dash-summary-card {
     box-shadow:
       0 1px 2px rgba(0, 0, 0, 0.2),
@@ -4010,6 +4016,7 @@
   }
   .dash-summary-card strong { font-size: 22px; }
   .dash-kpi-float .dash-summary-card strong { font-size: 21px; }
+  .dash-kpi-float .dash-summary-card:nth-child(-n+3) strong { font-size: 23px; }
   .dash-kpi-float .dash-summary-card span.dash-kpi-label { font-size: 11px; letter-spacing: 0.05em; }
   .dash-quick-strip {
     margin-bottom: var(--dash-gap);
@@ -4102,7 +4109,8 @@
   .sidebar-menu { padding: 8px 10px 24px; gap: 5px; }
   @media (max-width: 720px) {
     .dash-quick-strip .dash-quick-secondary { grid-template-columns: 1fr; }
-    .dash-kpi-float .dash-summary-card strong { font-size: 18px; }
+    .dash-kpi-float .dash-summary-card strong { font-size: 19px; }
+    .dash-kpi-float .dash-summary-card:nth-child(-n+3) strong { font-size: 20px; }
   }
 </style>
 </head>
