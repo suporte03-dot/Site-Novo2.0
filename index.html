@@ -4157,6 +4157,366 @@
   .sidebar { --sidebar-text: #9aa8b8; }
   .menu-section-sub { color: rgba(203, 213, 225, 0.74); font-size: 12px; }
   .sidebar-footer { padding-bottom: max(11px, env(safe-area-inset-bottom)); }
+
+  /* ===== LISTA DE MERCADO — REFINO VISUAL ===== */
+  #mod-mercado {
+    overflow-x: clip;
+    max-width: 100%;
+    min-width: 0;
+  }
+  #mod-mercado .mod-hero-pro.mkt-hero-pro {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  }
+  #mod-mercado .mod-hero-pro .mod-hero-title,
+  #mod-mercado .mod-hero-pro .mod-hero-desc,
+  #mod-mercado .mkt-hero-eyebrow,
+  #mod-mercado .mkt-hero-month { display: block; }
+  .mkt-hero-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 11px;
+    background: linear-gradient(145deg, rgba(30, 92, 75, 0.14) 0%, rgba(30, 92, 75, 0.06) 100%);
+    border: 1px solid rgba(30, 92, 75, 0.18);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .mkt-hero-icon svg { width: 22px; height: 22px; }
+  .mkt-hero-meta-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+  .mkt-hero-eyebrow {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--primary);
+  }
+  .mkt-hero-month {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-light);
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--surface-muted);
+    border: 1px solid var(--border);
+  }
+  #mod-mercado .mkt-hero-pro .mod-hero-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--dark);
+    letter-spacing: -0.03em;
+    margin: 0 0 4px;
+    line-height: 1.25;
+  }
+  #mod-mercado .mkt-hero-pro .mod-hero-desc {
+    font-size: 13px;
+    color: var(--text-light);
+    margin: 0;
+    line-height: 1.45;
+    max-width: 520px;
+  }
+  .mkt-top-panel {
+    padding: 12px 14px !important;
+    margin-bottom: 10px !important;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  }
+  .mkt-toolbar {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .mkt-toolbar-copy { flex: 1; min-width: 180px; }
+  .mkt-dica-inline {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.45;
+    color: var(--text-light);
+  }
+  .mkt-toolbar-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  .mkt-btn-primary { min-height: 36px; padding-left: 14px; padding-right: 14px; }
+  .mkt-btn-sec { min-height: 36px; color: var(--text); }
+  .mkt-kpi-strip {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .mkt-kpi-strip .mkt-resumo-box {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 12px 11px;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+    box-shadow: none;
+    min-height: 0;
+  }
+  .mkt-kpi-strip .mkt-resumo-box::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+  }
+  .mkt-kpi-strip .mkt-resumo-prev::before { background: var(--primary); }
+  .mkt-kpi-strip .mkt-resumo-real::before { background: #0284c7; }
+  .mkt-kpi-strip .mkt-resumo-dif::before { background: #ea580c; }
+  .mkt-kpi-strip .mkt-resumo-dif.is-neutral::before { background: var(--border-strong); }
+  .mkt-kpi-strip .mkt-resumo-box span {
+    display: block;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    margin-bottom: 5px;
+  }
+  .mkt-kpi-strip .mkt-resumo-box strong {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+    font-variant-numeric: tabular-nums;
+    color: var(--dark);
+  }
+  .mkt-kpi-strip .mkt-resumo-prev strong { color: #1a5545; }
+  .mkt-kpi-strip .mkt-resumo-real strong { color: #0369a1; }
+  .mkt-kpi-strip .mkt-resumo-dif strong.mkt-val-warn { color: #c2410c; }
+  .mkt-kpi-strip .mkt-resumo-dif strong.mkt-val-good { color: var(--success); }
+  .mkt-kpi-strip .mkt-resumo-dif strong.mkt-val-neutral { color: var(--text-muted); }
+  .mkt-count-line {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 0;
+    font-size: 11px;
+  }
+  .mkt-count-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: var(--surface-muted);
+    border: 1px solid var(--border);
+    font-weight: 600;
+    font-size: 11px;
+    color: var(--text-light);
+  }
+  .mkt-gasto-mes {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text-light);
+  }
+  .mkt-gasto-mes strong { font-weight: 700; }
+  .mkt-tab-nav {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    padding: 4px;
+    background: var(--surface-muted);
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    margin-bottom: 12px;
+  }
+  .mkt-tab-nav .mkt-tab {
+    flex: 1 1 auto;
+    min-width: 0;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    margin-bottom: 0;
+    padding: 9px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-light);
+    background: transparent;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    cursor: pointer;
+    transition: background var(--transition), color var(--transition), border-color var(--transition);
+  }
+  .mkt-tab-nav .mkt-tab:hover {
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.55);
+    border-color: var(--border);
+  }
+  body.theme-dark .mkt-tab-nav .mkt-tab:hover { background: rgba(255, 255, 255, 0.05); }
+  .mkt-tab-nav .mkt-tab.active {
+    background: var(--card-bg);
+    color: var(--primary);
+    border-color: rgba(30, 92, 75, 0.22);
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+  }
+  .mkt-tab-nav .mkt-tab.active:hover { color: var(--primary); background: var(--card-bg); }
+  .mkt-tab-nav .mkt-tab .mkt-tab-count {
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    margin-left: 5px;
+    font-size: 9px;
+    font-weight: 700;
+    background: rgba(15, 23, 42, 0.07);
+    color: var(--text-light);
+  }
+  .mkt-tab-nav .mkt-tab.active .mkt-tab-count {
+    background: rgba(30, 92, 75, 0.12);
+    color: var(--primary);
+  }
+  #mod-mercado .mod-layout {
+    gap: 14px;
+    grid-template-columns: minmax(280px, 360px) 1fr;
+  }
+  .mkt-form-panel { padding: 14px 16px !important; }
+  .mkt-form-panel .panel-title {
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  #mod-mercado .mkt-form-section {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+  }
+  #mod-mercado .mkt-form-section .form-section-title {
+    font-size: 11px;
+    margin-bottom: 8px;
+  }
+  #mod-mercado .mkt-form-section .form-group { margin-bottom: 10px; }
+  #mod-mercado .mkt-form-section .form-row { gap: 10px; }
+  .mkt-sug-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .mkt-sug-group { display: flex; flex-direction: column; gap: 5px; }
+  .mkt-sug-group-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+  }
+  .mkt-sug-group-chips { display: flex; flex-wrap: wrap; gap: 5px; }
+  .mkt-sug-chip {
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+    color: var(--text);
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: border-color var(--transition), background var(--transition), color var(--transition);
+    line-height: 1.3;
+  }
+  .mkt-sug-chip:hover {
+    border-color: rgba(30, 92, 75, 0.28);
+    background: var(--primary-light);
+    color: var(--primary);
+  }
+  .mkt-list-head {
+    margin-bottom: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--dark);
+  }
+  .mkt-list-grid {
+    max-height: 460px;
+    gap: 8px;
+  }
+  .mkt-item-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 11px 12px;
+    box-shadow: none;
+  }
+  .mkt-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 8px;
+    padding: 20px 14px;
+    border: 1px dashed var(--border);
+    border-radius: 10px;
+    background: var(--surface-muted);
+    min-height: 140px;
+  }
+  .mkt-empty-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 500;
+    opacity: 0.8;
+  }
+  .mkt-empty-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--dark);
+    margin: 0;
+  }
+  .mkt-empty-text {
+    font-size: 12px;
+    color: var(--text-light);
+    margin: 0 0 4px;
+    line-height: 1.45;
+    max-width: 280px;
+  }
+  @media (max-width: 900px) {
+    #mod-mercado .mod-layout { grid-template-columns: 1fr; }
+    .mkt-kpi-strip { grid-template-columns: 1fr; }
+    .mkt-toolbar-actions { width: 100%; justify-content: flex-start; }
+    .mkt-btn-primary { flex: 1 1 auto; }
+  }
+  @media (max-width: 600px) {
+    .mkt-tab-nav { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; }
+    .mkt-tab-nav .mkt-tab { flex: 0 0 auto; white-space: nowrap; }
+    .mkt-hero-pro { align-items: flex-start; }
+    .mkt-kpi-strip .mkt-resumo-box strong { font-size: 19px; }
+  }
+
   @media (max-width: 720px) {
     .dash-quick-strip .dash-quick-secondary { grid-template-columns: 1fr; }
   }
@@ -5051,33 +5411,38 @@
         </div>
         <div id="print-lista"></div>
 
-        <div class="mod-hero-pro mkt-hero-slim">
-          <div class="mod-hero-pro-body">
-            <h3 class="mod-hero-title">Lista de Mercado</h3>
-            <p class="mod-hero-desc">Organize itens, use o Modo Compra e registre o gasto no financeiro.</p>
+        <div class="mod-hero-pro mkt-hero-pro no-print">
+          <div class="mkt-hero-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1"/><circle cx="17" cy="20" r="1"/><path d="M3 3h2l1.8 9.2a1 1 0 0 0 1 .82h7.6a1 1 0 0 0 1-.78l1.22-5.4H6.1"/></svg>
           </div>
-          <div class="mod-hero-pro-actions no-print">
-            <button type="button" class="btn btn-primary btn-sm" onclick="focarItemMercado()">Adicionar item</button>
-            <button type="button" class="btn btn-ghost btn-sm" onclick="abrirModulo('lancamentos')">Lançamentos</button>
+          <div class="mod-hero-pro-body">
+            <div class="mkt-hero-meta-row">
+              <span class="mkt-hero-eyebrow">Mercado</span>
+              <span class="mkt-hero-month" id="mktHeroMes">—</span>
+            </div>
+            <h3 class="mod-hero-title">Lista de mercado</h3>
+            <p class="mod-hero-desc">Organize itens, use o Modo Compra e registre o gasto no financeiro.</p>
           </div>
         </div>
 
         <div class="panel no-print mkt-top-panel">
           <div class="mkt-toolbar">
-            <div id="mktDicaIA" class="pro-muted" style="flex:1;min-width:200px;font-size:13px;line-height:1.5;">Monte sua lista e use o Modo Compra no mercado.</div>
+            <div class="mkt-toolbar-copy">
+              <p id="mktDicaIA" class="mkt-dica-inline">Monte sua lista e use o Modo Compra no mercado.</p>
+            </div>
             <div class="mkt-toolbar-actions">
-              <button type="button" class="btn btn-success btn-sm" id="btnIniciarCompra">Iniciar compra</button>
-              <button type="button" class="btn btn-outline btn-sm" id="btnExportarLista">Exportar</button>
-              <button type="button" class="btn btn-outline btn-sm" id="btnLimparLista">Limpar lista</button>
+              <button type="button" class="btn btn-primary btn-sm mkt-btn-primary" id="btnMercadoPrincipal">Adicionar item</button>
+              <button type="button" class="btn btn-outline btn-sm mkt-btn-sec" id="btnExportarLista">Exportar</button>
+              <button type="button" class="btn btn-outline btn-sm mkt-btn-sec" id="btnLimparLista">Limpar lista</button>
             </div>
           </div>
           <div class="mkt-kpi-strip">
             <div class="mkt-resumo-box mkt-resumo-prev"><span>Total previsto</span><strong id="mercadoTotalLista">R$ 0,00</strong></div>
             <div class="mkt-resumo-box mkt-resumo-real"><span>Total real</span><strong id="mktTotalReal">R$ 0,00</strong></div>
-            <div class="mkt-resumo-box mkt-resumo-dif"><span>Diferença</span><strong id="mktTotalDif">—</strong></div>
+            <div class="mkt-resumo-box mkt-resumo-dif is-neutral"><span>Diferença</span><strong id="mktTotalDif" class="mkt-val-neutral">R$ 0,00</strong></div>
           </div>
           <div class="mkt-count-line" id="mktCountLine"></div>
-          <div class="pro-muted" style="margin-top:8px;font-size:12px;">Gasto do mês (Alimentação/Mercado): <strong id="mercadoGastoMes" class="c-red">R$ 0,00</strong></div>
+          <div class="mkt-gasto-mes">Gasto do mês (Alimentação/Mercado): <strong id="mercadoGastoMes" class="c-red">R$ 0,00</strong></div>
         </div>
 
         <div class="mkt-tab-nav no-print">
@@ -5089,13 +5454,13 @@
 
         <div class="mkt-panel active" id="mkt-panel-lista">
           <div class="mod-layout">
-            <div class="panel" id="panelFormMercado">
+            <div class="panel mkt-form-panel" id="panelFormMercado">
               <div class="panel-title" id="formMercadoTitle">Adicionar item</div>
-              <div class="form-section">
+              <div class="form-section mkt-form-section">
                 <div class="form-section-title">Sugestões rápidas</div>
                 <div id="mktSugestoes" class="mkt-sug-grid"></div>
               </div>
-              <div class="form-section">
+              <div class="form-section mkt-form-section">
                 <div class="form-section-title">Item</div>
                 <div class="form-group">
                   <label for="inputItemMercado">Produto *</label>
@@ -6443,6 +6808,11 @@ function limparFormLanc() { ['fDesc','fValor','fVenc','fResp','fObs'].forEach(id
 
 /* LISTA DE MERCADO — ETAPA 5 */
 const SUGESTOES_MERCADO = ['Arroz', 'Feijão', 'Leite', 'Café', 'Açúcar', 'Carne', 'Frango', 'Ovos', 'Detergente', 'Papel higiênico'];
+const SUGESTOES_MERCADO_GRUPOS = [
+  { label: 'Básicos', items: ['Arroz', 'Feijão', 'Leite', 'Café', 'Açúcar'] },
+  { label: 'Proteínas', items: ['Carne', 'Frango', 'Ovos'] },
+  { label: 'Limpeza', items: ['Detergente', 'Papel higiênico'] }
+];
 let editMercadoId = null;
 
 const abasMercado = {
@@ -6707,6 +7077,23 @@ function renderCompraProgresso() {
   </div>`;
 }
 
+function atualizarToolbarMercado() {
+  normalizarListaMercado();
+  const vazia = !listaMercado.length;
+  const btn = document.getElementById('btnMercadoPrincipal');
+  if (btn) {
+    btn.textContent = vazia ? 'Adicionar item' : 'Iniciar compra';
+    btn.setAttribute('aria-label', vazia ? 'Adicionar item à lista' : 'Iniciar modo compra');
+  }
+}
+
+function mktEmptyStateHtml(o) {
+  const title = o.title || '';
+  const msg = o.msg || '';
+  const btn = o.btn ? `<button type="button" class="btn btn-primary btn-sm" onclick="${o.btn}">${escapeHtmlMercado(o.btnLabel || 'Começar')}</button>` : '';
+  return `<div class="mkt-empty-state"><span class="mkt-empty-icon" aria-hidden="true">○</span><div class="mkt-empty-body">${title ? `<div class="mkt-empty-title">${escapeHtmlMercado(title)}</div>` : ''}${msg ? `<p class="mkt-empty-text">${escapeHtmlMercado(msg)}</p>` : ''}${btn}</div></div>`;
+}
+
 function atualizarResumoMercadoHeader() {
   const { totalPrevisto, totalReal, dif } = totaisMercado();
   const { total, pendentes, comprados, naoEncontrados, substituidos } = contarItensMercado();
@@ -6729,14 +7116,16 @@ function atualizarResumoMercadoHeader() {
   if (tabHist) tabHist.innerText = Array.isArray(historicoCopras) ? historicoCopras.length : 0;
   const realEl = document.getElementById('mktTotalReal'); if (realEl) realEl.innerText = formatMoeda(totalReal);
   const difEl = document.getElementById('mktTotalDif');
+  const difBox = difEl?.closest('.mkt-resumo-dif');
   if (difEl) {
-    if (!totalReal) { difEl.innerText = '—'; difEl.className = ''; }
-    else {
-      difEl.innerText = formatMoeda(dif);
-      difEl.className = dif > 0 ? 'c-up' : dif < 0 ? 'c-down' : '';
-    }
+    difEl.innerText = formatMoeda(dif);
+    difEl.className = dif > 0 ? 'mkt-val-warn' : dif < 0 ? 'mkt-val-good' : 'mkt-val-neutral';
+    if (difBox) difBox.classList.toggle('is-neutral', dif === 0);
   }
   const mes = getMesGlobal();
+  const heroMes = document.getElementById('mktHeroMes');
+  if (heroMes) heroMes.textContent = mes ? formatMesExtenso(mes) : '—';
+  atualizarToolbarMercado();
   const gastosMercado = getLancamentosFiltrados(mes).filter(l => l.tipo === 'despesa' && (((l.categoria || '').toLowerCase().includes('mercado')) || ((l.categoria || '').toLowerCase().includes('alimenta')))).reduce((sum, l) => sum + l.valor, 0);
   const gastoEl = document.getElementById('mercadoGastoMes'); if (gastoEl) gastoEl.innerText = formatMoeda(gastosMercado);
   renderCompraProgresso();
@@ -6749,7 +7138,7 @@ function renderListaMercado() {
   if (el) {
     el.innerHTML = listaMercado.length
       ? listaMercado.map(i => renderItemMercadoCard(i)).join('')
-      : emptyStateHtml({icon:'🛒',title:'Sua lista está vazia',msg:'Use as sugestões rápidas ou adicione itens manualmente à lista de mercado.',btnLabel:'Adicionar item',btn:'focarItemMercado()'});
+      : mktEmptyStateHtml({title:'Sua lista está vazia',msg:'Use as sugestões rápidas ou adicione itens manualmente.',btnLabel:'Adicionar item',btn:'focarItemMercado()'});
   }
   renderModoCompraMercado();
   renderHistoricoMercado();
@@ -7076,13 +7465,13 @@ function renderPromocoesMercado() {
 function renderSugestoesMercado() {
   const el = document.getElementById('mktSugestoes');
   if (!el) return;
-  el.innerHTML = SUGESTOES_MERCADO.map(s => `<button type="button" class="mkt-sug-chip" onclick="aplicarSugestaoMercado('${s.replace(/'/g, "\\'")}')">${escapeHtmlMercado(s)}</button>`).join('');
+  el.innerHTML = SUGESTOES_MERCADO_GRUPOS.map(g => `<div class="mkt-sug-group"><span class="mkt-sug-group-label">${escapeHtmlMercado(g.label)}</span><div class="mkt-sug-group-chips">${g.items.map(s => `<button type="button" class="mkt-sug-chip" onclick="aplicarSugestaoMercado('${s.replace(/'/g, "\\'")}')">${escapeHtmlMercado(s)}</button>`).join('')}</div></div>`).join('');
 }
 
 function inicializarEventosMercado() {
   renderSugestoesMercado();
   [
-    ['btnIniciarCompra', iniciarModoCompra],
+    ['btnMercadoPrincipal', evt => { evt.preventDefault(); if (!listaMercado.length) focarItemMercado(); else iniciarModoCompra(evt); }],
     ['btnExportarLista', openModalDownload],
     ['btnLimparLista', limparListaMercado],
     ['abaLista', evt => abrirAbaMercado('lista', evt)],
