@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FinançasCasa — Controle financeiro residencial</title>
+<title>ContaLar — Controle financeiro do lar</title>
 <style>
   :root {
     --primary: #1e5c4b;
@@ -86,7 +86,7 @@
   .sidebar {
     width: var(--sidebar-w);
     min-width: var(--sidebar-w);
-    background: var(--sidebar-bg);
+    background: linear-gradient(180deg, #0a0f14 0%, var(--sidebar-bg) 28%, #0c1117 100%);
     color: var(--sidebar-text);
     display: flex;
     flex-direction: column;
@@ -153,28 +153,39 @@
   .btn-collapse-pc svg { transition: transform 0.3s ease; }
 
   .sidebar-header {
-    padding: 18px 16px 14px;
+    padding: 16px 14px 14px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     display: flex;
     flex-direction: column;
-    gap: 11px;
+    gap: 12px;
     flex-shrink: 0;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, transparent 100%);
+    background: linear-gradient(165deg, rgba(30, 92, 75, 0.14) 0%, rgba(12, 53, 57, 0.08) 42%, transparent 100%);
+    position: relative;
+  }
+  .sidebar-header::after {
+    content: '';
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    bottom: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(134, 196, 168, 0.22), transparent);
+    pointer-events: none;
   }
   .sidebar-brand {
     display: flex;
     align-items: center;
-    gap: 13px;
+    gap: 11px;
     width: 100%;
-    min-height: 48px;
+    min-height: 44px;
   }
   .brand-mark {
-    width: 46px;
-    height: 46px;
-    border-radius: 13px;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
     background: linear-gradient(145deg, #1e5c4b 0%, #0f4c3a 52%, #0c3539 100%);
     color: #fff;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 800;
     display: flex;
     align-items: center;
@@ -182,11 +193,11 @@
     letter-spacing: -0.5px;
     flex-shrink: 0;
     overflow: hidden;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.14);
-    border: 1px solid rgba(134, 196, 168, 0.22);
+    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(134, 196, 168, 0.2);
   }
-  .brand-mark.is-svg { background: transparent; border: none; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.28); padding: 0; }
-  .brand-mark-svg { width: 100%; height: 100%; display: block; border-radius: 13px; }
+  .brand-mark.is-svg { background: transparent; border: none; box-shadow: 0 3px 14px rgba(0, 0, 0, 0.28); padding: 0; }
+  .brand-mark-svg { width: 100%; height: 100%; display: block; border-radius: 12px; }
   .brand-mark.has-img { background: #fff; padding: 3px; border: 1px solid rgba(255,255,255,0.12); box-shadow: 0 4px 14px rgba(0,0,0,0.22); }
   .brand-mark.has-img img { width: 100%; height: 100%; object-fit: contain; border-radius: 10px; display: block; }
   .brand-preview {
@@ -207,65 +218,76 @@
   .brand-preview-mark.has-img img { width: 100%; height: 100%; object-fit: contain; border-radius: 10px; }
   .brand-text { display: flex; flex-direction: column; gap: 4px; min-width: 0; flex: 1; }
   .brand-name {
-    font-size: 17px;
+    font-size: 18px;
     font-weight: 700;
     color: var(--sidebar-text-active);
-    letter-spacing: -0.03em;
-    line-height: 1.15;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .brand-name-main { color: #f8fafc; }
-  .brand-name-accent { color: #86efac; font-weight: 800; }
-  .brand-mark.is-emoji { font-size: 20px; letter-spacing: 0; }
+  .brand-name-main { color: #f8fafc; font-weight: 700; }
+  .brand-name-accent { color: #6ee7b7; font-weight: 800; }
+  .brand-mark.is-emoji { font-size: 18px; letter-spacing: 0; }
   .brand-tagline {
-    font-size: 11.5px;
-    color: rgba(203, 213, 225, 0.78);
+    font-size: 10.5px;
+    color: rgba(148, 163, 184, 0.82);
     font-weight: 500;
     line-height: 1.35;
-    letter-spacing: 0.01em;
+    letter-spacing: 0.02em;
   }
   #lblGrupoId {
-    font-size: 11px;
-    color: rgba(203, 213, 225, 0.82);
-    font-weight: 500;
-    padding: 7px 12px;
+    font-size: 10px;
+    color: rgba(203, 213, 225, 0.88);
+    font-weight: 600;
+    padding: 5px 10px;
     background: rgba(255, 255, 255, 0.04);
     border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.09);
     line-height: 1.35;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    align-self: flex-start;
+    gap: 7px;
+    flex-shrink: 0;
     cursor: help;
   }
   .sidebar-local-wrap {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
     gap: 8px;
-    align-items: flex-start;
     width: 100%;
   }
   .sidebar-backup-link {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 6px 10px;
-    border-radius: 999px;
-    border: 1px solid rgba(134, 196, 168, 0.28);
-    background: rgba(30, 92, 75, 0.22);
-    color: #bbf7d0;
-    font-size: 11px;
+    padding: 6px 11px;
+    border-radius: 8px;
+    border: 1px solid rgba(134, 196, 168, 0.22);
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(226, 232, 240, 0.92);
+    font-size: 10.5px;
     font-weight: 600;
     font-family: inherit;
     cursor: pointer;
-    transition: background var(--transition), border-color var(--transition);
+    transition: background var(--transition), border-color var(--transition), color var(--transition), box-shadow var(--transition);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+  }
+  .sidebar-backup-link svg {
+    width: 13px;
+    height: 13px;
+    flex-shrink: 0;
+    opacity: 0.85;
   }
   .sidebar-backup-link:hover {
-    background: rgba(30, 92, 75, 0.38);
-    border-color: rgba(134, 196, 168, 0.45);
+    background: rgba(30, 92, 75, 0.28);
+    border-color: rgba(134, 196, 168, 0.38);
+    color: #ecfdf5;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
   }
   #lblGrupoId::before {
     content: '';
@@ -313,38 +335,39 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 10px 12px;
-    background: transparent;
-    border: none;
+    padding: 9px 11px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid transparent;
     cursor: pointer;
     font-family: inherit;
     text-align: left;
-    transition: background var(--transition), color var(--transition);
-    border-radius: var(--radius-sm);
+    transition: background var(--transition), color var(--transition), border-color var(--transition);
+    border-radius: 10px;
     position: relative;
     z-index: 1;
     min-height: 44px;
   }
-  .menu-section.collapsed .menu-section-head { border-radius: var(--radius-sm); }
-  .menu-section-head:hover { background: rgba(255, 255, 255, 0.06); }
+  .menu-section.collapsed .menu-section-head { border-radius: 10px; }
+  .menu-section-head:hover { background: rgba(255, 255, 255, 0.06); border-color: rgba(255, 255, 255, 0.05); }
   .menu-section:not(.collapsed) .menu-section-head {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.07);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
   }
   .menu-section-icon {
-    width: 28px;
-    height: 28px;
+    width: 30px;
+    height: 30px;
     border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 13px;
+    font-size: 12px;
     flex-shrink: 0;
     font-weight: 700;
     opacity: 1;
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.07);
     color: #e2e8f0;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.09);
   }
   .menu-section[data-section="geral"] .menu-section-icon {
     background: rgba(56, 189, 248, 0.18);
@@ -379,29 +402,30 @@
   .menu-section-sub { display: block; font-size: 12px; font-weight: 500; color: rgba(203, 213, 225, 0.72); margin-top: 3px; line-height: 1.35; }
   .menu-section-count { display: none; }
   .menu-section-chevron {
-    width: 26px;
-    height: 26px;
+    width: 24px;
+    height: 24px;
     border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #cbd5e1;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: rgba(203, 213, 225, 0.75);
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.08);
     flex-shrink: 0;
     transition: transform 0.22s ease, color var(--transition), background var(--transition), border-color var(--transition);
     opacity: 1;
   }
-  .menu-section-chevron svg { width: 14px; height: 14px; stroke-width: 2.5; }
+  .menu-section-chevron svg { width: 12px; height: 12px; stroke-width: 2.25; }
   .menu-section-head:hover .menu-section-chevron {
-    color: #f8fafc;
-    background: rgba(255, 255, 255, 0.14);
-    border-color: rgba(255, 255, 255, 0.22);
+    color: #f1f5f9;
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.14);
   }
   .menu-section:not(.collapsed) .menu-section-chevron {
     color: #86efac;
-    background: rgba(30, 92, 75, 0.28);
-    border-color: rgba(134, 196, 168, 0.35);
+    background: rgba(30, 92, 75, 0.2);
+    border-color: rgba(134, 196, 168, 0.28);
+    transform: rotate(0deg);
   }
   .menu-section:not(.collapsed) .menu-section-head:hover .menu-section-chevron {
     color: #bbf7d0;
@@ -461,10 +485,10 @@
   }
   .menu-item:hover { background: rgba(255, 255, 255, 0.07); color: var(--sidebar-text-active); }
   .menu-item.active {
-    background: rgba(30, 92, 75, 0.18);
+    background: rgba(30, 92, 75, 0.22);
     color: #fff;
     font-weight: 600;
-    box-shadow: inset 3px 0 0 #3d9a7a;
+    box-shadow: inset 3px 0 0 #4ade80;
   }
   .menu-dot {
     width: 5px;
@@ -473,7 +497,12 @@
     background: rgba(148, 163, 184, 0.28);
     flex-shrink: 0;
   }
-  .menu-item.active .menu-dot { background: rgba(134, 196, 168, 0.95); }
+  .menu-item.active .menu-dot {
+    background: #4ade80;
+    box-shadow: 0 0 6px rgba(74, 222, 128, 0.45);
+    width: 6px;
+    height: 6px;
+  }
   .menu-label { flex: 1; min-width: 0; }
   .menu-badge {
     margin-left: auto;
@@ -1135,7 +1164,7 @@
   body.theme-dark th, body.theme-dark .global-filter, body.theme-dark .metric-card, body.theme-dark .pro-card,
   body.theme-dark .pro-filter, body.theme-dark .list-row, body.theme-dark .chip-card { background: #0f1419; }
   body.theme-dark tr:hover td, body.theme-dark .btn-outline:hover:not(:disabled) { background: rgba(255, 255, 255, 0.03); }
-  body.theme-dark .sidebar { background: #080b10; border-color: var(--sidebar-border); }
+  body.theme-dark .sidebar { background: linear-gradient(180deg, #060a0f 0%, #080b10 32%, #0a0e13 100%); border-color: var(--sidebar-border); }
   .modules-wrapper { padding: 20px 24px 28px; }
   .module { max-width: 1480px; margin: 0 auto; }
   #mod-dashboard .panel { margin-bottom: 12px; }
@@ -1496,16 +1525,13 @@
   /* ===== ETAPA 10: DASHBOARD ADAPTATIVO ===== */
   #mod-dashboard.dash-empty-mode .dash-full-only { display: none !important; }
   #mod-dashboard:not(.dash-empty-mode) .dash-empty-only { display: none !important; }
-  #mod-dashboard.dash-empty-mode .dash-hero-fin {
+  #mod-dashboard.dash-empty-mode .dash-hero-fin.dash-exec-hero {
     grid-template-columns: 1fr;
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    box-shadow: var(--shadow-xs);
-    padding: 16px 18px;
-    margin-bottom: 10px;
-  }
-  body.theme-dark #mod-dashboard.dash-empty-mode .dash-hero-fin {
-    background: var(--card-bg);
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin-bottom: var(--dash-gap, 8px);
   }
   #mod-dashboard.dash-empty-mode .dash-hero-greeting span { color: var(--dark); font-weight: 700; }
   #mod-dashboard.dash-empty-mode .dash-hero-insight {
@@ -3573,13 +3599,11 @@
   .dash-kpi-micro { margin-bottom: var(--dash-gap, 8px); }
   .dash-exec-grid { margin-bottom: var(--dash-gap, 8px); gap: var(--dash-gap, 8px); }
   .modules-wrapper { padding: 16px 20px 22px; }
-  .sidebar-menu { padding: 10px 12px 24px; gap: 6px; }
-  .menu-item { padding: 11px 14px; gap: 11px; min-height: 46px; }
-  .menu-section-head { padding: 10px 12px; }
-  .sidebar-header { padding: 18px 16px 16px; gap: 12px; }
-  .sidebar #lblGrupoId { color: rgba(168, 180, 196, 0.75); }
-  .menu-section-title { color: rgba(203, 213, 225, 0.82); }
-  .menu-section-sub { color: rgba(148, 163, 184, 0.65); }
+  body.modo-celular .sidebar-brand { gap: 10px; }
+  body.modo-celular .brand-name { font-size: 17px; }
+  body.modo-celular .brand-tagline { font-size: 10px; }
+  body.modo-celular .sidebar-local-wrap { flex-direction: column; align-items: flex-start; }
+  body.modo-celular .sidebar-backup-link { width: 100%; justify-content: center; }
   @media (max-width: 1100px) {
     .dash-summary-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     #mod-dashboard.dash-empty-mode .dash-quick-actions-hier { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -3619,14 +3643,17 @@
       <div class="sidebar-brand">
         <div class="brand-mark is-svg" id="brandMark" aria-hidden="true"></div>
         <div class="brand-text">
-          <span class="brand-name" id="brandName"><span class="brand-name-main">Finanças</span><span class="brand-name-accent">Casa</span></span>
-          <span class="brand-tagline" id="brandTagline">Controle financeiro residencial</span>
+          <span class="brand-name" id="brandName"><span class="brand-name-main">Conta</span><span class="brand-name-accent">Lar</span></span>
+          <span class="brand-tagline" id="brandTagline">Controle financeiro do lar</span>
         </div>
         <button class="btn-menu hidden" id="btnCloseMenu" onclick="toggleMenu()" type="button" style="margin-left:auto;color:var(--sidebar-text-active);background:transparent;border:none;font-size:18px;cursor:pointer;" aria-label="Fechar menu">×</button>
       </div>
       <div class="sidebar-local-wrap">
         <div id="lblGrupoId" title="Seus dados estão salvos apenas neste dispositivo.">Modo local · offline</div>
-        <button type="button" class="sidebar-backup-link" onclick="irParaBackup()" title="Exportar cópia dos seus dados">↗ Fazer backup</button>
+        <button type="button" class="sidebar-backup-link" onclick="irParaBackup()" title="Exportar cópia dos seus dados">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Fazer backup
+        </button>
       </div>
     </div>
     <div class="sidebar-menu">
@@ -3733,7 +3760,7 @@
         <div class="dash-exec-hero dash-hero-fin" id="dashHeroWrap">
           <div class="dash-exec-main dash-hero-content">
             <div class="dash-exec-head">
-              <div class="dash-hero-greeting" id="dashHeroGreeting">Olá, bem-vindo ao <span>FinançasCasa</span>.</div>
+              <div class="dash-hero-greeting" id="dashHeroGreeting">Olá, bem-vindo ao <span>ContaLar</span>.</div>
               <div class="dash-hero-meta dash-full-only" id="dashHeroMeta">
                 <span class="dash-hero-month-pill" id="dashHeroMes">—</span>
                 <span class="dash-hero-status-pill status-neutral" id="dashHeroStatus">Aguardando dados</span>
@@ -3837,7 +3864,7 @@
           <div class="mod-hero-pro-body">
             <div class="mod-hero-pro-meta"><span class="mod-hero-month">—</span></div>
             <p class="mod-hero-eyebrow">Inteligência local</p>
-            <h3 class="mod-hero-title" id="modAssistenteTitle">Assistente IA FinançasCasa</h3>
+            <h3 class="mod-hero-title" id="modAssistenteTitle">Assistente IA ContaLar</h3>
             <p class="mod-hero-desc">Análises, alertas e recomendações geradas localmente — sem API externa.</p>
           </div>
           <div class="mod-hero-pro-actions no-print">
@@ -4776,23 +4803,23 @@
               <div class="form-section-title">Identidade do app</div>
               <p class="pro-muted" style="font-size:12px;margin-bottom:12px;line-height:1.5;">Personalize nome, subtítulo e logo da barra lateral. Use iniciais, emoji ou envie uma imagem PNG/JPG.</p>
               <div id="configBrandPreview" class="brand-preview">
-                <div class="brand-preview-mark" id="configBrandPreviewMark">FC</div>
+                <div class="brand-preview-mark" id="configBrandPreviewMark">CL</div>
                 <div>
-                  <strong id="configBrandPreviewNome"><span class="brand-name-main">Finanças</span><span class="brand-name-accent">Casa</span></strong>
-                  <div class="pro-muted" id="configBrandPreviewSub" style="font-size:12px;margin-top:2px;">Controle financeiro residencial</div>
+                  <strong id="configBrandPreviewNome"><span class="brand-name-main">Conta</span><span class="brand-name-accent">Lar</span></strong>
+                  <div class="pro-muted" id="configBrandPreviewSub" style="font-size:12px;margin-top:2px;">Controle financeiro do lar</div>
                 </div>
               </div>
               <div class="form-group">
                 <label for="configAppNome">Nome do app</label>
-                <input type="text" id="configAppNome" class="form-control" maxlength="40" placeholder="Ex.: FinançasCasa" oninput="salvarConfigMarca()">
+                <input type="text" id="configAppNome" class="form-control" maxlength="40" placeholder="Ex.: ContaLar" oninput="salvarConfigMarca()">
               </div>
               <div class="form-group">
                 <label for="configAppSubtitulo">Subtítulo</label>
-                <input type="text" id="configAppSubtitulo" class="form-control" maxlength="50" placeholder="Ex.: Controle financeiro residencial" oninput="salvarConfigMarca()">
+                <input type="text" id="configAppSubtitulo" class="form-control" maxlength="50" placeholder="Ex.: Controle financeiro do lar" oninput="salvarConfigMarca()">
               </div>
               <div class="form-group">
                 <label for="configAppLogo">Logo em texto (iniciais ou emoji)</label>
-                <input type="text" id="configAppLogo" class="form-control" maxlength="2" placeholder="FC" oninput="salvarConfigMarca()">
+                <input type="text" id="configAppLogo" class="form-control" maxlength="2" placeholder="CL" oninput="salvarConfigMarca()">
               </div>
               <div class="form-group">
                 <label for="configAppLogoFile">Logo em imagem (PNG/JPG)</label>
@@ -4988,9 +5015,15 @@ if (!config || typeof config !== 'object') {
   config = { modo: 'auto', inicio: 'dashboard' };
   salvarLocal('config', config);
 }
-const CONFIG_PADRAO = { modo: 'auto', inicio: 'dashboard', tema: 'claro', densidade: 'normal', moeda: 'BRL', mesInicial: '', mostrarExemplo: false, ultimoBackup: '', appNome: 'FinançasCasa', appSubtitulo: 'Controle financeiro residencial', appLogo: 'FC', appLogoImg: '', menuSections: { geral: true, financeiro: true, utilitarios: true, sistema: true } };
+const CONFIG_PADRAO = { modo: 'auto', inicio: 'dashboard', tema: 'claro', densidade: 'normal', moeda: 'BRL', mesInicial: '', mostrarExemplo: false, ultimoBackup: '', appNome: 'ContaLar', appSubtitulo: 'Controle financeiro do lar', appLogo: 'CL', appLogoImg: '', menuSections: { geral: true, financeiro: true, utilitarios: true, sistema: true } };
 Object.keys(CONFIG_PADRAO).forEach(k => { if (config[k] === undefined) config[k] = CONFIG_PADRAO[k]; });
 if (!config.menuSections || typeof config.menuSections !== 'object') config.menuSections = { ...CONFIG_PADRAO.menuSections };
+if (config.appNome === 'FinançasCasa' && (!config.appSubtitulo || config.appSubtitulo === 'Controle financeiro residencial')) {
+  config.appNome = 'ContaLar';
+  config.appSubtitulo = 'Controle financeiro do lar';
+  if (!config.appLogoImg && (!config.appLogo || config.appLogo === 'FC')) config.appLogo = 'CL';
+  salvarLocal('config', config);
+}
 salvarLocal('config', config);
 
 let editLancId = null;
@@ -5759,7 +5792,7 @@ function abrirModulo(modulo) {
     alvo.classList.add('active');
   }
   
-  const titulo = titulosModulos[modulo] || "FinançasCasa";
+  const titulo = titulosModulos[modulo] || "ContaLar";
   const pTitle = document.getElementById('pageTitle');
   if(pTitle) pTitle.innerText = titulo;
   atualizarHeaderContext(modulo);
@@ -6751,37 +6784,52 @@ function aprimorarEstruturaVisual(){
     });
   }
 }
-function getAppNome(){ return String(config.appNome || 'FinançasCasa').trim() || 'FinançasCasa'; }
-function getAppSubtitulo(){ return String(config.appSubtitulo || 'Controle financeiro residencial').trim() || 'Controle financeiro residencial'; }
-function getAppLogo(){ return String(config.appLogo || 'FC').trim().slice(0, 2) || 'FC'; }
-function usaLogoSvgPadrao(){ return !config.appLogoImg && String(config.appLogo || 'FC').trim() === 'FC'; }
+function getAppNome(){ return String(config.appNome || 'ContaLar').trim() || 'ContaLar'; }
+function getAppSubtitulo(){ return String(config.appSubtitulo || 'Controle financeiro do lar').trim() || 'Controle financeiro do lar'; }
+function getAppLogo(){ return String(config.appLogo || 'CL').trim().slice(0, 2) || 'CL'; }
+function usaLogoSvgPadrao(){
+  const logo = String(config.appLogo || 'CL').trim();
+  return !config.appLogoImg && (logo === 'CL' || logo === 'FC');
+}
 function svgMarcaPremium(uid){
-  const g='brandGrad'+uid, s='brandShine'+uid;
+  const g='brandGrad'+uid, s='brandShine'+uid, t='brandTeal'+uid;
   return `<svg class="brand-mark-svg" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <defs>
-      <linearGradient id="${g}" x1="8" y1="6" x2="40" y2="42" gradientUnits="userSpaceOnUse">
-        <stop offset="0%" stop-color="#1e5c4b"/>
-        <stop offset="52%" stop-color="#155744"/>
-        <stop offset="100%" stop-color="#0c3539"/>
+      <linearGradient id="${g}" x1="6" y1="4" x2="42" y2="44" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#1a5c4a"/>
+        <stop offset="48%" stop-color="#0f4a42"/>
+        <stop offset="100%" stop-color="#0c3540"/>
       </linearGradient>
-      <linearGradient id="${s}" x1="12" y1="8" x2="28" y2="24" gradientUnits="userSpaceOnUse">
-        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.18"/>
+      <linearGradient id="${t}" x1="14" y1="18" x2="34" y2="36" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#6ee7b7" stop-opacity="0.35"/>
+        <stop offset="100%" stop-color="#0d9488" stop-opacity="0"/>
+      </linearGradient>
+      <linearGradient id="${s}" x1="10" y1="6" x2="26" y2="22" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.16"/>
         <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
       </linearGradient>
     </defs>
-    <rect width="48" height="48" rx="13" fill="url(#${g})"/>
-    <rect width="48" height="48" rx="13" fill="url(#${s})"/>
-    <path d="M24 12 35.5 20.5V35.5H12.5V20.5L24 12Z" fill="none" stroke="#bbf7d0" stroke-width="1.55" stroke-linejoin="round"/>
-    <path d="M19.5 35.5V27.2H28.5V35.5" fill="rgba(255,255,255,0.1)" stroke="#ecfdf5" stroke-width="1.25" stroke-linejoin="round"/>
-    <rect x="16.8" y="29.2" width="3" height="4.8" rx="0.7" fill="#4ade80" opacity="0.9"/>
-    <rect x="21.5" y="26.2" width="3" height="7.8" rx="0.7" fill="#86efac"/>
-    <rect x="26.2" y="23.2" width="3" height="10.8" rx="0.7" fill="#d9f99d"/>
-    <path d="M24 12V9.2" stroke="rgba(148,163,184,0.45)" stroke-width="1.1" stroke-linecap="round"/>
-    <text x="24" y="18.5" text-anchor="middle" font-size="7.5" font-weight="800" fill="rgba(255,255,255,0.92)" font-family="system-ui,sans-serif">FC</text>
+    <rect width="48" height="48" rx="12" fill="url(#${g})"/>
+    <rect width="48" height="48" rx="12" fill="url(#${s})"/>
+    <path d="M24 10.5 35.5 19.2V34.5H12.5V19.2L24 10.5Z" fill="none" stroke="#a7f3d0" stroke-width="1.45" stroke-linejoin="round"/>
+    <path d="M18.5 34.5V27.5H29.5V34.5" fill="url(#${t})" stroke="#d1fae5" stroke-width="1.1" stroke-linejoin="round"/>
+    <rect x="19.2" y="28.8" width="2.8" height="5.7" rx="0.55" fill="#34d399" opacity="0.9"/>
+    <rect x="22.6" y="25.4" width="2.8" height="9.1" rx="0.55" fill="#6ee7b7"/>
+    <rect x="26" y="22.2" width="2.8" height="12.3" rx="0.55" fill="#a7f3d0"/>
+    <path d="M24 10.5V8.2" stroke="rgba(148,163,184,0.4)" stroke-width="1" stroke-linecap="round"/>
+    <circle cx="33.5" cy="32.5" r="4.2" fill="none" stroke="#5eead4" stroke-width="1.1" opacity="0.85"/>
+    <path d="M31.8 32.5h3.4M33.5 30.8v3.4" stroke="#99f6e4" stroke-width="0.9" stroke-linecap="round" opacity="0.9"/>
   </svg>`;
 }
 function renderBrandNameEl(el, nome){
   if(!el) return;
+  if(/Lar$/i.test(nome) && nome.length > 3){
+    const base=nome.replace(/Lar$/i,'');
+    if(base.length >= 2){
+      el.innerHTML=`<span class="brand-name-main">${esc(base)}</span><span class="brand-name-accent">Lar</span>`;
+      return;
+    }
+  }
   if(/Casa$/i.test(nome) && nome.length > 4){
     const base=nome.slice(0,-4);
     el.innerHTML=`<span class="brand-name-main">${esc(base)}</span><span class="brand-name-accent">Casa</span>`;
@@ -6866,9 +6914,9 @@ function removerLogoImagem(){
   showToast('Imagem removida. Voltou para logo em texto.', 'warning');
 }
 function salvarConfigMarca(){
-  config.appNome = (document.getElementById('configAppNome')?.value || '').trim() || 'FinançasCasa';
-  config.appSubtitulo = (document.getElementById('configAppSubtitulo')?.value || '').trim() || 'Controle financeiro residencial';
-  config.appLogo = (document.getElementById('configAppLogo')?.value || '').trim().slice(0, 2) || 'FC';
+  config.appNome = (document.getElementById('configAppNome')?.value || '').trim() || 'ContaLar';
+  config.appSubtitulo = (document.getElementById('configAppSubtitulo')?.value || '').trim() || 'Controle financeiro do lar';
+  config.appLogo = (document.getElementById('configAppLogo')?.value || '').trim().slice(0, 2) || 'CL';
   salvarLocal('config', config);
   aplicarMarcaApp();
 }
@@ -6880,9 +6928,9 @@ function sincronizarConfigUI(){
   const ex=document.getElementById('configExemplo'); if(ex) ex.value=config.mostrarExemplo?'1':'0';
   const modo=document.getElementById('configModo'); if(modo) modo.value=config.modo||'auto';
   const inicio=document.getElementById('configInicio'); if(inicio) inicio.value=config.inicio||'dashboard';
-  const appNome=document.getElementById('configAppNome'); if(appNome) appNome.value=config.appNome||'FinançasCasa';
-  const appSub=document.getElementById('configAppSubtitulo'); if(appSub) appSub.value=config.appSubtitulo||'Controle financeiro residencial';
-  const appLogo=document.getElementById('configAppLogo'); if(appLogo) appLogo.value=config.appLogo||'FC';
+  const appNome=document.getElementById('configAppNome'); if(appNome) appNome.value=config.appNome||'ContaLar';
+  const appSub=document.getElementById('configAppSubtitulo'); if(appSub) appSub.value=config.appSubtitulo||'Controle financeiro do lar';
+  const appLogo=document.getElementById('configAppLogo'); if(appLogo) appLogo.value=config.appLogo||'CL';
   renderConfigResumoDados();
   aplicarMarcaApp();
 }
