@@ -3423,6 +3423,7 @@
   }
   .dash-summary-card.is-saldo .dash-kpi-icon { background: rgba(3, 105, 161, 0.1); color: var(--saldo); }
   .dash-summary-card.is-saldo strong { color: var(--saldo); }
+  .dash-summary-card.is-saldo.is-neg strong { color: var(--danger); }
   .dash-summary-card.is-meta {
     border-left-color: var(--primary);
     background: linear-gradient(135deg, var(--card-bg) 0%, var(--primary-light) 100%);
@@ -3622,6 +3623,186 @@
   @media (max-width: 480px) {
     .dash-summary-grid { grid-template-columns: 1fr 1fr; }
   }
+
+  /* ===== CAPA DASHBOARD ===== */
+  #mod-dashboard {
+    --dash-pad-x: 20px;
+    --dash-pad-top: 16px;
+    --dash-cover-h: 220px;
+  }
+  body.modo-celular #mod-dashboard { --dash-pad-x: 14px; --dash-pad-top: 12px; --dash-cover-h: 168px; }
+  #mod-dashboard .dash-cover-zone {
+    position: relative;
+    margin: calc(-1 * var(--dash-pad-top)) calc(-1 * var(--dash-pad-x)) 0;
+    width: calc(100% + var(--dash-pad-x) * 2);
+    min-height: var(--dash-cover-h);
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .dash-cover-bg {
+    position: absolute;
+    inset: 0;
+    background: url('assets/dash-cover.svg') center center / cover no-repeat;
+    background-color: #0c1f1c;
+    transform: scale(1.02);
+  }
+  .dash-cover-shade {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(105deg, rgba(6, 12, 18, 0.88) 0%, rgba(8, 20, 24, 0.62) 42%, rgba(10, 26, 36, 0.45) 100%),
+      linear-gradient(180deg, transparent 45%, rgba(244, 246, 249, 0.94) 100%);
+    pointer-events: none;
+  }
+  body.theme-dark .dash-cover-shade {
+    background:
+      linear-gradient(105deg, rgba(4, 8, 12, 0.92) 0%, rgba(6, 16, 20, 0.72) 42%, rgba(8, 18, 26, 0.55) 100%),
+      linear-gradient(180deg, transparent 50%, rgba(12, 17, 23, 0.96) 100%);
+  }
+  .dash-cover-inner {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    min-height: var(--dash-cover-h);
+    padding: 22px var(--dash-pad-x) 36px;
+  }
+  .dash-cover-copy { min-width: 0; flex: 1 1 280px; max-width: 640px; }
+  .dash-cover-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(167, 243, 208, 0.85);
+    margin-bottom: 8px;
+  }
+  .dash-cover-eyebrow::before {
+    content: '';
+    width: 18px;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #4ade80, transparent);
+  }
+  .dash-cover-title {
+    font-size: clamp(22px, 3vw, 28px);
+    font-weight: 800;
+    color: #f8fafc;
+    letter-spacing: -0.04em;
+    line-height: 1.15;
+    margin: 0 0 8px;
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.35);
+  }
+  .dash-cover-desc {
+    font-size: 13px;
+    line-height: 1.5;
+    color: rgba(226, 232, 240, 0.82);
+    margin: 0;
+    max-width: 520px;
+  }
+  .dash-cover-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+  .dash-cover-month-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.08);
+    color: #f1f5f9;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    transition: background var(--transition), border-color var(--transition);
+  }
+  .dash-cover-month-btn svg { width: 14px; height: 14px; opacity: 0.85; flex-shrink: 0; }
+  .dash-cover-month-btn:hover {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(134, 196, 168, 0.35);
+  }
+  .dash-cover-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: 1px solid rgba(74, 222, 128, 0.35);
+    background: linear-gradient(135deg, #1e5c4b 0%, #174a3c 100%);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28);
+    transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+  }
+  .dash-cover-cta span {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.14);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    line-height: 1;
+  }
+  .dash-cover-cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.32);
+    background: linear-gradient(135deg, #226b56 0%, #1a5545 100%);
+  }
+  .dash-kpi-float-wrap {
+    position: relative;
+    z-index: 3;
+    margin-top: -28px;
+    margin-bottom: 12px;
+    padding: 0 2px;
+  }
+  .dash-kpi-float.dash-summary-grid {
+    margin-bottom: 0;
+    filter: drop-shadow(0 8px 20px rgba(15, 23, 42, 0.08));
+  }
+  .dash-kpi-float .dash-summary-card {
+    background: var(--card-bg);
+    box-shadow: var(--shadow);
+    border-color: var(--border);
+  }
+  #mod-dashboard .dash-exec-hero.dash-post-cover {
+    margin-top: 4px;
+  }
+  #mod-dashboard.dash-empty-mode .dash-cover-cta { display: inline-flex; }
+  #mod-dashboard:not(.dash-empty-mode) .dash-exec-balance { display: none; }
+  #mod-dashboard .dash-quick-actions-hier .dash-quick-btn-primary { display: none; }
+  @media (max-width: 720px) {
+    #mod-dashboard { --dash-cover-h: 176px; }
+    .dash-cover-inner { padding: 16px var(--dash-pad-x) 30px; align-items: flex-start; flex-direction: column; }
+    .dash-cover-toolbar { width: 100%; justify-content: flex-start; }
+    .dash-cover-cta { flex: 1 1 auto; justify-content: center; }
+    .dash-kpi-float-wrap { margin-top: -22px; }
+  }
+  @media (max-width: 480px) {
+    #mod-dashboard { --dash-cover-h: 156px; }
+    .dash-cover-title { font-size: 20px; }
+    .dash-cover-desc { font-size: 12px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .dash-cover-toolbar { flex-direction: column; align-items: stretch; }
+    .dash-cover-month-btn, .dash-cover-cta { width: 100%; justify-content: center; }
+  }
 </style>
 </head>
 <body class="modo-pc">
@@ -3758,7 +3939,30 @@
 
       <!-- MÓDULO 1: DASHBOARD -->
       <section id="mod-dashboard" class="module active dash-empty-mode">
-        <div class="dash-exec-hero dash-hero-fin" id="dashHeroWrap">
+        <div class="dash-cover-zone">
+          <div class="dash-cover-bg" aria-hidden="true"></div>
+          <div class="dash-cover-shade" aria-hidden="true"></div>
+          <div class="dash-cover-inner">
+            <div class="dash-cover-copy">
+              <span class="dash-cover-eyebrow" id="dashCoverEyebrow">ContaLar</span>
+              <h2 class="dash-cover-title">Dashboard Financeiro</h2>
+              <p class="dash-cover-desc">Acompanhe receitas, despesas e saldo do mês em um só lugar.</p>
+            </div>
+            <div class="dash-cover-toolbar">
+              <button type="button" class="dash-cover-month-btn" id="dashCoverMonthBtn" onclick="focarFiltroMes()" title="Alterar mês do período">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                <span id="dashCoverMonthLabel">—</span>
+              </button>
+              <button type="button" class="dash-cover-cta" onclick="focarNovoLancamento()"><span>+</span> Novo lançamento</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="dash-kpi-float-wrap">
+          <div class="dash-summary-grid dash-kpi-float" id="dashKpiStrip" aria-label="Indicadores do mês"></div>
+        </div>
+
+        <div class="dash-exec-hero dash-hero-fin dash-post-cover" id="dashHeroWrap">
           <div class="dash-exec-main dash-hero-content">
             <div class="dash-exec-head">
               <div class="dash-hero-greeting" id="dashHeroGreeting">Olá, bem-vindo ao <span>ContaLar</span>.</div>
@@ -3776,11 +3980,11 @@
                 <button type="button" class="dash-quick-btn" onclick="irParaBackup()"><span class="dash-quick-icon" aria-hidden="true">↓</span><span class="dash-quick-label">Importar backup</span></button>
               </div>
             </div>
-            <div class="dash-quick-actions dash-full-only" id="dashQuickActionsFull">
-              <button type="button" class="dash-quick-btn" onclick="focarNovoLancamento()"><span class="dash-quick-label">Novo lançamento</span></button>
-              <button type="button" class="dash-quick-btn" onclick="focarNovaMeta()"><span class="dash-quick-label">Criar meta</span></button>
-              <button type="button" class="dash-quick-btn" onclick="focarNovoOrcamento()"><span class="dash-quick-label">Definir limite</span></button>
-              <button type="button" class="dash-quick-btn" onclick="irParaBackup()"><span class="dash-quick-label">Importar backup</span></button>
+            <div class="dash-quick-actions dash-quick-actions-inline dash-full-only" id="dashQuickActionsFull">
+              <button type="button" class="dash-quick-btn dash-quick-btn-featured" onclick="focarNovoLancamento()"><span class="dash-quick-icon" aria-hidden="true">+</span><span class="dash-quick-label">Novo lançamento</span></button>
+              <button type="button" class="dash-quick-btn" onclick="focarNovaMeta()"><span class="dash-quick-icon" aria-hidden="true">◎</span><span class="dash-quick-label">Criar meta</span></button>
+              <button type="button" class="dash-quick-btn" onclick="focarNovoOrcamento()"><span class="dash-quick-icon" aria-hidden="true">⊟</span><span class="dash-quick-label">Definir limite</span></button>
+              <button type="button" class="dash-quick-btn" onclick="irParaBackup()"><span class="dash-quick-icon" aria-hidden="true">↓</span><span class="dash-quick-label">Importar backup</span></button>
             </div>
           </div>
           <aside class="dash-exec-balance dash-hero-balance dash-full-only" aria-label="Saldo líquido do período">
@@ -3796,8 +4000,6 @@
             </div>
           </aside>
         </div>
-
-        <div class="dash-empty-only dash-summary-grid" id="dashEmptyKpiGrid" aria-label="Resumo financeiro do mês"></div>
 
         <div class="dash-empty-only panel dash-panel-compact dash-empty-charts-panel">
           <div class="panel-title">Visão gráfica do mês</div>
@@ -3852,9 +4054,8 @@
           </div>
         </div>
 
-        <div class="dash-empty-only panel dash-panel-compact" style="margin-bottom:0;">
+        <div class="dash-empty-only panel dash-panel-compact dash-empty-actions-panel" style="margin-bottom:0;">
           <div class="panel-title">Próximas ações</div>
-          <p class="dash-empty-charts-hint" style="margin-bottom:8px;font-size:12px;font-weight:400;color:var(--text-light);">Recomendações para começar a usar o painel financeiro.</p>
           <div id="dashProximasAcoesEmptyHtml" class="dash-panel-body"></div>
         </div>
       </section>
@@ -6666,17 +6867,25 @@ function aplicarModoDashboard(emptyMes,mes,lAnt){
     if(greet) greet.innerHTML=`${saudacaoHorario()}! <span>Resumo de ${esc(mesTxt)}.</span>`;
   }
 }
-function montarEmptyKpiGrid(metasQtd,limitesQtd,vencendo){
+function focarFiltroMes(){
+  const el=document.getElementById('filtroGlobalMes');
+  if(!el) return;
+  try{ if(typeof el.showPicker==='function') el.showPicker(); else el.focus(); }
+  catch(e){ el.focus(); }
+}
+function montarKpiGrid(rec,des,saldo,metasQtd,limitesQtd,vencendo){
+  const saldoCls='is-saldo'+(saldo<0?' is-neg':'');
   const cards=[
-    {label:'Receitas',value:formatMoeda(0),cls:'is-rec',icon:'↑'},
-    {label:'Despesas',value:formatMoeda(0),cls:'is-des',icon:'↓'},
-    {label:'Saldo do mês',value:formatMoeda(0),cls:'is-saldo',icon:'≡'},
+    {label:'Receitas',value:formatMoeda(rec),cls:'is-rec',icon:'↑'},
+    {label:'Despesas',value:formatMoeda(des),cls:'is-des',icon:'↓'},
+    {label:'Saldo do mês',value:formatMoeda(saldo),cls:saldoCls,icon:'≡'},
     {label:'Metas',value:String(metasQtd),cls:'is-meta',icon:'◎'},
     {label:'Limites',value:String(limitesQtd),cls:'is-limite',icon:'⊟'},
     {label:'Contas vencendo',value:String(vencendo),cls:'is-venc'+(vencendo?'':' is-ok'),icon:'!'}
   ];
   return cards.map(c=>`<div class="dash-summary-card ${c.cls}"><div class="dash-kpi-head"><span class="dash-kpi-icon" aria-hidden="true">${c.icon}</span><span class="dash-kpi-label">${esc(c.label)}</span></div><strong>${esc(c.value)}</strong></div>`).join('');
 }
+function montarEmptyKpiGrid(metasQtd,limitesQtd,vencendo){ return montarKpiGrid(0,0,0,metasQtd,limitesQtd,vencendo); }
 function montarEmptyChartsPlaceholder(){
   const charts=['Receitas x Despesas','Despesas por categoria','Evolução do saldo no mês'];
   return charts.map(t=>`<div class="dash-chart-placeholder"><div class="dash-chart-placeholder-title">${esc(t)}</div><div class="dash-chart-placeholder-bars" aria-hidden="true"><span></span><span></span><span></span><span></span></div></div>`).join('');
@@ -6865,6 +7074,7 @@ function aplicarMarcaApp(){
   const bt=document.getElementById('brandTagline'); if(bt) bt.textContent=sub;
   document.title=nome+' — '+sub;
   const dashSpan=document.querySelector('#dashHeroGreeting span'); if(dashSpan) dashSpan.textContent=nome;
+  const coverBrand=document.getElementById('dashCoverEyebrow'); if(coverBrand) coverBrand.textContent=nome;
   const iaTitle=document.getElementById('modAssistenteTitle'); if(iaTitle) iaTitle.textContent='Assistente IA '+nome;
   const prevNome=document.getElementById('configBrandPreviewNome');
   if(prevNome) renderBrandNameEl(prevNome, nome);
@@ -7228,9 +7438,17 @@ function renderDashboard(){
   const heroSaldoSub=document.getElementById('dashHeroSaldoSub');
   const elComprom=document.getElementById('dashComprometimento');
   const elAcoesEmpty=document.getElementById('dashProximasAcoesEmptyHtml');
-  const elEmptyKpi=document.getElementById('dashEmptyKpiGrid');
+  const elKpiStrip=document.getElementById('dashKpiStrip');
   const elEmptyCharts=document.getElementById('dashEmptyChartsHtml');
+  const elCoverMonth=document.getElementById('dashCoverMonthLabel');
   if(heroMes) heroMes.textContent=formatMesExtenso(mes);
+  if(elCoverMonth) elCoverMonth.textContent=mes?formatMesExtenso(mes):'Selecionar mês';
+  const metasQtd=getMetasMes(mes).length;
+  const limitesQtd=mes&&orcamentos[mes]?Object.keys(orcamentos[mes]).length:0;
+  const hojeK=new Date(); hojeK.setHours(0,0,0,0);
+  const limK=new Date(hojeK); limK.setDate(limK.getDate()+7);
+  const vencendoQtd=l.filter(i=>i.vencimento&&calcularStatus(i)!=='pago'&&new Date(i.vencimento+'T00:00:00')<=limK).length;
+  if(elKpiStrip) elKpiStrip.innerHTML=montarKpiGrid(r.rec,r.des,r.saldo,metasQtd,limitesQtd,vencendoQtd);
   if(!emptyMes&&heroFrase) heroFrase.textContent=gerarInsightDashboard(l,r,atras,pend);
   if(!emptyMes&&heroStatus){
     const st=statusHeroDashboard(l,r,atras);
@@ -7241,12 +7459,6 @@ function renderDashboard(){
   const elTrendDes=document.getElementById('dashTrendDespesas');
   const elTrendSal=document.getElementById('dashTrendSaldo');
   if(emptyMes){
-    const metasQtd=getMetasMes(mes).length;
-    const limitesQtd=mes&&orcamentos[mes]?Object.keys(orcamentos[mes]).length:0;
-    const hoje=new Date(); hoje.setHours(0,0,0,0);
-    const lim=new Date(hoje); lim.setDate(lim.getDate()+7);
-    const vencendo=l.filter(i=>i.vencimento&&calcularStatus(i)!=='pago'&&new Date(i.vencimento+'T00:00:00')<=lim).length;
-    if(elEmptyKpi) elEmptyKpi.innerHTML=montarEmptyKpiGrid(metasQtd,limitesQtd,vencendo);
     if(elEmptyCharts) elEmptyCharts.innerHTML=montarEmptyChartsPlaceholder();
     if(elAcoesEmpty) elAcoesEmpty.innerHTML=montarRecomendacoesDashboard();
   }else{
