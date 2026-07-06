@@ -2871,7 +2871,7 @@
   @media print {
     body.print-ia .sidebar, body.print-ia .top-header, body.print-ia .global-filter,
     body.print-ia #toast-container, body.print-ia .no-print, body.print-ia .ia-side-stack,
-    body.print-ia .ia-chat-panel { display: none !important; }
+    body.print-ia .ia-chat-panel, body.print-ia .ia-kpi-strip, body.print-ia .ia-action-bar { display: none !important; }
     body.print-ia .main-content, body.print-ia .modules-wrapper, body.print-ia #mod-assistente { overflow: visible !important; height: auto !important; padding: 0 !important; }
     body.print-ia .module.hidden { display: none !important; }
     body.print-ia #mod-assistente { display: block !important; }
@@ -4520,6 +4520,305 @@
   @media (max-width: 720px) {
     .dash-quick-strip .dash-quick-secondary { grid-template-columns: 1fr; }
   }
+
+  /* ===== ASSISTENTE IA — REFINO VISUAL ===== */
+  #mod-assistente {
+    overflow-x: clip;
+    max-width: 100%;
+    min-width: 0;
+  }
+  #mod-assistente .ia-layout > *,
+  #mod-assistente .ia-side-stack,
+  #mod-assistente .ia-chat-panel,
+  #mod-assistente .ia-kpi-strip { min-width: 0; }
+  #mod-assistente .mod-hero-pro.ia-hero-pro {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  }
+  #mod-assistente .mod-hero-pro .mod-hero-title,
+  #mod-assistente .mod-hero-pro .mod-hero-desc,
+  #mod-assistente .ia-hero-eyebrow,
+  #mod-assistente .ia-hero-month { display: block; }
+  .ia-hero-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 11px;
+    background: linear-gradient(145deg, rgba(30, 92, 75, 0.14) 0%, rgba(30, 92, 75, 0.06) 100%);
+    border: 1px solid rgba(30, 92, 75, 0.18);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .ia-hero-icon svg { width: 22px; height: 22px; }
+  .ia-hero-meta-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+  .ia-hero-eyebrow {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--primary);
+  }
+  .ia-hero-month {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-light);
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--surface-muted);
+    border: 1px solid var(--border);
+  }
+  #mod-assistente .ia-hero-pro .mod-hero-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--dark);
+    letter-spacing: -0.03em;
+    margin: 0 0 4px;
+    line-height: 1.25;
+  }
+  #mod-assistente .ia-hero-pro .mod-hero-desc {
+    font-size: 13px;
+    color: var(--text-light);
+    margin: 0;
+    line-height: 1.45;
+    max-width: 520px;
+  }
+  .ia-kpi-strip {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .ia-kpi-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 12px 11px;
+    position: relative;
+    overflow: hidden;
+  }
+  .ia-kpi-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+  }
+  .ia-kpi-rec::before { background: var(--success); }
+  .ia-kpi-des::before { background: var(--danger); }
+  .ia-kpi-saldo::before { background: #0284c7; }
+  .ia-kpi-aberto::before { background: var(--warning); }
+  .ia-kpi-card span {
+    display: block;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    margin-bottom: 5px;
+  }
+  .ia-kpi-card strong {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+    font-variant-numeric: tabular-nums;
+    color: var(--dark);
+  }
+  .ia-kpi-rec strong { color: var(--success); }
+  .ia-kpi-des strong { color: var(--danger); }
+  .ia-kpi-saldo strong { color: #0369a1; }
+  .ia-kpi-saldo.is-neg strong { color: var(--danger); }
+  .ia-kpi-aberto strong { color: var(--dark); }
+  .ia-action-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .ia-btn-primary { min-height: 36px; }
+  .ia-btn-sec { min-height: 36px; color: var(--text); }
+  #mod-assistente .ia-layout {
+    gap: 14px;
+    grid-template-columns: minmax(280px, 340px) 1fr;
+    align-items: stretch;
+  }
+  #mod-assistente .ia-side-stack { gap: 10px; }
+  #mod-assistente .ia-panel-compact {
+    padding: 12px 14px !important;
+    margin-bottom: 0 !important;
+    box-shadow: none;
+  }
+  #mod-assistente .ia-panel-compact .panel-title {
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-light);
+  }
+  #mod-assistente .ia-alert-grid { gap: 6px; }
+  #mod-assistente .ia-alert-card {
+    padding: 9px 10px;
+    border-radius: 9px;
+    gap: 9px;
+    box-shadow: none;
+    border-left-width: 3px;
+  }
+  #mod-assistente .ia-alert-card strong { font-size: 12px; margin-bottom: 2px; }
+  #mod-assistente .ia-alert-card p { font-size: 11px; line-height: 1.4; }
+  #mod-assistente .ia-alert-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    font-size: 12px;
+  }
+  #mod-assistente .ia-rec-list { gap: 6px; }
+  #mod-assistente .ia-rec-item {
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 11px;
+    line-height: 1.4;
+    border-style: solid;
+    border-color: var(--border);
+    background: var(--surface-muted);
+  }
+  #mod-assistente .ia-rec-item strong { font-size: 12px; margin-bottom: 2px; }
+  #mod-assistente .ia-help-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  #mod-assistente .ia-help-btn {
+    padding: 7px 9px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  #mod-assistente .ia-help-btn:hover {
+    border-color: rgba(30, 92, 75, 0.28);
+    background: var(--primary-light);
+    color: var(--primary);
+  }
+  #mod-assistente .ia-chat-panel {
+    min-height: 520px;
+    max-height: calc(100vh - 220px);
+    border-radius: 11px;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  }
+  #mod-assistente .ia-chat-head {
+    padding: 12px 14px;
+    background: var(--card-bg);
+  }
+  #mod-assistente .ia-chat-head-title { font-size: 14px; font-weight: 700; }
+  #mod-assistente .ia-chat-head-sub { font-size: 11px; margin-top: 1px; }
+  #mod-assistente .ia-chat-body {
+    flex: 1;
+    min-height: 260px;
+    max-height: none;
+    padding: 12px 14px;
+    gap: 10px;
+    background: var(--surface-muted);
+  }
+  body.theme-dark #mod-assistente .ia-chat-body {
+    background: rgba(255, 255, 255, 0.02);
+  }
+  #mod-assistente .chat-row { max-width: 88%; gap: 8px; }
+  #mod-assistente .chat-avatar {
+    width: 26px;
+    height: 26px;
+    font-size: 9px;
+  }
+  #mod-assistente .chat-bubble {
+    padding: 9px 12px;
+    border-radius: 12px;
+    font-size: 13px;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+  #mod-assistente .chat-bubble.chat-ai {
+    border-bottom-left-radius: 4px;
+    background: var(--card-bg);
+  }
+  #mod-assistente .chat-bubble.chat-user {
+    border-bottom-right-radius: 4px;
+    background: var(--primary);
+  }
+  #mod-assistente .ia-chat-suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 8px 14px 0;
+    border-top: 1px solid var(--border);
+    background: var(--card-bg);
+  }
+  #mod-assistente .ia-sug-chip {
+    border: 1px solid var(--border);
+    background: var(--surface-muted);
+    color: var(--text);
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: border-color var(--transition), background var(--transition), color var(--transition);
+    line-height: 1.3;
+  }
+  #mod-assistente .ia-sug-chip:hover {
+    border-color: rgba(30, 92, 75, 0.28);
+    background: var(--primary-light);
+    color: var(--primary);
+  }
+  #mod-assistente .ia-chat-input-bar {
+    padding: 10px 12px;
+    gap: 8px;
+    background: var(--card-bg);
+  }
+  #mod-assistente .ia-chat-input-bar .form-control {
+    min-height: 40px;
+    font-size: 13px;
+    padding: 8px 12px;
+  }
+  #mod-assistente .ia-chat-input-bar .btn-primary {
+    min-width: 84px;
+    min-height: 40px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  @media (max-width: 960px) {
+    #mod-assistente .ia-layout { grid-template-columns: 1fr; }
+    #mod-assistente .ia-chat-panel { max-height: none; min-height: 460px; }
+    .ia-kpi-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 480px) {
+    .ia-kpi-strip { grid-template-columns: 1fr 1fr; }
+    .ia-kpi-card strong { font-size: 17px; }
+    #mod-assistente .ia-help-grid { grid-template-columns: 1fr; }
+    .ia-action-bar .ia-btn-primary { flex: 1 1 100%; }
+  }
 </style>
 </head>
 <body class="modo-pc">
@@ -4792,43 +5091,54 @@
 
       <!-- MÓDULO: ASSISTENTE IA -->
       <section id="mod-assistente" class="module hidden">
-        <div class="mod-hero-pro">
+        <div class="mod-hero-pro ia-hero-pro no-print">
+          <div class="ia-hero-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-1.2 0-2.4.6-3 1.7A3.5 3.5 0 0 0 5.5 8 3.5 3.5 0 0 0 8 11.5c.3 0 .6 0 .9-.1"/><path d="M12 3c1.2 0 2.4.6 3 1.7A3.5 3.5 0 0 1 18.5 8 3.5 3.5 0 0 1 16 11.5c-.3 0-.6 0-.9-.1"/><path d="M8 11.5C6.1 12.4 4.5 14.4 4.5 17v2.5h15V17c0-2.6-1.6-4.6-3.5-5.5"/><circle cx="9" cy="9" r="1"/><circle cx="15" cy="9" r="1"/><path d="M9.5 15.5h5"/></svg>
+          </div>
           <div class="mod-hero-pro-body">
-            <div class="mod-hero-pro-meta"><span class="mod-hero-month">—</span></div>
-            <p class="mod-hero-eyebrow">Inteligência local</p>
+            <div class="ia-hero-meta-row">
+              <span class="ia-hero-eyebrow">Inteligência local</span>
+              <span class="ia-hero-month" id="iaHeroMes">—</span>
+            </div>
             <h3 class="mod-hero-title" id="modAssistenteTitle">Assistente IA ContaLar</h3>
             <p class="mod-hero-desc">Análises, alertas e recomendações geradas localmente — sem API externa.</p>
           </div>
-          <div class="mod-hero-pro-actions no-print">
-            <button type="button" class="btn btn-primary btn-sm" onclick="autoAjuda('analisar')">Analisar meu mês</button>
-            <button type="button" class="btn btn-ghost btn-sm" onclick="baixarAnaliseIA()">Baixar TXT</button>
-            <button type="button" class="btn btn-ghost btn-sm" onclick="imprimirAnaliseIA()">Imprimir</button>
-          </div>
+        </div>
+
+        <div class="ia-kpi-strip no-print" aria-label="Resumo financeiro do período">
+          <div class="ia-kpi-card ia-kpi-rec"><span>Receitas</span><strong id="iaKpiReceitas">R$ 0,00</strong></div>
+          <div class="ia-kpi-card ia-kpi-des"><span>Despesas</span><strong id="iaKpiDespesas">R$ 0,00</strong></div>
+          <div class="ia-kpi-card ia-kpi-saldo"><span>Saldo</span><strong id="iaKpiSaldo">R$ 0,00</strong></div>
+          <div class="ia-kpi-card ia-kpi-aberto"><span>Contas em aberto</span><strong id="iaKpiAberto">0</strong></div>
+        </div>
+
+        <div class="ia-action-bar no-print">
+          <button type="button" class="btn btn-primary btn-sm ia-btn-primary" onclick="autoAjuda('analisar')">Analisar meu mês</button>
+          <button type="button" class="btn btn-outline btn-sm ia-btn-sec" onclick="baixarAnaliseIA()">Baixar TXT</button>
+          <button type="button" class="btn btn-outline btn-sm ia-btn-sec" onclick="imprimirAnaliseIA()">Imprimir</button>
         </div>
 
         <div class="ia-layout">
           <div class="ia-side-stack">
-            <div class="panel">
-              <div class="panel-title">Alertas Inteligentes</div>
-              <p class="pro-muted" style="margin-bottom:12px;">Situação do mês selecionado no topo.</p>
+            <div class="panel ia-panel-compact">
+              <div class="panel-title">Alertas inteligentes</div>
               <div id="iaAlertasHtml" class="ia-alert-grid"></div>
             </div>
 
-            <div class="panel">
-              <div class="panel-title">Recomendações do Mês</div>
+            <div class="panel ia-panel-compact">
+              <div class="panel-title">Recomendações do mês</div>
               <div id="iaRecomendacoesHtml" class="ia-rec-list"></div>
             </div>
 
-            <div class="panel">
-              <div class="panel-title">Autoajuda Financeira</div>
-              <p class="pro-muted" style="margin-bottom:12px;">Toque em uma ação para receber orientação imediata no chat.</p>
-              <div class="ia-help-grid">
+            <div class="panel ia-panel-compact">
+              <div class="panel-title">O que fazer?</div>
+              <div class="ia-help-grid" id="iaHelpGrid">
                 <button type="button" class="ia-help-btn" onclick="autoAjuda('analisar')">Analisar meu mês</button>
                 <button type="button" class="ia-help-btn" onclick="autoAjuda('economizar')">Como economizar mais?</button>
-                <button type="button" class="ia-help-btn" onclick="autoAjuda('atrasadas')">Quais contas estão atrasadas?</button>
-                <button type="button" class="ia-help-btn" onclick="autoAjuda('maior_gasto')">Onde estou gastando mais?</button>
-                <button type="button" class="ia-help-btn" onclick="autoAjuda('melhorar_saldo')">Como melhorar meu saldo?</button>
-                <button type="button" class="ia-help-btn" onclick="autoAjuda('plano_financeiro')">Gerar plano financeiro simples</button>
+                <button type="button" class="ia-help-btn" onclick="autoAjuda('atrasadas')">Contas atrasadas</button>
+                <button type="button" class="ia-help-btn" onclick="autoAjuda('maior_gasto')">Maior gasto</button>
+                <button type="button" class="ia-help-btn" onclick="autoAjuda('melhorar_saldo')">Melhorar saldo</button>
+                <button type="button" class="ia-help-btn" onclick="autoAjuda('plano_financeiro')">Plano financeiro</button>
               </div>
             </div>
           </div>
@@ -4837,13 +5147,14 @@
             <div class="ia-chat-head">
               <div>
                 <div class="ia-chat-head-title">Pergunte ao Assistente</div>
-                <div class="ia-chat-head-sub">Respostas locais · histórico salvo neste navegador</div>
+                <div class="ia-chat-head-sub">Respostas locais · histórico neste navegador</div>
               </div>
-              <button type="button" class="btn btn-outline btn-sm" onclick="limparChatIA()">Limpar chat</button>
+              <button type="button" class="btn btn-outline btn-sm ia-btn-sec" onclick="limparChatIA()">Limpar chat</button>
             </div>
             <div id="chatMessages" class="ia-chat-body chat-shell"></div>
+            <div class="ia-chat-suggestions" id="iaChatSugestoes" aria-label="Sugestões de perguntas"></div>
             <div class="ia-chat-input-bar">
-              <input type="text" id="chatInput" class="form-control" placeholder="Ex.: qual meu saldo? contas atrasadas? como economizar?" onkeypress="if(event.key==='Enter') enviarMensagemIA()">
+              <input type="text" id="chatInput" class="form-control" placeholder="Ex.: qual meu saldo? contas atrasadas?" onkeypress="if(event.key==='Enter') enviarMensagemIA()">
               <button type="button" class="btn btn-primary" onclick="enviarMensagemIA()">Enviar</button>
             </div>
           </div>
@@ -9285,6 +9596,33 @@ function renderAlertaCard(a){
   const icon={success:'✓',warning:'!',danger:'!',info:'i'}[a.tipo]||'i';
   return `<div class="ia-alert-card ia-alert-${a.tipo}"><div class="ia-alert-icon">${icon}</div><div><strong>${esc(a.titulo)}</strong><p>${esc(a.msg)}</p></div></div>`;
 }
+const IA_SUGESTOES_CHAT=[
+  {label:'Analisar meu mês',tipo:'analisar'},
+  {label:'Como economizar?',tipo:'economizar'},
+  {label:'Contas atrasadas',tipo:'atrasadas'},
+  {label:'Maior gasto',tipo:'maior_gasto'},
+  {label:'Melhorar saldo',tipo:'melhorar_saldo'},
+  {label:'Plano financeiro',tipo:'plano_financeiro'}
+];
+function renderSugestoesChat(){
+  const el=document.getElementById('iaChatSugestoes');
+  if(!el)return;
+  el.innerHTML=IA_SUGESTOES_CHAT.map(s=>`<button type="button" class="ia-sug-chip" onclick="autoAjuda('${s.tipo}')">${esc(s.label)}</button>`).join('');
+}
+function atualizarKpiAssistente(ctx){
+  const c=ctx||coletarContextoIA();
+  const recEl=document.getElementById('iaKpiReceitas'); if(recEl) recEl.textContent=formatMoeda(c.r.rec);
+  const desEl=document.getElementById('iaKpiDespesas'); if(desEl) desEl.textContent=formatMoeda(c.r.des);
+  const saldoEl=document.getElementById('iaKpiSaldo');
+  const saldoCard=saldoEl?.closest('.ia-kpi-saldo');
+  if(saldoEl){
+    saldoEl.textContent=formatMoeda(c.r.saldo);
+    if(saldoCard) saldoCard.classList.toggle('is-neg', c.r.saldo<0);
+  }
+  const abEl=document.getElementById('iaKpiAberto'); if(abEl) abEl.textContent=String(c.r.aberto);
+  const heroMes=document.getElementById('iaHeroMes');
+  if(heroMes) heroMes.textContent=c.mes?formatMesExtenso(c.mes):'—';
+}
 function montarRecomendacoesIA(ctx){
   const rec=[];
   if(!ctx.l.length){rec.push({titulo:'Comece registrando',texto:'Cadastre ao menos uma receita e uma despesa do mês para destravar alertas e recomendações.'});return rec;}
@@ -9380,12 +9718,14 @@ function montarTextoAnaliseIA(){
 }
 function analisarIA(){
   const ctx=coletarContextoIA();
+  atualizarKpiAssistente(ctx);
   const alertas=montarAlertasIA(ctx);
   iaContext.qtdAlertas=alertas.filter(a=>a.tipo==='danger'||a.tipo==='warning').length;
   const el=document.getElementById('iaAlertasHtml');
   if(el) el.innerHTML=alertas.map(renderAlertaCard).join('');
   renderRecomendacoesIA(ctx);
   renderChatHistorico();
+  renderSugestoesChat();
 }
 function enviarMensagemIA(){
   const i=document.getElementById('chatInput');
