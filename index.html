@@ -4819,6 +4819,401 @@
     #mod-assistente .ia-help-grid { grid-template-columns: 1fr; }
     .ia-action-bar .ia-btn-primary { flex: 1 1 100%; }
   }
+
+  /* ===== LANÇAMENTOS — REFINO VISUAL ===== */
+  #mod-lancamentos {
+    overflow-x: clip;
+    max-width: 100%;
+    min-width: 0;
+  }
+  #mod-lancamentos .mod-hero-pro.lanc-hero-pro {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  }
+  #mod-lancamentos .mod-hero-pro .mod-hero-title,
+  #mod-lancamentos .mod-hero-pro .mod-hero-desc,
+  #mod-lancamentos .lanc-hero-eyebrow,
+  #mod-lancamentos .lanc-hero-month { display: block; }
+  #mod-lancamentos .mod-hero-pro-meta { display: none; }
+  .lanc-hero-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 11px;
+    background: linear-gradient(145deg, rgba(30, 92, 75, 0.14) 0%, rgba(30, 92, 75, 0.06) 100%);
+    border: 1px solid rgba(30, 92, 75, 0.18);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .lanc-hero-icon svg { width: 22px; height: 22px; }
+  .lanc-hero-meta-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+  .lanc-hero-eyebrow {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--primary);
+  }
+  .lanc-hero-month {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-light);
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--surface-muted);
+    border: 1px solid var(--border);
+  }
+  #mod-lancamentos .lanc-hero-pro .mod-hero-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--dark);
+    letter-spacing: -0.03em;
+    margin: 0 0 4px;
+    line-height: 1.25;
+  }
+  #mod-lancamentos .lanc-hero-pro .mod-hero-desc {
+    font-size: 13px;
+    color: var(--text-light);
+    margin: 0;
+    line-height: 1.45;
+    max-width: 520px;
+  }
+  .lanc-btn-primary { min-height: 36px; }
+  .lanc-btn-sec { min-height: 36px; color: var(--text); }
+  #mod-lancamentos .lanc-list-panel {
+    padding: 14px 16px 16px;
+    min-width: 0;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  }
+  #mod-lancamentos .lanc-list-head {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+  #mod-lancamentos .lanc-list-head .panel-title {
+    margin: 0 0 4px;
+    padding: 0;
+    border: none;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--dark);
+  }
+  #mod-lancamentos .lanc-summary-meta {
+    margin: 0;
+    font-size: 11px;
+    line-height: 1.4;
+    color: var(--text-muted);
+  }
+  .lanc-kpi-strip {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .lanc-kpi-card {
+    background: var(--surface-muted);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 8px 10px 9px;
+    position: relative;
+    overflow: hidden;
+  }
+  .lanc-kpi-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+  }
+  .lanc-kpi-rec::before { background: var(--success); }
+  .lanc-kpi-des::before { background: var(--danger); }
+  .lanc-kpi-saldo::before { background: #0284c7; }
+  .lanc-kpi-aberto::before { background: var(--warning); }
+  .lanc-kpi-card span {
+    display: block;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+  .lanc-kpi-card strong {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    font-variant-numeric: tabular-nums;
+    color: var(--dark);
+  }
+  .lanc-kpi-saldo.is-neg strong { color: var(--danger) !important; }
+  .lanc-toolbar { margin-bottom: 12px; }
+  #mod-lancamentos .lanc-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
+    padding: 4px;
+    border-radius: 10px;
+    background: var(--surface-muted);
+    border: 1px solid var(--border);
+  }
+  #mod-lancamentos .lanc-chip {
+    border: none;
+    background: transparent;
+    color: var(--text-light);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.3;
+    transition: background var(--transition), color var(--transition), box-shadow var(--transition);
+  }
+  #mod-lancamentos .lanc-chip:hover {
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.55);
+  }
+  body.theme-dark #mod-lancamentos .lanc-chip:hover { background: rgba(255, 255, 255, 0.06); }
+  #mod-lancamentos .lanc-chip.active {
+    background: var(--card-bg);
+    color: var(--primary);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
+  }
+  #mod-lancamentos .lanc-chip[data-chip="receita"].active { color: var(--success); }
+  #mod-lancamentos .lanc-chip[data-chip="despesa"].active { color: var(--danger); }
+  #mod-lancamentos .lanc-chip[data-chip="pago"].active { color: #0369a1; }
+  #mod-lancamentos .lanc-chip[data-chip="pendente"].active { color: var(--warning); }
+  #mod-lancamentos .lanc-chip[data-chip="atrasado"].active { color: var(--danger); }
+  .lanc-search-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .lanc-search-field { flex: 1; min-width: min(100%, 280px); margin: 0; }
+  .lanc-search-field .form-control {
+    min-height: 38px;
+    font-size: 13px;
+    padding: 8px 12px;
+  }
+  .lanc-filters-advanced {
+    margin-bottom: 12px;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface-muted);
+  }
+  .lanc-filters-advanced[hidden] { display: none !important; }
+  #mod-lancamentos .lanc-filters {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  #mod-lancamentos .lanc-filters .form-group label {
+    font-size: 11px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  #mod-lancamentos .lanc-filters .form-control {
+    min-height: 36px;
+    font-size: 13px;
+    padding: 7px 10px;
+  }
+  .lanc-filter-actions { display: flex; justify-content: flex-end; }
+  .lanc-table-wrap {
+    overflow-x: auto;
+    max-width: 100%;
+    border-radius: 10px;
+    -webkit-overflow-scrolling: touch;
+  }
+  #mod-lancamentos .table-lanc { min-width: 640px; font-size: 13px; }
+  #mod-lancamentos .table-lanc th,
+  #mod-lancamentos .table-lanc td { padding: 10px 12px; }
+  #mod-lancamentos .table-lanc .col-acoes { width: 168px; }
+  #mod-lancamentos .empty-state {
+    padding: 28px 16px;
+  }
+  #mod-lancamentos .empty-state-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 6px;
+  }
+  .lanc-drawer-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.38);
+    z-index: 1200;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.22s ease;
+  }
+  .lanc-drawer-backdrop.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .lanc-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: min(420px, 100vw);
+    height: 100vh;
+    height: 100dvh;
+    background: var(--card-bg);
+    border-left: 1px solid var(--border);
+    box-shadow: -8px 0 32px rgba(15, 23, 42, 0.12);
+    z-index: 1201;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.24s ease;
+  }
+  .lanc-drawer.is-open { transform: translateX(0); }
+  body.lanc-drawer-open { overflow: hidden; }
+  .lanc-drawer-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 16px 12px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .lanc-drawer-title {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--dark);
+    letter-spacing: -0.02em;
+  }
+  .lanc-drawer-sub {
+    margin: 4px 0 0;
+    font-size: 12px;
+    color: var(--text-light);
+    line-height: 1.4;
+  }
+  .lanc-drawer-close {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface-muted);
+    color: var(--text-light);
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    flex-shrink: 0;
+    font-family: inherit;
+  }
+  .lanc-drawer-close:hover { background: var(--primary-light); color: var(--primary); border-color: rgba(30, 92, 75, 0.2); }
+  .lanc-drawer-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 14px 16px 20px;
+  }
+  #mod-lancamentos .lanc-edit-banner {
+    margin-bottom: 12px;
+    padding: 8px 10px;
+    font-size: 12px;
+    border-radius: 8px;
+  }
+  #mod-lancamentos #panelFormLanc.panel-edit-mode .lanc-edit-banner { display: flex; }
+  .lanc-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 12px;
+    margin-bottom: 12px;
+  }
+  .lanc-form-grid .form-group { margin-bottom: 0; }
+  .lanc-form-grid .form-group label {
+    font-size: 11px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--text-light);
+  }
+  .lanc-form-grid .form-control {
+    min-height: 38px;
+    font-size: 13px;
+    padding: 8px 10px;
+  }
+  .lanc-span-full { grid-column: 1 / -1; }
+  .lanc-form-more {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface-muted);
+    margin-bottom: 14px;
+    overflow: hidden;
+  }
+  .lanc-form-more summary {
+    padding: 10px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+  }
+  .lanc-form-more summary::-webkit-details-marker { display: none; }
+  .lanc-form-more summary::after {
+    content: '▾';
+    float: right;
+    color: var(--text-muted);
+    transition: transform 0.15s ease;
+  }
+  .lanc-form-more[open] summary::after { transform: rotate(180deg); }
+  .lanc-form-more .lanc-form-grid {
+    padding: 0 12px 12px;
+    margin-bottom: 0;
+  }
+  .lanc-drawer-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 4px;
+    border-top: 1px solid var(--border);
+  }
+  .lanc-drawer-actions .btn { min-height: 42px; font-size: 14px; font-weight: 600; }
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  @media (max-width: 960px) {
+    .lanc-kpi-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    #mod-lancamentos .lanc-filters { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    #mod-lancamentos .mod-hero-pro.lanc-hero-pro { flex-wrap: wrap; }
+    #mod-lancamentos .mod-hero-pro-actions { width: 100%; }
+    .lanc-kpi-card strong { font-size: 15px; }
+    #mod-lancamentos .lanc-filters { grid-template-columns: 1fr; }
+    .lanc-form-grid { grid-template-columns: 1fr; }
+    .lanc-span-full { grid-column: 1; }
+    .lanc-search-row .lanc-btn-sec { width: 100%; }
+  }
 </style>
 </head>
 <body class="modo-pc">
@@ -5164,114 +5559,56 @@
       </section>
 
       <section id="mod-lancamentos" class="module hidden">
-        <div class="mod-hero-pro">
+        <div class="mod-hero-pro lanc-hero-pro no-print">
+          <div class="lanc-hero-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h6M7 16h4"/></svg>
+          </div>
           <div class="mod-hero-pro-body">
-            <div class="mod-hero-pro-meta"><span class="mod-hero-month">—</span></div>
-            <p class="mod-hero-eyebrow">Movimentações</p>
+            <div class="lanc-hero-meta-row">
+              <span class="lanc-hero-eyebrow">Movimentações</span>
+              <span class="lanc-hero-month" id="lancHeroMes">—</span>
+            </div>
             <h3 class="mod-hero-title">Lançamentos</h3>
-            <p class="mod-hero-desc">Cadastre receitas e despesas, filtre por período e acompanhe o status de cada compromisso.</p>
+            <p class="mod-hero-desc">Consulte, filtre e cadastre receitas e despesas do período selecionado.</p>
           </div>
           <div class="mod-hero-pro-actions no-print">
-            <button type="button" class="btn btn-primary btn-sm" onclick="focarNovoLancamento()">Novo lançamento</button>
-            <button type="button" class="btn btn-ghost btn-sm" onclick="abrirModulo('relatorios')">Relatório</button>
+            <button type="button" class="btn btn-primary btn-sm lanc-btn-primary" onclick="focarNovoLancamento()">Novo lançamento</button>
+            <button type="button" class="btn btn-outline btn-sm lanc-btn-sec" onclick="abrirModulo('relatorios')">Relatório</button>
           </div>
         </div>
-        <div class="lanc-layout">
-          <div class="panel" id="panelFormLanc">
-            <div class="panel-title" id="formLancTitle">Novo lançamento</div>
-            <div class="lanc-edit-banner" id="lancEditBanner" aria-live="polite">✎ Editando lançamento — altere os campos e salve ou cancele.</div>
 
-            <div class="form-section">
-              <div class="form-section-title">Identificação</div>
-              <div class="form-group">
-                <label for="fDesc">O que é este lançamento? *</label>
-                <input type="text" id="fDesc" class="form-control" list="sugestoesDescricao" placeholder="Ex.: Conta de luz, salário...">
-                <datalist id="sugestoesDescricao"></datalist>
-              </div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="fTipo">Tipo de movimentação</label>
-                  <select id="fTipo" class="form-control"><option value="despesa">Despesa</option><option value="receita">Receita</option></select>
-                </div>
-                <div class="form-group">
-                  <label for="fCat">Categoria *</label>
-                  <select id="fCat" class="form-control"></select>
-                </div>
-              </div>
+        <div class="panel lanc-list-panel">
+          <div class="lanc-list-head">
+            <div>
+              <div class="panel-title">Movimentações do período</div>
+              <div class="lanc-summary-meta" id="lancResumoMeta"></div>
             </div>
+            <span class="lanc-count-pill" id="lancCountPill">0 registros</span>
+          </div>
 
-            <div class="form-section">
-              <div class="form-section-title">Valores e prazo</div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="fValor">Valor (R$) *</label>
-                  <input type="number" id="fValor" class="form-control" step="0.01" min="0" placeholder="0,00">
-                </div>
-                <div class="form-group">
-                  <label for="fVenc">Data de vencimento *</label>
-                  <input type="date" id="fVenc" class="form-control">
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="fStatus">Situação do pagamento</label>
-                <select id="fStatus" class="form-control"><option value="pendente">Pendente</option><option value="pago">Pago</option></select>
-              </div>
+          <div class="lanc-kpi-strip" id="lancResumoFiltrado" aria-label="Resumo dos lançamentos filtrados"></div>
+
+          <div class="lanc-toolbar">
+            <div class="lanc-chips" id="lancChipsBar" role="tablist" aria-label="Filtrar por tipo e status">
+              <button type="button" class="lanc-chip active" data-chip="" onclick="aplicarChipLanc('')" role="tab" aria-selected="true">Todos</button>
+              <button type="button" class="lanc-chip" data-chip="receita" onclick="aplicarChipLanc('receita')" role="tab" aria-selected="false">Receitas</button>
+              <button type="button" class="lanc-chip" data-chip="despesa" onclick="aplicarChipLanc('despesa')" role="tab" aria-selected="false">Despesas</button>
+              <button type="button" class="lanc-chip" data-chip="pago" onclick="aplicarChipLanc('pago')" role="tab" aria-selected="false">Pagas</button>
+              <button type="button" class="lanc-chip" data-chip="pendente" onclick="aplicarChipLanc('pendente')" role="tab" aria-selected="false">Pendentes</button>
+              <button type="button" class="lanc-chip" data-chip="atrasado" onclick="aplicarChipLanc('atrasado')" role="tab" aria-selected="false">Atrasadas</button>
             </div>
-
-            <div class="form-section">
-              <div class="form-section-title">Detalhes do pagamento</div>
-              <div class="form-group">
-                <label for="fPgto">Forma de pagamento</label>
-                <select id="fPgto" class="form-control">
-                  <option>Pix</option><option>Boleto</option><option>Cartão Crédito</option>
-                  <option>Cartão Débito</option><option>Dinheiro</option><option>Débito Auto</option><option>Outro</option>
-                </select>
+            <div class="lanc-search-row">
+              <div class="form-group lanc-search-field">
+                <label class="sr-only" for="buscaLanc">Buscar lançamento</label>
+                <input type="text" id="buscaLanc" class="form-control" placeholder="Buscar por descrição, categoria ou responsável..." oninput="sincronizarBuscaLanc(); renderLancamentos()">
+                <input type="hidden" id="buscaLancPro" value="">
               </div>
-              <div class="form-group">
-                <label for="fResp">Responsável</label>
-                <input type="text" id="fResp" class="form-control" placeholder="Quem pagou ou vai pagar?">
-              </div>
-            </div>
-
-            <div class="form-section">
-              <div class="form-section-title">Complemento</div>
-              <div class="form-group">
-                <label for="fObs">Observações</label>
-                <input type="text" id="fObs" class="form-control" placeholder="Notas, referências ou lembretes (opcional)">
-              </div>
-            </div>
-
-            <div class="flex gap-2 mt-3">
-              <button type="button" class="btn btn-primary" style="flex:1;" onclick="salvarLancamento()" id="btnSalvarLanc">Salvar lançamento</button>
-              <button type="button" class="btn btn-outline hidden" id="btnCancelLanc" onclick="cancelarEdicaoLancamento()">Cancelar edição</button>
+              <button type="button" class="btn btn-outline btn-sm lanc-btn-sec" id="btnToggleFiltrosLanc" onclick="toggleFiltrosAvancadosLanc()" aria-expanded="false" aria-controls="lancFiltrosAvancados">Filtros avançados</button>
             </div>
           </div>
 
-          <div class="panel lanc-list-panel">
-            <div class="lanc-list-head">
-              <div class="panel-title">Movimentações do período</div>
-              <span class="lanc-count-pill" id="lancCountPill">0 registros</span>
-            </div>
-
-            <div class="lanc-chips" id="lancChipsBar">
-              <button type="button" class="lanc-chip active" data-chip="" onclick="aplicarChipLanc('')">Todos</button>
-              <button type="button" class="lanc-chip" data-chip="receita" onclick="aplicarChipLanc('receita')">Receitas</button>
-              <button type="button" class="lanc-chip" data-chip="despesa" onclick="aplicarChipLanc('despesa')">Despesas</button>
-              <button type="button" class="lanc-chip" data-chip="pago" onclick="aplicarChipLanc('pago')">Pagas</button>
-              <button type="button" class="lanc-chip" data-chip="pendente" onclick="aplicarChipLanc('pendente')">Pendentes</button>
-              <button type="button" class="lanc-chip" data-chip="atrasado" onclick="aplicarChipLanc('atrasado')">Atrasadas</button>
-            </div>
-
-            <div class="lanc-filter-bar">
-              <span>Filtros avançados</span>
-              <button type="button" class="btn btn-ghost btn-sm" onclick="limparFiltrosLanc()">Limpar filtros</button>
-            </div>
+          <div class="lanc-filters-advanced" id="lancFiltrosAvancados" hidden>
             <div class="lanc-filters">
-              <div class="form-group span-3">
-                <label for="buscaLanc">Buscar lançamento</label>
-                <input type="text" id="buscaLanc" class="form-control" placeholder="Descrição, categoria ou responsável..." oninput="sincronizarBuscaLanc(); renderLancamentos()">
-                <input type="hidden" id="buscaLancPro" value="">
-              </div>
               <div class="form-group">
                 <label for="fLancTipo">Tipo</label>
                 <select id="fLancTipo" class="form-control" onchange="atualizarChipsLanc(); renderLancamentos()">
@@ -5305,28 +5642,96 @@
                 </select>
               </div>
             </div>
-
-            <div class="lanc-summary-meta" id="lancResumoMeta"></div>
-            <div class="pro-summary-strip lanc-summary lanc-summary-pro" id="lancResumoFiltrado"></div>
-
-            <div class="table-responsive view-tabela has-mobile-alt">
-              <table class="table-lanc">
-                <thead>
-                  <tr>
-                    <th>Descrição</th>
-                    <th>Categoria</th>
-                    <th>Vencimento</th>
-                    <th class="col-valor">Valor</th>
-                    <th class="col-status">Status</th>
-                    <th class="col-acoes">Ações</th>
-                  </tr>
-                </thead>
-                <tbody id="listaLancTabela"></tbody>
-              </table>
+            <div class="lanc-filter-actions">
+              <button type="button" class="btn btn-ghost btn-sm" onclick="limparFiltrosLanc()">Limpar filtros</button>
             </div>
-            <div class="view-lista" id="listaLancMobile"></div>
           </div>
+
+          <div class="lanc-table-wrap table-responsive view-tabela has-mobile-alt">
+            <table class="table-lanc">
+              <thead>
+                <tr>
+                  <th>Descrição</th>
+                  <th>Categoria</th>
+                  <th>Vencimento</th>
+                  <th class="col-valor">Valor</th>
+                  <th class="col-status">Status</th>
+                  <th class="col-acoes">Ações</th>
+                </tr>
+              </thead>
+              <tbody id="listaLancTabela"></tbody>
+            </table>
+          </div>
+          <div class="view-lista" id="listaLancMobile"></div>
         </div>
+
+        <div class="lanc-drawer-backdrop" id="lancDrawerBackdrop" onclick="fecharDrawerLanc()" aria-hidden="true"></div>
+        <aside class="lanc-drawer" id="lancDrawer" role="dialog" aria-modal="true" aria-labelledby="formLancTitle" aria-hidden="true">
+          <div class="lanc-drawer-head">
+            <div>
+              <h4 class="lanc-drawer-title" id="formLancTitle">Novo lançamento</h4>
+              <p class="lanc-drawer-sub">Preencha os campos essenciais do movimento</p>
+            </div>
+            <button type="button" class="lanc-drawer-close" onclick="fecharDrawerLanc()" aria-label="Fechar formulário">×</button>
+          </div>
+          <div class="lanc-drawer-body" id="panelFormLanc">
+            <div class="lanc-edit-banner" id="lancEditBanner" aria-live="polite">✎ Editando lançamento — altere os campos e salve ou cancele.</div>
+
+            <div class="lanc-form-grid">
+              <div class="form-group lanc-span-full">
+                <label for="fDesc">Descrição *</label>
+                <input type="text" id="fDesc" class="form-control" list="sugestoesDescricao" placeholder="Ex.: Conta de luz, salário...">
+                <datalist id="sugestoesDescricao"></datalist>
+              </div>
+              <div class="form-group">
+                <label for="fTipo">Tipo</label>
+                <select id="fTipo" class="form-control"><option value="despesa">Despesa</option><option value="receita">Receita</option></select>
+              </div>
+              <div class="form-group">
+                <label for="fCat">Categoria *</label>
+                <select id="fCat" class="form-control"></select>
+              </div>
+              <div class="form-group">
+                <label for="fValor">Valor (R$) *</label>
+                <input type="number" id="fValor" class="form-control" step="0.01" min="0" placeholder="0,00">
+              </div>
+              <div class="form-group">
+                <label for="fVenc">Vencimento *</label>
+                <input type="date" id="fVenc" class="form-control">
+              </div>
+              <div class="form-group lanc-span-full">
+                <label for="fStatus">Situação</label>
+                <select id="fStatus" class="form-control"><option value="pendente">Pendente</option><option value="pago">Pago</option></select>
+              </div>
+            </div>
+
+            <details class="lanc-form-more">
+              <summary>Mais detalhes (opcional)</summary>
+              <div class="lanc-form-grid">
+                <div class="form-group lanc-span-full">
+                  <label for="fPgto">Forma de pagamento</label>
+                  <select id="fPgto" class="form-control">
+                    <option>Pix</option><option>Boleto</option><option>Cartão Crédito</option>
+                    <option>Cartão Débito</option><option>Dinheiro</option><option>Débito Auto</option><option>Outro</option>
+                  </select>
+                </div>
+                <div class="form-group lanc-span-full">
+                  <label for="fResp">Responsável</label>
+                  <input type="text" id="fResp" class="form-control" placeholder="Quem pagou ou vai pagar?">
+                </div>
+                <div class="form-group lanc-span-full">
+                  <label for="fObs">Observações</label>
+                  <input type="text" id="fObs" class="form-control" placeholder="Notas ou lembretes">
+                </div>
+              </div>
+            </details>
+
+            <div class="lanc-drawer-actions">
+              <button type="button" class="btn btn-primary" onclick="salvarLancamento()" id="btnSalvarLanc">Salvar lançamento</button>
+              <button type="button" class="btn btn-outline hidden" id="btnCancelLanc" onclick="cancelarEdicaoLancamento()">Cancelar edição</button>
+            </div>
+          </div>
+        </aside>
       </section>
 
       <!-- Metas -->
@@ -6523,20 +6928,21 @@ async function salvarLancamento() {
   if (USAR_SUPABASE && supabase && currentGroupId) {
     const dbObj = { ...obj, grupo_id: currentGroupId, criado_por: sessionUser.id, forma_pagamento: obj.formaPagamento };
     delete dbObj.id; delete dbObj.formaPagamento;
-    if(editLancId) { await supabase.from('lancamentos').update(dbObj).eq('id', editLancId); cancelarEdicaoLancamento(); }
+    if(editLancId) { await supabase.from('lancamentos').update(dbObj).eq('id', editLancId); }
     else { await supabase.from('lancamentos').insert([dbObj]); }
     carregarTudoSupabase();
   } else {
     if(editLancId) {
       const idx = dados.findIndex(d => d.id === editLancId);
       if(idx !== -1) Object.assign(dados[idx], obj);
-      cancelarEdicaoLancamento();
     } else { dados.push(obj); }
     salvarLocal('dados', dados); processarDadosGlobais();
   }
   
   document.getElementById('btnSalvarLanc').disabled = false;
-  showToast("Lançamento salvo!"); limparFormLanc();
+  showToast("Lançamento salvo!");
+  if (editLancId) cancelarEdicaoLancamento();
+  else { limparFormLanc(); fecharDrawerLanc(); }
 }
 
 async function pagarLancamento(id) { 
@@ -6580,7 +6986,14 @@ function sugerirIconeCategoria() {
 function limparFiltrosLanc() {
   ['buscaLanc', 'buscaLancPro', 'fLancInicio', 'fLancFim'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
   ['fLancTipo', 'fLancStatus', 'fLancCategoria', 'fLancPgto'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
-  document.querySelectorAll('.lanc-chip').forEach(b => b.classList.toggle('active', b.dataset.chip === ''));
+  document.querySelectorAll('#mod-lancamentos .lanc-chip').forEach(b => {
+    b.classList.toggle('active', b.dataset.chip === '');
+    b.setAttribute('aria-selected', b.dataset.chip === '' ? 'true' : 'false');
+  });
+  const adv = document.getElementById('lancFiltrosAvancados');
+  const btn = document.getElementById('btnToggleFiltrosLanc');
+  if (adv) adv.hidden = true;
+  if (btn) { btn.setAttribute('aria-expanded', 'false'); btn.textContent = 'Filtros avançados'; }
   renderLancamentos();
 }
 
@@ -6652,8 +7065,10 @@ function atualizarChipsLanc() {
   let chip = '';
   if (t === 'receita' || t === 'despesa') chip = t;
   else if (['pago', 'pendente', 'atrasado'].includes(s)) chip = s;
-  document.querySelectorAll('.lanc-chip').forEach(b => {
-    b.classList.toggle('active', b.dataset.chip === chip);
+  document.querySelectorAll('#mod-lancamentos .lanc-chip').forEach(b => {
+    const on = b.dataset.chip === chip;
+    b.classList.toggle('active', on);
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
   });
 }
 
@@ -6665,10 +7080,24 @@ function aplicarChipLanc(chip) {
   status.value = '';
   if (chip === 'receita' || chip === 'despesa') tipo.value = chip;
   else if (['pago', 'pendente', 'atrasado'].includes(chip)) status.value = chip;
-  document.querySelectorAll('.lanc-chip').forEach(b => {
-    b.classList.toggle('active', b.dataset.chip === chip);
+  document.querySelectorAll('#mod-lancamentos .lanc-chip').forEach(b => {
+    const on = b.dataset.chip === chip;
+    b.classList.toggle('active', on);
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
   });
   renderLancamentos();
+}
+
+function toggleFiltrosAvancadosLanc() {
+  const el = document.getElementById('lancFiltrosAvancados');
+  const btn = document.getElementById('btnToggleFiltrosLanc');
+  if (!el) return;
+  const open = el.hidden;
+  el.hidden = !open;
+  if (btn) {
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    btn.textContent = open ? 'Ocultar filtros' : 'Filtros avançados';
+  }
 }
 
 async function adicionarCategoria() {
@@ -7088,6 +7517,7 @@ function processarDadosGlobais() {
 function editarLancamento(id) {
   const item = dados.find(d => d.id === id);
   if (!item) return;
+  abrirModulo('lancamentos');
   editLancId = id;
   const pForm = document.getElementById('panelFormLanc');
   pForm.classList.add('panel-edit-mode');
@@ -7104,16 +7534,24 @@ function editarLancamento(id) {
   document.getElementById('fPgto').value = item.formaPagamento || 'Outro';
   document.getElementById('fResp').value = item.responsavel || '';
   document.getElementById('fObs').value = item.observacao || '';
-  pForm.scrollIntoView({ behavior: 'smooth' });
+  const more = pForm.querySelector('.lanc-form-more');
+  if (more && (item.formaPagamento || item.responsavel || item.observacao)) more.open = true;
+  setTimeout(() => { abrirDrawerLanc(); document.getElementById('fDesc')?.focus(); }, 80);
 }
 function cancelarEdicaoLancamento() {
   editLancId = null;
-  document.getElementById('panelFormLanc').classList.remove('panel-edit-mode');
+  const pForm = document.getElementById('panelFormLanc');
+  if (pForm) {
+    pForm.classList.remove('panel-edit-mode');
+    const more = pForm.querySelector('.lanc-form-more');
+    if (more) more.open = false;
+  }
   document.getElementById('formLancTitle').innerText = 'Novo lançamento';
   document.getElementById('btnSalvarLanc').innerText = 'Salvar lançamento';
   document.getElementById('btnSalvarLanc').className = 'btn btn-primary';
   document.getElementById('btnCancelLanc').classList.add('hidden');
   limparFormLanc();
+  fecharDrawerLanc();
 }
 function limparFormLanc() { ['fDesc','fValor','fVenc','fResp','fObs'].forEach(id => document.getElementById(id).value = ''); document.getElementById('fStatus').value = 'pendente'; }
 
@@ -7833,7 +8271,34 @@ function emptyStateHtml(o){
   return `<div class="empty-state"><div class="empty-state-icon" aria-hidden="true">${icon}</div>${title?`<div class="empty-state-title">${esc(title)}</div>`:''}<p class="empty-state-text">${esc(msg)}</p>${btn}</div>`;
 }
 function emptyStateRow(cols,o){return `<tr class="empty-row"><td colspan="${cols}">${emptyStateHtml(o)}</td></tr>`;}
-function focarNovoLancamento(){abrirModulo('lancamentos');setTimeout(()=>{document.getElementById('panelFormLanc')?.scrollIntoView({behavior:'smooth'});document.getElementById('fDesc')?.focus();},120);}
+function abrirDrawerLanc() {
+  const drawer = document.getElementById('lancDrawer');
+  const backdrop = document.getElementById('lancDrawerBackdrop');
+  if (!drawer) return;
+  drawer.classList.add('is-open');
+  drawer.setAttribute('aria-hidden', 'false');
+  backdrop?.classList.add('is-visible');
+  backdrop?.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('lanc-drawer-open');
+}
+function fecharDrawerLanc() {
+  const drawer = document.getElementById('lancDrawer');
+  const backdrop = document.getElementById('lancDrawerBackdrop');
+  if (!drawer) return;
+  drawer.classList.remove('is-open');
+  drawer.setAttribute('aria-hidden', 'true');
+  backdrop?.classList.remove('is-visible');
+  backdrop?.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('lanc-drawer-open');
+}
+function focarNovoLancamento() {
+  abrirModulo('lancamentos');
+  setTimeout(() => {
+    cancelarEdicaoLancamento();
+    abrirDrawerLanc();
+    document.getElementById('fDesc')?.focus();
+  }, 120);
+}
 function focarNovaMeta(){abrirModulo('metas');setTimeout(()=>document.getElementById('fMetaNome')?.focus(),120);}
 function focarNovoOrcamento(){abrirModulo('gastos');setTimeout(()=>document.getElementById('fOrcValor')?.focus(),120);}
 function focarNovoFuturo(){abrirModulo('planejamento');setTimeout(()=>document.getElementById('fFutDesc')?.focus(),120);}
@@ -8068,6 +8533,7 @@ function aprimorarEstruturaVisual(){
     window._menuEscBound=true;
     document.addEventListener('keydown',e=>{
       if(e.key!=='Escape') return;
+      if(document.getElementById('lancDrawer')?.classList.contains('is-open')){ fecharDrawerLanc(); return; }
       if(document.getElementById('sidebar')?.classList.contains('open')) toggleMenu();
     });
   }
@@ -8620,21 +9086,24 @@ function renderLancamentos() {
   const meta = document.getElementById('lancResumoMeta');
   const count = document.getElementById('lancCountPill');
   if (count) count.textContent = `${l.length} registro${l.length === 1 ? '' : 's'}`;
+  const heroMes = document.getElementById('lancHeroMes');
+  if (heroMes) heroMes.textContent = mes ? formatMesExtenso(mes) : '—';
   if (meta) meta.innerHTML = montarResumoLancMeta(l.length, mes);
   if (re) {
-    re.innerHTML = `<div class="mini-stat"><span>Receitas</span><strong class="c-green">${formatMoeda(r.rec)}</strong></div>
-      <div class="mini-stat"><span>Despesas</span><strong class="c-red">${formatMoeda(r.des)}</strong></div>
-      <div class="mini-stat"><span>Saldo</span><strong class="${r.saldo >= 0 ? 'c-green' : 'c-red'}">${formatMoeda(r.saldo)}</strong></div>
-      <div class="mini-stat"><span>Em aberto</span><strong>${r.aberto}</strong></div>`;
+    re.innerHTML = `<div class="lanc-kpi-card lanc-kpi-rec"><span>Receitas</span><strong class="c-green">${formatMoeda(r.rec)}</strong></div>
+      <div class="lanc-kpi-card lanc-kpi-des"><span>Despesas</span><strong class="c-red">${formatMoeda(r.des)}</strong></div>
+      <div class="lanc-kpi-card lanc-kpi-saldo${r.saldo < 0 ? ' is-neg' : ''}"><span>Saldo</span><strong class="${r.saldo >= 0 ? 'c-green' : 'c-red'}">${formatMoeda(r.saldo)}</strong></div>
+      <div class="lanc-kpi-card lanc-kpi-aberto"><span>Em aberto</span><strong>${r.aberto}</strong></div>`;
   }
+  const hasFilter = !!(document.getElementById('buscaLanc')?.value?.trim() || document.getElementById('fLancTipo')?.value || document.getElementById('fLancStatus')?.value || document.getElementById('fLancCategoria')?.value || document.getElementById('fLancInicio')?.value || document.getElementById('fLancFim')?.value || document.getElementById('fLancPgto')?.value);
   const emptyOpts = l.length ? null : {
     icon: '💳',
-    title: mes ? `Nenhum lançamento em ${formatMesExtenso(mes)}` : 'Nenhum lançamento encontrado',
-    msg: document.getElementById('buscaLanc')?.value || document.getElementById('fLancTipo')?.value || document.getElementById('fLancStatus')?.value
-      ? 'Nenhum resultado para os filtros atuais. Limpe os filtros ou cadastre um novo lançamento.'
-      : 'Cadastre receitas e despesas para acompanhar o mês selecionado.',
-    btnLabel: 'Novo lançamento',
-    btn: 'focarNovoLancamento()'
+    title: hasFilter ? 'Nenhum resultado encontrado' : (mes ? `Nenhum lançamento em ${formatMesExtenso(mes)}` : 'Nenhum lançamento cadastrado'),
+    msg: hasFilter
+      ? 'Ajuste os filtros ou limpe a busca para ver mais movimentações.'
+      : 'Cadastre sua primeira receita ou despesa para começar a acompanhar o período.',
+    btnLabel: hasFilter ? 'Limpar filtros' : 'Criar lançamento',
+    btn: hasFilter ? 'limparFiltrosLanc()' : 'focarNovoLancamento()'
   };
   const tb = l.map(montarLinhaLancTabela).join('');
   const lst = l.map(montarLancMobileCard).join('');
