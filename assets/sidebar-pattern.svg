@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 292 800" fill="none" aria-hidden="true">
+  <defs>
+    <linearGradient id="sbGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e5c4b" stop-opacity="0.14"/>
+      <stop offset="55%" stop-color="#0f4c5c" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#0369a1" stop-opacity="0.06"/>
+    </linearGradient>
+  </defs>
+  <!-- Grid de dashboard -->
+  <g stroke="rgba(255,255,255,0.06)" stroke-width="0.75">
+    <path d="M16 100h260M16 180h260M16 260h200M16 340h240"/>
+    <path d="M16 100v500M76 100v420M136 100v360M196 100v440M276 100v500"/>
+  </g>
+  <!-- Gráfico de barras -->
+  <g transform="translate(28,420)">
+    <rect x="0" y="48" width="16" height="32" rx="2" fill="rgba(30,92,75,0.12)" stroke="rgba(134,196,168,0.18)" stroke-width="0.8"/>
+    <rect x="24" y="32" width="16" height="48" rx="2" fill="rgba(30,92,75,0.1)" stroke="rgba(134,196,168,0.16)" stroke-width="0.8"/>
+    <rect x="48" y="16" width="16" height="64" rx="2" fill="rgba(30,92,75,0.14)" stroke="rgba(134,196,168,0.2)" stroke-width="0.8"/>
+    <rect x="72" y="38" width="16" height="42" rx="2" fill="rgba(30,92,75,0.09)" stroke="rgba(134,196,168,0.14)" stroke-width="0.8"/>
+    <path d="M-4 88h104" stroke="rgba(255,255,255,0.08)" stroke-width="0.8"/>
+  </g>
+  <!-- Calendário -->
+  <g transform="translate(168,168)" stroke="rgba(255,255,255,0.11)" stroke-width="0.9">
+    <rect x="0" y="0" width="68" height="58" rx="5" fill="rgba(255,255,255,0.02)"/>
+    <path d="M0 16h68M17 0v16M51 0v16"/>
+    <circle cx="17" cy="32" r="2.5" fill="rgba(255,255,255,0.07)"/>
+    <circle cx="34" cy="32" r="2.5" fill="rgba(255,255,255,0.07)"/>
+    <circle cx="51" cy="32" r="2.5" fill="rgba(255,255,255,0.07)"/>
+    <circle cx="17" cy="46" r="2.5" fill="rgba(255,255,255,0.05)"/>
+    <circle cx="34" cy="46" r="2.5" fill="rgba(30,92,75,0.15)" stroke="rgba(134,196,168,0.2)"/>
+  </g>
+  <!-- Moedas -->
+  <g transform="translate(36,268)" stroke="rgba(251,191,36,0.16)" stroke-width="0.9" fill="none">
+    <ellipse cx="18" cy="22" rx="16" ry="5"/>
+    <ellipse cx="18" cy="16" rx="16" ry="5"/>
+    <path d="M2 16v12c0 2.8 7.2 5 16 5s16-2.2 16-5V16"/>
+  </g>
+  <!-- Linha de planejamento -->
+  <polyline points="24,620 64,580 104,595 144,540 184,555 224,500 264,515"
+    stroke="url(#sbGrad)" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
+  <circle cx="264" cy="515" r="3" fill="rgba(56,189,248,0.2)" stroke="rgba(56,189,248,0.25)" stroke-width="0.8"/>
+  <!-- Casa -->
+  <g transform="translate(148,548)" stroke="rgba(255,255,255,0.13)" stroke-width="1.1" fill="rgba(30,92,75,0.05)">
+    <path d="M0 72 L52 -36 L104 72 Z" fill="rgba(30,92,75,0.06)"/>
+    <rect x="14" y="72" width="76" height="58" rx="2" fill="rgba(255,255,255,0.02)"/>
+    <rect x="40" y="92" width="24" height="38" rx="1.5" fill="none"/>
+    <rect x="22" y="86" width="14" height="12" rx="1" fill="none" opacity="0.7"/>
+  </g>
+  <!-- Formas abstratas -->
+  <circle cx="230" cy="700" r="72" stroke="rgba(30,92,75,0.12)" stroke-width="1" fill="none"/>
+  <circle cx="48" cy="480" r="44" stroke="rgba(255,255,255,0.05)" stroke-width="0.8" fill="none"/>
+  <path d="M200 40 Q260 80 220 130" stroke="rgba(3,105,161,0.12)" stroke-width="1" fill="none"/>
+</svg>
