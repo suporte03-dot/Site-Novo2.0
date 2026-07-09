@@ -46,7 +46,7 @@
     --border: #e4e9ef;
     --border-strong: #cdd5df;
     --border-subtle: rgba(15, 23, 42, 0.06);
-    --sidebar-bg-art-opacity: 0.1;
+    --sidebar-bg-art-opacity: 0.08;
     --sidebar-w: 292px;
     --radius: 12px;
     --radius-sm: 8px;
@@ -3834,7 +3834,7 @@
   body.modo-celular .sidebar-brand { gap: 10px; }
   body.modo-celular .brand-name { font-size: 17px; }
   body.modo-celular .brand-tagline { font-size: 10.5px; }
-  body.modo-celular .sidebar-local-wrap { grid-template-columns: 1fr; }
+  body.modo-celular .sidebar-local-wrap { flex-direction: column; align-items: stretch; }
   body.modo-celular .sidebar-backup-link { justify-self: start; }
   @media (max-width: 1100px) {
     .dash-summary-grid:not(.dash-kpi-float) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -4095,8 +4095,8 @@
     }
     .dash-cover-bg { background-position: 72% center; }
     .dash-cover-toolbar { width: 100%; justify-content: flex-start; align-self: stretch; }
-    .dash-cover-cta { flex: 1 1 auto; justify-content: center; }
-    .dash-kpi-float-wrap { margin-top: -20px; margin-bottom: 10px; }
+    .dash-cover-cta { width: 100%; justify-content: center; }
+    .dash-kpi-float-wrap { margin-top: -16px; margin-bottom: 10px; }
     .dash-kpi-float.dash-summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
   }
   @media (max-width: 480px) {
@@ -4104,7 +4104,7 @@
     .dash-cover-title { font-size: 19px; }
     .dash-cover-desc { font-size: 12px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
     .dash-cover-toolbar { flex-direction: column; align-items: stretch; }
-    .dash-cover-month-btn, .dash-cover-cta { width: 100%; justify-content: center; }
+    .dash-cover-cta { width: 100%; justify-content: center; }
     .dash-kpi-float-wrap { margin-top: -18px; }
     .dash-kpi-float.dash-summary-grid { gap: 8px; }
     .dash-kpi-float .dash-summary-card:nth-child(-n+3) strong { font-size: 17px; }
@@ -4222,8 +4222,183 @@
   }
   .sidebar { --sidebar-text: #9eb0c4; }
   .menu-section-sub { color: rgba(203, 213, 225, 0.76); font-size: 12px; }
-  .sidebar-footer { padding-bottom: max(12px, env(safe-area-inset-bottom)); }
+  .sidebar-footer { padding-bottom: max(10px, env(safe-area-inset-bottom)); }
   .menu-section:not(.collapsed) { box-shadow: 0 2px 8px rgba(0, 0, 0, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.04); }
+
+  /* ===== DASHBOARD — REFINO VISUAL ===== */
+  #mod-dashboard {
+    --dash-cover-h: 184px;
+    --dash-cover-pad-b: 32px;
+    --dash-value-primary: 22px;
+    overflow-x: clip;
+  }
+  body.modo-celular #mod-dashboard {
+    --dash-cover-h: 164px;
+    --dash-cover-pad-b: 28px;
+  }
+  #mod-dashboard .dash-cover-inner {
+    padding-top: 20px;
+    min-height: var(--dash-cover-h);
+  }
+  #mod-dashboard .dash-cover-zone::after { height: 48px; }
+  .dash-kpi-float-wrap {
+    margin-top: -18px;
+    margin-bottom: 14px;
+    padding: 0 1px;
+  }
+  .dash-kpi-float.dash-summary-grid {
+    gap: 10px;
+    align-items: stretch;
+  }
+  .dash-kpi-float .dash-summary-card.is-primary {
+    min-height: 90px;
+    padding: 12px 14px 14px;
+    border-left-width: 4px;
+    box-shadow: 0 2px 4px rgba(15, 23, 42, 0.05), 0 8px 22px rgba(30, 92, 75, 0.09);
+  }
+  .dash-kpi-float .dash-summary-card.is-primary strong {
+    font-size: var(--dash-value-primary, 22px);
+    margin-top: 2px;
+  }
+  .dash-kpi-float .dash-summary-card.is-primary.is-rec {
+    background: linear-gradient(135deg, var(--card-bg) 0%, rgba(21, 128, 61, 0.04) 100%);
+  }
+  .dash-kpi-float .dash-summary-card.is-primary.is-des {
+    background: linear-gradient(135deg, var(--card-bg) 0%, rgba(185, 28, 28, 0.03) 100%);
+  }
+  .dash-kpi-float .dash-summary-card.is-primary.is-saldo {
+    background: linear-gradient(135deg, var(--card-bg) 0%, rgba(3, 105, 161, 0.04) 100%);
+  }
+  .dash-kpi-float .dash-summary-card.is-secondary {
+    min-height: 74px;
+    padding: 9px 12px 10px;
+    border-left-width: 2px;
+    background: var(--surface-muted);
+    box-shadow: none;
+    border-color: var(--border);
+    gap: 1px;
+  }
+  .dash-kpi-float .dash-summary-card.is-secondary strong {
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 0;
+  }
+  .dash-kpi-float .dash-summary-card.is-secondary .dash-kpi-icon {
+    width: 22px;
+    height: 22px;
+    font-size: 11px;
+    border-radius: 6px;
+  }
+  .dash-kpi-hint {
+    display: block;
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--text-light);
+    line-height: 1.35;
+    margin-top: 1px;
+  }
+  body.theme-dark .dash-kpi-float .dash-summary-card.is-secondary {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+  .dash-empty-welcome {
+    padding: 12px 14px;
+    gap: 12px;
+    border-left-width: 3px;
+    border-left-color: rgba(30, 92, 75, 0.45);
+  }
+  .dash-empty-welcome-icon {
+    width: 34px;
+    height: 34px;
+    background: rgba(21, 128, 61, 0.1);
+    color: var(--success);
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .dash-empty-welcome-title { font-size: 13.5px; }
+  .dash-empty-welcome-sub { max-width: 52ch; }
+  .dash-quick-chip {
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    padding: 6px 12px !important;
+    min-height: 32px !important;
+    border-radius: 999px !important;
+    background: var(--surface-muted) !important;
+    border: 1px solid var(--border) !important;
+    box-shadow: none !important;
+  }
+  .dash-quick-chip:hover {
+    border-color: rgba(30, 92, 75, 0.32) !important;
+    background: var(--card-bg) !important;
+  }
+  .dash-quick-chip .dash-quick-icon {
+    width: 20px !important;
+    height: 20px !important;
+    font-size: 10px !important;
+    border-radius: 50% !important;
+    background: rgba(30, 92, 75, 0.08) !important;
+    color: var(--success) !important;
+  }
+  .dash-quick-chip .dash-quick-label {
+    font-size: 11px !important;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .dash-quick-strip .dash-quick-secondary,
+  #mod-dashboard.dash-empty-mode .dash-quick-actions-hier .dash-quick-secondary {
+    gap: 8px;
+  }
+  .dash-quick-actions-inline .dash-quick-chip {
+    flex: 0 1 auto;
+  }
+  .dash-charts-empty-center {
+    padding: 22px 16px 16px;
+    gap: 8px;
+  }
+  .dash-charts-empty-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    background: rgba(21, 128, 61, 0.08);
+    border: 1px solid rgba(30, 92, 75, 0.14);
+    color: var(--success);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .dash-charts-empty-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dark);
+    margin: 0;
+    letter-spacing: -0.02em;
+    line-height: 1.35;
+  }
+  .dash-charts-empty-msg {
+    font-size: 12px;
+    max-width: 38ch;
+    line-height: 1.5;
+    margin: 0;
+  }
+  .dash-charts-empty-cta { margin-top: 6px; }
+  #mod-dashboard.dash-empty-mode .dash-empty-charts-grid { display: none; }
+  #mod-dashboard .dash-exec-hero,
+  #mod-dashboard .dash-kpi-float-wrap,
+  #mod-dashboard .dash-post-cover { min-width: 0; max-width: 100%; }
+  @media (max-width: 720px) {
+    #mod-dashboard { --dash-cover-h: 172px; --dash-cover-pad-b: 28px; }
+    .dash-kpi-float-wrap { margin-top: -16px; }
+    .dash-kpi-float .dash-summary-card.is-primary { min-height: 82px; }
+    .dash-kpi-float .dash-summary-card.is-primary strong { font-size: 19px; }
+  }
+  @media (max-width: 480px) {
+    #mod-dashboard { --dash-cover-h: 156px; --dash-cover-pad-b: 26px; }
+    .dash-kpi-float-wrap { margin-top: -14px; }
+    .dash-quick-strip .dash-quick-secondary { grid-template-columns: 1fr; }
+    .dash-quick-chip { width: 100%; }
+  }
 
   /* ===== LISTA DE MERCADO — REFINO VISUAL ===== */
   #mod-mercado {
@@ -5666,6 +5841,190 @@
     .fut-form-grid { grid-template-columns: 1fr; }
     .fut-span-full { grid-column: 1; }
   }
+
+  /* ===== SIDEBAR — REFINO PREMIUM ===== */
+  .sidebar::before {
+    height: 68%;
+    opacity: var(--sidebar-bg-art-opacity);
+  }
+  .sidebar-brand {
+    align-items: center;
+    gap: 11px;
+  }
+  .brand-text {
+    gap: 2px;
+    justify-content: center;
+    padding-top: 1px;
+  }
+  .brand-name {
+    font-size: 17px;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+  }
+  .brand-tagline {
+    font-size: 10.5px;
+    color: rgba(186, 198, 212, 0.82);
+    line-height: 1.25;
+    margin-top: 0;
+  }
+  .sidebar-local-wrap {
+    display: flex;
+    align-items: stretch;
+    gap: 6px;
+    width: 100%;
+  }
+  #lblGrupoId {
+    flex: 1;
+    min-width: 0;
+    min-height: 28px;
+    padding: 0 10px;
+    font-size: 10px;
+    font-weight: 600;
+    align-items: center;
+    border-radius: 7px;
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.07);
+  }
+  .sidebar-backup-link {
+    min-height: 28px;
+    padding: 0 10px;
+    border-radius: 7px;
+    font-size: 10px;
+    font-weight: 600;
+    align-items: center;
+    border-color: rgba(255, 255, 255, 0.09);
+    background: rgba(255, 255, 255, 0.03);
+    color: rgba(203, 213, 225, 0.88);
+  }
+  .sidebar-backup-link svg {
+    width: 11px;
+    height: 11px;
+    opacity: 0.7;
+  }
+  .sidebar-menu {
+    padding: 8px 9px 8px 10px;
+    gap: 6px;
+  }
+  .menu-section {
+    margin-bottom: 5px;
+    border-radius: 11px;
+    border-color: rgba(255, 255, 255, 0.06);
+    background: rgba(8, 14, 22, 0.58);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  }
+  .menu-section-head {
+    min-height: 44px;
+    padding: 8px 10px;
+    gap: 9px;
+  }
+  .menu-section-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 7px;
+  }
+  .menu-section-icon svg { width: 15px; height: 15px; }
+  .menu-section-title {
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    line-height: 1.25;
+  }
+  .menu-section-sub {
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(186, 198, 212, 0.82);
+    margin-top: 2px;
+    line-height: 1.35;
+  }
+  .menu-section-chevron {
+    width: 18px;
+    height: 18px;
+    margin-left: 2px;
+    align-self: center;
+    color: rgba(148, 163, 184, 0.42);
+    opacity: 0.9;
+  }
+  .menu-section-chevron svg {
+    width: 10px;
+    height: 10px;
+    stroke-width: 2;
+  }
+  .menu-section:not(.collapsed) .menu-section-chevron {
+    color: rgba(110, 190, 165, 0.5);
+  }
+  .menu-section-head:hover .menu-section-chevron {
+    color: rgba(186, 198, 212, 0.65);
+  }
+  .menu-section:not(.collapsed) .menu-section-head:hover .menu-section-chevron {
+    color: rgba(110, 231, 183, 0.65);
+  }
+  .menu-section-body {
+    padding: 3px 7px 7px 9px;
+    gap: 1px;
+  }
+  .menu-item {
+    min-height: 40px;
+    padding: 7px 10px;
+    font-size: 14px;
+    border-radius: 7px;
+    border-left: 2px solid transparent;
+  }
+  .menu-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
+  .menu-item.active {
+    background: linear-gradient(90deg, rgba(30, 92, 75, 0.22) 0%, rgba(30, 92, 75, 0.08) 100%);
+    color: #f8fafc;
+    font-weight: 600;
+    border-left-color: rgba(74, 222, 128, 0.9);
+    box-shadow: none;
+  }
+  .menu-item.active .menu-dot {
+    background: #6ee7b7;
+    box-shadow: 0 0 0 2px rgba(110, 231, 183, 0.2);
+  }
+  .sidebar-footer {
+    padding: 8px 10px 10px;
+    background: rgba(5, 10, 18, 0.72);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+  .sidebar-footer-inner {
+    padding: 8px 10px;
+    border-radius: 9px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .sidebar-footer-row {
+    padding: 0;
+    border: none;
+    background: transparent;
+    gap: 10px;
+  }
+  .sidebar-footer-label {
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    color: rgba(148, 163, 184, 0.78);
+  }
+  .sidebar-footer-val {
+    font-size: 10px;
+    color: rgba(226, 232, 240, 0.92);
+    font-variant-numeric: tabular-nums;
+  }
+  .sidebar-footer-meta {
+    padding-top: 6px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    justify-content: center;
+    font-size: 9.5px;
+    color: rgba(148, 163, 184, 0.72);
+    gap: 6px;
+  }
+  body.modo-celular .sidebar-local-wrap {
+    flex-direction: row;
+    align-items: stretch;
+  }
 </style>
 </head>
 <body class="modo-pc">
@@ -5772,14 +6131,16 @@
       </div>
     </div>
     <footer class="sidebar-footer" aria-label="Informações do sistema">
-      <div class="sidebar-footer-row">
-        <span class="sidebar-footer-label">Último backup</span>
-        <span class="sidebar-footer-val" id="sidebarFooterBackup" title="Data do último backup exportado">Nunca</span>
-      </div>
-      <div class="sidebar-footer-meta">
-        <span id="sidebarFooterStorage">0 registros locais</span>
-        <span class="sidebar-footer-dot" aria-hidden="true">·</span>
-        <span id="sidebarFooterVersion">v2.0</span>
+      <div class="sidebar-footer-inner">
+        <div class="sidebar-footer-row">
+          <span class="sidebar-footer-label">Último backup</span>
+          <span class="sidebar-footer-val" id="sidebarFooterBackup" title="Data do último backup exportado">Nunca</span>
+        </div>
+        <div class="sidebar-footer-meta">
+          <span id="sidebarFooterStorage">0 registros locais</span>
+          <span class="sidebar-footer-dot" aria-hidden="true">·</span>
+          <span id="sidebarFooterVersion">v2.0</span>
+        </div>
       </div>
     </footer>
   </aside>
@@ -5823,10 +6184,6 @@
               <p class="dash-cover-desc" id="dashCoverDesc">Acompanhe receitas, despesas e saldo do mês em um só lugar.</p>
             </div>
             <div class="dash-cover-toolbar">
-              <button type="button" class="dash-cover-month-btn" id="dashCoverMonthBtn" onclick="focarFiltroMes()" title="Alterar mês do período">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                <span id="dashCoverMonthLabel">—</span>
-              </button>
               <button type="button" class="dash-cover-cta" onclick="focarNovoLancamento()"><span>+</span> Novo lançamento</button>
             </div>
           </div>
@@ -5849,17 +6206,17 @@
             <div class="dash-empty-only dash-quick-strip">
               <div class="dash-quick-actions dash-quick-actions-hier" id="dashQuickActions">
                 <div class="dash-quick-secondary">
-                  <button type="button" class="dash-quick-btn" onclick="focarNovaMeta()"><span class="dash-quick-icon" aria-hidden="true">◎</span><span class="dash-quick-label">Criar meta</span></button>
-                  <button type="button" class="dash-quick-btn" onclick="focarNovoOrcamento()"><span class="dash-quick-icon" aria-hidden="true">⊟</span><span class="dash-quick-label">Definir limite</span></button>
-                  <button type="button" class="dash-quick-btn" onclick="irParaBackup()"><span class="dash-quick-icon" aria-hidden="true">↓</span><span class="dash-quick-label">Importar backup</span></button>
+                  <button type="button" class="dash-quick-btn dash-quick-chip" onclick="focarNovaMeta()"><span class="dash-quick-icon" aria-hidden="true">◎</span><span class="dash-quick-label">Criar meta</span></button>
+                  <button type="button" class="dash-quick-btn dash-quick-chip" onclick="focarNovoOrcamento()"><span class="dash-quick-icon" aria-hidden="true">⊟</span><span class="dash-quick-label">Definir limite</span></button>
+                  <button type="button" class="dash-quick-btn dash-quick-chip" onclick="irParaBackup()"><span class="dash-quick-icon" aria-hidden="true">↓</span><span class="dash-quick-label">Importar backup</span></button>
                 </div>
               </div>
             </div>
             <div class="dash-quick-actions dash-quick-actions-inline dash-full-only" id="dashQuickActionsFull">
               <button type="button" class="dash-quick-btn dash-quick-btn-featured" onclick="focarNovoLancamento()"><span class="dash-quick-icon" aria-hidden="true">+</span><span class="dash-quick-label">Novo lançamento</span></button>
-              <button type="button" class="dash-quick-btn" onclick="focarNovaMeta()"><span class="dash-quick-icon" aria-hidden="true">◎</span><span class="dash-quick-label">Criar meta</span></button>
-              <button type="button" class="dash-quick-btn" onclick="focarNovoOrcamento()"><span class="dash-quick-icon" aria-hidden="true">⊟</span><span class="dash-quick-label">Definir limite</span></button>
-              <button type="button" class="dash-quick-btn" onclick="irParaBackup()"><span class="dash-quick-icon" aria-hidden="true">↓</span><span class="dash-quick-label">Importar backup</span></button>
+              <button type="button" class="dash-quick-btn dash-quick-chip" onclick="focarNovaMeta()"><span class="dash-quick-icon" aria-hidden="true">◎</span><span class="dash-quick-label">Criar meta</span></button>
+              <button type="button" class="dash-quick-btn dash-quick-chip" onclick="focarNovoOrcamento()"><span class="dash-quick-icon" aria-hidden="true">⊟</span><span class="dash-quick-label">Definir limite</span></button>
+              <button type="button" class="dash-quick-btn dash-quick-chip" onclick="irParaBackup()"><span class="dash-quick-icon" aria-hidden="true">↓</span><span class="dash-quick-label">Importar backup</span></button>
             </div>
           </div>
           <aside class="dash-exec-balance dash-hero-balance dash-full-only" aria-label="Saldo líquido do período">
@@ -5879,10 +6236,14 @@
         <div class="dash-empty-only panel dash-panel-compact dash-empty-charts-panel">
           <div class="dash-charts-empty">
             <div class="dash-charts-empty-center">
-              <span class="dash-charts-empty-icon" aria-hidden="true">▦</span>
-              <p class="dash-charts-empty-msg">Cadastre seu primeiro lançamento para visualizar os gráficos do mês.</p>
+              <span class="dash-charts-empty-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M3 3v18h18"/><path d="M7 16l4-6 4 3 5-7"/></svg>
+              </span>
+              <p class="dash-charts-empty-title">Gráficos disponíveis após o primeiro lançamento</p>
+              <p class="dash-charts-empty-msg">Registre receitas ou despesas para visualizar tendências, categorias e a evolução do saldo no período selecionado.</p>
+              <button type="button" class="btn btn-primary btn-sm dash-charts-empty-cta" onclick="focarNovoLancamento()">Criar lançamento</button>
             </div>
-            <div class="dash-empty-charts-grid dash-charts-placeholders" id="dashEmptyChartsHtml"></div>
+            <div class="dash-empty-charts-grid dash-charts-placeholders" id="dashEmptyChartsHtml" aria-hidden="true"></div>
           </div>
         </div>
 
@@ -8937,8 +9298,8 @@ function aplicarModoDashboard(emptyMes,mes,lAnt){
   const mesTxt=formatMesExtenso(mes);
   if(emptyMes){
     if(greet) greet.innerHTML=mes
-      ?`<div class="dash-empty-welcome"><span class="dash-empty-welcome-icon" aria-hidden="true">○</span><div class="dash-empty-welcome-body"><h3 class="dash-empty-welcome-title">Sem movimentações em ${esc(mesTxt)}</h3><p class="dash-empty-welcome-sub">Cadastre receitas ou despesas para ativar os indicadores do mês.</p></div></div>`
-      :'<div class="dash-empty-welcome"><span class="dash-empty-welcome-icon" aria-hidden="true">○</span><div class="dash-empty-welcome-body"><h3 class="dash-empty-welcome-title">Nenhuma movimentação registrada</h3><p class="dash-empty-welcome-sub">Use o botão <strong>Novo lançamento</strong> na capa para começar.</p></div></div>';
+      ?`<div class="dash-empty-welcome"><span class="dash-empty-welcome-icon" aria-hidden="true">◇</span><div class="dash-empty-welcome-body"><h3 class="dash-empty-welcome-title">Nenhuma movimentação em ${esc(mesTxt)}</h3><p class="dash-empty-welcome-sub">Comece registrando uma receita ou despesa para ativar os indicadores. Altere o período pelo filtro de mês no topo da página.</p></div></div>`
+      :'<div class="dash-empty-welcome"><span class="dash-empty-welcome-icon" aria-hidden="true">◇</span><div class="dash-empty-welcome-body"><h3 class="dash-empty-welcome-title">Seu painel está pronto para começar</h3><p class="dash-empty-welcome-sub">Cadastre o primeiro lançamento para liberar gráficos, comparativos e alertas do período.</p></div></div>';
     if(frase) frase.textContent='';
     if(status){ status.textContent='Sem lançamentos'; status.className='dash-hero-status-pill status-neutral'; }
     if(mesPill&&mes) mesPill.textContent=mesTxt;
@@ -8954,15 +9315,18 @@ function focarFiltroMes(){
 }
 function montarKpiGrid(rec,des,saldo,metasQtd,limitesQtd,vencendo){
   const saldoCls='is-saldo'+(saldo<0?' is-neg':'');
+  const metaHint=metasQtd?`${metasQtd} ativa${metasQtd>1?'s':''} no mês`:'Configure uma meta';
+  const limHint=limitesQtd?`${limitesQtd} categoria${limitesQtd>1?'s':''} com teto`:'Defina um limite';
+  const vencHint=vencendo?`${vencendo} nos próx. 7 dias`:'Nenhuma pendência';
   const cards=[
-    {label:'Receitas',value:formatMoeda(rec),cls:'is-rec',icon:'↑'},
-    {label:'Despesas',value:formatMoeda(des),cls:'is-des',icon:'↓'},
-    {label:'Saldo do mês',value:formatMoeda(saldo),cls:saldoCls,icon:'≡'},
-    {label:'Metas',value:String(metasQtd),cls:'is-meta',icon:'◎'},
-    {label:'Limites',value:String(limitesQtd),cls:'is-limite',icon:'⊟'},
-    {label:'Contas vencendo',value:String(vencendo),cls:'is-venc'+(vencendo?'':' is-ok'),icon:'!'}
+    {label:'Receitas',value:formatMoeda(rec),cls:'is-rec is-primary',icon:'↑'},
+    {label:'Despesas',value:formatMoeda(des),cls:'is-des is-primary',icon:'↓'},
+    {label:'Saldo do mês',value:formatMoeda(saldo),cls:saldoCls+' is-primary',icon:'≡'},
+    {label:'Metas',value:metasQtd?String(metasQtd):'—',hint:metaHint,cls:'is-meta is-secondary',icon:'◎'},
+    {label:'Limites',value:limitesQtd?String(limitesQtd):'—',hint:limHint,cls:'is-limite is-secondary',icon:'⊟'},
+    {label:'Contas vencendo',value:vencendo?String(vencendo):'0',hint:vencHint,cls:'is-venc'+(vencendo?'':' is-ok')+' is-secondary',icon:'!'}
   ];
-  return cards.map(c=>`<div class="dash-summary-card ${c.cls}"><div class="dash-kpi-head"><span class="dash-kpi-icon" aria-hidden="true">${c.icon}</span><span class="dash-kpi-label">${esc(c.label)}</span></div><strong>${esc(c.value)}</strong></div>`).join('');
+  return cards.map(c=>`<div class="dash-summary-card ${c.cls}"><div class="dash-kpi-head"><span class="dash-kpi-icon" aria-hidden="true">${c.icon}</span><span class="dash-kpi-label">${esc(c.label)}</span></div><strong>${esc(c.value)}</strong>${c.hint?`<span class="dash-kpi-hint">${esc(c.hint)}</span>`:''}</div>`).join('');
 }
 function montarEmptyKpiGrid(metasQtd,limitesQtd,vencendo){ return montarKpiGrid(0,0,0,metasQtd,limitesQtd,vencendo); }
 function montarEmptyChartsPlaceholder(){
@@ -9525,11 +9889,9 @@ function renderDashboard(){
   const elAcoesEmpty=document.getElementById('dashProximasAcoesEmptyHtml');
   const elKpiStrip=document.getElementById('dashKpiStrip');
   const elEmptyCharts=document.getElementById('dashEmptyChartsHtml');
-  const elCoverMonth=document.getElementById('dashCoverMonthLabel');
   const elCoverTitle=document.getElementById('dashCoverTitle');
   if(heroMes) heroMes.textContent=formatMesExtenso(mes);
-  if(elCoverMonth) elCoverMonth.textContent=mes?formatMesExtenso(mes):'Selecionar mês';
-  if(elCoverTitle) elCoverTitle.textContent=mes?formatMesExtenso(mes):'Visão financeira';
+  if(elCoverTitle) elCoverTitle.textContent='Visão financeira';
   const metasQtd=getMetasMes(mes).length;
   const limitesQtd=mes&&orcamentos[mes]?Object.keys(orcamentos[mes]).length:0;
   const hojeK=new Date(); hojeK.setHours(0,0,0,0);
