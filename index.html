@@ -6538,6 +6538,303 @@
       flex: 1 1 auto;
     }
   }
+
+  /* ===== KPI FLOAT PADRÃO — TODOS OS MÓDULOS ===== */
+  :root {
+    --module-kpi-float-offset: -22px;
+    --module-kpi-float-gap: 10px;
+    --module-hero-stack-overlap: 28px;
+  }
+  .module-hero-stack {
+    position: relative;
+    margin-bottom: 12px;
+    max-width: 100%;
+    min-width: 0;
+    overflow: visible;
+  }
+  .module-hero-stack > .mod-hero-pro.module-hero,
+  .module-hero-stack > .dash-cover-zone.module-hero {
+    margin-bottom: 0 !important;
+  }
+  .module-hero-stack:has(.module-kpi-float-wrap) > .mod-hero-pro.module-hero {
+    padding-bottom: calc(20px + var(--module-hero-stack-overlap));
+  }
+  .module-hero-stack:has(.module-kpi-float-wrap) #mod-dashboard .dash-cover-inner {
+    padding-bottom: calc(var(--dash-cover-pad-b, 32px) + var(--module-hero-stack-overlap));
+  }
+  .module-kpi-float-wrap,
+  .dash-kpi-float-wrap.module-kpi-float-wrap {
+    position: relative;
+    z-index: 5;
+    margin-top: var(--module-kpi-float-offset);
+    margin-bottom: 12px;
+    padding: 0;
+    max-width: 100%;
+    min-width: 0;
+  }
+  .module-kpi-float,
+  .module-kpi-float-wrap > .ia-kpi-strip,
+  .module-kpi-float-wrap > .lanc-kpi-strip,
+  .module-kpi-float-wrap > .pro-summary-strip,
+  .module-kpi-float-wrap > .fut-horizon-grid,
+  .module-kpi-float-wrap > .mkt-kpi-strip,
+  .module-kpi-float-wrap > .cat-summary-strip,
+  .module-kpi-float-wrap > .dash-summary-grid {
+    margin-bottom: 0 !important;
+  }
+  .module-kpi-float-wrap .ia-kpi-strip,
+  .module-kpi-float-wrap .lanc-kpi-strip,
+  .module-kpi-float-wrap .mkt-kpi-strip,
+  .module-kpi-float-wrap .pro-summary-strip,
+  .module-kpi-float-wrap .cat-summary-strip,
+  .module-kpi-float-wrap .fut-horizon-grid {
+    display: grid;
+    gap: var(--module-kpi-float-gap);
+    width: 100%;
+  }
+  .module-kpi-float-wrap .ia-kpi-strip,
+  .module-kpi-float-wrap .lanc-kpi-strip,
+  .module-kpi-float-wrap .mkt-kpi-strip,
+  .module-kpi-float-wrap .pro-summary-strip {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .module-kpi-float-wrap .cat-summary-strip {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .module-kpi-float-wrap .fut-horizon-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .module-kpi-float-wrap .ia-kpi-card,
+  .module-kpi-float-wrap .lanc-kpi-card,
+  .module-kpi-float-wrap .mkt-resumo-box,
+  .module-kpi-float-wrap .fut-horizon-card,
+  .module-kpi-float-wrap .mini-stat,
+  .module-kpi-float-wrap .dash-summary-card,
+  #mod-planejamento .module-kpi-float-wrap .fut-horizon-card,
+  #mod-mercado .module-kpi-float-wrap .mkt-resumo-box,
+  #mod-lancamentos .module-kpi-float-wrap .lanc-kpi-card,
+  #mod-assistente .module-kpi-float-wrap .ia-kpi-card {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    border-radius: 11px;
+    border: 1px solid rgba(255, 255, 255, 0.38);
+    box-shadow: 0 2px 4px rgba(15, 23, 42, 0.05), 0 8px 22px rgba(15, 23, 42, 0.09);
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.14) 0%,
+      rgba(255, 255, 255, 0.42) 20%,
+      rgba(255, 255, 255, 0.82) 38%,
+      var(--card-bg) 54%,
+      var(--card-bg) 100%
+    );
+    backdrop-filter: blur(10px) saturate(1.12);
+    -webkit-backdrop-filter: blur(10px) saturate(1.12);
+  }
+  .module-kpi-float-wrap .ia-kpi-card > *,
+  .module-kpi-float-wrap .lanc-kpi-card > *,
+  .module-kpi-float-wrap .mkt-resumo-box > *,
+  .module-kpi-float-wrap .fut-horizon-card > *,
+  .module-kpi-float-wrap .mini-stat > *,
+  .module-kpi-float-wrap .dash-summary-card > * {
+    position: relative;
+    z-index: 1;
+  }
+  .module-kpi-float-wrap .dash-summary-card.is-primary.is-rec {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.12) 0%,
+      rgba(255, 255, 255, 0.4) 20%,
+      rgba(255, 255, 255, 0.86) 38%,
+      var(--card-bg) 54%,
+      color-mix(in srgb, var(--card-bg) 92%, rgba(21, 128, 61, 0.08) 8%) 100%
+    );
+  }
+  .module-kpi-float-wrap .dash-summary-card.is-primary.is-des {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.12) 0%,
+      rgba(255, 255, 255, 0.4) 20%,
+      rgba(255, 255, 255, 0.86) 38%,
+      var(--card-bg) 54%,
+      color-mix(in srgb, var(--card-bg) 92%, rgba(185, 28, 28, 0.06) 8%) 100%
+    );
+  }
+  .module-kpi-float-wrap .dash-summary-card.is-primary.is-saldo {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.12) 0%,
+      rgba(255, 255, 255, 0.4) 20%,
+      rgba(255, 255, 255, 0.86) 38%,
+      var(--card-bg) 54%,
+      color-mix(in srgb, var(--card-bg) 92%, rgba(3, 105, 161, 0.07) 8%) 100%
+    );
+  }
+  .module-kpi-float-wrap .dash-summary-card.is-secondary {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0.36) 20%,
+      rgba(248, 250, 252, 0.88) 38%,
+      var(--surface-muted) 54%,
+      var(--surface-muted) 100%
+    );
+    box-shadow: 0 2px 4px rgba(15, 23, 42, 0.04), 0 6px 16px rgba(15, 23, 42, 0.07);
+  }
+  body.theme-dark .module-kpi-float-wrap .ia-kpi-card,
+  body.theme-dark .module-kpi-float-wrap .lanc-kpi-card,
+  body.theme-dark .module-kpi-float-wrap .mkt-resumo-box,
+  body.theme-dark .module-kpi-float-wrap .fut-horizon-card,
+  body.theme-dark .module-kpi-float-wrap .mini-stat,
+  body.theme-dark .module-kpi-float-wrap .dash-summary-card,
+  body.theme-dark #mod-planejamento .module-kpi-float-wrap .fut-horizon-card,
+  body.theme-dark #mod-mercado .module-kpi-float-wrap .mkt-resumo-box {
+    border-color: rgba(255, 255, 255, 0.14);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 8px 22px rgba(0, 0, 0, 0.16);
+    background: linear-gradient(
+      180deg,
+      rgba(15, 23, 42, 0.12) 0%,
+      rgba(15, 23, 42, 0.38) 20%,
+      rgba(22, 30, 44, 0.82) 38%,
+      var(--card-bg) 54%,
+      var(--card-bg) 100%
+    );
+  }
+  body.theme-dark .module-kpi-float-wrap .dash-summary-card.is-secondary {
+    background: linear-gradient(
+      180deg,
+      rgba(15, 23, 42, 0.1) 0%,
+      rgba(15, 23, 42, 0.34) 20%,
+      rgba(22, 30, 44, 0.78) 38%,
+      rgba(255, 255, 255, 0.04) 54%,
+      rgba(255, 255, 255, 0.04) 100%
+    );
+  }
+  /* Legibilidade — faixa superior glass */
+  .module-kpi-float-wrap .dash-kpi-head {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    align-self: flex-start;
+    width: auto;
+    max-width: 100%;
+    padding: 5px 9px 5px 7px;
+    margin-bottom: 6px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+  .module-kpi-float-wrap .dash-kpi-label {
+    color: #0f172a !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.07em;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55);
+  }
+  .module-kpi-float-wrap .dash-kpi-icon {
+    background: rgba(255, 255, 255, 0.94) !important;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
+    opacity: 1;
+  }
+  .module-kpi-float-wrap .dash-kpi-hint {
+    color: #475569 !important;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.68);
+    padding: 2px 7px;
+    border-radius: 5px;
+    display: inline-block;
+    align-self: flex-start;
+    text-shadow: none;
+  }
+  .module-kpi-float-wrap .ia-kpi-card > span,
+  .module-kpi-float-wrap .lanc-kpi-card > span,
+  .module-kpi-float-wrap .mini-stat > span,
+  .module-kpi-float-wrap .mkt-resumo-box > span,
+  .module-kpi-float-wrap .fut-h-label {
+    display: inline-block;
+    padding: 4px 9px;
+    margin-bottom: 8px;
+    border-radius: 7px;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    color: #0f172a !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.06em;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+  .module-kpi-float-wrap .fut-h-label {
+    margin-bottom: 5px;
+  }
+  .module-kpi-float-wrap .fut-h-icon {
+    background: rgba(255, 255, 255, 0.88) !important;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
+    color: #0f172a !important;
+    font-weight: 700;
+  }
+  body.theme-dark .module-kpi-float-wrap .dash-kpi-head,
+  body.theme-dark .module-kpi-float-wrap .ia-kpi-card > span,
+  body.theme-dark .module-kpi-float-wrap .lanc-kpi-card > span,
+  body.theme-dark .module-kpi-float-wrap .mini-stat > span,
+  body.theme-dark .module-kpi-float-wrap .mkt-resumo-box > span,
+  body.theme-dark .module-kpi-float-wrap .fut-h-label {
+    background: rgba(15, 23, 42, 0.78);
+    color: #f8fafc !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+  body.theme-dark .module-kpi-float-wrap .dash-kpi-label {
+    color: #f8fafc !important;
+  }
+  body.theme-dark .module-kpi-float-wrap .dash-kpi-icon,
+  body.theme-dark .module-kpi-float-wrap .fut-h-icon {
+    background: rgba(30, 41, 59, 0.92) !important;
+    border-color: rgba(255, 255, 255, 0.12);
+    color: #e2e8f0 !important;
+  }
+  body.theme-dark .module-kpi-float-wrap .dash-kpi-hint {
+    color: #cbd5e1 !important;
+    background: rgba(15, 23, 42, 0.65);
+  }
+  #mod-assistente .module-hero-stack .mod-hero-pro.module-hero.ia-hero-pro,
+  #mod-planejamento .module-hero-stack .mod-hero-pro.module-hero.fut-hero-pro {
+    margin-bottom: 0 !important;
+  }
+  #mod-assistente .ia-kpi-strip.module-kpi-float {
+    margin-bottom: 0;
+  }
+  @media (max-width: 900px) {
+    :root { --module-kpi-float-offset: -18px; --module-hero-stack-overlap: 24px; }
+    .module-kpi-float-wrap .fut-horizon-grid,
+    .module-kpi-float-wrap .pro-summary-strip,
+    .module-kpi-float-wrap .ia-kpi-strip,
+    .module-kpi-float-wrap .lanc-kpi-strip {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 680px) {
+    :root { --module-kpi-float-offset: -14px; --module-kpi-float-gap: 8px; }
+    .module-kpi-float-wrap .ia-kpi-strip,
+    .module-kpi-float-wrap .lanc-kpi-strip,
+    .module-kpi-float-wrap .mkt-kpi-strip,
+    .module-kpi-float-wrap .pro-summary-strip,
+    .module-kpi-float-wrap .fut-horizon-grid,
+    .module-kpi-float-wrap .cat-summary-strip {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .dash-kpi-float-wrap.module-kpi-float-wrap {
+      margin-top: var(--module-kpi-float-offset);
+    }
+  }
+  @media (max-width: 480px) {
+    .module-kpi-float-wrap .cat-summary-strip {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>
 </head>
 <body class="modo-pc">
@@ -6687,6 +6984,7 @@
 
       <!-- MÓDULO 1: DASHBOARD -->
       <section id="mod-dashboard" class="module active dash-empty-mode">
+        <div class="module-hero-stack">
         <div class="dash-cover-zone module-hero">
           <div class="dash-cover-bg" aria-hidden="true"></div>
           <div class="dash-cover-shade" aria-hidden="true"></div>
@@ -6702,8 +7000,9 @@
           </div>
         </div>
 
-        <div class="dash-kpi-float-wrap">
-          <div class="dash-summary-grid dash-kpi-float" id="dashKpiStrip" aria-label="Indicadores do mês"></div>
+        <div class="dash-kpi-float-wrap module-kpi-float-wrap">
+          <div class="dash-summary-grid dash-kpi-float module-kpi-float" id="dashKpiStrip" aria-label="Indicadores do mês"></div>
+        </div>
         </div>
 
         <div class="dash-exec-hero dash-hero-fin dash-post-cover" id="dashHeroWrap">
@@ -6812,6 +7111,7 @@
 
       <!-- MÓDULO: ASSISTENTE IA -->
       <section id="mod-assistente" class="module hidden">
+        <div class="module-hero-stack">
         <div class="mod-hero-pro module-hero ia-hero-pro no-print">
           <div class="ia-hero-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-1.2 0-2.4.6-3 1.7A3.5 3.5 0 0 0 5.5 8 3.5 3.5 0 0 0 8 11.5c.3 0 .6 0 .9-.1"/><path d="M12 3c1.2 0 2.4.6 3 1.7A3.5 3.5 0 0 1 18.5 8 3.5 3.5 0 0 1 16 11.5c-.3 0-.6 0-.9-.1"/><path d="M8 11.5C6.1 12.4 4.5 14.4 4.5 17v2.5h15V17c0-2.6-1.6-4.6-3.5-5.5"/><circle cx="9" cy="9" r="1"/><circle cx="15" cy="9" r="1"/><path d="M9.5 15.5h5"/></svg>
@@ -6826,11 +7126,14 @@
           </div>
         </div>
 
-        <div class="ia-kpi-strip no-print" aria-label="Resumo financeiro do período">
+        <div class="module-kpi-float-wrap">
+        <div class="ia-kpi-strip module-kpi-float no-print" aria-label="Resumo financeiro do período">
           <div class="ia-kpi-card ia-kpi-rec"><span>Receitas</span><strong id="iaKpiReceitas">R$ 0,00</strong></div>
           <div class="ia-kpi-card ia-kpi-des"><span>Despesas</span><strong id="iaKpiDespesas">R$ 0,00</strong></div>
           <div class="ia-kpi-card ia-kpi-saldo"><span>Saldo</span><strong id="iaKpiSaldo">R$ 0,00</strong></div>
           <div class="ia-kpi-card ia-kpi-aberto"><span>Contas em aberto</span><strong id="iaKpiAberto">0</strong></div>
+        </div>
+        </div>
         </div>
 
         <div class="ia-action-bar no-print">
@@ -6885,6 +7188,7 @@
       </section>
 
       <section id="mod-lancamentos" class="module hidden">
+        <div class="module-hero-stack">
         <div class="mod-hero-pro module-hero lanc-hero-pro no-print">
           <div class="lanc-hero-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h6M7 16h4"/></svg>
@@ -6903,6 +7207,11 @@
           </div>
         </div>
 
+        <div class="module-kpi-float-wrap">
+          <div class="lanc-kpi-strip module-kpi-float" id="lancResumoFiltrado" aria-label="Resumo dos lançamentos filtrados"></div>
+        </div>
+        </div>
+
         <div class="panel lanc-list-panel">
           <div class="lanc-list-head">
             <div>
@@ -6911,8 +7220,6 @@
             </div>
             <span class="lanc-count-pill" id="lancCountPill">0 registros</span>
           </div>
-
-          <div class="lanc-kpi-strip" id="lancResumoFiltrado" aria-label="Resumo dos lançamentos filtrados"></div>
 
           <div class="lanc-toolbar">
             <div class="lanc-chips" id="lancChipsBar" role="tablist" aria-label="Filtrar por tipo e status">
@@ -7062,6 +7369,7 @@
 
       <!-- Metas -->
       <section id="mod-metas" class="module hidden">
+        <div class="module-hero-stack">
         <div class="mod-hero-pro module-hero">
           <div class="mod-hero-pro-body">
             <div class="mod-hero-pro-meta"><span class="mod-hero-month">—</span></div>
@@ -7073,6 +7381,10 @@
             <button type="button" class="btn btn-primary btn-sm" onclick="focarNovaMeta()">Nova meta</button>
             <button type="button" class="btn btn-ghost btn-sm" onclick="abrirModulo('dashboard')">Dashboard</button>
           </div>
+        </div>
+        <div class="module-kpi-float-wrap">
+          <div class="pro-summary-strip module-kpi-float" id="metaResumoGeral"></div>
+        </div>
         </div>
         <div class="mod-layout">
           <div class="panel" id="panelFormMeta">
@@ -7092,13 +7404,13 @@
           </div>
           <div class="panel">
             <div class="panel-title">Painel de metas · <span class="pro-muted" style="font-weight:600;font-size:12px;">saldo do mês como referência</span></div>
-            <div class="pro-summary-strip" id="metaResumoGeral"></div>
             <div id="metaProgressoHtml" class="goal-grid"></div>
           </div>
         </div>
       </section>
       <!-- Controle de Gastos -->
       <section id="mod-gastos" class="module hidden">
+        <div class="module-hero-stack">
         <div class="mod-hero-pro module-hero">
           <div class="mod-hero-pro-body">
             <div class="mod-hero-pro-meta"><span class="mod-hero-month">—</span></div>
@@ -7110,6 +7422,10 @@
             <button type="button" class="btn btn-primary btn-sm" onclick="focarNovoOrcamento()">Definir limite</button>
             <button type="button" class="btn btn-ghost btn-sm" onclick="abrirModulo('lancamentos')">Lançamentos</button>
           </div>
+        </div>
+        <div class="module-kpi-float-wrap">
+          <div class="pro-summary-strip module-kpi-float" id="orcResumoGeral"></div>
+        </div>
         </div>
         <div class="mod-layout">
           <div class="panel" id="panelFormOrc">
@@ -7129,13 +7445,13 @@
           </div>
           <div class="panel">
             <div class="panel-title">Painel de orçamento · <span class="pro-muted" style="font-weight:600;font-size:12px;">mês selecionado</span></div>
-            <div class="pro-summary-strip" id="orcResumoGeral"></div>
             <div id="orcamentoProgressoHtml" class="card-grid"></div>
           </div>
         </div>
       </section>
       <!-- Futuro -->
       <section id="mod-planejamento" class="module hidden">
+        <div class="module-hero-stack">
         <div class="mod-hero-pro module-hero fut-hero-pro no-print">
           <div class="fut-hero-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>
@@ -7154,6 +7470,11 @@
           </div>
         </div>
 
+        <div class="module-kpi-float-wrap">
+          <div class="fut-horizon-grid module-kpi-float" id="futuroHorizonHtml" aria-label="Resumo por horizonte de prazo"></div>
+        </div>
+        </div>
+
         <div class="panel fut-agenda-panel">
           <div class="fut-agenda-head">
             <div>
@@ -7167,7 +7488,6 @@
             </div>
           </div>
 
-          <div class="fut-horizon-grid" id="futuroHorizonHtml" aria-label="Resumo por horizonte de prazo"></div>
           <div id="futuroTimelineHtml" class="timeline-wrap fut-timeline-pro"></div>
 
           <div class="fut-table-bar no-print">
@@ -7236,6 +7556,7 @@
       </section>
       <!-- Recorrentes -->
       <section id="mod-recorrentes" class="module hidden">
+        <div class="module-hero-stack">
         <div class="mod-hero-pro module-hero">
           <div class="mod-hero-pro-body">
             <div class="mod-hero-pro-meta"><span class="mod-hero-month">—</span></div>
@@ -7247,6 +7568,10 @@
             <button type="button" class="btn btn-primary btn-sm" onclick="focarNovoRecorrente()">Nova recorrente</button>
             <button type="button" class="btn btn-ghost btn-sm" onclick="abrirModulo('lancamentos')">Lançamentos</button>
           </div>
+        </div>
+        <div class="module-kpi-float-wrap">
+          <div class="pro-summary-strip module-kpi-float" id="recResumoGeral"></div>
+        </div>
         </div>
         <div class="mod-layout">
           <div class="panel" id="panelFormRec">
@@ -7307,7 +7632,6 @@
                 <span>Gere lançamentos fixos com um clique. Duplicidades no mesmo mês são bloqueadas automaticamente.</span>
               </div>
             </div>
-            <div class="pro-summary-strip" id="recResumoGeral"></div>
             <div id="recProximasHtml" class="prox-list prox-list-auto"></div>
             <div class="section-block" style="margin-top:18px;">
               <div class="section-block-title">
@@ -7337,6 +7661,7 @@
             <button type="button" class="btn btn-outline" style="width:100%;" onclick="fecharModalParcelas()">Fechar</button>
           </div>
         </div>
+        <div class="module-hero-stack">
         <div class="mod-hero-pro module-hero">
           <div class="mod-hero-pro-body">
             <div class="mod-hero-pro-meta"><span class="mod-hero-month">—</span></div>
@@ -7348,6 +7673,10 @@
             <button type="button" class="btn btn-primary btn-sm" onclick="focarNovoParcelamento()">Novo parcelamento</button>
             <button type="button" class="btn btn-ghost btn-sm" onclick="abrirModulo('lancamentos')">Lançamentos</button>
           </div>
+        </div>
+        <div class="module-kpi-float-wrap">
+          <div class="pro-summary-strip module-kpi-float" id="parResumoGeral"></div>
+        </div>
         </div>
         <div class="mod-layout">
           <div class="panel" id="panelFormPar">
@@ -7406,7 +7735,6 @@
                 <span>Acompanhe pagas, restantes e marque a próxima parcela sem sair do painel.</span>
               </div>
             </div>
-            <div class="pro-summary-strip" id="parResumoGeral"></div>
             <div class="section-block">
               <div class="section-block-title"><span>Parcelamentos ativos</span></div>
               <div id="parcelamentosAtivosHtml" class="card-grid"></div>
@@ -7473,6 +7801,7 @@
         </div>
         <div id="print-lista"></div>
 
+        <div class="module-hero-stack">
         <div class="mod-hero-pro module-hero mkt-hero-pro no-print">
           <div class="mkt-hero-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1"/><circle cx="17" cy="20" r="1"/><path d="M3 3h2l1.8 9.2a1 1 0 0 0 1 .82h7.6a1 1 0 0 0 1-.78l1.22-5.4H6.1"/></svg>
@@ -7487,6 +7816,15 @@
           </div>
         </div>
 
+        <div class="module-kpi-float-wrap">
+          <div class="mkt-kpi-strip module-kpi-float">
+            <div class="mkt-resumo-box mkt-resumo-prev"><span>Total previsto</span><strong id="mercadoTotalLista">R$ 0,00</strong></div>
+            <div class="mkt-resumo-box mkt-resumo-real"><span>Total real</span><strong id="mktTotalReal">R$ 0,00</strong></div>
+            <div class="mkt-resumo-box mkt-resumo-dif is-neutral"><span>Diferença</span><strong id="mktTotalDif" class="mkt-val-neutral">R$ 0,00</strong></div>
+          </div>
+        </div>
+        </div>
+
         <div class="panel no-print mkt-top-panel">
           <div class="mkt-toolbar">
             <div class="mkt-toolbar-copy">
@@ -7497,11 +7835,6 @@
               <button type="button" class="btn btn-outline btn-sm mkt-btn-sec" id="btnExportarLista">Exportar</button>
               <button type="button" class="btn btn-outline btn-sm mkt-btn-sec" id="btnLimparLista">Limpar lista</button>
             </div>
-          </div>
-          <div class="mkt-kpi-strip">
-            <div class="mkt-resumo-box mkt-resumo-prev"><span>Total previsto</span><strong id="mercadoTotalLista">R$ 0,00</strong></div>
-            <div class="mkt-resumo-box mkt-resumo-real"><span>Total real</span><strong id="mktTotalReal">R$ 0,00</strong></div>
-            <div class="mkt-resumo-box mkt-resumo-dif is-neutral"><span>Diferença</span><strong id="mktTotalDif" class="mkt-val-neutral">R$ 0,00</strong></div>
           </div>
           <div class="mkt-count-line" id="mktCountLine"></div>
           <div class="mkt-gasto-mes">Gasto do mês (Alimentação/Mercado): <strong id="mercadoGastoMes" class="c-red">R$ 0,00</strong></div>
@@ -7628,6 +7961,7 @@
 
       <!-- Categorias -->
       <section id="mod-categorias" class="module hidden">
+        <div class="module-hero-stack">
         <div class="mod-hero-pro module-hero">
           <div class="mod-hero-pro-body">
             <div class="mod-hero-pro-meta"><span class="mod-hero-month">—</span></div>
@@ -7639,6 +7973,10 @@
             <button type="button" class="btn btn-primary btn-sm" onclick="document.getElementById('fNovaCat')?.focus()">Nova categoria</button>
             <button type="button" class="btn btn-ghost btn-sm" onclick="abrirModulo('lancamentos')">Lançamentos</button>
           </div>
+        </div>
+        <div class="module-kpi-float-wrap">
+          <div class="cat-summary-strip module-kpi-float" id="catResumoStrip"></div>
+        </div>
         </div>
         <div class="cat-layout">
           <div class="panel">
@@ -7670,7 +8008,6 @@
           </div>
           <div class="panel">
             <div class="panel-title">Suas categorias</div>
-            <div class="cat-summary-strip" id="catResumoStrip"></div>
             <div class="cat-chip-strip" id="catChipStrip"></div>
             <p class="pro-muted" style="margin-bottom:14px;">Padrões não podem ser excluídas. Em uso, a exclusão pede confirmação.</p>
             <div id="listaCategoriasHtml" class="cat-grid"></div>
@@ -7679,6 +8016,7 @@
       </section>
       <!-- Relatórios -->
       <section id="mod-relatorios" class="module hidden">
+        <div class="module-hero-stack">
         <div class="mod-hero-pro module-hero">
           <div class="mod-hero-pro-body">
             <div class="mod-hero-pro-meta"><span class="mod-hero-month">—</span></div>
@@ -7690,6 +8028,7 @@
             <button type="button" class="btn btn-primary btn-sm" onclick="gerarRelatorioTela();imprimirRelatorio()">Imprimir / PDF</button>
             <button type="button" class="btn btn-ghost btn-sm" onclick="exportarRelatorioCSV()">CSV</button>
           </div>
+        </div>
         </div>
         <div class="rel-layout">
           <div class="rel-side-panel rel-filter-panel">
@@ -7782,6 +8121,7 @@
       </section>
       <!-- Config -->
       <section id="mod-configuracoes" class="module hidden">
+        <div class="module-hero-stack">
         <div class="mod-hero-pro module-hero">
           <div class="mod-hero-pro-body">
             <div class="mod-hero-pro-meta"><span class="mod-hero-month">—</span></div>
@@ -7793,6 +8133,7 @@
             <button type="button" class="btn btn-primary btn-sm" onclick="irParaBackup()">Fazer backup</button>
             <button type="button" class="btn btn-ghost btn-sm" onclick="abrirModulo('dashboard')">Dashboard</button>
           </div>
+        </div>
         </div>
         <div class="config-warning">Os dados estão salvos localmente neste navegador (localStorage). Faça backup regularmente e evite limpar o cache do navegador sem exportar antes.</div>
         <div class="config-layout-pro">
@@ -7904,6 +8245,7 @@
       </section>
       <!-- Backup Local -->
       <section id="mod-backup" class="module hidden">
+        <div class="module-hero-stack">
         <div class="mod-hero-pro module-hero">
           <div class="mod-hero-pro-body">
             <div class="mod-hero-pro-meta"><span class="mod-hero-month">—</span></div>
@@ -7915,6 +8257,7 @@
             <button type="button" class="btn btn-primary btn-sm" onclick="exportarBackupJSON()">Baixar backup</button>
             <button type="button" class="btn btn-ghost btn-sm" onclick="document.getElementById('inputFileBackup')?.click()">Importar</button>
           </div>
+        </div>
         </div>
         <div class="config-warning">Os dados estão salvos localmente neste navegador (localStorage). Faça backup regularmente e evite limpar o cache do navegador sem exportar antes.</div>
         <div class="backup-layout">
