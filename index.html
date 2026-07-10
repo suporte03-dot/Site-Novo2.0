@@ -3659,7 +3659,7 @@
   .dash-panel-bg {
     position: absolute;
     inset: 0;
-    background: url('assets/dash-cover.svg') right center / cover no-repeat;
+    background: url('assets/finance-banner.png') right center / cover no-repeat;
     background-color: #0c1f1c;
     transform: scale(1.04);
     pointer-events: none;
@@ -3771,7 +3771,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: url('assets/dash-cover.svg') right bottom / 120% auto no-repeat;
+    background: url('assets/finance-banner.png') right bottom / 120% auto no-repeat;
     opacity: 0.22;
     pointer-events: none;
   }
@@ -3898,8 +3898,8 @@
   .dash-cover-bg {
     position: absolute;
     inset: 0;
-    background-image: url('assets/dash-cover.png');
-    background-position: right 38% center;
+    background-image: var(--finance-banner-url);
+    background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
     background-color: #0a0e16;
@@ -6025,6 +6025,388 @@
     flex-direction: row;
     align-items: stretch;
   }
+
+  /* ===== BANNER PADRÃO — TODOS OS MÓDULOS ===== */
+  :root {
+    --finance-banner-url: url('assets/finance-banner.png');
+    --module-hero-h: 220px;
+    --module-hero-h-md: 200px;
+    --module-hero-h-sm: 176px;
+    --module-hero-overlay-x: linear-gradient(90deg, rgba(5, 12, 24, 0.92) 0%, rgba(5, 18, 32, 0.72) 52%, rgba(5, 18, 32, 0.55) 100%);
+    --module-hero-overlay-y: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.28) 100%);
+  }
+  .module {
+    overflow-x: clip;
+    max-width: 100%;
+    min-width: 0;
+  }
+  .mod-hero-pro.module-hero {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px 24px;
+    flex-wrap: wrap;
+    min-height: var(--module-hero-h);
+    padding: 28px 32px;
+    margin-bottom: 14px;
+    border-radius: 18px;
+    overflow: hidden;
+    isolation: isolate;
+    border: none;
+    background: #0a0e16;
+    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.18);
+  }
+  .mod-hero-pro.module-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: var(--finance-banner-url);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .mod-hero-pro.module-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--module-hero-overlay-x), var(--module-hero-overlay-y);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .mod-hero-pro.module-hero > * {
+    position: relative;
+    z-index: 2;
+  }
+  .mod-hero-pro.module-hero .mod-hero-pro-body { min-width: 0; flex: 1 1 280px; }
+  .mod-hero-pro.module-hero .mod-hero-pro-meta,
+  .mod-hero-pro.module-hero .mod-hero-title,
+  .mod-hero-pro.module-hero .mod-hero-eyebrow,
+  .mod-hero-pro.module-hero .mod-hero-desc,
+  .mod-hero-pro.module-hero .ia-hero-eyebrow,
+  .mod-hero-pro.module-hero .ia-hero-month,
+  .mod-hero-pro.module-hero .lanc-hero-eyebrow,
+  .mod-hero-pro.module-hero .lanc-hero-month,
+  .mod-hero-pro.module-hero .fut-hero-eyebrow,
+  .mod-hero-pro.module-hero .fut-hero-month,
+  .mod-hero-pro.module-hero .mkt-hero-eyebrow,
+  .mod-hero-pro.module-hero .mkt-hero-month { display: block; }
+  .mod-hero-pro.module-hero .mod-hero-title {
+    font-size: clamp(19px, 2.2vw, 24px);
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -0.03em;
+    margin: 0 0 6px;
+    line-height: 1.25;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+  }
+  .mod-hero-pro.module-hero .mod-hero-desc {
+    font-size: 13px;
+    color: rgba(226, 232, 240, 0.9);
+    line-height: 1.5;
+    max-width: 560px;
+    margin: 0;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.28);
+  }
+  .mod-hero-pro.module-hero .mod-hero-eyebrow,
+  .mod-hero-pro.module-hero .ia-hero-eyebrow,
+  .mod-hero-pro.module-hero .lanc-hero-eyebrow,
+  .mod-hero-pro.module-hero .fut-hero-eyebrow,
+  .mod-hero-pro.module-hero .mkt-hero-eyebrow {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(134, 239, 172, 0.92);
+    margin-bottom: 4px;
+  }
+  .mod-hero-pro.module-hero .mod-hero-month,
+  .mod-hero-pro.module-hero .ia-hero-month,
+  .mod-hero-pro.module-hero .lanc-hero-month,
+  .mod-hero-pro.module-hero .fut-hero-month,
+  .mod-hero-pro.module-hero .mkt-hero-month {
+    display: inline-flex;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(241, 245, 249, 0.92);
+    padding: 2px 9px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+  .mod-hero-pro.module-hero .mod-hero-pro-meta { margin-bottom: 6px; }
+  .mod-hero-pro.module-hero .mod-hero-pro-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-end;
+    flex-shrink: 0;
+    align-items: center;
+  }
+  .mod-hero-pro.module-hero .mod-hero-pro-actions .btn-ghost {
+    color: #f1f5f9;
+    border-color: rgba(255, 255, 255, 0.22);
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+  .mod-hero-pro.module-hero .mod-hero-pro-actions .btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: #fff;
+  }
+  .mod-hero-pro.module-hero .ia-hero-icon,
+  .mod-hero-pro.module-hero .lanc-hero-icon,
+  .mod-hero-pro.module-hero .fut-hero-icon,
+  .mod-hero-pro.module-hero .mkt-hero-icon {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.18);
+    color: #86efac;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+  }
+  .mod-hero-pro.module-hero.ia-hero-pro,
+  .mod-hero-pro.module-hero.lanc-hero-pro,
+  .mod-hero-pro.module-hero.fut-hero-pro,
+  .mod-hero-pro.module-hero.mkt-hero-pro {
+    align-items: center;
+    padding: 22px 28px;
+    min-height: calc(var(--module-hero-h) - 12px);
+  }
+  #mod-dashboard .dash-cover-bg {
+    background-image: var(--finance-banner-url);
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: #0a0e16;
+  }
+  #mod-dashboard .dash-cover-shade {
+    background: var(--module-hero-overlay-x), var(--module-hero-overlay-y);
+  }
+  body.theme-dark #mod-dashboard .dash-cover-shade {
+    background: var(--module-hero-overlay-x), var(--module-hero-overlay-y);
+  }
+  .dash-panel-bg {
+    background-image: var(--finance-banner-url);
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: #0a0e16;
+  }
+  #mod-assistente .mod-hero-pro.module-hero,
+  #mod-lancamentos .mod-hero-pro.module-hero,
+  #mod-planejamento .mod-hero-pro.module-hero,
+  #mod-mercado .mod-hero-pro.module-hero,
+  #mod-metas .mod-hero-pro.module-hero,
+  #mod-gastos .mod-hero-pro.module-hero,
+  #mod-recorrentes .mod-hero-pro.module-hero,
+  #mod-parcelamentos .mod-hero-pro.module-hero,
+  #mod-categorias .mod-hero-pro.module-hero,
+  #mod-relatorios .mod-hero-pro.module-hero,
+  #mod-configuracoes .mod-hero-pro.module-hero,
+  #mod-backup .mod-hero-pro.module-hero {
+    background: #0a0e16;
+    border: none;
+    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.18);
+  }
+  #mod-relatorios .mod-hero-pro.module-hero .mod-hero-pro-meta,
+  #mod-backup .mod-hero-pro.module-hero .mod-hero-pro-meta,
+  #mod-configuracoes .mod-hero-pro.module-hero .mod-hero-pro-meta,
+  #mod-relatorios .mod-hero-pro.module-hero .mod-hero-eyebrow,
+  #mod-backup .mod-hero-pro.module-hero .mod-hero-eyebrow,
+  #mod-configuracoes .mod-hero-pro.module-hero .mod-hero-eyebrow {
+    display: block;
+  }
+  #mod-mercado .mod-hero-pro.module-hero .mod-hero-pro-meta { display: none; }
+  #mod-assistente .mod-hero-pro.module-hero.ia-hero-pro,
+  #mod-lancamentos .mod-hero-pro.module-hero.lanc-hero-pro,
+  #mod-planejamento .mod-hero-pro.module-hero.fut-hero-pro,
+  #mod-mercado .mod-hero-pro.module-hero.mkt-hero-pro {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 22px 28px;
+    margin-bottom: 14px;
+    min-height: var(--module-hero-h);
+    border-radius: 18px;
+    border: none;
+    background: #0a0e16;
+    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.18);
+  }
+  #mod-assistente .mod-hero-pro.module-hero .mod-hero-title,
+  #mod-lancamentos .mod-hero-pro.module-hero .mod-hero-title,
+  #mod-planejamento .mod-hero-pro.module-hero .mod-hero-title,
+  #mod-mercado .mod-hero-pro.module-hero .mod-hero-title,
+  #mod-metas .mod-hero-pro.module-hero .mod-hero-title,
+  #mod-gastos .mod-hero-pro.module-hero .mod-hero-title,
+  #mod-recorrentes .mod-hero-pro.module-hero .mod-hero-title,
+  #mod-parcelamentos .mod-hero-pro.module-hero .mod-hero-title,
+  #mod-categorias .mod-hero-pro.module-hero .mod-hero-title,
+  #mod-relatorios .mod-hero-pro.module-hero .mod-hero-title,
+  #mod-configuracoes .mod-hero-pro.module-hero .mod-hero-title,
+  #mod-backup .mod-hero-pro.module-hero .mod-hero-title {
+    color: #ffffff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+  }
+  #mod-assistente .mod-hero-pro.module-hero .mod-hero-desc,
+  #mod-lancamentos .mod-hero-pro.module-hero .mod-hero-desc,
+  #mod-planejamento .mod-hero-pro.module-hero .mod-hero-desc,
+  #mod-mercado .mod-hero-pro.module-hero .mod-hero-desc,
+  #mod-metas .mod-hero-pro.module-hero .mod-hero-desc,
+  #mod-gastos .mod-hero-pro.module-hero .mod-hero-desc,
+  #mod-recorrentes .mod-hero-pro.module-hero .mod-hero-desc,
+  #mod-parcelamentos .mod-hero-pro.module-hero .mod-hero-desc,
+  #mod-categorias .mod-hero-pro.module-hero .mod-hero-desc,
+  #mod-relatorios .mod-hero-pro.module-hero .mod-hero-desc,
+  #mod-configuracoes .mod-hero-pro.module-hero .mod-hero-desc,
+  #mod-backup .mod-hero-pro.module-hero .mod-hero-desc {
+    color: rgba(226, 232, 240, 0.9);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.28);
+  }
+  #mod-dashboard .dash-cover-zone.module-hero {
+    border-radius: 18px;
+    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.18);
+    --dash-cover-h: var(--module-hero-h);
+    --dash-cover-pad-b: 34px;
+  }
+  body.modo-celular #mod-dashboard .dash-cover-zone.module-hero {
+    --dash-cover-h: var(--module-hero-h-sm);
+    --dash-cover-pad-b: 28px;
+  }
+  @media (max-width: 900px) {
+    .mod-hero-pro.module-hero {
+      min-height: var(--module-hero-h-md);
+      padding: 22px 24px;
+    }
+    #mod-dashboard .dash-cover-zone.module-hero {
+      --dash-cover-h: var(--module-hero-h-md);
+    }
+    #mod-assistente .mod-hero-pro.module-hero.ia-hero-pro,
+    #mod-lancamentos .mod-hero-pro.module-hero.lanc-hero-pro,
+    #mod-planejamento .mod-hero-pro.module-hero.fut-hero-pro,
+    #mod-mercado .mod-hero-pro.module-hero.mkt-hero-pro {
+      min-height: var(--module-hero-h-md);
+      padding: 18px 20px;
+    }
+  }
+  @media (max-width: 680px) {
+    .mod-hero-pro.module-hero {
+      min-height: var(--module-hero-h-sm);
+      padding: 18px 16px;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .mod-hero-pro.module-hero .mod-hero-pro-actions {
+      width: 100%;
+      justify-content: flex-start;
+    }
+    .mod-hero-pro.module-hero .mod-hero-pro-actions .btn { flex: 1 1 auto; }
+    .mod-hero-pro.module-hero.ia-hero-pro,
+    .mod-hero-pro.module-hero.lanc-hero-pro,
+    .mod-hero-pro.module-hero.fut-hero-pro,
+    .mod-hero-pro.module-hero.mkt-hero-pro {
+      flex-wrap: wrap;
+      min-height: var(--module-hero-h-sm);
+      padding: 16px;
+    }
+  }
+
+  /* ===== ASSISTENTE — HERO BANNER REFINO ===== */
+  #mod-assistente .mod-hero-pro.module-hero.ia-hero-pro {
+    justify-content: flex-start;
+    align-items: center;
+    gap: 16px;
+    min-height: 0;
+    height: auto;
+    padding: 20px 24px 22px;
+    margin: 0 0 12px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  #mod-assistente .mod-hero-pro.module-hero.ia-hero-pro .ia-hero-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    align-self: flex-start;
+    margin-top: 1px;
+    flex-shrink: 0;
+  }
+  #mod-assistente .mod-hero-pro.module-hero.ia-hero-pro .ia-hero-icon svg {
+    width: 22px;
+    height: 22px;
+  }
+  #mod-assistente .mod-hero-pro.module-hero.ia-hero-pro .mod-hero-pro-body {
+    flex: 0 1 auto;
+    min-width: 0;
+    max-width: min(520px, 100%);
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0;
+  }
+  #mod-assistente .mod-hero-pro.module-hero.ia-hero-pro .ia-hero-meta-row {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 7px;
+    width: 100%;
+  }
+  #mod-assistente .mod-hero-pro.module-hero.ia-hero-pro .ia-hero-eyebrow {
+    margin-bottom: 0;
+    line-height: 1.2;
+  }
+  #mod-assistente .mod-hero-pro.module-hero.ia-hero-pro .ia-hero-month {
+    display: inline-flex;
+    align-items: center;
+    line-height: 1.2;
+    padding: 3px 9px;
+  }
+  #mod-assistente .mod-hero-pro.module-hero.ia-hero-pro .mod-hero-title {
+    margin: 0 0 6px;
+    font-size: clamp(18px, 2vw, 22px);
+    line-height: 1.22;
+    max-width: 100%;
+  }
+  #mod-assistente .mod-hero-pro.module-hero.ia-hero-pro .mod-hero-desc {
+    max-width: 46ch;
+    line-height: 1.5;
+    margin: 0;
+  }
+  @media (max-width: 900px) {
+    #mod-assistente .mod-hero-pro.module-hero.ia-hero-pro {
+      padding: 18px 20px 20px;
+      gap: 14px;
+    }
+    #mod-assistente .mod-hero-pro.module-hero.ia-hero-pro .mod-hero-pro-body {
+      max-width: min(480px, 100%);
+    }
+  }
+  @media (max-width: 680px) {
+    #mod-assistente .mod-hero-pro.module-hero.ia-hero-pro {
+      flex-direction: row;
+      align-items: flex-start;
+      padding: 16px;
+      gap: 12px;
+      min-height: 0;
+    }
+    #mod-assistente .mod-hero-pro.module-hero.ia-hero-pro .ia-hero-icon {
+      width: 42px;
+      height: 42px;
+      margin-top: 0;
+    }
+    #mod-assistente .mod-hero-pro.module-hero.ia-hero-pro .mod-hero-pro-body {
+      max-width: 100%;
+    }
+    #mod-assistente .mod-hero-pro.module-hero.ia-hero-pro .mod-hero-desc {
+      max-width: 100%;
+    }
+  }
 </style>
 </head>
 <body class="modo-pc">
@@ -6174,7 +6556,7 @@
 
       <!-- MÓDULO 1: DASHBOARD -->
       <section id="mod-dashboard" class="module active dash-empty-mode">
-        <div class="dash-cover-zone">
+        <div class="dash-cover-zone module-hero">
           <div class="dash-cover-bg" aria-hidden="true"></div>
           <div class="dash-cover-shade" aria-hidden="true"></div>
           <div class="dash-cover-inner">
@@ -6299,7 +6681,7 @@
 
       <!-- MÓDULO: ASSISTENTE IA -->
       <section id="mod-assistente" class="module hidden">
-        <div class="mod-hero-pro ia-hero-pro no-print">
+        <div class="mod-hero-pro module-hero ia-hero-pro no-print">
           <div class="ia-hero-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-1.2 0-2.4.6-3 1.7A3.5 3.5 0 0 0 5.5 8 3.5 3.5 0 0 0 8 11.5c.3 0 .6 0 .9-.1"/><path d="M12 3c1.2 0 2.4.6 3 1.7A3.5 3.5 0 0 1 18.5 8 3.5 3.5 0 0 1 16 11.5c-.3 0-.6 0-.9-.1"/><path d="M8 11.5C6.1 12.4 4.5 14.4 4.5 17v2.5h15V17c0-2.6-1.6-4.6-3.5-5.5"/><circle cx="9" cy="9" r="1"/><circle cx="15" cy="9" r="1"/><path d="M9.5 15.5h5"/></svg>
           </div>
@@ -6372,7 +6754,7 @@
       </section>
 
       <section id="mod-lancamentos" class="module hidden">
-        <div class="mod-hero-pro lanc-hero-pro no-print">
+        <div class="mod-hero-pro module-hero lanc-hero-pro no-print">
           <div class="lanc-hero-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h6M7 16h4"/></svg>
           </div>
@@ -6549,7 +6931,7 @@
 
       <!-- Metas -->
       <section id="mod-metas" class="module hidden">
-        <div class="mod-hero-pro">
+        <div class="mod-hero-pro module-hero">
           <div class="mod-hero-pro-body">
             <div class="mod-hero-pro-meta"><span class="mod-hero-month">—</span></div>
             <p class="mod-hero-eyebrow">Objetivos</p>
@@ -6586,7 +6968,7 @@
       </section>
       <!-- Controle de Gastos -->
       <section id="mod-gastos" class="module hidden">
-        <div class="mod-hero-pro">
+        <div class="mod-hero-pro module-hero">
           <div class="mod-hero-pro-body">
             <div class="mod-hero-pro-meta"><span class="mod-hero-month">—</span></div>
             <p class="mod-hero-eyebrow">Orçamento</p>
@@ -6623,7 +7005,7 @@
       </section>
       <!-- Futuro -->
       <section id="mod-planejamento" class="module hidden">
-        <div class="mod-hero-pro fut-hero-pro no-print">
+        <div class="mod-hero-pro module-hero fut-hero-pro no-print">
           <div class="fut-hero-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>
           </div>
@@ -6723,7 +7105,7 @@
       </section>
       <!-- Recorrentes -->
       <section id="mod-recorrentes" class="module hidden">
-        <div class="mod-hero-pro">
+        <div class="mod-hero-pro module-hero">
           <div class="mod-hero-pro-body">
             <div class="mod-hero-pro-meta"><span class="mod-hero-month">—</span></div>
             <p class="mod-hero-eyebrow">Automação</p>
@@ -6824,7 +7206,7 @@
             <button type="button" class="btn btn-outline" style="width:100%;" onclick="fecharModalParcelas()">Fechar</button>
           </div>
         </div>
-        <div class="mod-hero-pro">
+        <div class="mod-hero-pro module-hero">
           <div class="mod-hero-pro-body">
             <div class="mod-hero-pro-meta"><span class="mod-hero-month">—</span></div>
             <p class="mod-hero-eyebrow">Automação</p>
@@ -6960,7 +7342,7 @@
         </div>
         <div id="print-lista"></div>
 
-        <div class="mod-hero-pro mkt-hero-pro no-print">
+        <div class="mod-hero-pro module-hero mkt-hero-pro no-print">
           <div class="mkt-hero-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1"/><circle cx="17" cy="20" r="1"/><path d="M3 3h2l1.8 9.2a1 1 0 0 0 1 .82h7.6a1 1 0 0 0 1-.78l1.22-5.4H6.1"/></svg>
           </div>
@@ -7115,7 +7497,7 @@
 
       <!-- Categorias -->
       <section id="mod-categorias" class="module hidden">
-        <div class="mod-hero-pro">
+        <div class="mod-hero-pro module-hero">
           <div class="mod-hero-pro-body">
             <div class="mod-hero-pro-meta"><span class="mod-hero-month">—</span></div>
             <p class="mod-hero-eyebrow">Organização</p>
@@ -7166,7 +7548,7 @@
       </section>
       <!-- Relatórios -->
       <section id="mod-relatorios" class="module hidden">
-        <div class="mod-hero-pro">
+        <div class="mod-hero-pro module-hero">
           <div class="mod-hero-pro-body">
             <div class="mod-hero-pro-meta"><span class="mod-hero-month">—</span></div>
             <p class="mod-hero-eyebrow">Exportação</p>
@@ -7269,7 +7651,7 @@
       </section>
       <!-- Config -->
       <section id="mod-configuracoes" class="module hidden">
-        <div class="mod-hero-pro">
+        <div class="mod-hero-pro module-hero">
           <div class="mod-hero-pro-body">
             <div class="mod-hero-pro-meta"><span class="mod-hero-month">—</span></div>
             <p class="mod-hero-eyebrow">Preferências</p>
@@ -7391,7 +7773,7 @@
       </section>
       <!-- Backup Local -->
       <section id="mod-backup" class="module hidden">
-        <div class="mod-hero-pro">
+        <div class="mod-hero-pro module-hero">
           <div class="mod-hero-pro-body">
             <div class="mod-hero-pro-meta"><span class="mod-hero-month">—</span></div>
             <p class="mod-hero-eyebrow">Segurança</p>
