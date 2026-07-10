@@ -6835,6 +6835,444 @@
       grid-template-columns: 1fr;
     }
   }
+
+  /* ═══ SISTEMA SAAS — REFINO GLOBAL ═══ */
+  :root {
+    --fin-num-size: clamp(1.28rem, 2.4vw, 1.72rem);
+    --fin-num-weight: 800;
+    --fin-num-tracking: -0.032em;
+    --saas-panel-pad: 20px 22px;
+    --saas-gap: 18px;
+  }
+  .modules-wrapper {
+    overflow-x: clip;
+    max-width: 100%;
+    min-width: 0;
+  }
+  .module .panel {
+    padding: var(--saas-panel-pad);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    background: var(--card-bg);
+    min-width: 0;
+  }
+  .module .panel-title {
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: var(--tracking-tight);
+    color: var(--dark);
+    margin-bottom: 14px;
+    line-height: 1.35;
+  }
+  .fin-num,
+  .module-kpi-float strong,
+  .dash-summary-card.is-primary strong,
+  .ia-kpi-card strong,
+  .mkt-resumo-box strong,
+  .mini-stat strong,
+  .fut-h-value,
+  .dash-balance-value,
+  .backup-stat strong,
+  .backup-total-badge strong {
+    font-size: var(--fin-num-size);
+    font-weight: var(--fin-num-weight);
+    letter-spacing: var(--fin-num-tracking);
+    font-variant-numeric: tabular-nums;
+    line-height: 1.15;
+  }
+  .module .btn {
+    min-height: 36px;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    transition: background var(--transition), border-color var(--transition), box-shadow var(--transition), transform 0.12s ease;
+  }
+  .module .btn:active:not(:disabled) { transform: scale(0.98); }
+  .module .btn-sm { min-height: 32px; font-size: 12px; }
+  .module .btn-primary {
+    background: var(--primary);
+    border-color: var(--primary);
+    box-shadow: 0 1px 2px rgba(30, 92, 75, 0.12);
+  }
+  .module .btn-primary:hover { background: var(--primary-hover); border-color: var(--primary-hover); }
+  .module .form-control {
+    border-radius: var(--radius-sm);
+    border-color: var(--border);
+    min-height: 38px;
+  }
+  .module .form-control:focus {
+    border-color: var(--primary);
+    box-shadow: var(--focus-ring);
+  }
+  .module table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: var(--text-sm);
+  }
+  .module table th {
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-light);
+    padding: 10px 12px;
+    background: var(--surface-muted);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  .module table td {
+    padding: 11px 12px;
+    border-bottom: 1px solid var(--border-subtle);
+    vertical-align: middle;
+  }
+  .module table tbody tr:last-child td { border-bottom: none; }
+  .module table tbody tr:hover td { background: rgba(30, 92, 75, 0.03); }
+  .module .table-responsive,
+  .module .lanc-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-subtle);
+  }
+  .module .col-valor,
+  .module td.col-valor,
+  .module th.col-valor { text-align: right; font-variant-numeric: tabular-nums; }
+  .lanc-chip,
+  .ia-sug-chip,
+  .mkt-tab,
+  .rel-filter-chips .chip,
+  .cat-chip {
+    border-radius: 999px;
+    font-weight: 600;
+    transition: background var(--transition), border-color var(--transition), color var(--transition);
+  }
+
+  /* — Formulários recolhíveis — */
+  .mod-form-fold .mod-form-fold-head {
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: -4px 0 0;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed var(--border);
+    cursor: pointer;
+    user-select: none;
+  }
+  .mod-form-fold .mod-form-fold-head .panel-title { margin: 0; flex: 1; min-width: 0; }
+  .mod-form-fold-chevron {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+    background: var(--primary-light);
+    color: var(--primary);
+    transition: transform var(--transition);
+  }
+  .mod-form-fold.is-open .mod-form-fold-chevron { transform: rotate(180deg); }
+  @media (max-width: 900px) {
+    .mod-form-fold .mod-form-fold-head {
+      display: flex;
+      margin-bottom: 0;
+      padding-bottom: 14px;
+    }
+    .mod-form-fold:not(.is-open) .mod-form-fold-body { display: none; }
+    .mod-layout,
+    .cat-layout { gap: 14px; }
+  }
+  @media (min-width: 901px) {
+    .mod-form-fold .mod-form-fold-head {
+      display: block !important;
+      pointer-events: none;
+      cursor: default;
+      border-bottom: none;
+      padding-bottom: 0;
+      margin: 0 0 14px;
+    }
+    .mod-form-fold .mod-form-fold-head .panel-title { margin: 0; }
+    .mod-form-fold-chevron { display: none !important; }
+    .mod-form-fold .mod-form-fold-body { display: block !important; }
+  }
+
+  /* — Estados vazios — */
+  .empty-state {
+    padding: 28px 20px;
+    border-radius: var(--radius-lg);
+    border: 1px dashed var(--border-strong);
+    background: linear-gradient(180deg, var(--surface-muted) 0%, var(--card-bg) 100%);
+    text-align: center;
+  }
+  .empty-state-icon {
+    width: 52px;
+    height: 52px;
+    margin: 0 auto 14px;
+    display: grid;
+    place-items: center;
+    font-size: 24px;
+    border-radius: 14px;
+    background: var(--primary-light);
+    border: 1px solid rgba(30, 92, 75, 0.12);
+    box-shadow: var(--shadow-xs);
+  }
+  .empty-state-title {
+    font-size: var(--text-lg);
+    font-weight: 800;
+    color: var(--dark);
+    margin-bottom: 6px;
+  }
+  .empty-state-text { max-width: 400px; }
+  .empty-state-btn { margin-top: 4px; }
+  .mod-empty-hint {
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.55;
+    text-align: center;
+  }
+
+  /* — Banner dados locais / backup — */
+  .local-data-banner.config-warning {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px 18px;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(3, 105, 161, 0.22);
+    background: linear-gradient(135deg, #eff6ff 0%, #f0f9ff 55%, #eef5f2 100%);
+    color: #0c4a6e;
+    font-size: 13px;
+    line-height: 1.55;
+    margin-bottom: var(--saas-gap);
+    box-shadow: var(--shadow-xs);
+  }
+  .local-data-banner.config-warning::before {
+    content: '🔒';
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    font-size: 18px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(3, 105, 161, 0.15);
+  }
+  body.theme-dark .local-data-banner.config-warning {
+    background: linear-gradient(135deg, #0f172a 0%, #0c1929 100%);
+    border-color: rgba(56, 189, 248, 0.25);
+    color: #bae6fd;
+  }
+  body.theme-dark .local-data-banner.config-warning::before {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(56, 189, 248, 0.2);
+  }
+  .backup-security-callout {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px 20px;
+    padding: 18px 22px;
+    margin-bottom: var(--saas-gap);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(30, 92, 75, 0.22);
+    background: linear-gradient(135deg, var(--primary-light) 0%, #fff 48%, var(--saldo-soft) 100%);
+    box-shadow: var(--shadow);
+  }
+  .backup-security-callout-icon {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: var(--primary);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(30, 92, 75, 0.28);
+  }
+  .backup-security-callout-icon svg { width: 24px; height: 24px; }
+  .backup-security-callout-copy { flex: 1; min-width: 200px; }
+  .backup-security-callout-copy strong {
+    display: block;
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--dark);
+    margin-bottom: 4px;
+    letter-spacing: var(--tracking-tight);
+  }
+  .backup-security-callout-copy span {
+    font-size: 13px;
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+  .backup-panel {
+    border: 1px solid var(--border);
+    transition: box-shadow var(--transition), border-color var(--transition);
+  }
+  .backup-panel:hover {
+    border-color: rgba(30, 92, 75, 0.2);
+    box-shadow: var(--shadow-hover);
+  }
+  .backup-total-badge {
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    background: var(--primary-light);
+    border: 1px solid rgba(30, 92, 75, 0.12);
+    margin-bottom: 12px;
+    font-size: 13px;
+    color: var(--text);
+  }
+  .sidebar-backup-link {
+    border: 1px solid rgba(30, 92, 75, 0.35);
+    background: rgba(30, 92, 75, 0.12);
+    font-weight: 700;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+  }
+  .sidebar-backup-link:hover {
+    background: rgba(30, 92, 75, 0.22);
+    border-color: rgba(30, 92, 75, 0.5);
+  }
+
+  /* — Onboarding inicial — */
+  .saas-onboarding-strip {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px 18px;
+    padding: 16px 20px;
+    margin-bottom: var(--saas-gap);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(30, 92, 75, 0.18);
+    background: linear-gradient(90deg, var(--primary-light) 0%, #fff 55%, var(--surface-muted) 100%);
+    box-shadow: var(--shadow-xs);
+  }
+  .saas-onboarding-strip-icon {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: var(--primary);
+    color: #fff;
+    font-size: 20px;
+    font-weight: 800;
+  }
+  .saas-onboarding-strip-copy { flex: 1; min-width: 180px; }
+  .saas-onboarding-strip-copy strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--dark);
+    margin-bottom: 2px;
+  }
+  .saas-onboarding-strip-copy span {
+    font-size: 13px;
+    color: var(--text-light);
+    line-height: 1.45;
+  }
+  body.theme-dark .saas-onboarding-strip {
+    background: linear-gradient(90deg, rgba(30, 92, 75, 0.15) 0%, var(--card-bg) 100%);
+    border-color: var(--border);
+  }
+
+  /* — Assistente IA — */
+  #mod-assistente .ia-action-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 12px 16px;
+    margin-bottom: var(--saas-gap);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+    box-shadow: var(--shadow-xs);
+  }
+  #mod-assistente .ia-chat-panel {
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    min-width: 0;
+  }
+  #mod-assistente .ia-chat-head {
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface-muted);
+  }
+  #mod-assistente .ia-chat-body {
+    min-height: 280px;
+    max-height: min(52vh, 480px);
+    padding: 14px 16px;
+    overflow-y: auto;
+  }
+  #mod-assistente .ia-chat-suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 10px 16px 0;
+    border-top: 1px solid var(--border-subtle);
+    background: var(--surface-muted);
+  }
+  #mod-assistente .ia-sug-chip {
+    padding: 6px 12px;
+    font-size: 12px;
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+    color: var(--text);
+    cursor: pointer;
+  }
+  #mod-assistente .ia-sug-chip:hover {
+    border-color: var(--primary);
+    background: var(--primary-light);
+    color: var(--primary);
+  }
+  #mod-assistente .ia-chat-input-bar {
+    display: flex;
+    gap: 10px;
+    padding: 12px 16px 16px;
+    background: var(--card-bg);
+    border-top: 1px solid var(--border);
+  }
+  #mod-assistente .ia-chat-input-bar .form-control { flex: 1; min-width: 0; }
+  #mod-assistente .ia-help-btn {
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    transition: background var(--transition), border-color var(--transition);
+  }
+  #mod-assistente .ia-rec-item {
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-muted);
+    margin-bottom: 8px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  #mod-assistente .ia-rec-item strong {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 4px;
+  }
+
+  @media (max-width: 680px) {
+    .modules-wrapper { padding: 12px 14px 18px !important; }
+    .module .panel { padding: 16px; }
+    .local-data-banner.config-warning { flex-direction: column; }
+    .backup-security-callout { flex-direction: column; align-items: stretch; }
+    .backup-security-callout .btn { width: 100%; }
+    .saas-onboarding-strip { flex-direction: column; align-items: stretch; }
+    .saas-onboarding-strip .btn { width: 100%; }
+    #mod-assistente .ia-chat-body { max-height: 42vh; min-height: 220px; }
+    #mod-assistente .ia-chat-input-bar { flex-direction: column; }
+    #mod-assistente .ia-chat-input-bar .btn { width: 100%; }
+  }
 </style>
 </head>
 <body class="modo-pc">
@@ -7003,6 +7441,15 @@
         <div class="dash-kpi-float-wrap module-kpi-float-wrap">
           <div class="dash-summary-grid dash-kpi-float module-kpi-float" id="dashKpiStrip" aria-label="Indicadores do mês"></div>
         </div>
+        </div>
+
+        <div class="saas-onboarding-strip dash-empty-only">
+          <div class="saas-onboarding-strip-icon" aria-hidden="true">1</div>
+          <div class="saas-onboarding-strip-copy">
+            <strong>Primeiros passos</strong>
+            <span>Cadastre um lançamento para ativar gráficos, alertas e recomendações do Assistente.</span>
+          </div>
+          <button type="button" class="btn btn-primary btn-sm" onclick="focarNovoLancamento()">Começar agora</button>
         </div>
 
         <div class="dash-exec-hero dash-hero-fin dash-post-cover" id="dashHeroWrap">
@@ -7387,8 +7834,12 @@
         </div>
         </div>
         <div class="mod-layout">
-          <div class="panel" id="panelFormMeta">
-            <div class="panel-title" id="formMetaTitle">Nova meta</div>
+          <div class="panel mod-form-fold is-open" id="panelFormMeta">
+            <div class="mod-form-fold-head no-print" role="button" tabindex="0" onclick="this.parentElement.classList.toggle('is-open')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.parentElement.classList.toggle('is-open')}">
+              <div class="panel-title" id="formMetaTitle">Nova meta</div>
+              <span class="mod-form-fold-chevron" aria-hidden="true">⌄</span>
+            </div>
+            <div class="mod-form-fold-body">
             <div class="form-group">
               <label for="fMetaNome">Nome da meta *</label>
               <input type="text" id="fMetaNome" class="form-control" placeholder="Reserva, viagem, reforma...">
@@ -7400,6 +7851,7 @@
             <div class="meta-form-actions">
               <button type="button" class="btn btn-primary" id="btnSalvarMeta" onclick="salvarMeta()">Salvar meta</button>
               <button type="button" class="btn btn-outline hidden" id="btnCancelMeta" onclick="cancelarEdicaoMeta()">Cancelar edição</button>
+            </div>
             </div>
           </div>
           <div class="panel">
@@ -7428,8 +7880,12 @@
         </div>
         </div>
         <div class="mod-layout">
-          <div class="panel" id="panelFormOrc">
-            <div class="panel-title" id="formOrcTitle">Definir limite</div>
+          <div class="panel mod-form-fold is-open" id="panelFormOrc">
+            <div class="mod-form-fold-head no-print" role="button" tabindex="0" onclick="this.parentElement.classList.toggle('is-open')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.parentElement.classList.toggle('is-open')}">
+              <div class="panel-title" id="formOrcTitle">Definir limite</div>
+              <span class="mod-form-fold-chevron" aria-hidden="true">⌄</span>
+            </div>
+            <div class="mod-form-fold-body">
             <div class="form-group">
               <label for="fOrcCat">Categoria *</label>
               <select id="fOrcCat" class="form-control"></select>
@@ -7441,6 +7897,7 @@
             <div class="orc-form-actions">
               <button type="button" class="btn btn-primary" id="btnSalvarOrc" onclick="salvarOrcamento()">Definir limite</button>
               <button type="button" class="btn btn-outline hidden" id="btnCancelOrc" onclick="cancelarEdicaoOrcamento()">Cancelar edição</button>
+            </div>
             </div>
           </div>
           <div class="panel">
@@ -7574,8 +8031,12 @@
         </div>
         </div>
         <div class="mod-layout">
-          <div class="panel" id="panelFormRec">
-            <div class="panel-title" id="formRecTitle">Nova conta recorrente</div>
+          <div class="panel mod-form-fold is-open" id="panelFormRec">
+            <div class="mod-form-fold-head no-print" role="button" tabindex="0" onclick="this.parentElement.classList.toggle('is-open')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.parentElement.classList.toggle('is-open')}">
+              <div class="panel-title" id="formRecTitle">Nova conta recorrente</div>
+              <span class="mod-form-fold-chevron" aria-hidden="true">⌄</span>
+            </div>
+            <div class="mod-form-fold-body">
             <div class="form-section">
               <div class="form-section-title">Dados principais</div>
               <div class="form-group">
@@ -7621,6 +8082,7 @@
             <div class="rec-form-actions">
               <button type="button" class="btn btn-primary" id="btnSalvarRec" onclick="salvarRecorrente()">Cadastrar recorrente</button>
               <button type="button" class="btn btn-outline hidden" id="btnCancelRec" onclick="cancelarEdicaoRecorrente()">Cancelar edição</button>
+            </div>
             </div>
           </div>
           <div class="panel">
@@ -7679,8 +8141,12 @@
         </div>
         </div>
         <div class="mod-layout">
-          <div class="panel" id="panelFormPar">
-            <div class="panel-title">Novo parcelamento</div>
+          <div class="panel mod-form-fold is-open" id="panelFormPar">
+            <div class="mod-form-fold-head no-print" role="button" tabindex="0" onclick="this.parentElement.classList.toggle('is-open')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.parentElement.classList.toggle('is-open')}">
+              <div class="panel-title">Novo parcelamento</div>
+              <span class="mod-form-fold-chevron" aria-hidden="true">⌄</span>
+            </div>
+            <div class="mod-form-fold-body">
             <div class="form-section">
               <div class="form-section-title">Compra</div>
               <div class="form-group">
@@ -7724,6 +8190,7 @@
             </div>
             <div class="par-form-actions">
               <button type="button" class="btn btn-primary" onclick="gerarParcelamento()">Gerar parcelas</button>
+            </div>
             </div>
           </div>
           <div class="panel">
@@ -7849,8 +8316,12 @@
 
         <div class="mkt-panel active" id="mkt-panel-lista">
           <div class="mod-layout">
-            <div class="panel mkt-form-panel" id="panelFormMercado">
-              <div class="panel-title" id="formMercadoTitle">Adicionar item</div>
+            <div class="panel mkt-form-panel mod-form-fold is-open" id="panelFormMercado">
+              <div class="mod-form-fold-head no-print" role="button" tabindex="0" onclick="this.parentElement.classList.toggle('is-open')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.parentElement.classList.toggle('is-open')}">
+                <div class="panel-title" id="formMercadoTitle">Adicionar item</div>
+                <span class="mod-form-fold-chevron" aria-hidden="true">⌄</span>
+              </div>
+              <div class="mod-form-fold-body">
               <div class="form-section mkt-form-section">
                 <div class="form-section-title">Sugestões rápidas</div>
                 <div id="mktSugestoes" class="mkt-sug-grid"></div>
@@ -7895,6 +8366,7 @@
               <div class="rec-form-actions">
                 <button type="button" class="btn btn-primary" id="btnSalvarMercado" onclick="adicionarItemMercado()">Adicionar item</button>
                 <button type="button" class="btn btn-outline hidden" id="btnCancelMercado" onclick="cancelarEdicaoMercado()">Cancelar edição</button>
+              </div>
               </div>
             </div>
             <div class="panel">
@@ -7970,7 +8442,7 @@
             <p class="mod-hero-desc">Classifique lançamentos por tipo. Estatísticas referem-se ao mês selecionado no topo.</p>
           </div>
           <div class="mod-hero-pro-actions no-print">
-            <button type="button" class="btn btn-primary btn-sm" onclick="document.getElementById('fNovaCat')?.focus()">Nova categoria</button>
+            <button type="button" class="btn btn-primary btn-sm" onclick="focarNovaCategoria()">Nova categoria</button>
             <button type="button" class="btn btn-ghost btn-sm" onclick="abrirModulo('lancamentos')">Lançamentos</button>
           </div>
         </div>
@@ -7979,8 +8451,12 @@
         </div>
         </div>
         <div class="cat-layout">
-          <div class="panel">
-            <div class="panel-title" id="formCatTitle">Nova categoria</div>
+          <div class="panel mod-form-fold is-open" id="panelFormCat">
+            <div class="mod-form-fold-head no-print" role="button" tabindex="0" onclick="this.parentElement.classList.toggle('is-open')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.parentElement.classList.toggle('is-open')}">
+              <div class="panel-title" id="formCatTitle">Nova categoria</div>
+              <span class="mod-form-fold-chevron" aria-hidden="true">⌄</span>
+            </div>
+            <div class="mod-form-fold-body">
             <div class="form-section">
               <div class="form-section-title">Identificação</div>
               <div class="form-group">
@@ -8004,6 +8480,7 @@
             <div class="cat-form-actions">
               <button type="button" class="btn btn-primary" id="btnSalvarCat" onclick="adicionarCategoria()">Adicionar categoria</button>
               <button type="button" class="btn btn-outline hidden" id="btnCancelCat" onclick="cancelarEdicaoCategoria()">Cancelar edição</button>
+            </div>
             </div>
           </div>
           <div class="panel">
@@ -8135,7 +8612,7 @@
           </div>
         </div>
         </div>
-        <div class="config-warning">Os dados estão salvos localmente neste navegador (localStorage). Faça backup regularmente e evite limpar o cache do navegador sem exportar antes.</div>
+        <div class="config-warning local-data-banner">Os dados estão salvos localmente neste navegador (localStorage). Faça backup regularmente e evite limpar o cache do navegador sem exportar antes.</div>
         <div class="config-layout-pro">
           <div class="config-section">
             <div class="config-section-title"><span class="config-section-icon">🎨</span>Aparência</div>
@@ -8259,7 +8736,17 @@
           </div>
         </div>
         </div>
-        <div class="config-warning">Os dados estão salvos localmente neste navegador (localStorage). Faça backup regularmente e evite limpar o cache do navegador sem exportar antes.</div>
+        <div class="config-warning local-data-banner">Os dados estão salvos localmente neste navegador (localStorage). Faça backup regularmente e evite limpar o cache do navegador sem exportar antes.</div>
+        <div class="backup-security-callout no-print">
+          <div class="backup-security-callout-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          </div>
+          <div class="backup-security-callout-copy">
+            <strong>Proteja seus dados financeiros</strong>
+            <span>Exporte backups periódicos. Sem cópia externa, limpar o navegador apaga tudo sem recuperação.</span>
+          </div>
+          <button type="button" class="btn btn-primary btn-sm" onclick="exportarBackupJSON()">Baixar backup agora</button>
+        </div>
         <div class="backup-layout">
           <div class="backup-panel">
             <div class="panel-title">Backup completo</div>
@@ -8843,6 +9330,7 @@ function editarCategoria(cat) {
   const t = document.getElementById('formCatTitle'); if (t) t.innerText = 'Editar categoria';
   const b = document.getElementById('btnSalvarCat'); if (b) b.innerText = 'Salvar alterações';
   document.getElementById('btnCancelCat')?.classList.remove('hidden');
+  abrirFormFold('panelFormCat');
   document.getElementById('fNovaCat')?.focus();
 }
 
@@ -9363,6 +9851,7 @@ function editarItemMercado(id) {
   document.getElementById('formMercadoTitle').innerText = 'Editar item';
   document.getElementById('btnSalvarMercado').innerText = 'Salvar alterações';
   document.getElementById('btnCancelMercado').classList.remove('hidden');
+  abrirFormFold('panelFormMercado');
   document.getElementById('panelFormMercado').scrollIntoView({ behavior: 'smooth' });
 }
 
@@ -9984,6 +10473,10 @@ function emptyStateHtml(o){
   return `<div class="empty-state"><div class="empty-state-icon" aria-hidden="true">${icon}</div>${title?`<div class="empty-state-title">${esc(title)}</div>`:''}<p class="empty-state-text">${esc(msg)}</p>${btn}</div>`;
 }
 function emptyStateRow(cols,o){return `<tr class="empty-row"><td colspan="${cols}">${emptyStateHtml(o)}</td></tr>`;}
+function abrirFormFold(panelId){
+  const p=document.getElementById(panelId);
+  if(p) p.classList.add('is-open');
+}
 function abrirDrawerLanc() {
   const drawer = document.getElementById('lancDrawer');
   const backdrop = document.getElementById('lancDrawerBackdrop');
@@ -10012,8 +10505,9 @@ function focarNovoLancamento() {
     document.getElementById('fDesc')?.focus();
   }, 120);
 }
-function focarNovaMeta(){abrirModulo('metas');setTimeout(()=>document.getElementById('fMetaNome')?.focus(),120);}
-function focarNovoOrcamento(){abrirModulo('gastos');setTimeout(()=>document.getElementById('fOrcValor')?.focus(),120);}
+function focarNovaMeta(){abrirModulo('metas');setTimeout(()=>{abrirFormFold('panelFormMeta');document.getElementById('fMetaNome')?.focus();},120);}
+function focarNovaCategoria(){abrirModulo('categorias');setTimeout(()=>{abrirFormFold('panelFormCat');document.getElementById('fNovaCat')?.focus();},120);}
+function focarNovoOrcamento(){abrirModulo('gastos');setTimeout(()=>{abrirFormFold('panelFormOrc');document.getElementById('fOrcValor')?.focus();},120);}
 function focarNovoFuturo() {
   abrirModulo('planejamento');
   setTimeout(() => {
@@ -10055,8 +10549,8 @@ function toggleFutTabela() {
       : '<span class="fut-btn-table-icon" aria-hidden="true">▦</span> Ver tabela completa';
   }
 }
-function focarNovoRecorrente(){abrirModulo('recorrentes');setTimeout(()=>document.getElementById('fRecDesc')?.focus(),120);}
-function focarNovoParcelamento(){abrirModulo('parcelamentos');setTimeout(()=>document.getElementById('fParDesc')?.focus(),120);}
+function focarNovoRecorrente(){abrirModulo('recorrentes');setTimeout(()=>{abrirFormFold('panelFormRec');document.getElementById('fRecDesc')?.focus();},120);}
+function focarNovoParcelamento(){abrirModulo('parcelamentos');setTimeout(()=>{abrirFormFold('panelFormPar');document.getElementById('fParDesc')?.focus();},120);}
 function focarItemMercado(){abrirModulo('mercado');setTimeout(()=>document.getElementById('inputItemMercado')?.focus(),120);}
 function irParaBackup(){abrirModulo('backup');}
 function validarAppLocal(){
@@ -10962,6 +11456,7 @@ function editarMeta(id) {
   document.getElementById('formMetaTitle').innerText = 'Editar meta';
   document.getElementById('btnSalvarMeta').innerText = 'Salvar alterações';
   document.getElementById('btnCancelMeta').classList.remove('hidden');
+  abrirFormFold('panelFormMeta');
   document.getElementById('panelFormMeta').scrollIntoView({ behavior: 'smooth' });
 }
 
@@ -11055,6 +11550,7 @@ function editarOrcamento(cat) {
   document.getElementById('formOrcTitle').innerText = 'Editar limite';
   document.getElementById('btnSalvarOrc').innerText = 'Salvar alterações';
   document.getElementById('btnCancelOrc').classList.remove('hidden');
+  abrirFormFold('panelFormOrc');
   document.getElementById('panelFormOrc').scrollIntoView({ behavior: 'smooth' });
 }
 
@@ -11319,6 +11815,7 @@ function editarRecorrente(id) {
   document.getElementById('formRecTitle').innerText = 'Editar conta recorrente';
   document.getElementById('btnSalvarRec').innerText = 'Salvar alterações';
   document.getElementById('btnCancelRec').classList.remove('hidden');
+  abrirFormFold('panelFormRec');
   document.getElementById('panelFormRec').scrollIntoView({ behavior: 'smooth' });
 }
 
@@ -11787,7 +12284,7 @@ function renderCategorias() {
         ${btnDel}
       </div>
     </div>`;
-  }).join('') : emptyStateHtml({icon:'🏷️',title:'Nenhuma categoria cadastrada',msg:'Crie categorias personalizadas ou use as padrões do sistema.',btnLabel:'Nova categoria',btn:"document.getElementById('fNovaCat')?.focus()"});
+  }).join('') : emptyStateHtml({icon:'🏷️',title:'Nenhuma categoria cadastrada',msg:'Crie categorias personalizadas ou use as padrões do sistema.',btnLabel:'Nova categoria',btn:'focarNovaCategoria()'});
 }
 function baixarAnaliseIA(){baixarArquivo(`analise_ia_financas_${new Date().toISOString().slice(0,10)}.txt`,montarTextoAnaliseIA(),'text/plain;charset=utf-8');showToast('Análise TXT baixada.');}
 function imprimirAnaliseIA(){const area=document.getElementById('iaPrintArea');if(area){area.innerHTML=`<div class="rel-print-header"><h1>${esc(getAppNome())}</h1><p><strong>Análise do Assistente IA</strong></p><p>Emitido em: ${esc(new Date().toLocaleString('pt-BR'))}</p></div><pre style="white-space:pre-wrap;font-family:inherit;font-size:13px;line-height:1.6;">${esc(montarTextoAnaliseIA())}</pre>`;}document.body.classList.add('print-ia');window.print();setTimeout(()=>document.body.classList.remove('print-ia'),700);}
