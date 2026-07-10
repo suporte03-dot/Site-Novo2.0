@@ -6407,6 +6407,137 @@
       max-width: 100%;
     }
   }
+
+  /* ===== PLANEJAMENTO — HERO BANNER REFINO ===== */
+  #mod-planejamento .mod-hero-pro.module-hero.fut-hero-pro {
+    justify-content: flex-start;
+    align-items: center;
+    gap: 16px 20px;
+    min-height: 0;
+    height: auto;
+    padding: 20px 24px 22px;
+    margin: 0 0 12px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  #mod-planejamento .mod-hero-pro.module-hero.fut-hero-pro .fut-hero-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    align-self: flex-start;
+    margin-top: 1px;
+    flex-shrink: 0;
+  }
+  #mod-planejamento .mod-hero-pro.module-hero.fut-hero-pro .fut-hero-icon svg {
+    width: 22px;
+    height: 22px;
+  }
+  #mod-planejamento .mod-hero-pro.module-hero.fut-hero-pro .mod-hero-pro-body {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: min(520px, 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0;
+  }
+  #mod-planejamento .mod-hero-pro.module-hero.fut-hero-pro .fut-hero-meta-row {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 7px;
+    width: 100%;
+  }
+  #mod-planejamento .mod-hero-pro.module-hero.fut-hero-pro .fut-hero-eyebrow {
+    margin-bottom: 0;
+    line-height: 1.2;
+  }
+  #mod-planejamento .mod-hero-pro.module-hero.fut-hero-pro .fut-hero-month {
+    display: inline-flex;
+    align-items: center;
+    line-height: 1.2;
+    padding: 3px 9px;
+  }
+  #mod-planejamento .mod-hero-pro.module-hero.fut-hero-pro .mod-hero-title {
+    margin: 0 0 6px;
+    font-size: clamp(18px, 2vw, 22px);
+    line-height: 1.22;
+    max-width: 100%;
+  }
+  #mod-planejamento .mod-hero-pro.module-hero.fut-hero-pro .mod-hero-desc {
+    max-width: 46ch;
+    line-height: 1.5;
+    margin: 0;
+  }
+  #mod-planejamento .mod-hero-pro.module-hero.fut-hero-pro .mod-hero-pro-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    align-self: center;
+    gap: 8px;
+    flex-shrink: 0;
+    margin-left: auto;
+    min-width: min(168px, 100%);
+  }
+  #mod-planejamento .mod-hero-pro.module-hero.fut-hero-pro .mod-hero-pro-actions .btn {
+    justify-content: center;
+    min-height: 34px;
+    white-space: nowrap;
+  }
+  #mod-planejamento .mod-hero-pro.module-hero.fut-hero-pro .mod-hero-pro-actions .btn-outline {
+    color: #f1f5f9;
+    border-color: rgba(255, 255, 255, 0.24);
+    background: rgba(255, 255, 255, 0.08);
+  }
+  #mod-planejamento .mod-hero-pro.module-hero.fut-hero-pro .mod-hero-pro-actions .btn-outline:hover {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.32);
+    color: #fff;
+  }
+  @media (max-width: 900px) {
+    #mod-planejamento .mod-hero-pro.module-hero.fut-hero-pro {
+      padding: 18px 20px 20px;
+      gap: 14px 16px;
+    }
+    #mod-planejamento .mod-hero-pro.module-hero.fut-hero-pro .mod-hero-pro-body {
+      max-width: min(460px, 100%);
+    }
+  }
+  @media (max-width: 680px) {
+    #mod-planejamento .mod-hero-pro.module-hero.fut-hero-pro {
+      flex-wrap: wrap;
+      align-items: flex-start;
+      padding: 16px;
+      gap: 12px;
+    }
+    #mod-planejamento .mod-hero-pro.module-hero.fut-hero-pro .fut-hero-icon {
+      width: 42px;
+      height: 42px;
+      margin-top: 0;
+    }
+    #mod-planejamento .mod-hero-pro.module-hero.fut-hero-pro .mod-hero-pro-body {
+      flex: 1 1 calc(100% - 54px);
+      max-width: 100%;
+    }
+    #mod-planejamento .mod-hero-pro.module-hero.fut-hero-pro .mod-hero-desc {
+      max-width: 100%;
+    }
+    #mod-planejamento .mod-hero-pro.module-hero.fut-hero-pro .mod-hero-pro-actions {
+      width: 100%;
+      margin-left: 0;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-start;
+      min-width: 0;
+    }
+    #mod-planejamento .mod-hero-pro.module-hero.fut-hero-pro .mod-hero-pro-actions .btn {
+      flex: 1 1 auto;
+    }
+  }
 </style>
 </head>
 <body class="modo-pc">
