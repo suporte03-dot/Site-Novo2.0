@@ -6198,6 +6198,7 @@
   }
   #mod-assistente .mod-hero-pro.module-hero,
   #mod-lancamentos .mod-hero-pro.module-hero,
+  #mod-contas .mod-hero-pro.module-hero,
   #mod-planejamento .mod-hero-pro.module-hero,
   #mod-mercado .mod-hero-pro.module-hero,
   #mod-metas .mod-hero-pro.module-hero,
@@ -6238,6 +6239,7 @@
   }
   #mod-assistente .mod-hero-pro.module-hero .mod-hero-title,
   #mod-lancamentos .mod-hero-pro.module-hero .mod-hero-title,
+  #mod-contas .mod-hero-pro.module-hero .mod-hero-title,
   #mod-planejamento .mod-hero-pro.module-hero .mod-hero-title,
   #mod-mercado .mod-hero-pro.module-hero .mod-hero-title,
   #mod-metas .mod-hero-pro.module-hero .mod-hero-title,
@@ -6253,6 +6255,7 @@
   }
   #mod-assistente .mod-hero-pro.module-hero .mod-hero-desc,
   #mod-lancamentos .mod-hero-pro.module-hero .mod-hero-desc,
+  #mod-contas .mod-hero-pro.module-hero .mod-hero-desc,
   #mod-planejamento .mod-hero-pro.module-hero .mod-hero-desc,
   #mod-mercado .mod-hero-pro.module-hero .mod-hero-desc,
   #mod-metas .mod-hero-pro.module-hero .mod-hero-desc,
@@ -6583,6 +6586,7 @@
     margin-bottom: 0 !important;
   }
   .module-kpi-float-wrap .ia-kpi-strip,
+  .module-kpi-float-wrap .bank-kpi-strip,
   .module-kpi-float-wrap .lanc-kpi-strip,
   .module-kpi-float-wrap .mkt-kpi-strip,
   .module-kpi-float-wrap .pro-summary-strip,
@@ -6593,6 +6597,7 @@
     width: 100%;
   }
   .module-kpi-float-wrap .ia-kpi-strip,
+  .module-kpi-float-wrap .bank-kpi-strip,
   .module-kpi-float-wrap .lanc-kpi-strip,
   .module-kpi-float-wrap .mkt-kpi-strip,
   .module-kpi-float-wrap .pro-summary-strip {
@@ -6819,7 +6824,8 @@
   @media (max-width: 680px) {
     :root { --module-kpi-float-offset: -14px; --module-kpi-float-gap: 8px; }
     .module-kpi-float-wrap .ia-kpi-strip,
-    .module-kpi-float-wrap .lanc-kpi-strip,
+    .module-kpi-float-wrap .bank-kpi-strip,
+  .module-kpi-float-wrap .lanc-kpi-strip,
     .module-kpi-float-wrap .mkt-kpi-strip,
     .module-kpi-float-wrap .pro-summary-strip,
     .module-kpi-float-wrap .fut-horizon-grid,
@@ -7273,6 +7279,237 @@
     #mod-assistente .ia-chat-input-bar { flex-direction: column; }
     #mod-assistente .ia-chat-input-bar .btn { width: 100%; }
   }
+
+  /* ═══ CONTAS BANCÁRIAS ═══ */
+  #mod-contas { overflow-x: clip; }
+  #mod-contas .bank-hero-pro .bank-hero-icon {
+    width: 48px; height: 48px; flex-shrink: 0;
+    display: grid; place-items: center;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.18);
+    color: #fff;
+  }
+  #mod-contas .bank-hero-pro .bank-hero-icon svg { width: 24px; height: 24px; }
+  .bank-kpi-strip {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .bank-kpi-card {
+    padding: 14px 16px;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    background: linear-gradient(180deg, rgba(255,255,255,0.42) 0%, rgba(255,255,255,0.88) 54%, #fff 100%);
+    box-shadow: var(--shadow);
+    min-width: 0;
+  }
+  .bank-kpi-card > span {
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-light);
+    margin-bottom: 6px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.8);
+    width: fit-content;
+  }
+  .bank-kpi-card strong {
+    display: block;
+    font-size: var(--fin-num-size);
+    font-weight: var(--fin-num-weight);
+    letter-spacing: var(--fin-num-tracking);
+    font-variant-numeric: tabular-nums;
+    color: var(--dark);
+    line-height: 1.15;
+  }
+  .bank-kpi-card.is-total strong { color: var(--primary); }
+  .bank-kpi-card.is-info strong { color: var(--saldo); }
+  .bank-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-top: 4px;
+  }
+  .bank-account-card {
+    position: relative;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: box-shadow var(--transition), border-color var(--transition), transform 0.12s ease;
+    min-width: 0;
+  }
+  .bank-account-card:hover {
+    box-shadow: var(--shadow-hover);
+    border-color: rgba(30, 92, 75, 0.2);
+  }
+  .bank-account-card.is-inactive { opacity: 0.72; }
+  .bank-account-card-accent {
+    height: 5px;
+    background: var(--bank-accent, var(--primary));
+  }
+  .bank-account-card-body { padding: 16px 18px 14px; }
+  .bank-account-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .bank-account-card-top strong {
+    display: block;
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--dark);
+    letter-spacing: var(--tracking-tight);
+    line-height: 1.3;
+  }
+  .bank-account-card-top .bank-meta {
+    font-size: 12px;
+    color: var(--text-light);
+    margin-top: 3px;
+  }
+  .bank-type-pill {
+    flex-shrink: 0;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: var(--primary-light);
+    color: var(--primary);
+    border: 1px solid rgba(30, 92, 75, 0.12);
+  }
+  .bank-account-card.is-inactive .bank-type-pill {
+    background: var(--surface-muted);
+    color: var(--text-muted);
+    border-color: var(--border);
+  }
+  .bank-saldo-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    background: var(--surface-muted);
+    border: 1px solid var(--border-subtle);
+    margin-bottom: 12px;
+  }
+  .bank-saldo-row span { font-size: 11px; font-weight: 700; color: var(--text-light); text-transform: uppercase; }
+  .bank-saldo-row strong {
+    font-size: 1.35rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.03em;
+  }
+  .bank-saldo-row.is-neg strong { color: var(--danger); }
+  .bank-saldo-row:not(.is-neg) strong { color: var(--primary); }
+  .bank-month-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .bank-month-item {
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: var(--surface-muted);
+    border: 1px solid var(--border-subtle);
+    font-size: 11px;
+  }
+  .bank-month-item span { display: block; color: var(--text-light); font-weight: 600; margin-bottom: 2px; }
+  .bank-month-item strong { font-size: 13px; font-variant-numeric: tabular-nums; }
+  .bank-card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .bank-card-actions .btn { flex: 1 1 auto; min-width: 0; font-size: 11px; padding: 6px 8px; min-height: 30px; }
+  .bank-extrato-panel { margin-top: 4px; }
+  .bank-extrato-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .bank-extrato-head .panel-title { margin: 0; }
+  .bank-extrato-filters {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .bank-extrato-filters .form-group { margin: 0; }
+  .bank-extrato-filters label { font-size: 11px; font-weight: 700; color: var(--text-light); }
+  .bank-mov-table { min-width: 640px; }
+  .bank-mov-table .mov-entrada { color: var(--success); font-weight: 700; }
+  .bank-mov-table .mov-saida { color: var(--danger); font-weight: 700; }
+  .bank-mov-table .mov-transfer { color: var(--saldo); font-weight: 700; }
+  .bank-mov-table .mov-saldo-acum { font-weight: 700; font-variant-numeric: tabular-nums; color: var(--dark); }
+  .bank-conc-pill {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .bank-conc-pill.is-pendente { background: var(--warning-soft); color: var(--warning); }
+  .bank-conc-pill.is-conciliado { background: var(--success-soft); color: var(--success); }
+  .bank-conc-pill.is-ignorado { background: var(--surface-muted); color: var(--text-muted); }
+  .conta-drawer-backdrop {
+    position: fixed; inset: 0; z-index: 1200;
+    background: rgba(15, 23, 42, 0.45);
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+  }
+  .conta-drawer-backdrop.is-visible { opacity: 1; visibility: visible; }
+  .conta-drawer {
+    position: fixed; top: 0; right: 0; z-index: 1201;
+    width: min(420px, 100vw); height: 100%;
+    background: var(--card-bg);
+    border-left: 1px solid var(--border);
+    box-shadow: -8px 0 32px rgba(15, 23, 42, 0.12);
+    transform: translateX(100%);
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex; flex-direction: column;
+  }
+  .conta-drawer.is-open { transform: translateX(0); }
+  .conta-drawer-head {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 12px; padding: 18px 20px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface-muted);
+  }
+  .conta-drawer-title { font-size: 16px; font-weight: 800; color: var(--dark); margin: 0; }
+  .conta-drawer-sub { font-size: 12px; color: var(--text-light); margin-top: 4px; }
+  .conta-drawer-close {
+    width: 32px; height: 32px; border: none; border-radius: 8px;
+    background: var(--card-bg); color: var(--text-light); font-size: 20px; cursor: pointer;
+  }
+  .conta-drawer-body { flex: 1; overflow-y: auto; padding: 18px 20px; }
+  .conta-drawer-actions { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
+  body.conta-drawer-open { overflow: hidden; }
+  @media (max-width: 900px) {
+    .bank-kpi-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .bank-extrato-filters { grid-template-columns: 1fr 1fr; }
+    .bank-cards-grid { grid-template-columns: 1fr; }
+    .bank-card-actions .btn { flex: 1 1 calc(50% - 6px); }
+  }
+  @media (max-width: 480px) {
+    .bank-kpi-strip { grid-template-columns: 1fr; }
+    .bank-extrato-filters { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body class="modo-pc">
@@ -7332,11 +7569,12 @@
             <span class="menu-section-title">Financeiro</span>
             <span class="menu-section-sub">Lançamentos, metas e contas</span>
           </span>
-          <span class="menu-section-count">6</span>
+          <span class="menu-section-count">7</span>
           <span class="menu-section-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
         </button>
         <div class="menu-section-body" id="menuBodyFinanceiro">
           <button type="button" class="menu-item" data-module="lancamentos" data-section="financeiro"><span class="menu-dot" aria-hidden="true"></span><span class="menu-label">Lançamentos</span><span class="menu-badge hidden" id="badgeLanc">0</span></button>
+          <button type="button" class="menu-item" data-module="contas" data-section="financeiro"><span class="menu-dot" aria-hidden="true"></span><span class="menu-label">Contas bancárias</span></button>
           <button type="button" class="menu-item" data-module="metas" data-section="financeiro"><span class="menu-dot" aria-hidden="true"></span><span class="menu-label">Metas do mês</span></button>
           <button type="button" class="menu-item" data-module="gastos" data-section="financeiro"><span class="menu-dot" aria-hidden="true"></span><span class="menu-label">Controle de gastos</span></button>
           <button type="button" class="menu-item" data-module="planejamento" data-section="financeiro"><span class="menu-dot" aria-hidden="true"></span><span class="menu-label">Planejamento</span></button>
@@ -7783,6 +8021,10 @@
                 <label for="fStatus">Situação</label>
                 <select id="fStatus" class="form-control"><option value="pendente">Pendente</option><option value="pago">Pago</option></select>
               </div>
+              <div class="form-group lanc-span-full">
+                <label for="fConta">Conta bancária</label>
+                <select id="fConta" class="form-control"><option value="">Nenhuma</option></select>
+              </div>
             </div>
 
             <details class="lanc-form-more">
@@ -7812,6 +8054,194 @@
             </div>
           </div>
         </aside>
+      </section>
+
+      <!-- Contas Bancárias -->
+      <section id="mod-contas" class="module hidden">
+        <div class="module-hero-stack">
+        <div class="mod-hero-pro module-hero bank-hero-pro no-print">
+          <div class="bank-hero-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10h18M7 15h1m4 0h1m-8 5h12a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2z"/></svg>
+          </div>
+          <div class="mod-hero-pro-body">
+            <div class="mod-hero-pro-meta"><span class="mod-hero-month" id="bankHeroMes">—</span></div>
+            <p class="mod-hero-eyebrow">Patrimônio</p>
+            <h3 class="mod-hero-title">Contas Bancárias</h3>
+            <p class="mod-hero-desc">Cadastre contas, acompanhe saldos, movimentações e transferências internas.</p>
+          </div>
+          <div class="mod-hero-pro-actions no-print">
+            <button type="button" class="btn btn-primary btn-sm" onclick="focarNovaConta()">Adicionar conta</button>
+            <button type="button" class="btn btn-outline btn-sm" onclick="abrirModalTransferencia()">Transferir</button>
+          </div>
+        </div>
+        <div class="module-kpi-float-wrap">
+          <div class="bank-kpi-strip module-kpi-float" id="bankKpiStrip" aria-label="Resumo das contas"></div>
+        </div>
+        </div>
+
+        <div id="contasListView">
+          <div id="contasCardsGrid" class="bank-cards-grid"></div>
+          <div id="contasEmptyWrap"></div>
+        </div>
+
+        <div id="contasExtratoView" class="bank-extrato-panel hidden">
+          <div class="panel">
+            <div class="bank-extrato-head">
+              <div>
+                <div class="panel-title" id="bankExtratoTitle">Extrato da conta</div>
+                <p class="pro-muted" style="margin:4px 0 0;font-size:13px;" id="bankExtratoSub"></p>
+              </div>
+              <div class="flex gap-2" style="flex-wrap:wrap;">
+                <button type="button" class="btn btn-outline btn-sm" onclick="fecharExtratoConta()">← Voltar</button>
+                <button type="button" class="btn btn-primary btn-sm" onclick="abrirModalTransferencia(document.getElementById('contaExtratoId')?.value)">Transferir</button>
+              </div>
+            </div>
+            <input type="hidden" id="contaExtratoId" value="">
+            <div class="bank-extrato-filters no-print">
+              <div class="form-group">
+                <label for="fExtInicio">Data inicial</label>
+                <input type="date" id="fExtInicio" class="form-control" onchange="renderExtratoConta()">
+              </div>
+              <div class="form-group">
+                <label for="fExtFim">Data final</label>
+                <input type="date" id="fExtFim" class="form-control" onchange="renderExtratoConta()">
+              </div>
+              <div class="form-group">
+                <label for="fExtTipo">Tipo</label>
+                <select id="fExtTipo" class="form-control" onchange="renderExtratoConta()">
+                  <option value="">Todos</option>
+                  <option value="entrada">Entradas</option>
+                  <option value="saida">Saídas</option>
+                  <option value="transferencia">Transferências</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="fExtConc">Conciliação</label>
+                <select id="fExtConc" class="form-control" onchange="renderExtratoConta()">
+                  <option value="">Todas</option>
+                  <option value="pendente">Pendente</option>
+                  <option value="conciliado">Conciliado</option>
+                  <option value="ignorado">Ignorado</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="fExtCat">Categoria</label>
+                <select id="fExtCat" class="form-control" onchange="renderExtratoConta()"><option value="">Todas</option></select>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="bank-mov-table">
+                <thead>
+                  <tr>
+                    <th>Data</th>
+                    <th>Descrição</th>
+                    <th>Categoria</th>
+                    <th>Tipo</th>
+                    <th class="col-valor">Valor</th>
+                    <th class="col-valor">Saldo</th>
+                    <th>Conciliação</th>
+                    <th class="col-acoes no-print">Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="bankExtratoBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="conta-drawer-backdrop" id="contaDrawerBackdrop" onclick="fecharDrawerConta()" aria-hidden="true"></div>
+        <aside class="conta-drawer" id="contaDrawer" role="dialog" aria-modal="true" aria-labelledby="formContaTitle" aria-hidden="true">
+          <div class="conta-drawer-head">
+            <div>
+              <h4 class="conta-drawer-title" id="formContaTitle">Nova conta</h4>
+              <p class="conta-drawer-sub">Cadastre uma conta para acompanhar saldos e movimentações</p>
+            </div>
+            <button type="button" class="conta-drawer-close" onclick="fecharDrawerConta()" aria-label="Fechar">×</button>
+          </div>
+          <div class="conta-drawer-body">
+            <div class="form-group">
+              <label for="fContaNome">Nome da conta *</label>
+              <input type="text" id="fContaNome" class="form-control" placeholder="Ex.: Conta principal, Poupança viagem...">
+            </div>
+            <div class="form-group">
+              <label for="fContaBanco">Banco</label>
+              <input type="text" id="fContaBanco" class="form-control" placeholder="Ex.: Nubank, Itaú, Caixa...">
+            </div>
+            <div class="form-group">
+              <label for="fContaTipo">Tipo da conta *</label>
+              <select id="fContaTipo" class="form-control">
+                <option value="corrente">Conta corrente</option>
+                <option value="poupanca">Poupança</option>
+                <option value="carteira">Carteira</option>
+                <option value="dinheiro">Dinheiro</option>
+                <option value="pre_pago">Cartão pré-pago</option>
+                <option value="investimento">Investimento</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="fContaSaldoIni">Saldo inicial (R$)</label>
+              <input type="number" id="fContaSaldoIni" class="form-control" step="0.01" placeholder="0,00">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="fContaCor">Cor de identificação</label>
+                <input type="color" id="fContaCor" class="form-control" value="#1e5c4b">
+              </div>
+              <div class="form-group">
+                <label for="fContaStatus">Status</label>
+                <select id="fContaStatus" class="form-control">
+                  <option value="ativa">Ativa</option>
+                  <option value="inativa">Inativa</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="fContaObs">Observação</label>
+              <input type="text" id="fContaObs" class="form-control" placeholder="Notas sobre esta conta">
+            </div>
+            <div class="conta-drawer-actions">
+              <button type="button" class="btn btn-primary" id="btnSalvarConta" onclick="salvarContaBancaria()">Salvar conta</button>
+              <button type="button" class="btn btn-outline hidden" id="btnCancelConta" onclick="cancelarEdicaoConta()">Cancelar edição</button>
+            </div>
+          </div>
+        </aside>
+
+        <div class="modal-overlay hidden" id="modalTransferencia">
+          <div class="modal-box" style="max-width:480px;">
+            <div class="modal-title">Transferir entre contas</div>
+            <p class="pro-muted" style="font-size:13px;margin-bottom:14px;line-height:1.5;">A transferência movimenta saldos entre contas sem registrar receita ou despesa do mês.</p>
+            <div class="form-group">
+              <label for="fTransOrigem">Conta origem *</label>
+              <select id="fTransOrigem" class="form-control"></select>
+            </div>
+            <div class="form-group">
+              <label for="fTransDestino">Conta destino *</label>
+              <select id="fTransDestino" class="form-control"></select>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="fTransValor">Valor (R$) *</label>
+                <input type="number" id="fTransValor" class="form-control" step="0.01" min="0" placeholder="0,00">
+              </div>
+              <div class="form-group">
+                <label for="fTransData">Data *</label>
+                <input type="date" id="fTransData" class="form-control">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="fTransDesc">Descrição</label>
+              <input type="text" id="fTransDesc" class="form-control" placeholder="Ex.: Reserva de emergência">
+            </div>
+            <div class="form-group">
+              <label for="fTransCat">Categoria (opcional)</label>
+              <select id="fTransCat" class="form-control"><option value="">—</option></select>
+            </div>
+            <div style="display:flex;gap:10px;margin-top:16px;">
+              <button type="button" class="btn btn-primary" style="flex:1;" onclick="executarTransferencia()">Confirmar transferência</button>
+              <button type="button" class="btn btn-outline" style="flex:1;" onclick="fecharModalTransferencia()">Cancelar</button>
+            </div>
+          </div>
+        </div>
       </section>
 
       <!-- Metas -->
@@ -8830,6 +9260,11 @@ let promocoesMercado = carregarLocal('promocoesMercado', []);
 if(!Array.isArray(promocoesMercado)) promocoesMercado = [];
 let chatHistorico = carregarLocal('chatHistorico', []);
 if(!Array.isArray(chatHistorico)) chatHistorico = [];
+let contasBancarias = carregarLocal('contasBancarias', []);
+if(!Array.isArray(contasBancarias)) contasBancarias = [];
+let movimentacoesConta = carregarLocal('movimentacoesConta', []);
+if(!Array.isArray(movimentacoesConta)) movimentacoesConta = [];
+let editContaId = null;
 
 let categorias = carregarLocal('categorias', ['Moradia', 'Alimentação', 'Transporte', 'Saúde', 'Educação', 'Lazer', 'Outros']);
 let categoriasDetalhes = carregarLocal('categoriasDetalhes', {});
@@ -9096,8 +9531,10 @@ function generateId() { return Date.now().toString(36) + Math.random().toString(
 async function salvarLancamento() {
   const desc = document.getElementById('fDesc').value.trim(); const val = Number(document.getElementById('fValor').value); const venc = document.getElementById('fVenc').value;
   if(!desc||!val||!venc||val<=0) return showToast("Preencha Descrição, Valor e Vencimento.", "error");
-  
-  const obj = { id: editLancId || generateId(), descricao: desc, valor: val, vencimento: venc, tipo: document.getElementById('fTipo').value, categoria: document.getElementById('fCat').value, status: document.getElementById('fStatus').value, formaPagamento: document.getElementById('fPgto').value, responsavel: document.getElementById('fResp').value, observacao: document.getElementById('fObs').value };
+  const contaId = document.getElementById('fConta')?.value || '';
+  const oldLanc = editLancId ? { ...dados.find(d => d.id === editLancId) } : null;
+  const obj = { id: editLancId || generateId(), descricao: desc, valor: val, vencimento: venc, tipo: document.getElementById('fTipo').value, categoria: document.getElementById('fCat').value, status: document.getElementById('fStatus').value, formaPagamento: document.getElementById('fPgto').value, responsavel: document.getElementById('fResp').value, observacao: document.getElementById('fObs').value, contaId: contaId || undefined };
+  if(!obj.contaId) delete obj.contaId;
   
   document.getElementById('btnSalvarLanc').disabled = true;
   
@@ -9112,7 +9549,9 @@ async function salvarLancamento() {
       const idx = dados.findIndex(d => d.id === editLancId);
       if(idx !== -1) Object.assign(dados[idx], obj);
     } else { dados.push(obj); }
-    salvarLocal('dados', dados); processarDadosGlobais();
+    salvarLocal('dados', dados);
+    sincronizarMovimentacaoLancamento(obj, oldLanc);
+    processarDadosGlobais();
   }
   
   document.getElementById('btnSalvarLanc').disabled = false;
@@ -9123,13 +9562,13 @@ async function salvarLancamento() {
 
 async function pagarLancamento(id) { 
   if (USAR_SUPABASE && supabase && currentGroupId) { await supabase.from('lancamentos').update({ status: 'pago' }).eq('id', id); carregarTudoSupabase(); }
-  else { const i = dados.find(d=>d.id===id); if(i) { i.status = 'pago'; salvarLocal('dados', dados); processarDadosGlobais(); } }
+  else { const i = dados.find(d=>d.id===id); if(i) { i.status = 'pago'; salvarLocal('dados', dados); sincronizarMovimentacaoLancamento(i); processarDadosGlobais(); } }
   showToast("Pago!"); 
 }
 async function excluirLancamento(id) { 
   if(!confirm("Excluir?")) return;
   if (USAR_SUPABASE && supabase && currentGroupId) { await supabase.from('lancamentos').delete().eq('id', id); carregarTudoSupabase(); }
-  else { dados = dados.filter(d=>d.id!==id); salvarLocal('dados', dados); processarDadosGlobais(); }
+  else { removerMovimentacaoPorLancamento(id); dados = dados.filter(d=>d.id!==id); salvarLocal('dados', dados); processarDadosGlobais(); }
   showToast("Excluído", "warning"); 
 }
 
@@ -9572,6 +10011,7 @@ const titulosModulos = {
   dashboard: "Dashboard",
   assistente: "Assistente",
   lancamentos: "Lançamentos",
+  contas: "Contas bancárias",
   metas: "Metas do mês",
   gastos: "Controle de gastos",
   planejamento: "Planejamento",
@@ -9587,6 +10027,7 @@ const SUBTITULOS_MODULOS = {
   dashboard: 'Visão consolidada do período',
   assistente: 'Análises e alertas locais',
   lancamentos: 'Receitas, despesas e filtros',
+  contas: 'Saldos, extrato e transferências',
   metas: 'Objetivos de economia do mês',
   gastos: 'Limites e consumo por categoria',
   planejamento: 'Compromissos futuros',
@@ -9627,7 +10068,7 @@ function toggleMenu() {
   document.getElementById('overlayMenu').classList.toggle('active', open);
   document.body.classList.toggle('menu-drawer-open', open);
 }
-const MODULO_MENU_SECAO = { dashboard:'geral', assistente:'geral', lancamentos:'financeiro', metas:'financeiro', gastos:'financeiro', planejamento:'financeiro', recorrentes:'financeiro', parcelamentos:'financeiro', mercado:'utilitarios', categorias:'utilitarios', relatorios:'utilitarios', configuracoes:'sistema', backup:'sistema' };
+const MODULO_MENU_SECAO = { dashboard:'geral', assistente:'geral', lancamentos:'financeiro', contas:'financeiro', metas:'financeiro', gastos:'financeiro', planejamento:'financeiro', recorrentes:'financeiro', parcelamentos:'financeiro', mercado:'utilitarios', categorias:'utilitarios', relatorios:'utilitarios', configuracoes:'sistema', backup:'sistema' };
 function aplicarMenuSections(){
   if(!config.menuSections) config.menuSections={...CONFIG_PADRAO.menuSections};
   document.querySelectorAll('.menu-section[data-section]').forEach(sec=>{
@@ -9697,6 +10138,20 @@ function getLancamentosFiltrados(mes = getMesGlobal()) { return mes ? dados.filt
 function popularSelectCategorias() {
   const options = [...new Set(categorias)].sort().map(c => `<option value="${c}">${c}</option>`).join('');
   ['fCat', 'fOrcCat', 'fFutCat', 'fRecCat', 'fParCat'].forEach(id => { const el = document.getElementById(id); if(el) el.innerHTML = options; });
+  const fTrans = document.getElementById('fTransCat'); if(fTrans) fTrans.innerHTML = '<option value="">—</option>' + options;
+  const fExt = document.getElementById('fExtCat'); if(fExt) fExt.innerHTML = '<option value="">Todas</option>' + options;
+  popularSelectContas();
+}
+function popularSelectContas(){
+  const ativas = contasBancarias.filter(c => c.status !== 'inativa');
+  const opts = ativas.map(c => `<option value="${escAttr(c.id)}">${esc(c.nome)}${c.banco ? ' · '+esc(c.banco) : ''}</option>`).join('');
+  const optsAll = contasBancarias.map(c => `<option value="${escAttr(c.id)}">${esc(c.nome)}${c.status==='inativa'?' (inativa)':''}</option>`).join('');
+  const fConta = document.getElementById('fConta');
+  if(fConta) fConta.innerHTML = '<option value="">Nenhuma</option>' + opts;
+  ['fTransOrigem','fTransDestino'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.innerHTML = '<option value="">Selecione...</option>' + optsAll;
+  });
 }
 function popularDatalistDescricao() {
   const setDesc = new Set(); dados.forEach(i => setDesc.add(i.descricao));
@@ -9706,7 +10161,7 @@ function popularDatalistDescricao() {
 
 function processarDadosGlobais() {
   popularSelectCategorias(); popularDatalistDescricao(); analisarIA();
-  renderDashboard(); renderLancamentos(); renderMetas(); renderOrcamento(); renderFuturo(); renderRecorrentes(); renderParcelamentos(); renderCategorias(); renderListaMercado(); gerarRelatorioTela();
+  renderDashboard(); renderLancamentos(); renderContas(); renderMetas(); renderOrcamento(); renderFuturo(); renderRecorrentes(); renderParcelamentos(); renderCategorias(); renderListaMercado(); gerarRelatorioTela();
   const modAtivo = document.querySelector('.menu-item.active')?.dataset?.module || 'dashboard';
   atualizarHeaderContext(modAtivo);
   
@@ -9735,6 +10190,8 @@ function editarLancamento(id) {
   document.getElementById('fPgto').value = item.formaPagamento || 'Outro';
   document.getElementById('fResp').value = item.responsavel || '';
   document.getElementById('fObs').value = item.observacao || '';
+  const fConta = document.getElementById('fConta');
+  if(fConta) fConta.value = item.contaId || '';
   const more = pForm.querySelector('.lanc-form-more');
   if (more && (item.formaPagamento || item.responsavel || item.observacao)) more.open = true;
   setTimeout(() => { abrirDrawerLanc(); document.getElementById('fDesc')?.focus(); }, 80);
@@ -9754,7 +10211,399 @@ function cancelarEdicaoLancamento() {
   limparFormLanc();
   fecharDrawerLanc();
 }
-function limparFormLanc() { ['fDesc','fValor','fVenc','fResp','fObs'].forEach(id => document.getElementById(id).value = ''); document.getElementById('fStatus').value = 'pendente'; }
+function limparFormLanc() { ['fDesc','fValor','fVenc','fResp','fObs'].forEach(id => document.getElementById(id).value = ''); document.getElementById('fStatus').value = 'pendente'; const fc=document.getElementById('fConta'); if(fc) fc.value=''; }
+
+/* CONTAS BANCÁRIAS */
+const TIPOS_CONTA_LABEL = { corrente:'Conta corrente', poupanca:'Poupança', carteira:'Carteira', dinheiro:'Dinheiro', pre_pago:'Cartão pré-pago', investimento:'Investimento' };
+const TIPOS_CONTA_RESERVA = ['poupanca','investimento'];
+function labelTipoConta(t){ return TIPOS_CONTA_LABEL[t] || t || '—'; }
+function getContaById(id){ return contasBancarias.find(c => c.id === id); }
+function calcularSaldoConta(contaId){
+  const conta = getContaById(contaId);
+  if(!conta) return 0;
+  let saldo = Number(conta.saldoInicial || 0);
+  movimentacoesConta.filter(m => m.contaId === contaId).forEach(m => {
+    const v = Number(m.valor || 0);
+    if(m.tipo === 'entrada' || m.tipo === 'transferencia_entrada') saldo += v;
+    else if(m.tipo === 'saida' || m.tipo === 'transferencia_saida') saldo -= v;
+  });
+  return saldo;
+}
+function statsContaMes(contaId, mes){
+  const movs = movimentacoesConta.filter(m => m.contaId === contaId && (!mes || (m.data && m.data.startsWith(mes))));
+  const entradas = movs.filter(m => m.tipo === 'entrada' || m.tipo === 'transferencia_entrada').reduce((s,m) => s + Number(m.valor||0), 0);
+  const saidas = movs.filter(m => m.tipo === 'saida' || m.tipo === 'transferencia_saida').reduce((s,m) => s + Number(m.valor||0), 0);
+  return { entradas, saidas };
+}
+function ultimaMovimentacaoConta(contaId){
+  const movs = movimentacoesConta.filter(m => m.contaId === contaId).sort((a,b) => (b.data||'').localeCompare(a.data||''));
+  return movs[0] || null;
+}
+function labelMovTipo(t){
+  if(t === 'entrada') return 'Entrada';
+  if(t === 'saida') return 'Saída';
+  if(t === 'transferencia_entrada' || t === 'transferencia_saida') return 'Transferência';
+  return t;
+}
+function classeMovValor(t){
+  if(t === 'entrada') return 'mov-entrada';
+  if(t === 'saida') return 'mov-saida';
+  return 'mov-transfer';
+}
+function sinalMovValor(t, v){
+  const n = Number(v||0);
+  if(t === 'entrada' || t === 'transferencia_entrada') return '+' + formatMoeda(n);
+  if(t === 'saida' || t === 'transferencia_saida') return '−' + formatMoeda(n);
+  return formatMoeda(n);
+}
+function removerMovimentacaoPorLancamento(lancId){
+  if(!lancId) return;
+  const antes = movimentacoesConta.length;
+  movimentacoesConta = movimentacoesConta.filter(m => m.lancamentoId !== lancId);
+  if(movimentacoesConta.length !== antes) salvarLocal('movimentacoesConta', movimentacoesConta);
+}
+function sincronizarMovimentacaoLancamento(lanc, oldLanc){
+  if(!lanc?.id) return;
+  if(oldLanc?.id && oldLanc.id !== lanc.id) removerMovimentacaoPorLancamento(oldLanc.id);
+  const isPago = lanc.status === 'pago';
+  const contaId = lanc.contaId || '';
+  if(!isPago || !contaId){
+    removerMovimentacaoPorLancamento(lanc.id);
+    return;
+  }
+  const tipo = lanc.tipo === 'receita' ? 'entrada' : 'saida';
+  const existing = movimentacoesConta.find(m => m.lancamentoId === lanc.id);
+  const mov = {
+    id: existing?.id || generateId(),
+    contaId,
+    lancamentoId: lanc.id,
+    tipo,
+    valor: Number(lanc.valor || 0),
+    data: lanc.vencimento || hojeISO(),
+    descricao: lanc.descricao || 'Lançamento',
+    categoria: lanc.categoria || '',
+    conciliacao: existing?.conciliacao || 'pendente'
+  };
+  if(existing) Object.assign(existing, mov);
+  else movimentacoesConta.push(mov);
+  salvarLocal('movimentacoesConta', movimentacoesConta);
+}
+function abrirDrawerConta(){
+  const drawer = document.getElementById('contaDrawer');
+  const backdrop = document.getElementById('contaDrawerBackdrop');
+  if(!drawer) return;
+  drawer.classList.add('is-open');
+  drawer.setAttribute('aria-hidden','false');
+  backdrop?.classList.add('is-visible');
+  backdrop?.setAttribute('aria-hidden','false');
+  document.body.classList.add('conta-drawer-open');
+}
+function fecharDrawerConta(){
+  const drawer = document.getElementById('contaDrawer');
+  const backdrop = document.getElementById('contaDrawerBackdrop');
+  if(!drawer) return;
+  drawer.classList.remove('is-open');
+  drawer.setAttribute('aria-hidden','true');
+  backdrop?.classList.remove('is-visible');
+  backdrop?.setAttribute('aria-hidden','true');
+  document.body.classList.remove('conta-drawer-open');
+}
+function limparFormConta(){
+  ['fContaNome','fContaBanco','fContaObs'].forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
+  const si=document.getElementById('fContaSaldoIni'); if(si) si.value='';
+  const tp=document.getElementById('fContaTipo'); if(tp) tp.value='corrente';
+  const st=document.getElementById('fContaStatus'); if(st) st.value='ativa';
+  const cr=document.getElementById('fContaCor'); if(cr) cr.value='#1e5c4b';
+}
+function focarNovaConta(){
+  abrirModulo('contas');
+  cancelarEdicaoConta();
+  setTimeout(() => { abrirDrawerConta(); document.getElementById('fContaNome')?.focus(); }, 120);
+}
+function salvarContaBancaria(){
+  const nome = document.getElementById('fContaNome')?.value?.trim();
+  const tipo = document.getElementById('fContaTipo')?.value;
+  if(!nome) return showToast('Informe o nome da conta.', 'error');
+  const obj = {
+    id: editContaId || generateId(),
+    nome,
+    banco: document.getElementById('fContaBanco')?.value?.trim() || '',
+    tipo: tipo || 'corrente',
+    saldoInicial: Number(document.getElementById('fContaSaldoIni')?.value || 0),
+    cor: document.getElementById('fContaCor')?.value || '#1e5c4b',
+    status: document.getElementById('fContaStatus')?.value || 'ativa',
+    observacao: document.getElementById('fContaObs')?.value?.trim() || ''
+  };
+  if(editContaId){
+    const idx = contasBancarias.findIndex(c => c.id === editContaId);
+    if(idx !== -1){
+      const old = contasBancarias[idx];
+      const saldoInput = document.getElementById('fContaSaldoIni')?.value;
+      obj.saldoInicial = saldoInput !== '' ? Number(saldoInput || 0) : Number(old.saldoInicial || 0);
+      Object.assign(contasBancarias[idx], obj);
+    }
+  } else {
+    contasBancarias.push(obj);
+  }
+  salvarLocal('contasBancarias', contasBancarias);
+  showToast(editContaId ? 'Conta atualizada!' : 'Conta cadastrada!');
+  cancelarEdicaoConta();
+  fecharDrawerConta();
+  renderContas();
+  popularSelectContas();
+}
+function editarContaBancaria(id){
+  const c = getContaById(id);
+  if(!c) return;
+  editContaId = id;
+  document.getElementById('formContaTitle').innerText = 'Editar conta';
+  document.getElementById('btnSalvarConta').innerText = 'Salvar alterações';
+  document.getElementById('btnCancelConta')?.classList.remove('hidden');
+  document.getElementById('fContaNome').value = c.nome || '';
+  document.getElementById('fContaBanco').value = c.banco || '';
+  document.getElementById('fContaTipo').value = c.tipo || 'corrente';
+  document.getElementById('fContaSaldoIni').value = c.saldoInicial ?? '';
+  document.getElementById('fContaCor').value = c.cor || '#1e5c4b';
+  document.getElementById('fContaStatus').value = c.status || 'ativa';
+  document.getElementById('fContaObs').value = c.observacao || '';
+  abrirModulo('contas');
+  setTimeout(() => { abrirDrawerConta(); document.getElementById('fContaNome')?.focus(); }, 80);
+}
+function cancelarEdicaoConta(){
+  editContaId = null;
+  document.getElementById('formContaTitle').innerText = 'Nova conta';
+  document.getElementById('btnSalvarConta').innerText = 'Salvar conta';
+  document.getElementById('btnCancelConta')?.classList.add('hidden');
+  limparFormConta();
+}
+function arquivarContaBancaria(id){
+  const c = getContaById(id);
+  if(!c) return;
+  const arquivar = c.status !== 'inativa';
+  const msg = arquivar ? 'Arquivar esta conta? Ela ficará inativa mas o histórico será mantido.' : 'Reativar esta conta?';
+  if(!confirm(msg)) return;
+  c.status = arquivar ? 'inativa' : 'ativa';
+  salvarLocal('contasBancarias', contasBancarias);
+  renderContas();
+  popularSelectContas();
+  showToast(arquivar ? 'Conta arquivada.' : 'Conta reativada.');
+}
+function abrirExtratoConta(id){
+  const c = getContaById(id);
+  if(!c) return;
+  document.getElementById('contaExtratoId').value = id;
+  document.getElementById('bankExtratoTitle').innerText = `Extrato · ${c.nome}`;
+  document.getElementById('bankExtratoSub').innerText = `${c.banco || 'Sem banco'} · ${labelTipoConta(c.tipo)} · Saldo atual: ${formatMoeda(calcularSaldoConta(id))}`;
+  document.getElementById('contasListView').classList.add('hidden');
+  document.getElementById('contasExtratoView').classList.remove('hidden');
+  const mes = getMesGlobal();
+  const ini = document.getElementById('fExtInicio');
+  const fim = document.getElementById('fExtFim');
+  if(ini && mes) ini.value = `${mes}-01`;
+  if(fim && mes){
+    const p = mes.split('-');
+    const ult = new Date(Number(p[0]), Number(p[1]), 0).getDate();
+    fim.value = `${mes}-${String(ult).padStart(2,'0')}`;
+  }
+  renderExtratoConta();
+  abrirModulo('contas');
+}
+function fecharExtratoConta(){
+  document.getElementById('contaExtratoId').value = '';
+  document.getElementById('contasExtratoView').classList.add('hidden');
+  document.getElementById('contasListView').classList.remove('hidden');
+}
+function filtrarMovimentacoesExtrato(contaId){
+  let movs = movimentacoesConta.filter(m => m.contaId === contaId);
+  const ini = document.getElementById('fExtInicio')?.value;
+  const fim = document.getElementById('fExtFim')?.value;
+  const tipo = document.getElementById('fExtTipo')?.value;
+  const conc = document.getElementById('fExtConc')?.value;
+  const cat = document.getElementById('fExtCat')?.value;
+  if(ini) movs = movs.filter(m => m.data >= ini);
+  if(fim) movs = movs.filter(m => m.data <= fim);
+  if(tipo === 'entrada') movs = movs.filter(m => m.tipo === 'entrada');
+  else if(tipo === 'saida') movs = movs.filter(m => m.tipo === 'saida');
+  else if(tipo === 'transferencia') movs = movs.filter(m => m.tipo === 'transferencia_entrada' || m.tipo === 'transferencia_saida');
+  if(conc) movs = movs.filter(m => (m.conciliacao || 'pendente') === conc);
+  if(cat) movs = movs.filter(m => m.categoria === cat);
+  return movs.sort((a,b) => (a.data||'').localeCompare(b.data||'') || String(a.id).localeCompare(String(b.id)));
+}
+function renderExtratoConta(){
+  const contaId = document.getElementById('contaExtratoId')?.value;
+  const tbody = document.getElementById('bankExtratoBody');
+  if(!tbody || !contaId) return;
+  const conta = getContaById(contaId);
+  if(!conta){ tbody.innerHTML = emptyStateRow(8,{icon:'🏦',title:'Conta não encontrada',msg:'Selecione outra conta na lista.'}); return; }
+  const movs = filtrarMovimentacoesExtrato(contaId);
+  if(!movs.length){
+    tbody.innerHTML = emptyStateRow(8,{icon:'📋',title:'Nenhuma movimentação',msg:'Não há movimentações para os filtros selecionados.',btnLabel:'Adicionar conta',btn:'focarNovaConta()'});
+    return;
+  }
+  const todas = movimentacoesConta.filter(m => m.contaId === contaId).sort((a,b) => (a.data||'').localeCompare(b.data||'') || String(a.id).localeCompare(String(b.id)));
+  let saldoAcum = Number(conta.saldoInicial || 0);
+  const saldoPorMov = {};
+  todas.forEach(m => {
+    const v = Number(m.valor || 0);
+    if(m.tipo === 'entrada' || m.tipo === 'transferencia_entrada') saldoAcum += v;
+    else saldoAcum -= v;
+    saldoPorMov[m.id] = saldoAcum;
+  });
+  tbody.innerHTML = movs.map(m => {
+    const conc = m.conciliacao || 'pendente';
+    return `<tr>
+      <td>${formatData(m.data)}</td>
+      <td><strong>${esc(m.descricao)}</strong>${m.lancamentoId ? '<div class="lanc-meta-sub">Vinculado a lançamento</div>' : ''}</td>
+      <td>${esc(m.categoria || '—')}</td>
+      <td>${esc(labelMovTipo(m.tipo))}</td>
+      <td class="col-valor ${classeMovValor(m.tipo)}">${sinalMovValor(m.tipo, m.valor)}</td>
+      <td class="col-valor mov-saldo-acum">${formatMoeda(saldoPorMov[m.id] ?? 0)}</td>
+      <td><span class="bank-conc-pill is-${conc}">${esc(conc)}</span></td>
+      <td class="col-acoes no-print">
+        <select class="form-control" style="min-height:30px;font-size:11px;padding:4px 6px;" onchange="alterarConciliacaoMov('${escAttr(m.id)}', this.value)" aria-label="Conciliação">
+          <option value="pendente" ${conc==='pendente'?'selected':''}>Pendente</option>
+          <option value="conciliado" ${conc==='conciliado'?'selected':''}>Conciliado</option>
+          <option value="ignorado" ${conc==='ignorado'?'selected':''}>Ignorado</option>
+        </select>
+      </td>
+    </tr>`;
+  }).join('');
+}
+function alterarConciliacaoMov(movId, status){
+  const m = movimentacoesConta.find(x => x.id === movId);
+  if(!m) return;
+  m.conciliacao = status;
+  salvarLocal('movimentacoesConta', movimentacoesConta);
+  renderExtratoConta();
+  renderContas();
+}
+function abrirModalTransferencia(origemPreset){
+  popularSelectContas();
+  const modal = document.getElementById('modalTransferencia');
+  if(!modal) return;
+  document.getElementById('fTransValor').value = '';
+  document.getElementById('fTransDesc').value = '';
+  document.getElementById('fTransData').value = hojeISO();
+  document.getElementById('fTransCat').value = '';
+  if(origemPreset) document.getElementById('fTransOrigem').value = origemPreset;
+  else document.getElementById('fTransOrigem').value = '';
+  document.getElementById('fTransDestino').value = '';
+  modal.classList.remove('hidden');
+  abrirModulo('contas');
+}
+function fecharModalTransferencia(){
+  document.getElementById('modalTransferencia')?.classList.add('hidden');
+}
+function executarTransferencia(){
+  const origem = document.getElementById('fTransOrigem')?.value;
+  const destino = document.getElementById('fTransDestino')?.value;
+  const valor = Number(document.getElementById('fTransValor')?.value);
+  const data = document.getElementById('fTransData')?.value;
+  const desc = document.getElementById('fTransDesc')?.value?.trim() || 'Transferência entre contas';
+  const cat = document.getElementById('fTransCat')?.value || '';
+  if(!origem || !destino || origem === destino) return showToast('Selecione contas de origem e destino diferentes.', 'error');
+  if(!valor || valor <= 0 || !data) return showToast('Informe valor e data válidos.', 'error');
+  if(calcularSaldoConta(origem) < valor) return showToast('Saldo insuficiente na conta de origem.', 'error');
+  const transferId = generateId();
+  movimentacoesConta.push({ id: generateId(), contaId: origem, transferId, tipo: 'transferencia_saida', valor, data, descricao: desc, categoria: cat, conciliacao: 'conciliado' });
+  movimentacoesConta.push({ id: generateId(), contaId: destino, transferId, tipo: 'transferencia_entrada', valor, data, descricao: desc, categoria: cat, conciliacao: 'conciliado' });
+  salvarLocal('movimentacoesConta', movimentacoesConta);
+  fecharModalTransferencia();
+  renderContas();
+  const extId = document.getElementById('contaExtratoId')?.value;
+  if(extId && (extId === origem || extId === destino)) renderExtratoConta();
+  showToast('Transferência registrada!');
+}
+function montarBankKpiStrip(){
+  const ativas = contasBancarias.filter(c => c.status === 'ativa');
+  const total = ativas.reduce((s,c) => s + calcularSaldoConta(c.id), 0);
+  const corrente = ativas.filter(c => c.tipo === 'corrente').reduce((s,c) => s + calcularSaldoConta(c.id), 0);
+  const reserva = ativas.filter(c => TIPOS_CONTA_RESERVA.includes(c.tipo)).reduce((s,c) => s + calcularSaldoConta(c.id), 0);
+  let ultima = null;
+  ativas.forEach(c => { const u = ultimaMovimentacaoConta(c.id); if(u && (!ultima || u.data > ultima.data)) ultima = u; });
+  const ultTxt = ultima ? formatData(ultima.data) : '—';
+  return [
+    { label:'Saldo total', value: formatMoeda(total), cls:'is-total' },
+    { label:'Conta corrente', value: formatMoeda(corrente), cls:'' },
+    { label:'Poupança / invest.', value: formatMoeda(reserva), cls:'is-info' },
+    { label:'Contas ativas', value: String(ativas.length), cls:'' },
+    { label:'Última mov.', value: ultTxt, cls:'' }
+  ].map(k => `<div class="bank-kpi-card ${k.cls}"><span>${esc(k.label)}</span><strong>${esc(k.value)}</strong></div>`).join('');
+}
+function montarBankAccountCard(c){
+  const mes = getMesGlobal();
+  const saldo = calcularSaldoConta(c.id);
+  const st = statsContaMes(c.id, mes);
+  const inativa = c.status === 'inativa';
+  const accent = c.cor || '#1e5c4b';
+  return `<div class="bank-account-card${inativa?' is-inactive':''}" style="--bank-accent:${escAttr(accent)}">
+    <div class="bank-account-card-accent"></div>
+    <div class="bank-account-card-body">
+      <div class="bank-account-card-top">
+        <div>
+          <strong>${esc(c.nome)}</strong>
+          <div class="bank-meta">${esc(c.banco || 'Sem banco')}</div>
+        </div>
+        <span class="bank-type-pill">${esc(labelTipoConta(c.tipo))}</span>
+      </div>
+      <div class="bank-saldo-row${saldo<0?' is-neg':''}">
+        <span>Saldo atual</span>
+        <strong>${formatMoeda(saldo)}</strong>
+      </div>
+      <div class="bank-month-split">
+        <div class="bank-month-item"><span>Entradas${mes?' do mês':''}</span><strong class="c-green">+${formatMoeda(st.entradas)}</strong></div>
+        <div class="bank-month-item"><span>Saídas${mes?' do mês':''}</span><strong class="c-red">−${formatMoeda(st.saidas)}</strong></div>
+      </div>
+      <div class="bank-card-actions no-print">
+        <button type="button" class="btn btn-primary btn-sm" onclick="abrirExtratoConta('${escAttr(c.id)}')">Ver extrato</button>
+        <button type="button" class="btn btn-outline btn-sm" onclick="editarContaBancaria('${escAttr(c.id)}')">Editar</button>
+        <button type="button" class="btn btn-outline btn-sm" onclick="abrirModalTransferencia('${escAttr(c.id)}')">Transferir</button>
+        <button type="button" class="btn btn-ghost btn-sm" onclick="arquivarContaBancaria('${escAttr(c.id)}')">${inativa?'Reativar':'Arquivar'}</button>
+      </div>
+    </div>
+  </div>`;
+}
+function renderContas(){
+  const mes = getMesGlobal();
+  const heroMes = document.getElementById('bankHeroMes');
+  if(heroMes) heroMes.textContent = mes ? formatMesExtenso(mes) : '—';
+  const kpi = document.getElementById('bankKpiStrip');
+  if(kpi) kpi.innerHTML = contasBancarias.length ? montarBankKpiStrip() : '';
+  const grid = document.getElementById('contasCardsGrid');
+  const empty = document.getElementById('contasEmptyWrap');
+  const ativasPrimeiro = [...contasBancarias].sort((a,b) => (a.status==='inativa')-(b.status==='inativa') || a.nome.localeCompare(b.nome));
+  if(!contasBancarias.length){
+    if(grid) grid.innerHTML = '';
+    if(empty) empty.innerHTML = emptyStateHtml({icon:'🏦',title:'Nenhuma conta bancária cadastrada.',msg:'Cadastre suas contas para acompanhar saldos, movimentações e transferências.',btnLabel:'Adicionar conta',btn:'focarNovaConta()'});
+    document.getElementById('contasListView')?.classList.remove('hidden');
+    document.getElementById('contasExtratoView')?.classList.add('hidden');
+    return;
+  }
+  if(empty) empty.innerHTML = '';
+  if(grid) grid.innerHTML = ativasPrimeiro.map(montarBankAccountCard).join('');
+  const extId = document.getElementById('contaExtratoId')?.value;
+  if(extId && !document.getElementById('contasExtratoView')?.classList.contains('hidden')) renderExtratoConta();
+}
+function migrarMovimentacoesBancarias(){
+  let alterou = false;
+  dados.forEach(l => {
+    if(l.status !== 'pago' || !l.contaId || !contasBancarias.some(c => c.id === l.contaId)) return;
+    if(movimentacoesConta.some(m => m.lancamentoId === l.id)) return;
+    movimentacoesConta.push({
+      id: generateId(),
+      contaId: l.contaId,
+      lancamentoId: l.id,
+      tipo: l.tipo === 'receita' ? 'entrada' : 'saida',
+      valor: Number(l.valor || 0),
+      data: l.vencimento || new Date().toISOString().slice(0, 10),
+      descricao: l.descricao || 'Lançamento',
+      categoria: l.categoria || '',
+      conciliacao: 'pendente'
+    });
+    alterou = true;
+  });
+  if(alterou) salvarLocal('movimentacoesConta', movimentacoesConta);
+}
 
 /* LISTA DE MERCADO — ETAPA 5 */
 const SUGESTOES_MERCADO = ['Arroz', 'Feijão', 'Leite', 'Café', 'Açúcar', 'Carne', 'Frango', 'Ovos', 'Detergente', 'Papel higiênico'];
@@ -10554,7 +11403,7 @@ function focarNovoParcelamento(){abrirModulo('parcelamentos');setTimeout(()=>{ab
 function focarItemMercado(){abrirModulo('mercado');setTimeout(()=>document.getElementById('inputItemMercado')?.focus(),120);}
 function irParaBackup(){abrirModulo('backup');}
 function validarAppLocal(){
-  ['dashboard','assistente','lancamentos','metas','gastos','planejamento','recorrentes','parcelamentos','mercado','categorias','relatorios','configuracoes','backup'].forEach(m=>{
+  ['dashboard','assistente','lancamentos','contas','metas','gastos','planejamento','recorrentes','parcelamentos','mercado','categorias','relatorios','configuracoes','backup'].forEach(m=>{
     if(!document.getElementById('mod-'+m)) console.warn('[FinançasCasa] Módulo ausente:',m);
   });
   try{localStorage.setItem('financasCasa_ping','1');localStorage.removeItem('financasCasa_ping');}catch(e){console.error('[FinançasCasa] localStorage indisponível:',e);}
@@ -10784,6 +11633,7 @@ function aprimorarEstruturaVisual(){
     document.addEventListener('keydown',e=>{
       if(e.key!=='Escape') return;
       if(document.getElementById('futDrawer')?.classList.contains('is-open')){ fecharDrawerFut(); return; }
+      if(document.getElementById('contaDrawer')?.classList.contains('is-open')){ fecharDrawerConta(); return; }
       if(document.getElementById('lancDrawer')?.classList.contains('is-open')){ fecharDrawerLanc(); return; }
       if(document.getElementById('sidebar')?.classList.contains('open')) toggleMenu();
     });
@@ -10954,7 +11804,7 @@ function renderConfigResumoDados(){
 }
 function contarRegistrosLocais(){
   const metasQtd=Object.values(metas||{}).reduce((s,a)=>s+(Array.isArray(a)?a.length:0),0);
-  return dados.length+categorias.length+metasQtd+listaMercado.length+(futuros||[]).length+(recorrentes||[]).length+(parcelamentos||[]).length+(historicoCopras||[]).length+(promocoesMercado||[]).length;
+  return dados.length+categorias.length+metasQtd+listaMercado.length+(futuros||[]).length+(recorrentes||[]).length+(parcelamentos||[]).length+(historicoCopras||[]).length+(promocoesMercado||[]).length+contasBancarias.length+movimentacoesConta.length;
 }
 function limparFiltrosRelatorio(){
   ['fRelTipo','fRelStatus','fRelCategoria','fRelResponsavel','fRelPagamento'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
@@ -11179,6 +12029,7 @@ function renderBackupInfo(){
     <div class="backup-stat"><span>Planejamento</span><strong>${(futuros||[]).length}</strong></div>
     <div class="backup-stat"><span>Recorrentes</span><strong>${(recorrentes||[]).length}</strong></div>
     <div class="backup-stat"><span>Parcelamentos</span><strong>${(parcelamentos||[]).length}</strong></div>
+    <div class="backup-stat"><span>Contas banc.</span><strong>${contasBancarias.length}</strong></div>
     <div class="backup-stat"><span>Hist. compras</span><strong>${(historicoCopras||[]).length}</strong></div>`;
 }
 function contarBackupPreview(b){
@@ -11192,8 +12043,9 @@ function contarBackupPreview(b){
     recorrentes:(b.recorrentes||[]).length,
     parcelamentos:(b.parcelamentos||[]).length,
     historico:(b.historicoCopras||[]).length,
+    contas:(b.contasBancarias||[]).length,
     config:cfg,
-    total:(b.dados||[]).length+(b.categorias||[]).length+Object.values(b.metas||{}).reduce((s,a)=>s+(Array.isArray(a)?a.length:0),0)+(b.listaMercado||[]).length+(b.futuros||[]).length+(b.recorrentes||[]).length+(b.parcelamentos||[]).length+(b.historicoCopras||[]).length
+    total:(b.dados||[]).length+(b.categorias||[]).length+Object.values(b.metas||{}).reduce((s,a)=>s+(Array.isArray(a)?a.length:0),0)+(b.listaMercado||[]).length+(b.futuros||[]).length+(b.recorrentes||[]).length+(b.parcelamentos||[]).length+(b.historicoCopras||[]).length+(b.contasBancarias||[]).length
   };
 }
 function cancelarImportacaoBackup(){backupPendente=null;const p=document.getElementById('backupPreview');if(p){p.classList.add('hidden');p.innerHTML='';}document.getElementById('btnConfirmarImportacao')?.classList.add('hidden');document.getElementById('btnCancelarImportacao')?.classList.add('hidden');const inp=document.getElementById('inputFileBackup');if(inp)inp.value='';}
@@ -12118,6 +12970,7 @@ function marcarParcelaPaga(lancId) {
   if (!item) return;
   item.status = 'pago';
   salvarLocal('dados', dados);
+  sincronizarMovimentacaoLancamento(item);
   processarDadosGlobais();
   const p = parcelamentos.find(x => x.id === item.parcelamentoId);
   if (p) verParcelas(p.id);
@@ -12470,7 +13323,7 @@ function autoAjuda(t){
 function exportarBackupJSON(){
   config.ultimoBackup=new Date().toISOString();
   salvarLocal('config',config);
-  baixarArquivo(`financas_casa_backup_${new Date().toISOString().split('T')[0]}.json`,JSON.stringify({dados,metas,orcamentos,futuros,recorrentes,parcelamentos,categorias,categoriasDetalhes,listaMercado,historicoCopras,promocoesMercado,config},null,2),'application/json;charset=utf-8');
+  baixarArquivo(`financas_casa_backup_${new Date().toISOString().split('T')[0]}.json`,JSON.stringify({dados,metas,orcamentos,futuros,recorrentes,parcelamentos,categorias,categoriasDetalhes,listaMercado,historicoCopras,promocoesMercado,contasBancarias,movimentacoesConta,config},null,2),'application/json;charset=utf-8');
   renderBackupInfo();
   showToast('Backup baixado com sucesso.');
 }
@@ -12496,6 +13349,7 @@ function importarBackupJSON(evt){
           <div class="backup-preview-item"><span>Planejamento</span><strong>${c.futuros}</strong></div>
           <div class="backup-preview-item"><span>Recorrentes</span><strong>${c.recorrentes}</strong></div>
           <div class="backup-preview-item"><span>Parcelamentos</span><strong>${c.parcelamentos}</strong></div>
+          <div class="backup-preview-item"><span>Contas banc.</span><strong>${c.contas||0}</strong></div>
           <div class="backup-preview-item"><span>Hist. compras</span><strong>${c.historico}</strong></div>
           <div class="backup-preview-item"><span>Configurações</span><strong>${c.config?'Sim':'Não'}</strong></div>
         </div>
@@ -12519,6 +13373,8 @@ function aplicarBackupSubstituir(b){
   listaMercado=b.listaMercado||[];
   historicoCopras=b.historicoCopras||[];
   promocoesMercado=b.promocoesMercado||[];
+  contasBancarias=b.contasBancarias||[];
+  movimentacoesConta=b.movimentacoesConta||[];
   if(b.config&&typeof b.config==='object'){config={...config,...b.config};}
 }
 function aplicarBackupSomar(b){
@@ -12529,6 +13385,8 @@ function aplicarBackupSomar(b){
   listaMercado=listaMercado.concat(b.listaMercado||[]);
   historicoCopras=historicoCopras.concat(b.historicoCopras||[]);
   promocoesMercado=promocoesMercado.concat(b.promocoesMercado||[]);
+  contasBancarias=contasBancarias.concat(b.contasBancarias||[]);
+  movimentacoesConta=movimentacoesConta.concat(b.movimentacoesConta||[]);
   categorias=[...new Set(categorias.concat(b.categorias||[]))];
   metas={...metas,...(b.metas||{})};
   orcamentos={...orcamentos,...(b.orcamentos||{})};
@@ -12542,14 +13400,17 @@ function confirmarImportacaoBackup(){
   salvarLocal('dados',dados); salvarLocal('metas',metas); salvarLocal('orcamentos',orcamentos); salvarLocal('futuros',futuros);
   salvarLocal('recorrentes',recorrentes); salvarLocal('parcelamentos',parcelamentos); salvarLocal('categorias',categorias);
   salvarLocal('categoriasDetalhes',categoriasDetalhes); salvarLocal('listaMercado',listaMercado);
-  salvarLocal('historicoCopras',historicoCopras); salvarLocal('promocoesMercado',promocoesMercado); salvarLocal('config',config);
+  salvarLocal('historicoCopras',historicoCopras); salvarLocal('promocoesMercado',promocoesMercado);
+  salvarLocal('contasBancarias',contasBancarias); salvarLocal('movimentacoesConta',movimentacoesConta);
+  salvarLocal('config',config);
   cancelarImportacaoBackup();
   processarDadosGlobais();
   showToast('Backup importado com sucesso!');
 }
-function limparTodosDados(){if(!confirm('Deseja apagar todos os dados locais do FinançasCasa? Esta ação não pode ser desfeita.'))return;if(!confirm('Confirme novamente: todos os lançamentos, metas, listas e configurações serão removidos.'))return;['dados','metas','orcamentos','futuros','recorrentes','parcelamentos','categorias','categoriasDetalhes','listaMercado','historicoCopras','promocoesMercado','chatHistorico'].forEach(k=>localStorage.removeItem('financasCasa_'+k));location.reload();}
-processarDadosGlobais=function(){aprimorarEstruturaVisual();popularSelectCategorias();popularDatalistDescricao();analisarIA();renderDashboard();renderLancamentos();renderMetas();renderOrcamento();renderFuturo();renderRecorrentes();renderParcelamentos();renderCategorias();renderListaMercado();renderBackupInfo();renderConfigResumoDados();gerarRelatorioTela();atualizarHeroesModulos();const mes=getMesGlobal(),qtd=getLancamentosFiltrados(mes).length;if(badgeLanc){if(qtd>0){badgeLanc.innerText=qtd;badgeLanc.classList.remove('hidden');}else badgeLanc.classList.add('hidden');}if(badgeIA){if(iaContext.qtdAlertas>0){badgeIA.innerText=iaContext.qtdAlertas;badgeIA.classList.remove('hidden');badgeIA.classList.add('badge-alert');}else badgeIA.classList.add('hidden');}if(!appValidado){validarAppLocal();appValidado=true;}};
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>{aprimorarEstruturaVisual();document.body.classList.toggle('modo-compacto',config.densidade==='compacto');document.body.classList.toggle('theme-dark',config.tema==='escuro');processarDadosGlobais();});else{aprimorarEstruturaVisual();document.body.classList.toggle('modo-compacto',config.densidade==='compacto');document.body.classList.toggle('theme-dark',config.tema==='escuro');processarDadosGlobais();}
+function limparTodosDados(){if(!confirm('Deseja apagar todos os dados locais do FinançasCasa? Esta ação não pode ser desfeita.'))return;if(!confirm('Confirme novamente: todos os lançamentos, metas, listas e configurações serão removidos.'))return;['dados','metas','orcamentos','futuros','recorrentes','parcelamentos','categorias','categoriasDetalhes','listaMercado','historicoCopras','promocoesMercado','chatHistorico','contasBancarias','movimentacoesConta'].forEach(k=>localStorage.removeItem('financasCasa_'+k));location.reload();}
+migrarMovimentacoesBancarias();
+processarDadosGlobais=function(){aprimorarEstruturaVisual();popularSelectCategorias();popularDatalistDescricao();analisarIA();renderDashboard();renderLancamentos();renderContas();renderMetas();renderOrcamento();renderFuturo();renderRecorrentes();renderParcelamentos();renderCategorias();renderListaMercado();renderBackupInfo();renderConfigResumoDados();gerarRelatorioTela();atualizarHeroesModulos();const mes=getMesGlobal(),qtd=getLancamentosFiltrados(mes).length;const bLanc=document.getElementById('badgeLanc');if(bLanc){if(qtd>0){bLanc.innerText=qtd;bLanc.classList.remove('hidden');}else bLanc.classList.add('hidden');}const bIA=document.getElementById('badgeIA');if(bIA){if(iaContext.qtdAlertas>0){bIA.innerText=iaContext.qtdAlertas;bIA.classList.remove('hidden');bIA.classList.add('badge-alert');}else bIA.classList.add('hidden');}if(!appValidado){validarAppLocal();appValidado=true;}};
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>{document.body.classList.remove('conta-drawer-open','lanc-drawer-open');aprimorarEstruturaVisual();document.body.classList.toggle('modo-compacto',config.densidade==='compacto');document.body.classList.toggle('theme-dark',config.tema==='escuro');processarDadosGlobais();});else{document.body.classList.remove('conta-drawer-open','lanc-drawer-open');aprimorarEstruturaVisual();document.body.classList.toggle('modo-compacto',config.densidade==='compacto');document.body.classList.toggle('theme-dark',config.tema==='escuro');processarDadosGlobais();}
 </script>
 </body>
 </html>
